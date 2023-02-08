@@ -2,18 +2,21 @@
 Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 """
-__software__ = "Volume Profile 2-split with Plotly"
-__version__ = "1.01"
-__author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/06 (initial version) ~ 2023/02/07 (last revision)"
-
 import yfinance as yf
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
+__software__ = "Volume Profile 2-split with Plotly"
+__version__ = "1.01"
+__author__ = "York <york.jong@gmail.com>"
+__date__ = "2023/02/06 (initial version) ~ 2023/02/08 (last revision)"
+__all__ = ['plot']
 
-def show_pbv2s_plotly(ticker='TSLA', period='12mo', total_bins=42):
+
+def plot(ticker='TSLA', period='12mo',
+         ma_days=(10, 20, 50, 150), vma_days=50,
+         total_bins=42):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
     given stock. Here the PBV overlaied with the price subplot. This figure
     consists of two subplots: a price subplot and a volume subplot. The former
@@ -22,11 +25,15 @@ def show_pbv2s_plotly(ticker='TSLA', period='12mo', total_bins=42):
 
     Parameters
     ----------
-    ticker
-        the ticker name (default is 'TSLA')
-    period
-        the period (default is '12mo' that means 12 monthes)
-    total_bins
+    ticker: str
+        the ticker name.
+    period: str
+        the period ('12mo' means 12 monthes)
+    ma_days: int Sequence
+        a sequence to list days of moving averge lines.
+    vma_days: int
+        days of the volume moving average line.
+    total_bins: int
         the number of bins to calculate comulative volume for bins.
     """
     # Download stock data
@@ -56,7 +63,6 @@ def show_pbv2s_plotly(ticker='TSLA', period='12mo', total_bins=42):
     fig.add_trace(candlestick)
 
     # Add moving averages to the figure
-    ma_days = (5, 10, 20, 50, 150)
     ma_colors = ('orange', 'red', 'green', 'blue', 'brown')
     for d, c in zip(ma_days, ma_colors):
         df[f'ma{d}'] = df['Close'].rolling(window=d).mean()
@@ -96,12 +102,14 @@ def show_pbv2s_plotly(ticker='TSLA', period='12mo', total_bins=42):
     fig.add_trace(volume, row=2, col=1)
 
     # Add moving average volume to 2nd row
-    df['vma50'] = df['Volume'].rolling(window=50).mean()
-    vma50 = go.Scatter(x=df.index, y=df['vma50'], name='VMA 50',
-                    line=dict(color='purple', width=2),
-                    #xaxis='x2', yaxis='y3'
-            )
-    fig.add_trace(vma50, row=2, col=1)
+    df[f'vma{vma_days}'] = df['Volume'].rolling(window=vma_days).mean()
+    vma = go.Scatter(
+        x=df.index, y=df[f'vma{vma_days}'],
+        name=f'VMA {vma_days}',
+        line=dict(color='purple', width=2),
+        #xaxis='x2', yaxis='y3'
+    )
+    fig.add_trace(vma, row=2, col=1)
 
     # Remove non-trading dates
     df.index = df.index.strftime('%Y-%m-%d')
@@ -135,16 +143,14 @@ def show_pbv2s_plotly(ticker='TSLA', period='12mo', total_bins=42):
     fig.update_xaxes(
         spikemode='across', spikesnap='cursor',
         spikethickness=1, spikedash='solid', spikecolor='grey')
-    fig.update_layout(hovermode='x')  # 'x', 'y', 'closest', False, 'x unified',
-                                      # 'y unified'
+    fig.update_layout(hovermode='x')    # 'x', 'y', 'closest', False,
+                                        # 'x unified', 'y unified'
 
-    # Show the figure
+    # Show and save the figure
     fig.show()
+    fig.write_html(f'{ticker}_{df.index.values[-1]}_pbv2s.html')
 
 
 if __name__ == '__main__':
-    ticker = "TSLA" #@param {type:"string"}
-    period = "12mo" #@param ["3mo", "6mo", "12mo", "24mo"]
-    total_bins = 42 #@param {type: "integer"}
-    show_pbv2s_plotly(ticker=ticker, period=period, total_bins=total_bins)
+    plot('TSLA')
 
