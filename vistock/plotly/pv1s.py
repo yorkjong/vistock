@@ -108,10 +108,10 @@ def plot(ticker='TSLA', period='12mo',
                 x=0, y=1.05
             ),
         ],
-        #annotations=[dict(
-        #    text="hovermode:", showarrow=False,
-        #    x=0, y=1.15, yref="paper", align="left"
-        #)],
+        annotations=[dict(
+            text="hovermode:", showarrow=False,
+            x=0, y=1.15, xref="paper", yref="paper", align="left"
+        )],
     )
     # Show the figure
     fig.show()

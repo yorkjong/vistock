@@ -153,7 +153,7 @@ def plot(ticker='TSLA', period='12mo',
         ],
         annotations=[dict(
             text="hovermode:", showarrow=False,
-            x=0, y=1.15, yref="paper", align="left"
+            x=0, y=1.15, xref="paper", yref="paper", align="left"
         )],
     )
 
