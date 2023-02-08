@@ -26,28 +26,27 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
 
     Parameters
     ----------
-    ticker
-        the ticker name (default is 'TSLA')
-    period
-        the period (default is '12mo' that means 12 monthes)
-    ma_days
-        a sequence to list days of price moving averge lines
-    vma_days
-        days of volume moving average lines
-    legend_loc
-        the location of the legend (default is 'best')
-        Valid locations are
-            best
-            upper right
-            upper left
-            lower left
-            lower right
-            right
-            center left
-            center right
-            lower center
-            upper center
-            center
+    ticker: str
+        the ticker name.
+    period: str
+        the period ('12mo' means 12 monthes)
+    ma_days: int Sequence
+        a sequence to list days of moving averge lines.
+    vma_days: int
+        days of the volume moving average line.
+    legend_loc: str
+        the location of the legend. Valid locations are
+            'best'
+            'upper right'
+            'upper left'
+            'lower left'
+            'lower right'
+            'right'
+            'center left'
+            'center right'
+            'lower center'
+            'upper center'
+            'center'
     """
     # Download stock data
     df = yf.Ticker(ticker).history(period=period)

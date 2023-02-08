@@ -11,7 +11,7 @@ from plotly.subplots import make_subplots
 __software__ = "Volume Profile 4-split with Plotly"
 __version__ = "1.02"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/07 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/08 (last revision)"
 __all__ = ['plot']
 
 
@@ -24,11 +24,15 @@ def plot(ticker='TSLA', period='12mo',
 
     Parameters
     ----------
-    ticker
-        the ticker name (default is 'TSLA')
-    period
-        the period (default is '12mo' that means 12 monthes)
-    total_bins
+    ticker: str
+        the ticker name.
+    period: str
+        the period ('12mo' means 12 monthes)
+    ma_days: int Sequence
+        a sequence to list days of moving averge lines.
+    vma_days: int
+        days of the volume moving average line.
+    total_bins: int
         the number of bins to calculate comulative volume for bins.
     """
     # Download stock data
@@ -129,8 +133,8 @@ def plot(ticker='TSLA', period='12mo',
     fig.update_xaxes(
         spikemode='across', spikesnap='cursor',
         spikethickness=1, spikedash='solid', spikecolor='grey')
-    fig.update_layout(hovermode='x')  # 'x', 'y', 'closest', False, 'x unified',
-                                      # 'y unified'
+    fig.update_layout(hovermode='x')    # 'x', 'y', 'closest', False,
+                                        # 'x unified', 'y unified'
 
     # Show and save the figure
     fig.show()
@@ -139,3 +143,4 @@ def plot(ticker='TSLA', period='12mo',
 
 if __name__ == '__main__':
     plot('TSLA')
+

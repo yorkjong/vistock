@@ -22,14 +22,14 @@ def plot(ticker='TSLA', period='12mo',
 
     Parameters
     ----------
-    ticker
-        the ticker name (default is 'TSLA')
-    period
-        the period (default is '12mo' that means 12 monthes)
-    ma_days
-        a sequence to list days of price moving averge lines
-    vma_days
-        days of volume moving average lines
+    ticker: str
+        the ticker name.
+    period: str
+        the period ('12mo' means 12 monthes)
+    ma_days: int Sequence
+        a sequence to list days of moving averge lines.
+    vma_days: int
+        days of the volume moving average line.
     """
     # Download stock data
     df = yf.Ticker(ticker).history(period=period)
@@ -101,4 +101,3 @@ def plot(ticker='TSLA', period='12mo',
 
 if __name__ == '__main__':
     plot('TSLA')
-
