@@ -95,7 +95,7 @@ def plot(ticker='TSLA', period='12mo',
             name="Price Bins",
             orientation="h",    # 'v', 'h'
             marker_color="brown",
-            texttemplate="%{x/1000:3.2fK}",
+            texttemplate="%{x:3.2f}",
             hoverinfo="y",   # 'x', 'y', 'x+y'
             opacity=0.5
         ),
