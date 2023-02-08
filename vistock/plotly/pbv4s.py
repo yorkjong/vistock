@@ -6,7 +6,7 @@ stock. Here the PBV occupies a split of a 4-split chart.
 __software__ = "Volume Profile 4-split with Plotly"
 __version__ = "1.02"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/08 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/09 (last revision)"
 
 __all__ = ['plot']
 
@@ -14,6 +14,7 @@ import yfinance as yf
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+from fig_util import *
 
 
 def plot(ticker='TSLA', period='12mo',
@@ -127,39 +128,13 @@ def plot(ticker='TSLA', period='12mo',
         xaxis_rangeslider_visible=False,
     )
 
-    # Add crosshair cursor
-    fig.update_yaxes(
-        spikemode='across', spikesnap='cursor',
-        spikethickness=1, spikedash='solid', spikecolor='grey')
-    fig.update_xaxes(
-        spikemode='across', spikesnap='cursor',
-        spikethickness=1, spikedash='solid', spikecolor='grey')
-    fig.update_layout(hovermode='x')    # 'x', 'y', 'closest', False,
-                                        # 'x unified', 'y unified'
-
-    # Add a dropdown menu for selecting a hovermode
-    hovermodes = ('x', 'y', 'closest', 'x unified', 'y unified')
-    fig.update_layout(
-        updatemenus=[
-            dict(
-                buttons=list([
-                    dict(args=[dict(hovermode=m)],
-                         label=m, method="relayout") for m in hovermodes
-                ]),
-                showactive=True,
-                xanchor='left', yanchor='bottom',
-                x=0, y=1.05
-            ),
-        ],
-        annotations=[dict(
-            text="hovermode:", showarrow=False,
-            x=0, y=1.15, xref="paper", yref="paper", align="left"
-        )],
-    )
+    # For Crosshair cursor
+    add_crosshair_cursor(fig)
+    add_hovermode_menu(fig)
 
     # Show and save the figure
     fig.show()
-    fig.write_html(f'{ticker}_{df.index.values[-1]}_pbv4s.html')
+    fig.write_html(f'{ticker}_{df.index.values[-1]}_pbv2s.html')
 
 
 if __name__ == '__main__':
