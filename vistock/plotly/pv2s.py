@@ -7,7 +7,7 @@ Show a price-and-volume separated stock chart.
 __software__ = "Price and Volume separated stock chart"
 __version__ = "1.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/08 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/09 (last revision)"
 
 __all__ = ['plot']
 
