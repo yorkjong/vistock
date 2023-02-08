@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import *
+import mpl
+import plotly
 
-__all__ = [
-    'mpl',      # plot with mplfinance (using Matplotlib inside)
-    'plotly',   # plot with Plotly
-]
