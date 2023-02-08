@@ -8,13 +8,27 @@ Plot a 3-split (price, volume, RSI) stock chart.
 import yfinance as yf
 import matplotlib.pyplot as plt
 import mplfinance as mpf
-from talib import abstract
 
 __software__ = "Stock chart of price, volume, and RSI"
 __version__ = "1.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2023/02/08 (last revision)"
 __all__ = ['plot']
+
+
+def installed(module_name):
+    import importlib
+    try:
+        importlib.import_module(module_name)
+        return True
+    except ImportError:
+        return False
+
+
+if installed('talib'):
+    from talib import abstract
+else:
+    print('Please install "talib" package.')
 
 
 def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
@@ -54,15 +68,18 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
     # Add Volume Moving Average
     vma = mpf.make_addplot(df['Volume'], mav=vma_days,
                            type='line', linestyle='', panel=1)
+    addplot = [vma]
 
-    # Add RSI
-    RSI = lambda df, period: abstract.RSI(df, timeperiod=period)
-    rsi = mpf.make_addplot(RSI(df['Close'], 14), panel=2, ylabel='RSI')
+    if installed('talib'):
+        # Add RSI
+        RSI = lambda df, period: abstract.RSI(df, timeperiod=period)
+        rsi = mpf.make_addplot(RSI(df['Close'], 14), panel=2, ylabel='RSI')
+        addplot.append(rsi)
 
     # Plot candlesticks MA, volume, volume MA, RSI
     fig, axes = mpf.plot(
         df, type='candle', mav=ma_days,     # candlestick and MA
-        volume=True, addplot=[vma, rsi],    # volume, volume MA, RSI
+        volume=True, addplot=addplot,       # volume, volume MA, RSI
         style='yahoo', figsize=(16, 8),
         returnfig=True
     )
