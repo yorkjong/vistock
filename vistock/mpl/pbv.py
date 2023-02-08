@@ -16,10 +16,10 @@ __date__ = "2023/02/02 (initial version) ~ 2023/02/06 (last revision)"
 def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
          vma_days=50, total_bins=42, legend_loc='best'):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
-    given stock. Here the PBV overlaied with the price subplot. This figure
+    given stock. Here the PBV overlaid with the price subplot. This figure
     consists of two subplots: a price subplot and a volume subplot. The former
     includes candlestick, moving average lines, while the latter includes
-    trading volume bar chart and volume moving average line.
+    a trading volume bar chart and a volume moving average line.
 
     Parameters
     ----------
