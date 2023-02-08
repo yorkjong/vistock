@@ -3,18 +3,21 @@
 Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV occupies a split of a 4-split chart.
 """
-__software__ = "Volume Profile 4-split with Plotly"
-__version__ = "1.02"
-__author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/07 (last revision)"
-
 import yfinance as yf
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
+__software__ = "Volume Profile 4-split with Plotly"
+__version__ = "1.02"
+__author__ = "York <york.jong@gmail.com>"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/07 (last revision)"
+__all__ = ['plot']
 
-def show_pbv4s_plotly(ticker='TSLA', period='12mo', total_bins=42):
+
+def plot(ticker='TSLA', period='12mo',
+         ma_days=(10, 20, 50, 150), vma_days=50,
+         total_bins=42):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
     given stock. Here the PBV occupies a split of a 4-split chart. This chart
     also includes candlestick, MA lines, volume, and volume MA line.
@@ -55,7 +58,6 @@ def show_pbv4s_plotly(ticker='TSLA', period='12mo', total_bins=42):
     fig.add_trace(candlestick, row=1, col=1)
 
     # Add moving averages to the figure
-    ma_days = (5, 10, 20, 50, 150)
     ma_colors = ('orange', 'red', 'green', 'blue', 'brown')
     for d, c in zip(ma_days, ma_colors):
         df[f'ma{d}'] = df['Close'].rolling(window=d).mean()
@@ -71,10 +73,10 @@ def show_pbv4s_plotly(ticker='TSLA', period='12mo', total_bins=42):
     fig.add_trace(volume, row=2, col=1)
 
     # Add moving average volume to 2nd row
-    df['vma50'] = df['Volume'].rolling(window=50).mean()
-    vma50 = go.Scatter(x=df.index, y=df['vma50'], name='VMA 50',
-                    line=dict(color='purple', width=2))
-    fig.add_trace(vma50, row=2, col=1)
+    df[f'vma{vma_days}'] = df['Volume'].rolling(window=vma_days).mean()
+    vma = go.Scatter(x=df.index, y=df[f'vma{vma_days}'],
+                     name=f'VMA {vma_days}', line=dict(color='purple', width=2))
+    fig.add_trace(vma, row=2, col=1)
 
     # Add Price by Volume (Volume Profile) chart
     bin_size = (max(df['High']) - min(df['Low'])) / total_bins
@@ -130,13 +132,10 @@ def show_pbv4s_plotly(ticker='TSLA', period='12mo', total_bins=42):
     fig.update_layout(hovermode='x')  # 'x', 'y', 'closest', False, 'x unified',
                                       # 'y unified'
 
-    # Show the figure
+    # Show and save the figure
     fig.show()
+    fig.write_html(f'{ticker}_{df.index.values[-1]}_pbv4s.html')
 
 
 if __name__ == '__main__':
-    #@title _
-    ticker = "TSLA" #@param {type:"string"}
-    period = "12mo" #@param ["3mo", "6mo", "12mo", "24mo"]
-    total_bins = 42 #@param {type: "integer"}
-    show_pbv4s_plotly(ticker=ticker, period=period, total_bins=total_bins)
+    plot('TSLA')
