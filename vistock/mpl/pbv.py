@@ -11,6 +11,7 @@ __software__ = "Volume Profile 2-split with mplfinace"
 __version__ = "1.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2023/02/06 (last revision)"
+__all__ = ['plot']
 
 
 def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
