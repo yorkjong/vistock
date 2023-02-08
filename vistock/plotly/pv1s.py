@@ -73,15 +73,15 @@ def plot(ticker='TSLA', period='12mo',
 
     # Update layout
     fig.update_layout(
-        xaxis_rangeslider_visible=False,
-
+        height=720,
         title=f'{ticker}: {df.index.values[0]}~{df.index.values[-1]}',
-        title_x=0.5, title_y=.85,
+        title_x=0.5, title_y=.9,
 
         yaxis=dict(title='Price (USD)', side='right', overlaying='y2'),
         yaxis2=dict(title='Volume', side='left', showgrid=False),
 
-        legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01)
+        legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
+        xaxis_rangeslider_visible=False,
     )
 
     # Add crosshair cursor
@@ -94,6 +94,25 @@ def plot(ticker='TSLA', period='12mo',
     fig.update_layout(hovermode='x')  # 'x', 'y', 'closest', False,
                                       # 'x unified', 'y unified'
 
+    # Add a dropdown menu for selecting a hovermode
+    hovermodes = ('x', 'y', 'closest', 'x unified', 'y unified')
+    fig.update_layout(
+        updatemenus=[
+            dict(
+                buttons=list([
+                    dict(args=[dict(hovermode=m)],
+                         label=m, method="relayout") for m in hovermodes
+                ]),
+                showactive=True,
+                xanchor='left', yanchor='bottom',
+                x=0, y=1.05
+            ),
+        ],
+        #annotations=[dict(
+        #    text="hovermode:", showarrow=False,
+        #    x=0, y=1.15, yref="paper", align="left"
+        #)],
+    )
     # Show the figure
     fig.show()
 

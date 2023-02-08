@@ -147,6 +147,26 @@ def plot(ticker='TSLA', period='12mo',
     fig.update_layout(hovermode='x')    # 'x', 'y', 'closest', False,
                                         # 'x unified', 'y unified'
 
+    # Add a dropdown menu for selecting a hovermode
+    hovermodes = ('x', 'y', 'closest', 'x unified', 'y unified')
+    fig.update_layout(
+        updatemenus=[
+            dict(
+                buttons=list([
+                    dict(args=[dict(hovermode=m)],
+                         label=m, method="relayout") for m in hovermodes
+                ]),
+                showactive=True,
+                xanchor='left', yanchor='bottom',
+                x=0, y=1.05
+            ),
+        ],
+        annotations=[dict(
+            text="hovermode:", showarrow=False,
+            x=0, y=1.15, yref="paper", align="left"
+        )],
+    )
+
     # Show and save the figure
     fig.show()
     fig.write_html(f'{ticker}_{df.index.values[-1]}_pbv2s.html')
