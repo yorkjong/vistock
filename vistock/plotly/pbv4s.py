@@ -17,7 +17,7 @@ from plotly.subplots import make_subplots
 
 
 def plot(ticker='TSLA', period='12mo',
-         ma_days=(10, 20, 50, 150), vma_days=50,
+         ma_days=(5, 10, 20, 50, 150), vma_days=50,
          total_bins=42):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
     given stock. Here the PBV occupies a split of a 4-split chart. This chart

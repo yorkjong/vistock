@@ -17,7 +17,7 @@ import plotly.graph_objs as go
 
 
 def plot(ticker='TSLA', period='12mo',
-         ma_days=(10, 20, 50, 150), vma_days=50):
+         ma_days=(5, 10, 20, 50, 150), vma_days=50):
     """Plot a stock chart that shows candlesticks, price moving-average lines,
     a volume bar chart, and a volume moving-average line in a single subplot.
 
@@ -44,7 +44,7 @@ def plot(ticker='TSLA', period='12mo',
     fig = go.Figure(data=[candlestick])
 
     # Add moving averages to the figure
-    ma_colors = ('red', 'green', 'blue', 'brown')
+    ma_colors = ('orange', 'red', 'green', 'blue', 'brown')
     for d, c in zip(ma_days, ma_colors):
         df[f'ma{d}'] = df['Close'].rolling(window=d).mean()
         ma = go.Scatter(x=df.index, y=df[f'ma{d}'], name=f'MA {d}',
