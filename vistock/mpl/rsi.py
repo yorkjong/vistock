@@ -5,7 +5,6 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * Plot with mplfinance
 * RSI from TA-Lib
 """
-
 import yfinance as yf
 import matplotlib.pyplot as plt
 import mplfinance as mpf
@@ -78,7 +77,8 @@ def plot(ticker='TSLA', period='12mo',
     # Show
     mpf.show()
 
-    return mpf
+    filename = f'{ticker}_{df.index.values[-1]}_rsi.png'
+    fig.savefig(filename)
 
 
 if __name__ == '__main__':
