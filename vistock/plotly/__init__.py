@@ -3,5 +3,6 @@
 from . import *
 
 __all__ = [
-    'pv1s',     # Single-subplot stock chart (price and volume)
+    'pv1s',     # Price and volume overlaid stock chart
+    'pv2s',     # Price and volume separated stock chart
 ]
