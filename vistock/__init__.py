@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import mpl
-from . import plotly
+import .mpl
+import .plotly
 
