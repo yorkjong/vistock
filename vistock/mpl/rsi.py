@@ -5,15 +5,16 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * Plot with mplfinance
 * RSI from TA-Lib
 """
-import yfinance as yf
-import matplotlib.pyplot as plt
-import mplfinance as mpf
-
 __software__ = "Stock chart of price, volume, and RSI"
 __version__ = "1.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2023/02/08 (last revision)"
+
 __all__ = ['plot']
+
+import yfinance as yf
+import matplotlib.pyplot as plt
+import mplfinance as mpf
 
 
 def installed(module_name):

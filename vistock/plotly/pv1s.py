@@ -4,15 +4,16 @@ Show a price-and-volume overlaid stock chart.
 * Data from yfinance
 * Plot with Plotly (for candlestick, MA, volume, volume MA)
 """
-import yfinance as yf
-import pandas as pd
-import plotly.graph_objs as go
-
 __software__ = "Price and Volume overlaid stock chart"
 __version__ = "1.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2023/02/08 (last revision)"
+
 __all__ = ['plot']
+
+import yfinance as yf
+import pandas as pd
+import plotly.graph_objs as go
 
 
 def plot(ticker='TSLA', period='12mo',
