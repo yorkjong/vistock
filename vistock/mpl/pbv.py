@@ -89,11 +89,9 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
         alpha=0.4
     )
 
-    # Show
+    # show and save
     mpf.show()  # plt.show()
-
-    filename = f'{ticker}_{df.index.values[-1]}_pbv.png'
-    fig.savefig(filename)
+    fig.savefig(f'{ticker}_{df.index.values[-1]}_pbv.png')
 
 
 if __name__ == '__main__':

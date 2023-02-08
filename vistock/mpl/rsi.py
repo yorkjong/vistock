@@ -17,10 +17,8 @@ __date__ = "2023/02/02 (initial version) ~ 2023/02/08 (last revision)"
 __all__ = ['plot']
 
 
-def plot(ticker='TSLA', period='12mo',
-         ma_days=(5, 10, 20, 50, 150),
-         vma_days=50,
-         legend_loc='best'):
+def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
+         vma_days=50, legend_loc='best'):
     """Show a stock figure that consists 3 suplots: a price subplot, a
     volume subplot, and a RSI subplot. The price subplot shows price
     candlesticks, and price moving-average lines. The volume subplot shows a
@@ -74,11 +72,9 @@ def plot(ticker='TSLA', period='12mo',
     fig.suptitle(f"{ticker}: {df.index.values[0]}~{df.index.values[-1]}",
                  y=0.93)
 
-    # Show
+    # Show and save
     mpf.show()
-
-    filename = f'{ticker}_{df.index.values[-1]}_rsi.png'
-    fig.savefig(filename)
+    fig.savefig(f'{ticker}_{df.index.values[-1]}_rsi.png')
 
 
 if __name__ == '__main__':
