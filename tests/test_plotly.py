@@ -3,8 +3,14 @@
 """
 import vistock.plotly as vsp
 
-modules = (vsp.pv1s, vsp.pv2s, vsp.pbv4s, vsp.pbv2s)
+modules = (
+    vsp.pv1s,     # Price and volume overlaid stock chart
+    vsp.pv2s,     # Price and volume separated stock chart
+    vsp.pbv4s,    # Volume Profile (price-by-volume) stock chart with 4 subplots
+    vsp.pbv2s,    # Volume Profile (price-by-volume) stock chart with 2 subplots
+)
+
 for m in modules:
-    m.plot('TSLA', interval='5m', period='1d')
+    #m.plot('TSLA', interval='5m', period='1d')
     m.plot('TSLA')
 
