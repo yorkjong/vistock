@@ -1,0 +1,4 @@
+* Add "interval" parameters for our Ploly plot functions
+* Apply forms for vistock_demo.ipynb
+* Fill README.md
+* Add git tag to the project
