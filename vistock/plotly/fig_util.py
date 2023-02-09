@@ -5,8 +5,8 @@ Common utility for Plotly figure.
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/09 (initial version) ~ 2023/02/09 (last revision)"
 
-
 __all__ = ['add_crosshair_cursor', 'add_hovermode_menu']
+
 
 def add_crosshair_cursor(fig):
     """Add crosshair cursor to a given figure.
