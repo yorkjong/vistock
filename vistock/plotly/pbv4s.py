@@ -14,7 +14,8 @@ import yfinance as yf
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-from fig_util import *
+
+from .fig_util import add_crosshair_cursor, add_hovermode_menu
 
 
 def plot(ticker='TSLA', period='12mo',
