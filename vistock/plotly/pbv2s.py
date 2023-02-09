@@ -6,7 +6,7 @@ stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 __software__ = "Volume Profile 2-split with Plotly"
 __version__ = "1.01"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/06 (initial version) ~ 2023/02/08 (last revision)"
+__date__ = "2023/02/06 (initial version) ~ 2023/02/09 (last revision)"
 
 __all__ = ['plot']
 
@@ -127,6 +127,7 @@ def plot(ticker='TSLA', period='12mo',
     fig.update_layout(
         title=f'{ticker}: {df.index.values[0]}~{df.index.values[-1]}',
         title_x=0.5, title_y=.98,
+        legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
 
         xaxis=dict(side='top', title='Bin Comulative Volume'),
         yaxis=dict(side='left', title='Bin Price (USD)'),
@@ -135,7 +136,6 @@ def plot(ticker='TSLA', period='12mo',
         yaxis2=dict(side='right', title='Price (USD)'),
         yaxis3=dict(side='right', title='Volume'),
 
-        legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
         xaxis_rangeslider_visible=False,
         xaxis2_rangeslider_visible=False,
     )

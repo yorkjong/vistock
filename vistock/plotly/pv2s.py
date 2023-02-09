@@ -92,12 +92,12 @@ def plot(ticker='TSLA', period='12mo',
     fig.update_layout(
         title=f'{ticker}: {df.index.values[0]}~{df.index.values[-1]}',
         title_x=0.5, title_y=.9,
+        legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
 
         xaxis=dict(anchor='free'),
         yaxis=dict(anchor='x2', side='right', title='Price (USD)'),
         yaxis2=dict(anchor='x', side='right', title='Volume'),
 
-        legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
         xaxis_rangeslider_visible=False,
     )
 
