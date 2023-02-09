@@ -14,8 +14,7 @@ import yfinance as yf
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-
-from .fig_util import add_crosshair_cursor, add_hovermode_menu
+from . import fig_util as futil
 
 
 def plot(ticker='TSLA', period='12mo', interval='1d',
@@ -124,18 +123,8 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     )
     fig.add_trace(vma, row=2, col=1)
 
-    # Remove non-trading dates
-    freq = interval
-    interval_aliases = ('m', 'h', 'd', 'wk', 'mo')
-    freq_aliases = ('min', 'H', 'D', 'W', 'M')
-    for i, f in zip(interval_aliases, freq_aliases):
-        freq = freq.replace(i, f)
-    df.index = df.index.strftime('%Y-%m-%d %H:%M')
-    dt_all = pd.date_range(start=df.index.values[0], end=df.index.values[-1], freq=freq)
-    dt_all = [d.strftime("%Y-%m-%d %H:%M") for d in dt_all]
-    trade_date = [d for d in df.index.values]
-    dt_breaks = list(set(dt_all) - set(trade_date))
-    fig.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+    # Update layout for removing non-trading dates
+    futil.remove_nontrading(fig, df, interval)
 
     # Update layout
     fig.update_layout(
@@ -146,7 +135,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         xaxis=dict(side='top', title='Bin Comulative Volume'),
         yaxis=dict(side='left', title='Bin Price (USD)'),
 
-        xaxis2=dict(overlaying='x', side='bottom', title='Date'),
+        xaxis2=dict(overlaying='x', side='bottom'),     # datetime
         yaxis2=dict(side='right', title='Price (USD)'),
         yaxis3=dict(side='right', title='Volume'),
 
@@ -155,8 +144,8 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     )
 
     # For Crosshair cursor
-    add_crosshair_cursor(fig)
-    add_hovermode_menu(fig)
+    futil.add_crosshair_cursor(fig)
+    futil.add_hovermode_menu(fig)
 
     # Show and save the figure
     fig.show()
