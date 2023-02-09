@@ -14,12 +14,12 @@ import yfinance as yf
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+
 from . import fig_util as futil
 
 
 def plot(ticker='TSLA', period='12mo', interval='1d',
-         ma_days=(5, 10, 20, 50, 150), vma_days=50,
-         total_bins=42):
+         ma_days=(5, 10, 20, 50, 150), vma_days=50, total_bins=42):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
     given stock. Here the PBV overlaied with the price subplot. This figure
     consists of two subplots: a price subplot and a volume subplot. The former
