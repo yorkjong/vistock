@@ -94,9 +94,14 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     futil.add_crosshair_cursor(fig)
     futil.add_hovermode_menu(fig)
 
-    # Show and save the figure
+    # Show the figure
     fig.show()
-    fig.write_html(f'{ticker}_{df.index.values[-1]}(interval={interval})_pv1s.html')
+
+    # Write the figure to an HTML file
+    info = f'{ticker}_{df.index.values[-1]}_{interval}'
+    info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
+    info = info.replace(' ', '_')
+    fig.write_html(f'{info}_pv1s.html')
 
 
 if __name__ == '__main__':
