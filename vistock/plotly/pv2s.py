@@ -107,7 +107,7 @@ def plot(ticker='TSLA', period='12mo',
 
     # Show and save the figure
     fig.show()
-    fig.write_html(f'{ticker}_{df.index.values[-1]}_pbv2s.html')
+    fig.write_html(f'{ticker}_{df.index.values[-1]}_pv2s.html')
 
 
 if __name__ == '__main__':
