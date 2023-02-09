@@ -15,12 +15,11 @@ import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
-from .fig_util import add_crosshair_cursor, add_hovermode_menu
+from . import fig_util as futil
 
 
-def plot(ticker='TSLA', period='12mo',
-         ma_days=(5, 10, 20, 50, 150), vma_days=50,
-         total_bins=42):
+def plot(ticker='TSLA', period='12mo', interval='1d',
+         ma_days=(5, 10, 20, 50, 150), vma_days=50, total_bins=42):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
     given stock. Here the PBV occupies a split of a 4-split chart. This chart
     also includes candlestick, MA lines, volume, and volume MA line.
@@ -30,7 +29,16 @@ def plot(ticker='TSLA', period='12mo',
     ticker: str
         the ticker name.
     period: str
-        the period ('12mo' means 12 monthes)
+        the period ('12mo' means 12 monthes).
+        Valid values are 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.
+    interval: str
+        the interval of an OHLC item.
+        Valid values are 1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo,
+        3mo. Intraday data cannot extend last 60 days:
+        * 1m - max 7 days within last 30 days
+        * up to 90m - max 60 days
+        * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
+          Yahoo does)
     ma_days: int Sequence
         a sequence to list days of moving averge lines.
     vma_days: int
@@ -39,7 +47,7 @@ def plot(ticker='TSLA', period='12mo',
         the number of bins to calculate comulative volume for bins.
     """
     # Download stock data
-    df = yf.Ticker(ticker).history(period=period)
+    df = yf.Ticker(ticker).history(period=period, interval=interval)
 
     # Initialize empty plot with marginal subplots
     fig = make_subplots(
@@ -104,13 +112,8 @@ def plot(ticker='TSLA', period='12mo',
         row=1, col=2
     )
 
-    # Remove non-trading dates
-    df.index = df.index.strftime('%Y-%m-%d')
-    dt_all = pd.date_range(start=df.index.values[0], end=df.index.values[-1])
-    dt_all = [d.strftime("%Y-%m-%d") for d in dt_all]
-    trade_date = [d for d in df.index.values]
-    dt_breaks = list(set(dt_all) - set(trade_date))
-    fig.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+    # Update layout for removing non-trading dates
+    futil.remove_nontrading(fig, df, interval)
 
     # Update layout
     fig.update_layout(
@@ -130,12 +133,12 @@ def plot(ticker='TSLA', period='12mo',
     )
 
     # For Crosshair cursor
-    add_crosshair_cursor(fig)
-    add_hovermode_menu(fig)
+    futil.add_crosshair_cursor(fig)
+    futil.add_hovermode_menu(fig)
 
     # Show and save the figure
     fig.show()
-    fig.write_html(f'{ticker}_{df.index.values[-1]}_pbv4s.html')
+    fig.write_html(f'{ticker}_{df.index.values[-1]}(interval={interval})_pbv4s.html')
 
 
 if __name__ == '__main__':
