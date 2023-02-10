@@ -1,10 +1,13 @@
 Change Log
 ==========
-0.2.dev1 [2023-02-XX]
----------------------
-* To apply forms for vistock_demo.ipynb
-* To fill README.md
+0.2.dev2
+--------
 * To add name to ticker support for Taiwan stocks
+
+0.2.dev1 [2023-02-11]
+---------------------
+* To fill README.md
+* Appled 4 Colab Forms to vistock_demo.ipynb for demo
 * Added "interval" parameter for all plot functions
 * Refined output filenames for all plot functions
 * Fine tuned the legend location for all plotly plot functions
