@@ -73,8 +73,8 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     fig.add_trace(candlestick, row=1, col=1)
 
     # Add moving averages to the figure
-    ma_colors = ('orange', 'red', 'green', 'blue', 'brown')
-    for d, c in zip(ma_nitems, ma_colors):
+    colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
+    for d, c in zip(ma_nitems, colors):
         df[f'ma{d}'] = df['Close'].rolling(window=d).mean()
         ma = go.Scatter(x=df.index, y=df[f'ma{d}'], name=f'MA {d}',
                         line=dict(color=f'{c}', width=2), opacity=0.5)

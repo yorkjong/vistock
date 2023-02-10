@@ -87,7 +87,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         addplot.append(rsi)
 
     # Plot candlesticks MA, volume, volume MA, RSI
-    colors = ('orange', 'red', 'green', 'blue', 'brown')
+    colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
     fig, axes = mpf.plot(
         df, type='candle',                  # candlesticks
         mav=ma_nitems, mavcolors=colors,    # moving average lines
