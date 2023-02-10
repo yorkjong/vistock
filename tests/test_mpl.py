@@ -11,4 +11,5 @@ modules = (
 
 for m in modules:
     m.plot('TSLA')
+    m.plot('TSLA', period="3d", interval="5m")
 

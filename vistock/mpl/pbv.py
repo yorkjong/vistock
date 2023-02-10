@@ -15,8 +15,9 @@ import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 
-def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
-         vma_days=50, total_bins=42, legend_loc='best'):
+def plot(ticker='TSLA', period='12mo', interval='1d',
+         ma_days=(5, 10, 20, 50, 150), vma_days=50,
+         total_bins=42, legend_loc='best'):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
     given stock. Here the PBV overlaid with the price subplot. This figure
     consists of two subplots: a price subplot and a volume subplot. The former
@@ -28,7 +29,16 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
     ticker: str
         the ticker name.
     period: str
-        the period ('12mo' means 12 monthes)
+        the period ('12mo' means 12 monthes).
+        Valid values are 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.
+    interval: str
+        the interval of an OHLC item.
+        Valid values are 1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo,
+        3mo. Intraday data cannot extend last 60 days:
+        * 1m - max 7 days within last 30 days
+        * up to 90m - max 60 days
+        * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
+          Yahoo does)
     ma_days: int Sequence
         a sequence to list days of moving averge lines.
     vma_days: int
@@ -50,7 +60,7 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
             'center'
     """
     # Download stock data
-    df = yf.Ticker(ticker).history(period=period)
+    df = yf.Ticker(ticker).history(period=period, interval=interval)
 
     # Add Volume Moving Average
     vma = mpf.make_addplot(df['Volume'], mav=vma_days,
@@ -70,7 +80,7 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
         returnfig=True
     )
     axes[0].legend([f'MA {d}' for d in ma_days], loc=legend_loc)
-    df.index = df.index.strftime('%Y-%m-%d')
+    df.index = df.index.strftime('%Y-%m-%d %H:%M')
     fig.suptitle(f"{ticker}: {df.index.values[0]}~{df.index.values[-1]}",
                  y=0.93)
 
@@ -92,9 +102,14 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
         alpha=0.4
     )
 
-    # show and save
-    mpf.show()  # plt.show()
-    fig.savefig(f'{ticker}_{df.index.values[-1]}_pbv.png')
+    # Show the figure
+    mpf.show()
+
+    # Write the figure to an PNG file
+    info = f'{ticker}_{df.index.values[-1]}_{interval}'
+    info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
+    info = info.replace(' ', '_')
+    fig.savefig(f'{info}_pbv.png')
 
 
 if __name__ == '__main__':
