@@ -128,7 +128,8 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
 
     # Update layout
     fig.update_layout(
-        title=f'{ticker}: {df.index.values[0]}~{df.index.values[-1]}',
+        title=f'{ticker} {interval} '
+              f'({df.index.values[0]}~{df.index.values[-1]})',
         title_x=0.5, title_y=.98,
         legend=dict(yanchor='top', xanchor="left", x=1),
 
@@ -151,7 +152,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     fig.show()
 
     # Write the figure to an HTML file
-    info = f'{ticker}_{df.index.values[-1]}_{interval}'
+    info = f'{ticker}_{interval}_{df.index.values[-1]}'
     info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
     info = info.replace(' ', '_')
     fig.write_html(f'{info}_pv1s.html')
