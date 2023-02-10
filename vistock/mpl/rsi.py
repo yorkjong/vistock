@@ -97,14 +97,15 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     )
     axes[0].legend([f'MA {d}' for d in ma_days], loc=legend_loc)
     df.index = df.index.strftime('%Y-%m-%d %H:%M')
-    fig.suptitle(f"{ticker}: {df.index.values[0]}~{df.index.values[-1]}",
+    fig.suptitle(f"{ticker} {interval} "
+                 f"({df.index.values[0]}~{df.index.values[-1]})",
                  y=0.93)
 
     # Show the figure
     mpf.show()
 
     # Write the figure to an PNG file
-    info = f'{ticker}_{df.index.values[-1]}_{interval}'
+    info = f'{ticker}_{interval}_{df.index.values[-1]}'
     info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
     info = info.replace(' ', '_')
     fig.savefig(f'{info}_rsi.png')
