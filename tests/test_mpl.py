@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Test modules in vistock.mpl package.
 """
 import vistock.mpl as vsm

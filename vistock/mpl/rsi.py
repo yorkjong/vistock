@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Plot a 3-split (price, volume, RSI) stock chart.
 * Data from yfinance

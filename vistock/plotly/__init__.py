@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+"""
+Initialize vistock.plotly package.
+"""
 
 __all__ = [
     'pv1s',     # Price and volume overlaid stock chart

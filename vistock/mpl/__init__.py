@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+"""
+Initialize vistock.mpl package.
+"""
 
 __all__ = [
     'rsi',  # Plot a 3-split (price, volume, RSI) stock chart.

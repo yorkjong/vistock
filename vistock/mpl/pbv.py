@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).

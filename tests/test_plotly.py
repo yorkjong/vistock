@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Test modules in vistock.plotly package.
 """
 import vistock.plotly as vsp

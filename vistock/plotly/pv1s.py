@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Show a price-and-volume overlaid stock chart.
 * Data from yfinance

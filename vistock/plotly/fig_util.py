@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Common utility for Plotly figure.
 """

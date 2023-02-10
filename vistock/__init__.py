@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+"""
+Initialize vistock package.
+"""
 
 __all__ = [
     'mpl',      # plot with mplfinance (using matplotlib internal)
