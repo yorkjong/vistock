@@ -2,7 +2,7 @@
 Common utility for Plotly figure.
 """
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/09 (initial version) ~ 2023/02/10 (last revision)"
+__date__ = "2023/02/09 (initial version) ~ 2023/02/11 (last revision)"
 
 __all__ = ['add_crosshair_cursor', 'add_hovermode_menu', 'remove_nontrading']
 
@@ -20,16 +20,16 @@ def remove_nontrading(fig, df, interval):
         the stock table
     interval: str
         the interval of an OHLC item.
-        Valid values are 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo.
-        Intraday data cannot extend last 60 days:
+        Valid values are 1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo,
+        3mo. Intraday data cannot extend last 60 days:
         * 1m - max 7 days within last 30 days
         * up to 90m - max 60 days
         * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
           Yahoo does)
     """
     freq = interval
-    interval_aliases = ('m', 'h', 'd', 'wk', 'mo')
-    freq_aliases = ('min', 'H', 'D', 'W', 'M')
+    interval_aliases = ('mo', 'm', 'h', 'd', 'wk')
+    freq_aliases = ('M', 'min', 'H', 'D', 'W')
     for i, f in zip(interval_aliases, freq_aliases):
         freq = freq.replace(i, f)
 
