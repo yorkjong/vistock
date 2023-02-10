@@ -4,6 +4,7 @@ Change Log
 ---------------------
 * To apply forms for vistock_demo.ipynb
 * To fill README.md
+* To add name to ticker support for Taiwan stocks
 * Added "interval" parameter for all plot functions
 * Refined output filenames for all plot functions
 * Fine tuned the legend location for all plotly plot functions
