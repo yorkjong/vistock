@@ -1,12 +1,14 @@
 
 0.2.dev1 (2023-02-XX)
-* Add "interval" parameter for all plot functions
+* To apply forms for vistock_demo.ipynb
+* To fill README.md
+* Added "interval" parameter for all plot functions
 * Refined output filenames for all plot functions
 * Fine tuned the legend location for all plotly plot functions
-* Refine titles and output finename
-* Add test_mpl.py
-* Rename test_on_plotly.py to test_plotly.py
-* Fine tune colors
+* Refined titles and output finename
+* Added test_mpl.py
+* Renamed test_on_plotly.py to test_plotly.py
+* Fine tuned colors
 
 0.2.0 (2023-02-09)
 * Add vistock_demo.ipynb
