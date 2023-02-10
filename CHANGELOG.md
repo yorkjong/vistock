@@ -3,8 +3,10 @@
 * Add "interval" parameter for all plot functions
 * Refined output filenames for all plot functions
 * Fine tuned the legend location for all plotly plot functions
+* Refine titles and output finename
 * Add test_mpl.py
 * Rename test_on_plotly.py to test_plotly.py
+* Fine tune colors
 
 0.2.0 (2023-02-09)
 * Add vistock_demo.ipynb
