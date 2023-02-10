@@ -5,9 +5,9 @@ Show a price-and-volume separated stock chart.
 * Plot with Plotly (for candlestick, MA, volume, volume MA)
 """
 __software__ = "Price and Volume separated stock chart"
-__version__ = "1.0"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/09 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/10 (last revision)"
 
 __all__ = ['plot']
 
@@ -20,7 +20,7 @@ from . import fig_util as futil
 
 
 def plot(ticker='TSLA', period='12mo', interval='1d',
-         ma_days=(5, 10, 20, 50, 150), vma_days=50):
+         ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50):
     """Plot a stock chart that consists of two subplots: a price subplot and a
     volume subplot. The former includes candlestick, moving average lines, while
     the latter includes a trading volume bar chart and a volume moving average
@@ -41,10 +41,10 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         * up to 90m - max 60 days
         * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
           Yahoo does)
-    ma_days: int Sequence
-        a sequence to list days of moving averge lines.
-    vma_days: int
-        days of the volume moving average line.
+    ma_nitems: int Sequence
+        a sequence to list the number of data items to calclate moving averges.
+    vma_nitems: int
+        the number of data items to calculate the volume moving average.
     """
     # Download stock data
     df = yf.Ticker(ticker).history(period=period, interval=interval)
@@ -69,7 +69,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
 
     # Add moving averages to the figure
     ma_colors = ('orange', 'red', 'green', 'blue', 'brown')
-    for d, c in zip(ma_days, ma_colors):
+    for d, c in zip(ma_nitems, ma_colors):
         df[f'ma{d}'] = df['Close'].rolling(window=d).mean()
         ma = go.Scatter(x=df.index, y=df[f'ma{d}'], name=f'MA {d}',
                         line=dict(color=f'{c}', width=2), opacity=0.4)
@@ -83,9 +83,9 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     fig.add_trace(volume, row=2, col=1)
 
     # Add moving average volume to 2nd row
-    df[f'vma{vma_days}'] = df['Volume'].rolling(window=vma_days).mean()
-    vma50 = go.Scatter(x=df.index, y=df[f'vma{vma_days}'],
-                       name=f'VMA {vma_days}',
+    df[f'vma{vma_nitems}'] = df['Volume'].rolling(window=vma_nitems).mean()
+    vma50 = go.Scatter(x=df.index, y=df[f'vma{vma_nitems}'],
+                       name=f'VMA {vma_nitems}',
                        line=dict(color='purple', width=2))
     fig.add_trace(vma50, row=2, col=1)
 

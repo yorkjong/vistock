@@ -4,9 +4,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 """
 __software__ = "Volume Profile 2-split with mplfinace"
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/06 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/10 (last revision)"
 
 __all__ = ['plot']
 
@@ -16,7 +16,7 @@ import mplfinance as mpf
 
 
 def plot(ticker='TSLA', period='12mo', interval='1d',
-         ma_days=(5, 10, 20, 50, 150), vma_days=50,
+         ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
          total_bins=42, legend_loc='best'):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
     given stock. Here the PBV overlaid with the price subplot. This figure
@@ -39,10 +39,10 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         * up to 90m - max 60 days
         * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
           Yahoo does)
-    ma_days: int Sequence
-        a sequence to list days of moving averge lines.
-    vma_days: int
-        days of the volume moving average line.
+    ma_nitems: int Sequence
+        a sequence to list the number of data items to calclate moving averges.
+    vma_nitems: int
+        the number of data items to calculate the volume moving average.
     total_bins: int
         the number of bins to calculate comulative volume for bins.
     legend_loc: str
@@ -63,7 +63,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     df = yf.Ticker(ticker).history(period=period, interval=interval)
 
     # Add Volume Moving Average
-    vma = mpf.make_addplot(df['Volume'], mav=vma_days,
+    vma = mpf.make_addplot(df['Volume'], mav=vma_nitems,
                            type='line', linestyle='', color='purple', panel=1)
 
     # Make a customized color style
@@ -73,13 +73,13 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     # Plot candlesticks MA, volume, volume MA, RSI
     colors = ('orange', 'red', 'green', 'blue', 'brown')
     fig, axes = mpf.plot(
-        df, type='candle',              # candlesticks
-        mav=ma_days, mavcolors=colors,  # moving average lines
-        volume=True, addplot=[vma],     # volume, volume MA
+        df, type='candle',                  # candlesticks
+        mav=ma_nitems, mavcolors=colors,    # moving average lines
+        volume=True, addplot=[vma],         # volume, volume MA
         style=s, figsize=(16, 8),
         returnfig=True
     )
-    axes[0].legend([f'MA {d}' for d in ma_days], loc=legend_loc)
+    axes[0].legend([f'MA {d}' for d in ma_nitems], loc=legend_loc)
     df.index = df.index.strftime('%Y-%m-%d %H:%M')
     fig.suptitle(f"{ticker} {interval} "
                  f"({df.index.values[0]}~{df.index.values[-1]})",
