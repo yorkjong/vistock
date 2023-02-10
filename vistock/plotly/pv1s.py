@@ -82,7 +82,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         height=720,
         title=f'{ticker}: {df.index.values[0]}~{df.index.values[-1]}',
         title_x=0.5, title_y=.9,
-        #legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
+        legend=dict(yanchor='top', xanchor="left", x=1.042),
 
         yaxis=dict(title='Price (USD)', side='right', overlaying='y2'),
         yaxis2=dict(title='Volume', side='left', showgrid=False),

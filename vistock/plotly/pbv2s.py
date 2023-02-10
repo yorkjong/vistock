@@ -130,7 +130,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     fig.update_layout(
         title=f'{ticker}: {df.index.values[0]}~{df.index.values[-1]}',
         title_x=0.5, title_y=.98,
-        #legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
+        legend=dict(yanchor='top', xanchor="left", x=1),
 
         xaxis=dict(side='top', title='Bin Comulative Volume'),
         yaxis=dict(side='left', title='Bin Price (USD)'),

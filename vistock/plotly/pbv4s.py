@@ -53,14 +53,14 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     fig = make_subplots(
         rows=2,
         cols=2,
-        column_width=[0.75, 0.25],
+        column_width=[0.8, 0.2],
         row_heights=[0.7, 0.3],
         #shared_xaxes="columns",
         #shared_yaxes="rows",
         #subplot_titles=["Price", "Price Bins", "Volume", ""]
         horizontal_spacing=0.01,
         vertical_spacing=0.03,
-        figure=go.Figure(layout=go.Layout(width=1280, height=720))
+        figure=go.Figure(layout=go.Layout(height=720))
     )
     #print(fig)
 
@@ -119,7 +119,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     fig.update_layout(
         title=f'{ticker}: {df.index.values[0]}~{df.index.values[-1]}',
         title_x=0.5, title_y=.9,
-        #legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
+        legend=dict(yanchor='top', xanchor="left", x=1.069),
 
         xaxis=dict(anchor='free'),
         yaxis=dict(anchor='x3', side='left', title='Price (USD)'),
