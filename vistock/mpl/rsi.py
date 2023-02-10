@@ -8,7 +8,7 @@ Plot a 3-split (price, volume, RSI) stock chart.
 __software__ = "Stock chart of price, volume, and RSI"
 __version__ = "1.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/08 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/10 (last revision)"
 
 __all__ = ['plot']
 
@@ -68,7 +68,7 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
 
     # Add Volume Moving Average
     vma = mpf.make_addplot(df['Volume'], mav=vma_days,
-                           type='line', linestyle='', panel=1)
+                           type='line', linestyle='', color='purple', panel=1)
     addplot = [vma]
 
     if installed('talib'):
@@ -78,9 +78,11 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
         addplot.append(rsi)
 
     # Plot candlesticks MA, volume, volume MA, RSI
+    colors = ('orange', 'red', 'green', 'blue', 'brown')
     fig, axes = mpf.plot(
-        df, type='candle', mav=ma_days,     # candlestick and MA
-        volume=True, addplot=addplot,       # volume, volume MA, RSI
+        df, type='candle',              # candlesticks
+        mav=ma_days, mavcolors=colors,  # moving average lines
+        volume=True, addplot=addplot,   # volume, volume MA, RSI
         style='yahoo', figsize=(16, 8),
         returnfig=True
     )

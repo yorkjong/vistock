@@ -61,9 +61,11 @@ def plot(ticker='TSLA', period='12mo', ma_days=(5, 10, 20, 50, 150),
     s = mpf.make_mpf_style(base_mpf_style='nightclouds', marketcolors=mc)
 
     # Plot candlesticks MA, volume, volume MA, RSI
+    colors = ('orange', 'red', 'green', 'blue', 'brown')
     fig, axes = mpf.plot(
-        df, type='candle', mav=ma_days,     # candlestick and MA
-        volume=True, addplot=[vma],         # volume, volume MA
+        df, type='candle',              # candlesticks
+        mav=ma_days, mavcolors=colors,  # moving average lines
+        volume=True, addplot=[vma],     # volume, volume MA
         style=s, figsize=(16, 8),
         returnfig=True
     )
