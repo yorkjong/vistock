@@ -7,6 +7,8 @@ Change Log
 0.2.dev1 [2023-02-11]
 ---------------------
 * To fill README.md
+* To add parameter of remove_nontrading
+* To add parameter of out_dir
 * Appled 4 Colab Forms to vistock_demo.ipynb for demo
 * Added "interval" parameter for all plot functions
 * Refined output filenames for all plot functions
