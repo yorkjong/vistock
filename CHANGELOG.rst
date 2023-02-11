@@ -7,6 +7,8 @@ Change Log
 0.2.dev1 [2023-02-11]
 ---------------------
 * To fill README.md
+* To refine breakrange code
+   https://plainenglish.io/blog/a-simple-guide-to-plotly-for-plotting-financial-chart-54986c996682
 * To add parameter of remove_nontrading
 * To add parameter of out_dir
 * Appled 4 Colab Forms to vistock_demo.ipynb for demo
