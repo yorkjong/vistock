@@ -10,18 +10,44 @@ vistock is an open source package that provides a lot of plot() function to visu
 https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-bc29-188ee5a2800f.mov
 
 
-## Install it on your computer.
+## Run it on your computer.
 
-### Install vistock from GitHub
-```sh
-pip install git+https://github.com/YorkJong/vistock.git
-```
+1. Install vistock from GitHub
+    ```sh
+    pip install git+https://github.com/YorkJong/vistock.git
+    ```
 
-### Install TA-Lib optionally (used only by vistock.mpl.rsi module)
+2. Install TA-Lib optionally (used only by vistock.mpl.rsi module)
+    Install TA-Lib on macOS
+    ```sh
+    brew install ta-lib
+    pip install Ta-Lib
+    ```
+    Install on other platform Please ref. [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python/)>
 
-References:
-* [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python/)
+3. Now, you can run test code or demo code. Enjoy it.
+    Run a test code:
+    ```sh
+    cd vistock\tests
+    python test_plotly.py
+    ```
+    The content of the test code is as follows:
+    ```python
+    """Test modules in vistock.plotly package.
+    """
+    import vistock.plotly as vsp
 
+    modules = (
+      vsp.pv1s,     # Price and volume overlaid stock chart
+      vsp.pv2s,     # Price and volume separated stock chart
+      vsp.pbv4s,    # Volume Profile (price-by-volume) stock chart with 4 subplots
+      vsp.pbv2s,    # Volume Profile (price-by-volume) stock chart with 2 subplots
+    )
 
+    for m in modules:
+      #m.plot('TSLA')
+      #m.plot('TSLA', period='3d', interval='5m')
+      m.plot('TSLA', period='2y', interval='1mo')
+    ```
 
 [//]: # (This may be the most platform independent comment)
