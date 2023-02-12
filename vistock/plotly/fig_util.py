@@ -2,7 +2,7 @@
 Common utility for Plotly figure.
 """
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/09 (initial version) ~ 2023/02/11 (last revision)"
+__date__ = "2023/02/09 (initial version) ~ 2023/02/13 (last revision)"
 
 __all__ = ['add_crosshair_cursor', 'add_hovermode_menu', 'remove_nontrading']
 
@@ -27,26 +27,24 @@ def remove_nontrading(fig, df, interval):
         * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
           Yahoo does)
     """
+    # convert interval to freq
     freq = interval
     interval_aliases = ('mo', 'm', 'h', 'd', 'wk')
     freq_aliases = ('M', 'min', 'H', 'D', 'W')
     for i, f in zip(interval_aliases, freq_aliases):
         freq = freq.replace(i, f)
 
+    # calculate nontrading datetimes
     df.index = df.index.strftime('%Y-%m-%d %H:%M')
     dt_all = pd.date_range(start=df.index[0], end=df.index[-1], freq=freq)
     dt_trade = [d for d in df.index]
     dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d %H:%M") if not d in dt_trade]
-    fig.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
 
-    #dt_all = pd.date_range(start=df.index[0], end=df.index[-1], freq=freq)
-    #dt_trade = [d.strftime("%Y-%m-%d %H:%M") for d in pd.to_datetime(df.index)]
-    #dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d %H:%M") if not d in dt_trade]
-    #fig.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+    # calculate dvalue in milliseconds
+    dvalue = (dt_all[1] - dt_all[0]).total_seconds() * 1000     # unit in msec
 
-    print('dt_all len:', len(dt_all))
-    print('dt_trade len:', len(dt_trade))
-    print('dt_beaks len:', len(dt_breaks))
+    # remove non-trading datetimes
+    fig.update_xaxes(rangebreaks=[dict(values=dt_breaks, dvalue=dvalue)])
 
 
 def add_crosshair_cursor(fig):
