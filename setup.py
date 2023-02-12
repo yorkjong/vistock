@@ -6,7 +6,7 @@ setup(
     license = 'MIT',
     author = 'York Jong',
     author_email = 'york.jong@gmail.com',
-    description = 'Visualizing Stocks'
+    description = 'Visualizing Stocks',
     long_description = open('README.md').read(),
     python_requires = '>=3.6',
     packages = find_packages(),
