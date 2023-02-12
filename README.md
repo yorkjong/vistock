@@ -10,7 +10,7 @@
 https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-bc29-188ee5a2800f.mov
 
 
-## Run it on your computer.
+## Dive into it on your computer.
 
 1. Install vistock from GitHub
     ```sh
@@ -29,13 +29,15 @@ https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-
     There are two test code in `vistock\tests` folder.
     * [test_plotly.py](https://github.com/YorkJong/vistock/blob/main/tests/test_plotly.py)
     * [test_mpl.py](https://github.com/YorkJong/vistock/blob/main/tests/test_mpl.py)
+    
     Run a test code:
     ```sh
     cd vistock\tests
     python test_plotly.py
     ```
-    This test code show stock charts and save them into interactie html files.
-    You can double-clicked on file to open it on your browser.
+    This test code will show stock charts and save them into interactie html files.
+    You can double-clicked a output file to open it on your browser.
+    
 4. Enjoy the demo code.
     The demo code called [vstock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/examples/vistock_demo.ipynb). You can open it on your Jupyter Notebook environment.
     
