@@ -3,14 +3,15 @@ Change Log
 0.2.dev2
 --------
 * To add name to ticker support for Taiwan stocks
-
-0.2.dev1 [2023-02-11]
----------------------
-* To fill README.md
 * To refine breakrange code
    https://plainenglish.io/blog/a-simple-guide-to-plotly-for-plotting-financial-chart-54986c996682
 * To add parameter of remove_nontrading
 * To add parameter of out_dir
+
+0.2.1 [2023-02-11]
+---------------------
+* Added the version number to 0.2.1
+* Filled README.md
 * Appled 4 Colab Forms to vistock_demo.ipynb for demo
 * Added "interval" parameter for all plot functions
 * Refined output filenames for all plot functions
