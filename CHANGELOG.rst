@@ -4,9 +4,10 @@ Change Log
 --------
 * To add name to ticker support for Taiwan stocks
 
-0.2.dev1 [2023-02-11]
+0.2.1 [2023-02-11]
 ---------------------
-* To fill README.md
+* Added the version number to 0.2.1
+* Filled README.md
 * Appled 4 Colab Forms to vistock_demo.ipynb for demo
 * Added "interval" parameter for all plot functions
 * Refined output filenames for all plot functions
