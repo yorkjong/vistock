@@ -3,8 +3,9 @@ vistock is an open source package that provides a lot of plot() function to visu
 
 ## Getting Started on Colab
 
-1. Click [vistock_demo.ipynb](https://colab.research.google.com/github/YorkJong/vistock/blob/main/examples/vistock_demo.ipynb) to open it in Colab
-
+1. Click [vistock_demo.ipynb](https://colab.research.google.com/github/YorkJong/vistock/blob/main/examples/vistock_demo.ipynb) to open it in Colab.
+2. Sign in your Google account if required.
+3. Follow the movies below.
 
 ## Install
 
