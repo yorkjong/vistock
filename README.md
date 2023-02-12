@@ -25,7 +25,10 @@ https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-
     ```
     Install on other platform Please ref. [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python/)>
 
-3. Now, you can run a test code or a demo code. Enjoy it.
+3. Run a test code.
+    There are two test code in `vistock\tests` folder.
+    * [test_plotly.py](https://github.com/YorkJong/vistock/blob/main/tests/test_plotly.py)
+    * [test_mpl.py](https://github.com/YorkJong/vistock/blob/main/tests/test_mpl.py)
     Run a test code:
     ```sh
     cd vistock\tests
@@ -33,25 +36,7 @@ https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-
     ```
     This test code show stock charts and save them into interactie html files.
     You can double-clicked on file to open it on your browser.
-    
-    The content of `test_plotly.py` is as follows:
-    ```python
-    """Test modules in vistock.plotly package.
-    """
-    import vistock.plotly as vsp
-
-    modules = (
-      vsp.pv1s,     # Price and volume overlaid stock chart
-      vsp.pv2s,     # Price and volume separated stock chart
-      vsp.pbv4s,    # Volume Profile (price-by-volume) stock chart with 4 subplots
-      vsp.pbv2s,    # Volume Profile (price-by-volume) stock chart with 2 subplots
-    )
-
-    for m in modules:
-      #m.plot('TSLA')
-      #m.plot('TSLA', period='3d', interval='5m')
-      m.plot('TSLA', period='2y', interval='1mo')
-    ```
-    A demo code called `vstock_demo.ipynb` is in `vistock\examples` folder. You can also open it on your Jupyter Notebook environment.
+4. Enjoy the demo code.
+    The demo code called [vstock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/examples/vistock_demo.ipynb). You can open it on your Jupyter Notebook environment.
     
 [//]: # (This may be the most platform independent comment)
