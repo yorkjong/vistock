@@ -34,11 +34,19 @@ def remove_nontrading(fig, df, interval):
         freq = freq.replace(i, f)
 
     df.index = df.index.strftime('%Y-%m-%d %H:%M')
-    dt_all = pd.date_range(start=df.index.values[0], end=df.index.values[-1], freq=freq)
-    dt_all = [d.strftime("%Y-%m-%d %H:%M") for d in dt_all]
-    trade_date = [d for d in df.index.values]
-    dt_breaks = list(set(dt_all) - set(trade_date))
+    dt_all = pd.date_range(start=df.index[0], end=df.index[-1], freq=freq)
+    dt_trade = [d for d in df.index]
+    dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d %H:%M") if not d in dt_trade]
     fig.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+
+    #dt_all = pd.date_range(start=df.index[0], end=df.index[-1], freq=freq)
+    #dt_trade = [d.strftime("%Y-%m-%d %H:%M") for d in pd.to_datetime(df.index)]
+    #dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d %H:%M") if not d in dt_trade]
+    #fig.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+
+    print('dt_all len:', len(dt_all))
+    print('dt_trade len:', len(dt_trade))
+    print('dt_beaks len:', len(dt_breaks))
 
 
 def add_crosshair_cursor(fig):
