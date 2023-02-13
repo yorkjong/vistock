@@ -1,11 +1,14 @@
 Change Log
 ==========
+TODO
+----
+* To add parameter "out_dir" to plot functions
+* To add name to ticker support for Taiwan stocks
+
 0.2.4
 -----
 * vistock.plotly: Added "hides_nontrading" parameter to plot functions
 * vistock_demo.ipynb: Added "hides_nontrading" parameter to Plotly forms
-* To add parameter "out_dir" to plot functions
-* To add name to ticker support for Taiwan stocks
 
 0.2.3 [2023-02-13]
 ------------------
