@@ -6,6 +6,12 @@
 1. Click [vistock_demo.ipynb](https://colab.research.google.com/github/YorkJong/vistock/blob/main/examples/vistock_demo.ipynb) to open it in Colab.
 2. Sign in your Google account if required.
 3. Follow the steps in the demo video below.
+  * Install vistock from GitHub
+    * Click the ► button to start install 
+    * We can see `[ ]` symbol at the begin of a cell. It will be changed to ► button while cursor over it.
+  * Fill parameters of a form.
+  * Manually click ► button (means "start run") to plot a chart.
+    * After running a cell manually, it will auto-run if you change the selected parameter value. 
 
 https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-bc29-188ee5a2800f.mov
 
@@ -23,7 +29,7 @@ https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-
     brew install ta-lib
     pip install Ta-Lib
     ```
-    Install on other platform Please ref. [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python/)>
+    Install on other platform Please ref. [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python/).
 
 3. Run a test code.
     There are two test code in `vistock\tests` folder.
