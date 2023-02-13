@@ -1,5 +1,11 @@
 Change Log
 ==========
+0.2.4
+-----
+* To add parameter "remove_nontrading" to plot functions
+* To add parameter "out_dir" to plot functions
+* To add name to ticker support for Taiwan stocks
+
 0.2.3 [2023-02-13]
 ------------------
 * vistock_demo.ipynb: Fixed "NameError: name 'sys' is not defined
