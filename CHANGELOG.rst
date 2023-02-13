@@ -2,7 +2,9 @@ Change Log
 ==========
 0.2.3
 -----
-
+* vistock_demo.ipynb: Fixed "NameError: name 'sys' is not defined
+* vistock_demo.ipynb: Added "total_bins" parameter to
+  the "mplfinance:interval of intraday" form.
 * To add name to ticker support for Taiwan stocks
 * To add parameter of remove_nontrading to plot functions
 * To add parameter of out_dir to plot functions
