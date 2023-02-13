@@ -4,9 +4,9 @@ Show a price-and-volume overlaid stock chart.
 * Plot with Plotly (for candlestick, MA, volume, volume MA)
 """
 __software__ = "Price and Volume overlaid stock chart"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/09 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/13 (last revision)"
 
 __all__ = ['plot']
 
@@ -18,7 +18,8 @@ from . import fig_util as futil
 
 
 def plot(ticker='TSLA', period='12mo', interval='1d',
-         ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50):
+         ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
+         hides_nontrading=True):
     """Plot a stock chart that shows candlesticks, price moving-average lines,
     a volume bar chart, and a volume moving-average line in a single subplot.
 
@@ -41,6 +42,8 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         a sequence to list the number of data items to calclate moving averges.
     vma_nitems: int
         the number of data items to calculate the volume moving average.
+    hides_nontrading: bool
+        decide if hides non-trading periods.
     """
     # Download stock data
     df = yf.Ticker(ticker).history(period=period, interval=interval)
@@ -73,8 +76,10 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
                      line=dict(color='purple'))
     fig.add_trace(vma)
 
-    # Update layout for removing non-trading dates
-    futil.remove_nontrading(fig, df, interval)
+    # Update layout for removing non-trading periods (dates or times).
+    df.index = df.index.strftime('%Y-%m-%d %H:%M')
+    if hides_nontrading:
+        futil.remove_nontrading(fig, df, interval)
 
     # Update layout
     fig.update_layout(

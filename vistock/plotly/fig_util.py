@@ -35,7 +35,7 @@ def remove_nontrading(fig, df, interval):
         freq = freq.replace(i, f)
 
     # calculate nontrading datetimes
-    df.index = df.index.strftime('%Y-%m-%d %H:%M')
+    #df.index = df.index.strftime('%Y-%m-%d %H:%M')
     dt_all = pd.date_range(start=df.index[0], end=df.index[-1], freq=freq)
     dt_trade = [d for d in df.index]
     dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d %H:%M") if not d in dt_trade]

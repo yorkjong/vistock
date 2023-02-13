@@ -3,9 +3,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV occupies a split of a 4-split chart.
 """
 __software__ = "Volume Profile 4-split with Plotly"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/09 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/13 (last revision)"
 
 __all__ = ['plot']
 
@@ -18,7 +18,8 @@ from . import fig_util as futil
 
 
 def plot(ticker='TSLA', period='12mo', interval='1d',
-         ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42):
+         ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
+         hides_nontrading=True):
     """Visualize a PBV (means price-by-volume, also called volume profile) for a
     given stock. Here the PBV occupies a split of a 4-split chart. This chart
     also includes candlestick, MA lines, volume, and volume MA line.
@@ -44,6 +45,8 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         the number of data items to calculate the volume moving average.
     total_bins: int
         the number of bins to calculate comulative volume for bins.
+    hides_nontrading: bool
+        decide if hides non-trading periods.
     """
     # Download stock data
     df = yf.Ticker(ticker).history(period=period, interval=interval)
@@ -112,8 +115,10 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         row=1, col=2
     )
 
-    # Update layout for removing non-trading dates
-    futil.remove_nontrading(fig, df, interval)
+    # Update layout for removing non-trading periods (dates or times).
+    df.index = df.index.strftime('%Y-%m-%d %H:%M')
+    if hides_nontrading:
+        futil.remove_nontrading(fig, df, interval)
 
     # Update layout
     fig.update_layout(
