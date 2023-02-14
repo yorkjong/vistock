@@ -41,7 +41,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         * up to 90m - max 60 days
         * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
           Yahoo does)
-    ma_nitems: int Sequence
+    ma_nitems: sequence of int
         a sequence to list the number of data items to calclate moving averges.
     vma_nitems: int
         the number of data items to calculate the volume moving average.
