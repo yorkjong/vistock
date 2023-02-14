@@ -20,23 +20,34 @@ from . import fig_util as futil
 def plot(ticker='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
          hides_nontrading=True):
-    """Visualize a PBV (means price-by-volume, also called volume profile) for a
-    given stock. Here the PBV overlaied with the price subplot. This figure
-    consists of two subplots: a price subplot and a volume subplot. The former
-    includes candlestick, moving average lines, while the latter includes
-    trading volume bar chart and volume moving average line.
+    """Plot a price-by-volume, PBV  (also called volume profile) figure for a
+    given stock.
+
+    Here the PBV is overlaied with the price subplot. This figure consists of
+    two subplots: a price subplot and a volume subplot. The former includes
+    candlestick, moving average lines, while the latter includes trading volume
+    bar chart and volume moving average line.
 
     Parameters
     ----------
     ticker: str
         the ticker name.
     period: str
-        the period ('12mo' means 12 monthes).
-        Valid values are 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.
+        the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+        1y, 2y, 5y, 10y, ytd, max.
+        * d   -- days
+        * mo  -- monthes
+        * y   -- years
+        * ytd -- year to date
+        * max -- all data
     interval: str
-        the interval of an OHLC item.
-        Valid values are 1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo,
-        3mo. Intraday data cannot extend last 60 days:
+        the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+        60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
+        * m  -- minutes
+        * h  -- hours
+        * wk -- weeks
+        * mo -- monthes
+        Intraday data cannot extend last 60 days:
         * 1m - max 7 days within last 30 days
         * up to 90m - max 60 days
         * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
@@ -48,7 +59,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     total_bins: int
         the number of bins to calculate comulative volume for bins.
     hides_nontrading: bool
-        decide if hides non-trading periods.
+        decide if hides non-trading time-periods.
     """
     # Download stock data
     df = yf.Ticker(ticker).history(period=period, interval=interval)
@@ -125,10 +136,10 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     )
     fig.add_trace(vma, row=2, col=1)
 
-    # Update layout for removing non-trading periods (dates or times).
+    # Update layout for removing non-trading time-periods.
     df.index = df.index.strftime('%Y-%m-%d %H:%M')
     if hides_nontrading:
-        futil.remove_nontrading(fig, df, interval)
+        futil.hide_nontrading_periods(fig, df, interval)
 
     # Update layout
     fig.update_layout(

@@ -1,16 +1,23 @@
 """
-Common utility for Plotly figure.
+Common utility for Plotly figures.
 """
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/09 (initial version) ~ 2023/02/13 (last revision)"
+__date__ = "2023/02/09 (initial version) ~ 2023/02/14 (last revision)"
 
-__all__ = ['add_crosshair_cursor', 'add_hovermode_menu', 'remove_nontrading']
+__all__ = [
+    'add_crosshair_cursor',
+    'add_hovermode_menu',
+    'hide_nontrading_periods',
+]
 
 import pandas as pd
 
 
-def remove_nontrading(fig, df, interval):
-    """Update layout for removing non-tranding dates.
+def hide_nontrading_periods(fig, df, interval):
+    """Hide non-tranding time-periods.
+
+    This function can hide certain time-periods to avoid the gaps at
+    non-trading time-periods.
 
     Parameters
     ----------
@@ -27,28 +34,30 @@ def remove_nontrading(fig, df, interval):
         * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
           Yahoo does)
     """
-    # convert interval to freq
+    # Convert aliases from `interval` to `freq`
+    # These aliases represent 'month', 'minute', 'hour', 'day', and 'week'.
     freq = interval
     interval_aliases = ('mo', 'm', 'h', 'd', 'wk')
     freq_aliases = ('M', 'min', 'H', 'D', 'W')
     for i, f in zip(interval_aliases, freq_aliases):
         freq = freq.replace(i, f)
 
-    # calculate nontrading datetimes
+    # Calculate nontrading time-periods
     #df.index = df.index.strftime('%Y-%m-%d %H:%M')
     dt_all = pd.date_range(start=df.index[0], end=df.index[-1], freq=freq)
     dt_trade = [d for d in df.index]
     dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d %H:%M") if not d in dt_trade]
 
-    # calculate dvalue in milliseconds
+    # Calculate dvalue in milliseconds
     dvalue = (dt_all[1] - dt_all[0]).total_seconds() * 1000     # unit in msec
 
-    # remove non-trading datetimes
+    # Update xaxes to hide non-trading time-periods
     fig.update_xaxes(rangebreaks=[dict(values=dt_breaks, dvalue=dvalue)])
 
 
 def add_crosshair_cursor(fig):
     """Add crosshair cursor to a given figure.
+
     Parameters
     ----------
     fig: plotly.graph_objects.Figure
@@ -65,7 +74,7 @@ def add_crosshair_cursor(fig):
 
 
 def add_hovermode_menu(fig, x=0, y=1.05):
-    """Add a dropdown menu (for selecting a hovermode) on a given figure.
+    """Add a dropdown menu for selecting a hover mode.
 
     Parameters
     ----------

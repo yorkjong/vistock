@@ -5,7 +5,7 @@ stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 __software__ = "Volume Profile 2-split with mplfinace"
 __version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/10 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/14 (last revision)"
 
 __all__ = ['plot']
 
@@ -17,23 +17,34 @@ import mplfinance as mpf
 def plot(ticker='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
          total_bins=42, legend_loc='best'):
-    """Visualize a PBV (means price-by-volume, also called volume profile) for a
-    given stock. Here the PBV overlaid with the price subplot. This figure
-    consists of two subplots: a price subplot and a volume subplot. The former
-    includes candlestick, moving average lines, while the latter includes
-    a trading volume bar chart and a volume moving average line.
+    """Plot a price-by-volume, PBV (also called volume profile) figure for a
+    given stock.
+
+    Here the PBV is overlaid with the price subplot. This figure consists of
+    two subplots: a price subplot and a volume subplot. The former includes
+    price candlesticks, price moving average lines, while the latter includes
+    a trading volume histogram and a volume moving average line.
 
     Parameters
     ----------
     ticker: str
         the ticker name.
     period: str
-        the period ('12mo' means 12 monthes).
-        Valid values are 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.
+        the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+        1y, 2y, 5y, 10y, ytd, max.
+        * d   -- days
+        * mo  -- monthes
+        * y   -- years
+        * ytd -- year to date
+        * max -- all data
     interval: str
-        the interval of an OHLC item.
-        Valid values are 1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo,
-        3mo. Intraday data cannot extend last 60 days:
+        the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+        60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
+        * m  -- minutes
+        * h  -- hours
+        * wk -- weeks
+        * mo -- monthes
+        Intraday data cannot extend last 60 days:
         * 1m - max 7 days within last 30 days
         * up to 90m - max 60 days
         * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
