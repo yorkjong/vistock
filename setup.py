@@ -26,13 +26,13 @@ setup(
         #'kaleido',  # plotly uses this to save picture
     ],
     #cmdclass=cmdclass,
-    #command_options = {
-    #    'build_sphinx': {
-    #        'project': ('setup.py', name),
-    #        'version': ('setup.py', version),
-    #        'release': ('setup.py', version),
-    #        'source_dir': ('setup.py', 'docs'),
-    #        'build_dir': ('setup.py', 'docs/_build'),
-    #    }
-    #},
+    command_options = {
+        'build_sphinx': {
+            'project': ('setup.py', name),
+            'version': ('setup.py', version),
+            'release': ('setup.py', version),
+            'source_dir': ('setup.py', 'docs'),
+            'build_dir': ('setup.py', 'docs/_build'),
+        }
+    },
 )
