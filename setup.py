@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 # this is only necessary when not using setuptools/distribute
-#from sphinx.setup_command import BuildDoc
-#cmdclass = {'build_sphinx': BuildDoc}
+from sphinx.setup_command import BuildDoc
+cmdclass = {'build_sphinx': BuildDoc}
 
 
 import vistock
@@ -25,7 +25,7 @@ setup(
         'plotly',
         #'kaleido',  # plotly uses this to save picture
     ],
-    #cmdclass=cmdclass,
+    cmdclass=cmdclass,
     command_options = {
         'build_sphinx': {
             'project': ('setup.py', name),
