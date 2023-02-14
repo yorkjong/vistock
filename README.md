@@ -1,5 +1,5 @@
 # vistock -- Visualizing Stocks
-`vistock` is an open source package that provides a lot of plot() functions to visualizing stocks. For those who just want to use it directly without knowing too many details, I also provide a Colab notebook file, which can be used to plot stock charts you want after simply filling out parameters on the Colab Forms.
+`vistock` is an open source package that provides a lot of plot() functions to visualize stocks. For those who just want to use it directly without knowing too many details, I also provide a Colab notebook file, which can be used to plot stock charts you want after simply filling out parameters on the Colab Forms.
 
 ## Getting Started on Colab
 
