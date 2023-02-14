@@ -18,4 +18,14 @@ setup(
         'plotly',
         #'kaleido',  # plotly uses this to save picture
     ],
+    cmdclass = {"build_sphinx": BuildDoc},
+    command_options = {
+        "build_sphinx": {
+            "project": ("setup.py", "vistock"),
+            "version": ("setup.py", vistock.__version__),
+            "release": ("setup.py", vistock.__version__),
+            "source_dir": ("setup.py", "docs"),
+            "build_dir": ("setup.py", "docs/_build"),
+        }
+    },
 )
