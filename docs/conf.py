@@ -17,12 +17,10 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-import vistock
-
 project = 'vistock'
 copyright = '2023, York Jong'
 author = 'York Jong'
-release = vistock.__version__
+release = '0.2.4'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
