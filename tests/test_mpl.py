@@ -1,4 +1,5 @@
-"""Test modules in vistock.mpl package.
+"""
+Test modules in vistock.mpl package.
 """
 import vistock.mpl as vsm
 
