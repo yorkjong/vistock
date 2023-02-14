@@ -5,12 +5,12 @@ from setuptools import setup, find_packages
 #cmdclass = {'build_sphinx': BuildDoc}
 
 
-import vistock
 name = 'vistock'
+version = '0.2.4'
 
 setup(
     name = name,
-    version = vistock.__version__,
+    version = version,
     license = 'MIT',
     author = 'York Jong',
     author_email = 'york.jong@gmail.com',
@@ -29,8 +29,8 @@ setup(
     #command_options = {
     #    'build_sphinx': {
     #        'project': ('setup.py', name),
-    #        'version': ('setup.py', vistock.__version__),
-    #        'release': ('setup.py', vistock.__version__),
+    #        'version': ('setup.py', version),
+    #        'release': ('setup.py', version),
     #        'source_dir': ('setup.py', 'docs'),
     #        'build_dir': ('setup.py', 'docs/_build'),
     #    }
