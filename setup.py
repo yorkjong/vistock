@@ -2,8 +2,8 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name = vistock,
-    version = 0.2.4,
+    name = 'vistock',
+    version = '0.2.4',
     license = 'MIT',
     author = 'York Jong',
     author_email = 'york.jong@gmail.com',
