@@ -17,6 +17,5 @@ jobs:
           make html
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         with:
           folder: docs/_build
