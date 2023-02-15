@@ -10,6 +10,7 @@ Welcome to vistock's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   README.md
    modules
 
 Indices and tables
