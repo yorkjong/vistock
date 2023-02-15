@@ -13,6 +13,7 @@ jobs:
           pip install -r requirements.txt
       - name: Sphinx build
         run: |
+          cd docs
           make html
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
