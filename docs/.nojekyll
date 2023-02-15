@@ -1,2 +1,0 @@
-[How to Host Your Sphinx Documentation on GitHub](https://python.plainenglish.io/how-to-host-your-sphinx-documentation-on-github-550254f325ae)
-GitHub by default publishes the pages through jekyll. We need to add an empty .nojekyll file in the docs directory or the root directory.
