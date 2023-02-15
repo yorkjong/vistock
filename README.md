@@ -1,5 +1,6 @@
-# vistock -- Visualizing Stocks
-`vistock` is an open source package that provides a lot of plot() functions to visualize stocks. For those who just want to use it directly without knowing too many details, I also provide a Colab notebook file, which can be used to plot stock charts you want after simply filling out parameters on the Colab Forms.
+# Read Me
+## Visualizing Stocks
+`vistock` is an open source package that provides a lot of plot() functions for visualizing stocks. For those who just want to use it directly without knowing too many details, I also provide a Colab notebook file, which can be used to plot stock charts you want after simply filling out parameters on the Colab Forms.
 
 ## Getting Started on Colab
 
@@ -7,11 +8,11 @@
 2. Sign in your Google account if required.
 3. Follow the steps in the demo video below.
    1. Install vistock from GitHub
-      * Click the ► button to start install 
+      * Click the ► button to start install
       * We can see `[ ]` symbol at the begin of a cell. It will be changed to ► button while the mouse cursor over it.
    2. Fill parameters of a form.
    3. Manually click ► button (means "start run") to plot a chart.
-      * After running a cell manually, it will auto-run if you change the selected parameter value. 
+      * After running a cell manually, it will auto-run if you change the selected parameter value.
 
 https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-bc29-188ee5a2800f.mov
 
@@ -19,19 +20,23 @@ https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-
 ## Dive into it on your computer.
 
 1. Install vistock from GitHub
+
     ```sh
     pip install git+https://github.com/YorkJong/vistock.git
     ```
 
 2. Install TA-Lib optionally (used only by vistock.mpl.rsi module)
+
     Install TA-Lib on macOS
     ```sh
     brew install ta-lib
     pip install Ta-Lib
     ```
+
     Install on other platform Please ref. [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python/).
 
 3. Run a test code.
+
     There are two test code in `vistock/tests` folder.
     * [test_plotly.py](https://github.com/YorkJong/vistock/blob/main/tests/test_plotly.py) -- for Plotly version
     * [test_mpl.py](https://github.com/YorkJong/vistock/blob/main/tests/test_mpl.py) -- for mplfinance version
@@ -41,9 +46,10 @@ https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-
     cd vistock/tests
     python test_plotly.py
     ```
+
     This test code will show stock charts and save them into interactie html files.
     You can double-clicked a output file to open it on your browser.
-    
+
 ![TSLA_30m_20230213_1000_pbv2s](https://user-images.githubusercontent.com/11453572/218501549-6061eab3-9591-4276-afe0-19915d8e68b8.png)
 
 4. Enjoy the demo code.
