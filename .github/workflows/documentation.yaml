@@ -9,13 +9,12 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt 
-          cd docs
-          pip install -r requirements.txt
+          pip install -r docs/requirements.txt
       - name: Sphinx build
         run: |
-          cd docs
-          make html
+          sphinx-build docs _build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         with:
-          folder: docs/_build
+          folder: _build
