@@ -6,9 +6,9 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * RSI from TA-Lib
 """
 __software__ = "Stock chart of price, volume, and RSI"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/14 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/16 (last revision)"
 
 __all__ = ['plot']
 
@@ -26,12 +26,6 @@ def installed(module_name):
         return True
     except ImportError:
         return False
-
-
-if installed('talib'):
-    from talib import abstract
-else:
-    print('Please install "talib" package.')
 
 
 def plot(ticker='TSLA', period='12mo', interval='1d',
@@ -94,10 +88,13 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     addplot = [vma]
 
     if installed('talib'):
+        from talib import abstract
         # Add RSI
         RSI = lambda df, period: abstract.RSI(df, timeperiod=period)
         rsi = mpf.make_addplot(RSI(df['Close'], 14), panel=2, ylabel='RSI')
         addplot.append(rsi)
+    else:
+        print('Please install "talib" package.')
 
     # Plot candlesticks MA, volume, volume MA, RSI
     colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
