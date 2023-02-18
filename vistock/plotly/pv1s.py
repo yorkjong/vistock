@@ -7,7 +7,7 @@ Show a price-and-volume overlaid stock chart.
 __software__ = "Price and Volume overlaid stock chart"
 __version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/14 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/18 (last revision)"
 
 __all__ = ['plot']
 
@@ -18,7 +18,7 @@ import plotly.graph_objs as go
 from . import fig_util as futil
 
 
-def plot(ticker='TSLA', period='12mo', interval='1d',
+def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
          hides_nontrading=True):
     """Plot a stock figure overlaying charts in a single subplot.
@@ -28,8 +28,8 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
 
     Parameters
     ----------
-    ticker: str
-        the ticker name.
+    symbol: str
+        the stock symbol.
     period: str
         the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
         1y, 2y, 5y, 10y, ytd, max.
@@ -58,7 +58,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
         decide if hides non-trading time-periods.
     """
     # Download stock data
-    df = yf.Ticker(ticker).history(period=period, interval=interval)
+    df = yf.Ticker(symbol).history(period=period, interval=interval)
 
     # Add the candlestick chart
     candlestick = go.Candlestick(
@@ -96,7 +96,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     # Update layout
     fig.update_layout(
         height=720,
-        title=f'{ticker} {interval} '
+        title=f'{symbol} {interval} '
               f'({df.index.values[0]}~{df.index.values[-1]})',
         title_x=0.5, title_y=.9,
         legend=dict(yanchor='top', xanchor="left", x=1.042),
@@ -115,7 +115,7 @@ def plot(ticker='TSLA', period='12mo', interval='1d',
     fig.show()
 
     # Write the figure to an HTML file
-    info = f'{ticker}_{interval}_{df.index.values[-1]}'
+    info = f'{symbol}_{interval}_{df.index.values[-1]}'
     info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
     info = info.replace(' ', '_')
     fig.write_html(f'{info}_pv1s.html')
