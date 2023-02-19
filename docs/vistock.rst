@@ -10,6 +10,17 @@ Subpackages
    vistock.mpl
    vistock.plotly
 
+Submodules
+----------
+
+vistock.tw module
+-----------------
+
+.. automodule:: vistock.tw
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
