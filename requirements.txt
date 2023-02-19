@@ -2,3 +2,5 @@ pandas
 yfinance
 mplfinance
 plotly
+requests
+beautifulsoup4
