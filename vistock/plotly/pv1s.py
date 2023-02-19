@@ -5,9 +5,9 @@ Show a price-and-volume overlaid stock chart.
 * Plot with Plotly (for candlestick, MA, volume, volume MA)
 """
 __software__ = "Price and Volume overlaid stock chart"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/18 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/19 (last revision)"
 
 __all__ = ['plot']
 
@@ -15,6 +15,7 @@ import yfinance as yf
 import pandas as pd
 import plotly.graph_objs as go
 
+from .. import tw
 from . import fig_util as futil
 
 
@@ -58,6 +59,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         decide if hides non-trading time-periods.
     """
     # Download stock data
+    symbol = tw.as_yfinance(symbol)
     df = yf.Ticker(symbol).history(period=period, interval=interval)
 
     # Add the candlestick chart

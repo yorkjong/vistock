@@ -3,9 +3,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 """
 __software__ = "Volume Profile 2-split with Plotly"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/06 (initial version) ~ 2023/02/18 (last revision)"
+__date__ = "2023/02/06 (initial version) ~ 2023/02/19 (last revision)"
 
 __all__ = ['plot']
 
@@ -14,6 +14,7 @@ import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
+from .. import tw
 from . import fig_util as futil
 
 
@@ -62,6 +63,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         decide if hides non-trading time-periods.
     """
     # Download stock data
+    symbol = tw.as_yfinance(symbol)
     df = yf.Ticker(symbol).history(period=period, interval=interval)
 
     # Initialize empty plot with a marginal subplot

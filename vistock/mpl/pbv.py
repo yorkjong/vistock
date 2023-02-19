@@ -3,15 +3,17 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 """
 __software__ = "Volume Profile 2-split with mplfinace"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/18 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/19 (last revision)"
 
 __all__ = ['plot']
 
 import yfinance as yf
 import matplotlib.pyplot as plt
 import mplfinance as mpf
+
+from .. import tw
 
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
@@ -70,6 +72,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
             * 'center'
     """
     # Download stock data
+    symbol = tw.as_yfinance(symbol)
     df = yf.Ticker(symbol).history(period=period, interval=interval)
 
     # Add Volume Moving Average
