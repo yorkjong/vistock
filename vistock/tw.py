@@ -38,6 +38,8 @@ def is_chinese(char):
 #------------------------------------------------------------------------------
 
 class Crawler:
+    """Crawl stock data from 'https://isin.twse.com.tw/isin/C_public.jsp'.
+    """
     @staticmethod
     def _get_name_code_pair(symbol, str_mode):
         """Get (name, code) pair from a given symbol.
@@ -102,6 +104,8 @@ class Crawler:
 #------------------------------------------------------------------------------
 
 class OpenAPI:
+    """Get stock data from the OpenAPI.
+    """
     @staticmethod
     def value_from_key(key, url, key_field, value_field):
         """Get the value of a given key that is looked-up from an Open API
@@ -187,43 +191,57 @@ class OpenAPI:
             return f'{code}.TWO'
         return name
 
+    # for a listed stock
+    listed_stock_name = functools.partial(
+        value_from_key,
+        url='https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_AVG_ALL',
+        key_field='Code',
+        value_field='Name'
+    )
+
+    # for an OTC stock
+    OTC_stock_name = functools.partial(
+        value_from_key,
+        url='https://www.tpex.org.tw/openapi/v1/'
+            'tpex_mainboard_daily_close_quotes',
+        key_field='SecuritiesCompanyCode',
+        value_field='CompanyName'
+    )
+
+    # for an emerging OTC stock
+    EOTC_stock_name = functools.partial(
+        value_from_key,
+        url='https://www.tpex.org.tw/openapi/v1/tpex_esb_latest_statistics',
+        key_field='SecuritiesCompanyCode',
+        value_field='CompanyName'
+    )
+
+
+    @staticmethod
+    def stock_name(code):
+        code = code.replace('.TWO', '')
+        code = code.replace('.TW', '')
+        name = OpenAPI.listed_stock_name(code)
+        if name:
+            return name
+        name = OpenAPI.OTC_stock_name(code)
+        if name:
+            return name
+        name = OpenAPI.EOTC_stock_name(code)
+        if name:
+            return name
+        return code
+
 
     @staticmethod
     def yfinance_symbol_from_code(code):
-        # for a listed stock
-        listed_stock_name = functools.partial(
-            OpenAPI.value_from_key,
-            url='https://openapi.twse.com.tw/v1/'
-                'exchangeReport/STOCK_DAY_AVG_ALL',
-            key_field='Code',
-            value_field='Name'
-        )
-
-        # for an OTC stock
-        OTC_stock_name = functools.partial(
-            OpenAPI.value_from_key,
-            url='https://www.tpex.org.tw/openapi/v1/'
-                'tpex_mainboard_daily_close_quotes',
-            key_field='SecuritiesCompanyCode',
-            value_field='CompanyName'
-        )
-
-        # for an emerging OTC stock
-        EOTC_stock_name = functools.partial(
-            OpenAPI.value_from_key,
-            url='https://www.tpex.org.tw/openapi/v1/'
-                'tpex_esb_latest_statistics',
-            key_field='SecuritiesCompanyCode',
-            value_field='CompanyName'
-        )
-
-        name = listed_stock_name(code)
+        name = OpenAPI.listed_stock_name(code)
         if name:
             return f'{code}.TW'
-        name = OTC_stock_name(code)
+        name = OpenAPI.OTC_stock_name(code)
         if name:
             return f'{code}.TWO'
-        name = EOTC_stock_name(code)
+        name = OpenAPI.EOTC_stock_name(code)
         if name:
             return f'{code}.TWO'
         return code
@@ -265,11 +283,11 @@ def as_yfinance(symbol):
     return symbol
 
 
-def similar_stocks(name):
-    """Get similar stock from a given name.
+def similar_stocks(symbol):
+    """Get similar stock of a given stock.
 
     Args:
-        name (str): the stock name.
+        symbol (str): a stock name or a stock code.
 
     Returns:
         [(name, code)...]: a list of stocks.
@@ -298,6 +316,7 @@ def similar_stocks(name):
         key_field='CompanyName',
         value_field='SecuritiesCompanyCode'
     )
+    name = OpenAPI.stock_name(symbol)
 
     stocks = similar_listed_stocks(name)
     if stocks:
