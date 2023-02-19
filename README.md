@@ -3,7 +3,7 @@
 `vistock` is an open source package that provides a lot of plot() functions for visualizing stocks. For those who just want to use it directly without knowing too many details, I also provide a Colab notebook file, which can be used to plot stock charts you want after simply filling out parameters on the Colab Forms.
 
 * Website: https://yorkjong.github.io/vistock/
-* Usage demo: https://github.com/YorkJong/vistock/blob/main/examples/vistock_demo.ipynb
+* Usage demo: https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb
 * Test code: https://github.com/YorkJong/vistock/tree/main/tests
 * Documentation: https://yorkjong.github.io/vistock/modules.html
 * Source code: https://github.com/YorkJong/vistock
@@ -11,7 +11,7 @@
 
 ## Getting Started on Colab
 
-1. Click [vistock_demo.ipynb](https://colab.research.google.com/github/YorkJong/vistock/blob/main/examples/vistock_demo.ipynb) to open it in Colab.
+1. Click [vistock_demo.ipynb](https://colab.research.google.com/github/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb) to open it in Colab.
 2. Sign in your Google account if required.
 3. Follow the steps in the demonstration video below.
    1. Install vistock from GitHub
@@ -60,6 +60,6 @@ https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-
 ![TSLA_30m_20230213_1000_pbv2s](https://user-images.githubusercontent.com/11453572/218501549-6061eab3-9591-4276-afe0-19915d8e68b8.png)
 
 4. Enjoy the demo code.
-    The demo code called [vstock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/examples/vistock_demo.ipynb). You can open it on your Jupyter Notebook environment.
+    The demo code called [vstock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb). You can open it on your Jupyter Notebook environment.
 
 [//]: # (This may be the most platform independent comment)
