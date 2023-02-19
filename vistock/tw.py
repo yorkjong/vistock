@@ -191,31 +191,6 @@ class OpenAPI:
             return f'{code}.TWO'
         return name
 
-    # for a listed stock
-    listed_stock_name = functools.partial(
-        value_from_key,
-        url='https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_AVG_ALL',
-        key_field='Code',
-        value_field='Name'
-    )
-
-    # for an OTC stock
-    OTC_stock_name = functools.partial(
-        value_from_key,
-        url='https://www.tpex.org.tw/openapi/v1/'
-            'tpex_mainboard_daily_close_quotes',
-        key_field='SecuritiesCompanyCode',
-        value_field='CompanyName'
-    )
-
-    # for an emerging OTC stock
-    EOTC_stock_name = functools.partial(
-        value_from_key,
-        url='https://www.tpex.org.tw/openapi/v1/tpex_esb_latest_statistics',
-        key_field='SecuritiesCompanyCode',
-        value_field='CompanyName'
-    )
-
 
     @staticmethod
     def stock_name(code):
@@ -245,6 +220,32 @@ class OpenAPI:
         if name:
             return f'{code}.TWO'
         return code
+
+
+# for a listed stock
+OpenAPI.listed_stock_name = functools.partial(
+    OpenAPI.value_from_key,
+    url='https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_AVG_ALL',
+    key_field='Code',
+    value_field='Name'
+)
+
+# for an OTC stock
+OpenAPI.OTC_stock_name = functools.partial(
+    OpenAPI.value_from_key,
+    url='https://www.tpex.org.tw/openapi/v1/'
+        'tpex_mainboard_daily_close_quotes',
+    key_field='SecuritiesCompanyCode',
+    value_field='CompanyName'
+)
+
+# for an emerging OTC stock
+OpenAPI.EOTC_stock_name = functools.partial(
+    OpenAPI.value_from_key,
+    url='https://www.tpex.org.tw/openapi/v1/tpex_esb_latest_statistics',
+    key_field='SecuritiesCompanyCode',
+    value_field='CompanyName'
+)
 
 
 #------------------------------------------------------------------------------
@@ -316,8 +317,8 @@ def similar_stocks(symbol):
         key_field='CompanyName',
         value_field='SecuritiesCompanyCode'
     )
-    name = OpenAPI.stock_name(symbol)
 
+    name = OpenAPI.stock_name(symbol)
     stocks = similar_listed_stocks(name)
     if stocks:
         return stocks
@@ -332,15 +333,15 @@ def similar_stocks(symbol):
 #------------------------------------------------------------------------------
 
 def main():
-    print(as_yfinance('TSLA'))
-    print(as_yfinance('台積電'))
-    print(as_yfinance('2330'))
-    print(as_yfinance('元太'))
-    print(as_yfinance('星宇航空'))
-    print(as_yfinance('台積電'))
-    print(as_yfinance('2330'))
-    print(as_yfinance('元太'))
-    print(as_yfinance('星宇航空'))
+    #print(as_yfinance('TSLA'))
+    #print(as_yfinance('台積電'))
+    #print(as_yfinance('2330'))
+    #print(as_yfinance('元太'))
+    #print(as_yfinance('星宇航空'))
+    #print(as_yfinance('台積電'))
+    #print(as_yfinance('2330'))
+    #print(as_yfinance('元太'))
+    #print(as_yfinance('星宇航空'))
     print(similar_stocks('TSLA'))
     print(similar_stocks('2330'))
     print(similar_stocks('台積電'))
