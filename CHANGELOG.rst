@@ -3,14 +3,13 @@ Change Log
 TODO
 ----
 * To add parameter "out_dir" to plot functions
-* To add name to ticker support for Taiwan stocks
 * To apply __file__ to generate output filenames
-* To rename foldr 'examples' to 'notebooks'
 
 0.2.5
 -----
 * Renamed parameter 'ticker' to 'symbol'
-
+* Renamed folder 'examples' to 'notebooks'
+* Added chinese stock name support for Taiwan stocks
 
 0.2.4 [2023-02-14]
 ------------------
