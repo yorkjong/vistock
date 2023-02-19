@@ -16,6 +16,8 @@ setup(
         'yfinance',
         'mplfinance',
         'plotly',
+        'requests',
+        'beautifulsoup4',
         #'kaleido',  # plotly uses this to save picture
     ],
 )
