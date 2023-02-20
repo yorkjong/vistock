@@ -6,9 +6,9 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * RSI from TA-Lib
 """
 __software__ = "Stock chart of price, volume, and RSI"
-__version__ = "1.2"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/19 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/20 (last revision)"
 
 __all__ = ['plot']
 
@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 from .. import tw
+from .. import file_util
 
 
 def installed(module_name):
@@ -31,7 +32,8 @@ def installed(module_name):
 
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
-         ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, legend_loc='best'):
+         ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
+         legend_loc='best', out_dir='out'):
     """Plot a stock figure that consists 3 suplots: a price subplot, a
     volume subplot, and a RSI subplot.
 
@@ -80,6 +82,8 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
             * 'lower center'
             * 'upper center'
             * 'center'
+    out_dir: str
+        the output directory for saving figure.
     """
     # Download stock data
     symbol = tw.as_yfinance(symbol)
@@ -118,10 +122,9 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     mpf.show()
 
     # Write the figure to an PNG file
-    info = f'{symbol}_{interval}_{df.index.values[-1]}'
-    info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
-    info = info.replace(' ', '_')
-    fig.savefig(f'{info}_rsi.png')
+    out_dir = file_util.make_dir(out_dir)
+    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fig.savefig(f'{out_dir}/{fn}.png')
 
 
 if __name__ == '__main__':

@@ -3,9 +3,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 """
 __software__ = "Volume Profile 2-split with Plotly"
-__version__ = "1.4"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/06 (initial version) ~ 2023/02/19 (last revision)"
+__date__ = "2023/02/06 (initial version) ~ 2023/02/20 (last revision)"
 
 __all__ = ['plot']
 
@@ -15,12 +15,13 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
 from .. import tw
+from .. import file_util
 from . import fig_util as futil
 
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
-         hides_nontrading=True):
+         hides_nontrading=True, out_dir='out'):
     """Plot a price-by-volume, PBV  (also called volume profile) figure for a
     given stock.
 
@@ -61,6 +62,8 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         the number of bins to calculate comulative volume for bins.
     hides_nontrading: bool
         decide if hides non-trading time-periods.
+    out_dir: str
+        the output directory for saving figure.
     """
     # Download stock data
     symbol = tw.as_yfinance(symbol)
@@ -169,11 +172,9 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     fig.show()
 
     # Write the figure to an HTML file
-    info = f'{symbol}_{interval}_{df.index.values[-1]}'
-    info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
-    info = info.replace(' ', '_')
-    fig.write_html(f'{info}_pv1s.html')
-
+    out_dir = file_util.make_dir(out_dir)
+    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fig.write_html(f'{out_dir}/{fn}.html')
 
 
 if __name__ == '__main__':
