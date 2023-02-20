@@ -159,5 +159,4 @@ cython_debug/
 .python-version
 
 # module generated figure files
-tests/*.html
-tests/*.png
+*/out/*.*

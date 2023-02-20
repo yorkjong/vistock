@@ -5,10 +5,30 @@ __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/20 (initial version) ~ 2023/02/20 (last revision)"
 
 __all__ = [
+    'make_dir',
     'gen_fn_info',
 ]
 
 import os
+
+
+def make_dir(directory_path: str) -> str:
+    """
+    Creates a directory at the given path and returns the original path
+    string if it is valid. Returns an empty string if the path is invalid.
+
+    Args:
+        directory_path: A string representing the directory path.
+
+    Returns:
+        A string representing the original directory path if it is valid,
+        otherwise an empty string.
+    """
+    try:
+        os.makedirs(directory_path, exist_ok=True)
+        return os.path.normpath(directory_path)
+    except OSError:
+        return ""
 
 
 def gen_fn_info(symbol, interval, date, module):

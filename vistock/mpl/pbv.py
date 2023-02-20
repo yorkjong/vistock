@@ -3,7 +3,7 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 """
 __software__ = "Volume Profile 2-split with mplfinace"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2023/02/20 (last revision)"
 
@@ -19,7 +19,7 @@ from .. import file_util
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-         total_bins=42, legend_loc='best'):
+         total_bins=42, legend_loc='best', out_dir='out'):
     """Plot a price-by-volume, PBV (also called volume profile) figure for a
     given stock.
 
@@ -71,6 +71,8 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
             * 'lower center'
             * 'upper center'
             * 'center'
+    out_dir: str
+        the output directory for saving figure.
     """
     # Download stock data
     symbol = tw.as_yfinance(symbol)
@@ -121,8 +123,9 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     mpf.show()
 
     # Write the figure to an PNG file
+    out_dir = file_util.make_dir(out_dir)
     fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
-    fig.savefig(f'{fn}.png')
+    fig.savefig(f'{out_dir}/{fn}.png')
 
 
 if __name__ == '__main__':
