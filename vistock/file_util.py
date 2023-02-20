@@ -23,6 +23,12 @@ def make_dir(directory_path: str) -> str:
     Returns:
         A string representing the original directory path if it is valid,
         otherwise an empty string.
+
+    Examples:
+        >>> make_dir("./out/")
+        'out'
+        >>> make_dir(":")  # ':' is not a valid character for directory names.
+        ''
     """
     try:
         os.makedirs(directory_path, exist_ok=True)
