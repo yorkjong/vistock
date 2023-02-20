@@ -291,7 +291,11 @@ def similar_stocks(symbol):
         symbol (str): a stock name or a stock code.
 
     Returns:
-        [(name, code)...]: a list of stocks.
+        [(name:str, code:str)...]: a list of stock name-code pairs.
+
+    Examples:
+        >>> similar_stocks('印度')
+        [('富邦印度', '00652'), ('富邦印度正2', '00653L'), ('富邦印度反1', '00654R')]
     """
     # for listed stocks
     similar_listed_stocks = functools.partial(
