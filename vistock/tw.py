@@ -51,7 +51,7 @@ class Crawler:
             str_mode (int): a parameter of GET requests.
 
         Returns:
-            (name, code) pair of first found stock.
+            (str, str): a name-code pair of first found stock.
         """
         url = 'https://isin.twse.com.tw/isin/C_public.jsp'
         params = {'strMode': str_mode}
@@ -70,6 +70,7 @@ class Crawler:
                     return name, code
         return None, None
 
+
     @staticmethod
     def as_yfinance(symbol):
         """
@@ -80,6 +81,12 @@ class Crawler:
 
         Returns:
             str: the yfinance compatible stock symbol.
+
+        Examples:
+            >>> Crawler.as_yfinance("台積電")
+            '2330.TW'
+            >>> Crawler.as_yfinance("2330")
+            '2330.TW'
         """
         # for a listed stock
         _, code = Crawler._get_name_code_pair(symbol, 2)
@@ -140,7 +147,8 @@ class OpenAPI:
             value_field (str): the name of a value field.
 
         Returns:
-            a list of (key, value) pairs: (key, value) pairs with similar keys.
+            [(str, str)]: a list of key-value pairs representing the similar
+                          stocks.
         """
         response = requests.get(url)
         json_rows = response.json()
@@ -153,6 +161,8 @@ class OpenAPI:
 
     @staticmethod
     def yfinance_symbol_from_name(name):
+        """Get yfinance compatible symbol from a Taiwan stock name.
+        """
         # for a listed stock
         listed_stock_code = functools.partial(
             OpenAPI.value_from_key,
@@ -194,6 +204,8 @@ class OpenAPI:
 
     @staticmethod
     def stock_name(code):
+        """Get stock name from its code.
+        """
         code = code.replace('.TWO', '')
         code = code.replace('.TW', '')
         name = OpenAPI.listed_stock_name(code)
@@ -210,6 +222,8 @@ class OpenAPI:
 
     @staticmethod
     def yfinance_symbol_from_code(code):
+        """Get yfinance compatible symbol from a Taiwan stock code.
+        """
         name = OpenAPI.listed_stock_name(code)
         if name:
             return f'{code}.TW'
