@@ -21,8 +21,8 @@
    3. Manually click ► button (means "start run") to plot a chart.
       * After running a cell manually, it will auto-run if you change the selected parameter value.
 
-https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-bc29-188ee5a2800f.mov
-
+<video src="https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-bc29-188ee5a2800f.mov" controls="controls" style="max-width: 730px;">
+</video>
 
 ## Dive into it on your computer.
 
