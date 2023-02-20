@@ -3,9 +3,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV occupies a split of a 4-split chart.
 """
 __software__ = "Volume Profile 4-split with Plotly"
-__version__ = "1.4"
+__version__ = "1.5"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/19 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/20 (last revision)"
 
 __all__ = ['plot']
 
@@ -160,11 +160,8 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     fig.show()
 
     # Write the figure to an HTML file
-    info = f'{symbol}_{interval}_{df.index.values[-1]}'
-    info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
-    info = info.replace(' ', '_')
-    fig.write_html(f'{info}_pbv4s.html')
-
+    fn = futil.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fig.write_html(f'{fn}.html')
 
 
 if __name__ == '__main__':
