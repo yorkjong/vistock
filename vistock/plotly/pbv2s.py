@@ -37,23 +37,29 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     period: str
         the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
         1y, 2y, 5y, 10y, ytd, max.
-            * d   -- days
-            * mo  -- monthes
-            * y   -- years
-            * ytd -- year to date
-            * max -- all data
+
+        * d   -- days
+        * mo  -- monthes
+        * y   -- years
+        * ytd -- year to date
+        * max -- all data
+
     interval: str
         the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
         60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
-            * m  -- minutes
-            * h  -- hours
-            * wk -- weeks
-            * mo -- monthes
+
+        * m  -- minutes
+        * h  -- hours
+        * wk -- weeks
+        * mo -- monthes
+
         Intraday data cannot extend last 60 days:
-            * 1m - max 7 days within last 30 days
-            * up to 90m - max 60 days
-            * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
-              Yahoo does)
+
+        * 1m - max 7 days within last 30 days
+        * up to 90m - max 60 days
+        * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
+          Yahoo does)
+
     ma_nitems: sequence of int
         a sequence to list the number of data items to calclate moving averges.
     vma_nitems: int
