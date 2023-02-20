@@ -12,16 +12,16 @@ __all__ = [
 import os
 
 
-def make_dir(directory_path: str) -> str:
+def make_dir(directory_path):
     """
     Creates a directory at the given path and returns the original path
     string if it is valid. Returns an empty string if the path is invalid.
 
     Args:
-        directory_path: A string representing the directory path.
+        directory_path (str): A string representing the directory path.
 
     Returns:
-        A string representing the original directory path if it is valid,
+        str: A string representing the original directory path if it is valid,
         otherwise an empty string.
 
     Examples:
