@@ -10,6 +10,35 @@ __all__ = [
 ]
 
 import os
+import re
+
+
+def is_valid_windows_dir_name(name):
+    """Check if a directory name is valid on Windows.
+
+    Args:
+        name (str): the input directory name.
+
+    Returns:
+        bool: True if valid; False otherwise.
+
+    Examples:
+        >>> is_valid_windows_dir_name(':')
+        False
+        >>> is_valid_windows_dir_name('out?')
+        False
+        >>> is_valid_windows_dir_name('out')
+        True
+    """
+    regex = r'^[A-Za-z0-9_\-\.]+$'
+
+    if re.match(regex, name) and \
+       not name.endswith(".") and \
+       not name.endswith(" ") and \
+       not re.search(r'[\\/:*?"<>|]', name):
+        return True
+    else:
+        return False
 
 
 def make_dir(directory_path):
@@ -30,9 +59,12 @@ def make_dir(directory_path):
         >>> make_dir(":")  # ':' is not a valid character for directory names.
         ''
     """
+    directory_path = os.path.normpath(directory_path)
+    if not is_valid_windows_dir_name(directory_path):
+        return ""
     try:
         os.makedirs(directory_path, exist_ok=True)
-        return os.path.normpath(directory_path)
+        return directory_path
     except OSError:
         return ""
 
