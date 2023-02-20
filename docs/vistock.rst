@@ -13,6 +13,14 @@ Subpackages
 Submodules
 ----------
 
+vistock.file\_util module
+-------------------------
+
+.. automodule:: vistock.file_util
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 vistock.tw module
 -----------------
 

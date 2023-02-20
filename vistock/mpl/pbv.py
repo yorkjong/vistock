@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 from .. import tw
-from ..plotly import fig_util as futil
+from .. import file_util
 
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
@@ -121,7 +121,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     mpf.show()
 
     # Write the figure to an PNG file
-    fn = futil.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
     fig.savefig(f'{fn}.png')
 
 

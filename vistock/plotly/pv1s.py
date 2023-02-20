@@ -16,6 +16,7 @@ import pandas as pd
 import plotly.graph_objs as go
 
 from .. import tw
+from .. import file_util
 from . import fig_util as futil
 
 
@@ -117,7 +118,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     fig.show()
 
     # Write the figure to an HTML file
-    fn = futil.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
     fig.write_html(f'{fn}.html')
 
 

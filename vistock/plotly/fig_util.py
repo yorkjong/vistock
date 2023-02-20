@@ -8,10 +8,8 @@ __all__ = [
     'hide_nontrading_periods',
     'add_crosshair_cursor',
     'add_hovermode_menu',
-    'gen_fn_info',
 ]
 
-import os
 import pandas as pd
 
 
@@ -108,30 +106,6 @@ def add_hovermode_menu(fig, x=0, y=1.05):
             x=x, y=y+0.1, xref="paper", yref="paper", align="left"
         )],
     )
-
-#------------------------------------------------------------------------------
-
-def gen_fn_info(symbol, interval, date, module):
-    """Generate the information string for the output filename of a stock.
-
-    Args:
-        symbol (str): the stock symbol.
-        interval (str): the interval of an OHLC item.
-        date (str): last date of the stock data.
-        module (str): filename of the module.
-
-    Returns:
-        str: a filename concatenated above information.
-
-    Examples:
-        >>> gen_fn_info('TSLA', '1d', '2023-02-17 00:00', 'plotly/pbv2s.py')
-        'TSLA_1d_20230217_0000_pbv2s'
-    """
-    module, _ = os.path.splitext(os.path.basename(module))
-    fn = f'{symbol}_{interval}_{date}_{module}'
-    fn = fn.translate({ord(i): None for i in ':-'})   # remove ':', '-'
-    fn = fn.replace(' ', '_')
-    return fn
 
 #------------------------------------------------------------------------------
 
