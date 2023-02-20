@@ -6,9 +6,9 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * RSI from TA-Lib
 """
 __software__ = "Stock chart of price, volume, and RSI"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/19 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/02/20 (last revision)"
 
 __all__ = ['plot']
 
@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 from .. import tw
+from ..plotly import fig_util as futil
 
 
 def installed(module_name):
@@ -118,10 +119,8 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     mpf.show()
 
     # Write the figure to an PNG file
-    info = f'{symbol}_{interval}_{df.index.values[-1]}'
-    info = info.translate({ord(i): None for i in ':-'})   # remove ':', '-'
-    info = info.replace(' ', '_')
-    fig.savefig(f'{info}_rsi.png')
+    fn = futil.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fig.savefig(f'{fn}.png')
 
 
 if __name__ == '__main__':
