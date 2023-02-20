@@ -1,9 +1,9 @@
 """
 Handle stocks of Taiwan markets.
 """
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2023/02/19 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2023/02/20 (last revision)"
 
 __all__ = [
     'as_yfinance',
@@ -29,6 +29,12 @@ def is_chinese(char):
 
     Returns:
         bool: True if the character is Chinese, False otherwise.
+
+    Examples:
+        >>> is_chinese('A')
+        False
+        >>> is_chinese('中')
+        True
     """
     return unicodedata.category(char[0]) == 'Lo'
 
@@ -87,6 +93,8 @@ class Crawler:
             '2330.TW'
             >>> Crawler.as_yfinance("2330")
             '2330.TW'
+            >>> Crawler.as_yfinance("元太")
+            '8069.TWO'
         """
         # for a listed stock
         _, code = Crawler._get_name_code_pair(symbol, 2)
@@ -162,6 +170,18 @@ class OpenAPI:
     @staticmethod
     def yfinance_symbol_from_name(name):
         """Get yfinance compatible symbol from a Taiwan stock name.
+
+        Args:
+            name (str): the Taiwan stock name.
+        Returns:
+            str: the yfinance compatible symbol.
+        Examples:
+            >>> OpenAPI.yfinance_symbol_from_name("台積電")
+            '2330.TW'
+            >>> OpenAPI.yfinance_symbol_from_name("元太")
+            '8069.TWO'
+            >>> OpenAPI.yfinance_symbol_from_name("星宇航空")
+            '2646.TWO'
         """
         # for a listed stock
         listed_stock_code = functools.partial(
@@ -205,6 +225,18 @@ class OpenAPI:
     @staticmethod
     def stock_name(code):
         """Get stock name from its code.
+
+        Args:
+            code (str): a Taiwan stock code.
+        Returns:
+            str: the Taiwan stock name.
+        Examples:
+            >>> OpenAPI.stock_name('2330')
+            '台積電'
+            >>> OpenAPI.stock_name('8069')
+            '元太'
+            >>> OpenAPI.stock_name('2646')
+            '星宇航空'
         """
         code = code.replace('.TWO', '')
         code = code.replace('.TW', '')
@@ -223,6 +255,18 @@ class OpenAPI:
     @staticmethod
     def yfinance_symbol_from_code(code):
         """Get yfinance compatible symbol from a Taiwan stock code.
+
+        Args:
+            code (str): the Taiwan stock code.
+        Returns:
+            str: the yfinance compatible symbol.
+        Examples:
+            >>> OpenAPI.yfinance_symbol_from_code("2330")
+            '2330.TW'
+            >>> OpenAPI.yfinance_symbol_from_code("8069")
+            '8069.TWO'
+            >>> OpenAPI.yfinance_symbol_from_code("2646")
+            '2646.TWO'
         """
         name = OpenAPI.listed_stock_name(code)
         if name:
@@ -278,6 +322,8 @@ def as_yfinance(symbol):
         str: the yfinance compatible stock symbol.
 
     Examples:
+        >>> as_yfinance('TSLA')
+        'TSLA'
         >>> as_yfinance('台積電')
         '2330.TW'
         >>> as_yfinance('2330')
@@ -350,23 +396,8 @@ def similar_stocks(symbol):
 # Test
 #------------------------------------------------------------------------------
 
-def main():
-    #print(as_yfinance('TSLA'))
-    #print(as_yfinance('台積電'))
-    #print(as_yfinance('2330'))
-    #print(as_yfinance('元太'))
-    #print(as_yfinance('星宇航空'))
-    #print(as_yfinance('台積電'))
-    #print(as_yfinance('2330'))
-    #print(as_yfinance('元太'))
-    #print(as_yfinance('星宇航空'))
-    print(similar_stocks('TSLA'))
-    print(similar_stocks('2330'))
-    print(similar_stocks('台積電'))
-    print(similar_stocks('元太'))
-    print(similar_stocks('星宇航空'))
-
 
 if __name__ == '__main__':
-    main()
+    import doctest
+    doctest.testmod()
 

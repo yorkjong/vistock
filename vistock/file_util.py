@@ -60,3 +60,7 @@ def gen_fn_info(symbol, interval, date, module):
     return fn
 
 
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+
