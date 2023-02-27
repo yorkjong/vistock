@@ -3,6 +3,11 @@ Change Log
 TODO
 ----
 
+0.2.6
+-----
+* Added 'hbar_align_on_right' parameter pbv2s.plot function to allow the
+  starting position of the horizontal bars on the right.
+
 0.2.5 [2023-02-20]
 ------------------
 * Renamed parameter 'ticker' to 'symbol'

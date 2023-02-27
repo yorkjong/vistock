@@ -3,9 +3,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 """
 __software__ = "Volume Profile 2-split with Plotly"
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/06 (initial version) ~ 2023/02/20 (last revision)"
+__date__ = "2023/02/06 (initial version) ~ 2023/02/28 (last revision)"
 
 __all__ = ['plot']
 
@@ -21,7 +21,8 @@ from . import fig_util as futil
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
-         hides_nontrading=True, out_dir='out'):
+         hides_nontrading=True, out_dir='out',
+         hbar_align_on_right=True):
     """Plot a price-by-volume, PBV  (also called volume profile) figure for a
     given stock.
 
@@ -70,6 +71,9 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         decide if hides non-trading time-periods.
     out_dir: str
         the output directory for saving figure.
+    hbar_align_on_right: bool
+        decide if the price-by-volume bars align on right. True to set the
+        starting position of the horizontal bars to the right; False the left.
     """
     # Download stock data
     symbol = tw.as_yfinance(symbol)
@@ -169,6 +173,9 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         xaxis_rangeslider_visible=False,
         xaxis2_rangeslider_visible=False,
     )
+    if hbar_align_on_right:
+        # change the starting position of the horizontal bars to the right
+        fig.update_layout(xaxis=dict(autorange='reversed'))
 
     # For Crosshair cursor
     futil.add_crosshair_cursor(fig)
