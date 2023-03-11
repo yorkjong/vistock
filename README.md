@@ -2,10 +2,10 @@
 ## Visualizing Stocks
 `vistock` is an open source package that provides a lot of plot() functions for visualizing stocks. For those who just want to use it directly without knowing too many details, I also provide a Colab notebook file, which can be used to plot stock charts you want after simply filling out parameters on the Colab Forms.
 
-* Website: [https://yorkjong.github.io/vistock/](https://yorkjong.github.io/vistock/)
+* Website: [https://vistock.netlify.app/](https://vistock.netlify.app/) (or [https://yorkjong.github.io/vistock/](https://yorkjong.github.io/vistock/))
 * Usage demo: [https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb)
 * Test code: [https://github.com/YorkJong/vistock/tree/main/tests](https://github.com/YorkJong/vistock/tree/main/tests)
-* Documentation: [https://yorkjong.github.io/vistock/modules.html](https://yorkjong.github.io/vistock/modules.html)
+* Documentation: [https://vistock.netlify.app/modules.html](https://vistock.netlify.app/modules.html) (or [https://yorkjong.github.io/vistock/modules.html](https://yorkjong.github.io/vistock/modules.html))
 * Source code: [https://github.com/YorkJong/vistock](https://github.com/YorkJong/vistock)
 * Bug reports: [https://github.com/YorkJong/vistock/issues](https://github.com/YorkJong/vistock/issues)
 
@@ -45,6 +45,7 @@
 3. Run a test code.
 
     There are two test code in `vistock/tests` folder.
+    
     * [test_plotly.py](https://github.com/YorkJong/vistock/blob/main/tests/test_plotly.py) -- for Plotly version
     * [test_mpl.py](https://github.com/YorkJong/vistock/blob/main/tests/test_mpl.py) -- for mplfinance version
 
@@ -57,7 +58,7 @@
     This test code will show stock charts and save them into interactie html files.
     You can double-clicked a output file to open it on your browser.
 
-![TSLA_30m_20230213_1000_pbv2s](https://user-images.githubusercontent.com/11453572/218501549-6061eab3-9591-4276-afe0-19915d8e68b8.png)
+![TSLA_1d_20230227_0000_pbv2s](https://user-images.githubusercontent.com/11453572/224471104-c6a998eb-368a-4de5-ac01-409bbe04be77.png)
 
 4. Enjoy the demo code.
     The demo code called [vstock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb). You can open it on your Jupyter Notebook environment.
