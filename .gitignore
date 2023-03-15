@@ -151,12 +151,20 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-
 # macOS system files
 .DS_Store
+.trash/
+
+# Thumbnails (macOS)
+._*
+
+# Dropbox system files
+.recycle/
+
 
 # pyenv files
 .python-version
 
 # module generated figure files
-*/out/*.*
+out/
+
