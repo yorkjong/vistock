@@ -2,12 +2,12 @@
 ## Visualizing Stocks
 `vistock` is an open source package that provides a lot of plot() functions for visualizing stocks. For those who just want to use it directly without knowing too many details, I also provide a Colab notebook file, which can be used to plot stock charts you want after simply filling out parameters on the Colab Forms.
 
-- **Website:** [https://vistock.netlify.app/](https://vistock.netlify.app/) (or [https://yorkjong.github.io/vistock/](https://yorkjong.github.io/vistock/))
-- **Usage demo:** [https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb)
-- **Test code:** [https://github.com/YorkJong/vistock/tree/main/tests](https://github.com/YorkJong/vistock/tree/main/tests)
-- **Documentation:** [https://vistock.netlify.app/modules.html](https://vistock.netlify.app/modules.html) (or [https://yorkjong.github.io/vistock/modules.html](https://yorkjong.github.io/vistock/modules.html))
-- **Source code:** [https://github.com/YorkJong/vistock](https://github.com/YorkJong/vistock)
-- **Bug reports:** [https://github.com/YorkJong/vistock/issues](https://github.com/YorkJong/vistock/issues)
+- **Website:** [vistock.netlify.app/](https://vistock.netlify.app) (or [yorkjong.github.io/vistock/](https://yorkjong.github.io/vistock))
+- **Usage demo:** [github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb)
+- **Test code:** [github.com/YorkJong/vistock/tree/main/tests](https://github.com/YorkJong/vistock/tree/main/tests)
+- **Documentation:** [vistock.netlify.app/modules.html](https://vistock.netlify.app/modules.html) (or [yorkjong.github.io/vistock/modules.html](https://yorkjong.github.io/vistock/modules.html))
+- **Source code:** [github.com/YorkJong/vistock](https://github.com/YorkJong/vistock)
+- **Bug reports:** [github.com/YorkJong/vistock/issues](https://github.com/YorkJong/vistock/issues)
 
 ## Getting Started on Colab
 
@@ -40,12 +40,12 @@
     pip install Ta-Lib
     ```
 
-    Install on other platform Please ref. [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python/).
+    Install on other platform Please ref. [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python).
 
 3. Run a test code.
 
     There are two test code in `vistock/tests` folder.
-    
+
     * [test_plotly.py](https://github.com/YorkJong/vistock/blob/main/tests/test_plotly.py) -- for Plotly version
     * [test_mpl.py](https://github.com/YorkJong/vistock/blob/main/tests/test_mpl.py) -- for mplfinance version
 
