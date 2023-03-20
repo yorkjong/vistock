@@ -2,10 +2,10 @@
 ## Visualizing Stocks
 `vistock` is an open source package that provides a lot of plot() functions for visualizing stocks. For those who just want to use it directly without knowing too many details, I also provide a Colab notebook file, which can be used to plot stock charts you want after simply filling out parameters on the Colab Forms.
 
-- **Website:** [vistock.netlify.app](https://vistock.netlify.app) (or [yorkjong.github.io/vistock](https://yorkjong.github.io/vistock))
+- **Website:** [vistock.netlify.app](https://vistock.netlify.app) (or [vistock.vercel.app](https://vistock.vercel.app))
 - **Usage demo:** [github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb)
 - **Test code:** [github.com/YorkJong/vistock/tree/main/tests](https://github.com/YorkJong/vistock/tree/main/tests)
-- **Documentation:** [vistock.netlify.app/modules.html](https://vistock.netlify.app/modules.html) (or [yorkjong.github.io/vistock/modules.html](https://yorkjong.github.io/vistock/modules.html))
+- **Documentation:** [vistock.netlify.app/modules.html](https://vistock.netlify.app/modules.html) (or [vistock.vercel.app/modules.html](https://vistock.vercel.app/modules.html))
 - **Source code:** [github.com/YorkJong/vistock](https://github.com/YorkJong/vistock)
 - **Bug reports:** [github.com/YorkJong/vistock/issues](https://github.com/YorkJong/vistock/issues)
 
