@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'vistock/**'
+      - 'docs/**'
+
 permissions:
   contents: write
 jobs:
