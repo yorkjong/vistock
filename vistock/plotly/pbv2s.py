@@ -132,7 +132,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     fig.add_trace(vp)
 
     # Add volume trace to 2nd row
-    colors = ['green' if o - c >= 0
+    colors = ['green' if c - o >= 0
             else 'red' for o, c in zip(df['Open'], df['Close'])]
     volume = go.Bar(
         x=df.index, y=df['Volume'], name='Volume',
