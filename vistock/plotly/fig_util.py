@@ -2,7 +2,7 @@
 Common utility for Plotly figures.
 """
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/09 (initial version) ~ 2023/02/20 (last revision)"
+__date__ = "2023/02/09 (initial version) ~ 2024/07/13 (last revision)"
 
 __all__ = [
     'hide_nontrading_periods',
@@ -46,13 +46,15 @@ def hide_nontrading_periods(fig, df, interval):
         freq = freq.replace(i, f)
 
     # Calculate nontrading time-periods
-    #df.index = df.index.strftime('%Y-%m-%d %H:%M')
     dt_all = pd.date_range(start=df.index[0], end=df.index[-1], freq=freq)
-    dt_trade = [d for d in df.index]
-    dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d %H:%M") if not d in dt_trade]
+    dt_breaks = dt_all.difference(df.index)
 
     # Calculate dvalue in milliseconds
-    dvalue = (dt_all[1] - dt_all[0]).total_seconds() * 1000     # unit in msec
+    dvalue = 86400 * 1000   # 1 day in milliseconds
+    if interval.endswith('m'):      # minute
+        dvalue = 60 * int(interval.replace('m', '')) * 1000
+    elif interval.endswith('h'):    # hour
+        dvalue = 3600 * int(interval.replace('h', '')) * 1000
 
     # Update xaxes to hide non-trading time-periods
     fig.update_xaxes(rangebreaks=[dict(values=dt_breaks, dvalue=dvalue)])

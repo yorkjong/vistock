@@ -12,7 +12,8 @@ modules = (
 
 for m in modules:
     #m.plot('TSLA', hides_nontrading=False)
-    m.plot('TSLA', period='6mo', interval='1d')
+    #m.plot('TSLA', period='6mo', interval='1d')
     #m.plot('TSLA', period='1mo', interval='1h')
-    #m.plot('TSLA', period='2y', interval='1mo')
+    #m.plot('TSLA', period='1y', interval='1wk')
+    m.plot('TSLA', period='2y', interval='1mo')
 
