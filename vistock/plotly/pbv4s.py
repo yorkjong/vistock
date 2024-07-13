@@ -3,9 +3,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV occupies a split of a 4-split chart.
 """
 __software__ = "Volume Profile 4-split with Plotly"
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/02/20 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/07/13 (last revision)"
 
 __all__ = ['plot']
 
@@ -138,10 +138,11 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         row=1, col=2
     )
 
-    # Update layout for removing non-trading time-periods.
-    df.index = df.index.strftime('%Y-%m-%d %H:%M')
-    if hides_nontrading:
-        futil.hide_nontrading_periods(fig, df, interval)
+    # Convert datetime index to string format suitable for display
+    if interval.endswith('m') or interval.endswith('h'):
+        df.index = df.index.strftime('%Y-%m-%d %H:%M')
+    else:
+        df.index = df.index.strftime('%Y-%m-%d')
 
     # Update layout
     fig.update_layout(
@@ -160,6 +161,8 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
 
         xaxis_rangeslider_visible=False,
     )
+    if hides_nontrading:
+        futil.hide_nontrading_periods(fig, df, interval)
 
     # For Crosshair cursor
     futil.add_crosshair_cursor(fig)

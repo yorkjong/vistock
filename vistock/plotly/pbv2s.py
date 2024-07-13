@@ -3,9 +3,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV is overlaid with the price subplot (total 2 subplots).
 """
 __software__ = "Volume Profile 2-split with Plotly"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/06 (initial version) ~ 2023/02/28 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/07/13 (last revision)"
 
 __all__ = ['plot']
 
@@ -151,10 +151,11 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     )
     fig.add_trace(vma, row=2, col=1)
 
-    # Update layout for removing non-trading time-periods.
-    df.index = df.index.strftime('%Y-%m-%d %H:%M')
-    if hides_nontrading:
-        futil.hide_nontrading_periods(fig, df, interval)
+    # Convert datetime index to string format suitable for display
+    if interval.endswith('m') or interval.endswith('h'):
+        df.index = df.index.strftime('%Y-%m-%d %H:%M')
+    else:
+        df.index = df.index.strftime('%Y-%m-%d')
 
     # Update layout
     fig.update_layout(
@@ -173,6 +174,9 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         xaxis_rangeslider_visible=False,
         xaxis2_rangeslider_visible=False,
     )
+    if hides_nontrading:
+        futil.hide_nontrading_periods(fig, df, interval)
+
     if hbar_align_on_right:
         # change the starting position of the horizontal bars to the right
         fig.update_layout(xaxis=dict(autorange='reversed'))
