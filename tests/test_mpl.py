@@ -11,7 +11,7 @@ modules = (
 
 for m in modules:
     #m.plot('TSLA')
-    #m.plot('TSLA', period="3d", interval="5m")
+    m.plot('TSLA', period="6mo", interval="1d")
     #m.plot('台積電', period="3d", interval="5m")
-    m.plot('2330', period="3d", interval="5m")
+    #m.plot('2330', period="3d", interval="5m")
 
