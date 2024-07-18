@@ -5,8 +5,8 @@ import vistock.mpl as vsm
 
 
 modules = (
-    vsm.rsi,    # Plot a 3-split (price, volume, RSI) stock chart.
-    vsm.pbv,    # Plot a price-by-volume stock chart.
+    #vsm.rsi,        # Plot a 3-split (price, volume, RSI) stock chart.
+    vsm.pbv.Volume, # Plot a price-by-volume stock chart.
 )
 
 for m in modules:
