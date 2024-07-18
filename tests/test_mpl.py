@@ -6,7 +6,8 @@ import vistock.mpl as vsm
 
 modules = (
     #vsm.rsi,        # Plot a 3-split (price, volume, RSI) stock chart.
-    vsm.profile.Volume, # Plot a price-by-volume stock chart.
+    vsm.profile.Volume,     # Plot a volume-profile stock chart.
+    vsm.profile.Turnover,   # Plot a turnover-profile stock chart.
 )
 
 for m in modules:
