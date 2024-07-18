@@ -24,7 +24,8 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
          hides_nontrading=True, out_dir='out',
          hbar_align_on_right=True):
     """Plot a price-by-volume, PBV  (also called volume profile) figure for a
-    given stock.
+    given stock. This figure shows the volume distribution across price levels
+    for a stock.
 
     Here the PBV is overlaied with the price subplot. This figure consists of
     two subplots: a price subplot and a volume subplot. The former includes
