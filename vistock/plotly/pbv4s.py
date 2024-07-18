@@ -3,9 +3,9 @@ Visualize a PBV (means price-by-volume, also called volume profile) for a given
 stock. Here the PBV occupies a split of a 4-split chart.
 """
 __software__ = "Volume Profile 4-split with Plotly"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/07/13 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/07/18 (last revision)"
 
 __all__ = ['plot']
 
@@ -155,12 +155,20 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         yaxis=dict(anchor='x3', side='left', title='Price (USD)'),
 
         xaxis2=dict(title='Bin Comulative Volume'),
-        yaxis2=dict(side='right', title='Price (USD)'),
+        yaxis2=dict(side='right', title='Price (USD)'), # Bin Price
 
         yaxis3=dict(side='left', title='Volume'),
 
         xaxis_rangeslider_visible=False,
     )
+    # Update the layout to set the same range for both y-axes
+    # This ensures that both price axes have the same scale and range
+    y_range = [min(df['Close']) * 0.95, max(df['Close']) * 1.05]
+    fig.update_layout(
+        yaxis=dict(range=y_range),
+        yaxis2=dict(range=y_range)
+    )
+
     if hides_nontrading:
         futil.hide_nontrading_periods(fig, df, interval)
 
