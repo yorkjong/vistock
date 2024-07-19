@@ -2,9 +2,10 @@ Change Log
 ==========
 TODO
 ----
-
-0.2.6
------
+0.3.0 [2024-07-19]
+------------------
+* Added Turnover Profile feature
+* Ensures that both price axes have the same scale and range (Plotly version)
 * Added 'hbar_align_on_right' parameter pbv2s.plot function to allow the
   starting position of the horizontal bars on the right.
 
