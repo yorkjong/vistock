@@ -2,13 +2,13 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "1.7"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/07/19 (last revision)"
 
 __all__ = [
-    'Volume',
-    'Turnover',
+    'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
+    'Turnover', # Turnover Profile
 ]
 
 import yfinance as yf
@@ -70,6 +70,8 @@ def _plot(df, profile_field='Volume', period='12mo', interval='1d',
 
 
 class Volume:
+    """Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
+    """
     @staticmethod
     def plot(symbol='TSLA', period='12mo', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
@@ -159,6 +161,8 @@ class Volume:
 
 
 class Turnover:
+    """Turnover (price*volume) Profile
+    """
     @staticmethod
     def plot(symbol='TSLA', period='12mo', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
