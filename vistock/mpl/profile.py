@@ -47,8 +47,7 @@ def _plot(df, profile_field='Volume', period='12mo', interval='1d',
     else:
         df.index = df.index.strftime('%Y-%m-%d')
 
-    # Profile
-
+    # Add Profile (e.g., Volume Profile or Turnover Profile)
     bin_size = (max(df['High']) - min(df['Low'])) / total_bins
     bin_round = lambda x: bin_size * round(x / bin_size)
     bin = df[profile_field].groupby(
@@ -143,9 +142,9 @@ class Volume:
         symbol = tw.as_yfinance(symbol)
         df = yf.Ticker(symbol).history(period=period, interval=interval)
 
+        # Plot
         fig = _plot(df, 'Volume', period, interval, ma_nitems, vma_nitems,
                     total_bins, legend_loc)
-
         fig.suptitle(f"{symbol} {interval} "
                      f"({df.index.values[0]}~{df.index.values[-1]})",
                      y=0.93)
