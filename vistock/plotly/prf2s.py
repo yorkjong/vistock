@@ -3,7 +3,7 @@ Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
 2-section layout for a given stock.
 """
 __software__ = "Profile with Plotly 2-subplots"
-__version__ = "2.0"
+__version__ = "2.0.1"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/07/19 (last revision)"
 
@@ -24,8 +24,7 @@ from . import fig_util as futil
 
 def _plot(df, profile_field='Volume', period='12mo', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
-          hides_nontrading=True, out_dir='out',
-          hbar_align_on_right=True):
+          hides_nontrading=True, hbar_align_on_right=True):
     # Initialize empty plot with a marginal subplot
     fig = make_subplots(
         rows=2, cols=1,
@@ -38,7 +37,6 @@ def _plot(df, profile_field='Volume', period='12mo', interval='1d',
         ],
         figure=go.Figure(layout=go.Layout(height=720))
     )
-    #print(fig)
 
     # Plot the candlestick chart
     candlestick = go.Candlestick(
