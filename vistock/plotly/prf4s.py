@@ -208,8 +208,10 @@ class Volume:
 
 
 class Turnover:
-    """Turnover (price*volume) Profile
-    """
+    '''Turnover Profile
+
+    Here "turnover" means "trading value" (= price * volume)
+    '''
     def plot(symbol='TSLA', period='12mo', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
              hides_nontrading=True, out_dir='out'):
