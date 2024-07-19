@@ -6,8 +6,9 @@ import vistock.plotly as vsp
 modules = (
     #vsp.pv1s,     # Price and volume overlaid stock chart
     #vsp.pv2s,     # Price and volume separated stock chart
-    vsp.prf2s,    # Volume Profile (price-by-volume) stock chart with 2 subplots
-    vsp.prf4s,    # Volume Profile (price-by-volume) stock chart with 4 subplots
+    vsp.prf2s.Volume,   # Volume Profile stock chart with 2-subplots
+    vsp.prf2s.Turnover, # Turnover Profile stock chart with 2-subplots
+    #vsp.prf4s,    # Volume Profile (price-by-volume) stock chart with 4 subplots
 )
 
 for m in modules:
