@@ -2,7 +2,7 @@
 Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
 2-section layout for a given stock.
 """
-__software__ = "Profile with Plotly 2-subplots"
+__software__ = "Profile with Plotly 2 subplots"
 __version__ = "2.0.1"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/07/19 (last revision)"
