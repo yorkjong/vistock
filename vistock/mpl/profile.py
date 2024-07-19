@@ -234,9 +234,9 @@ class Turnover:
         df = yf.Ticker(symbol).history(period=period, interval=interval)
         df['Turnover'] = df['Close'] * df['Volume']
 
+        # Plot
         fig = _plot(df, 'Turnover', period, interval, ma_nitems, vma_nitems,
                     total_bins, legend_loc)
-
         fig.suptitle(f"{symbol} {interval} "
                      f"({df.index.values[0]}~{df.index.values[-1]})",
                      y=0.93)
