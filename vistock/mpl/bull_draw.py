@@ -8,7 +8,6 @@ __date__ = "2024/07/21 (initial version) ~ 2024/07/21 (last revision)"
 
 __all__ = [ 'plot' ]
 
-import numpy as np
 import yfinance as yf
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -16,19 +15,21 @@ import mplfinance as mpf
 
 from .. import tw
 from .. import file_util
+from ..bull_draw_util import calculate_bull_run, calculate_drawdown
 
 
-def plot(ticker='TSLA', period='1y', interval='1d', legend_loc='best'):
+def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
+         out_dir='out'):
     """Visualize bull run and drawdown indicators on a stock price chart.
 
-    This function downloads stock data for the specified ticker and period,
+    This function downloads stock data for the specified period and interval,
     calculates the drawdown and bull run indicators, and visualizes them using
     mplfinance.
 
     Parameters
     ----------
-    ticker
-        the ticker name (default is 'TSLA')
+    symbol: str
+        the stock symbol.
     period
         the period (default is '1y' that means 1 year)
     interval
@@ -47,10 +48,12 @@ def plot(ticker='TSLA', period='1y', interval='1d', legend_loc='best'):
             lower center
             upper center
             center
+    out_dir: str
+        the output directory for saving figure.
     """
     # Download stock data
-    ticker = tw.as_yfinance(ticker)
-    df = yf.Ticker(ticker).history(period=period, interval=interval)
+    symbol = tw.as_yfinance(symbol)
+    df = yf.Ticker(symbol).history(period=period, interval=interval)
 
     # Calculate drawdown and bull run
     df['Drawdown'] = calculate_drawdown(df)
@@ -100,7 +103,7 @@ def plot(ticker='TSLA', period='1y', interval='1d', legend_loc='best'):
     else:
         df.index = df.index.strftime('%Y-%m-%d')
     fig.suptitle(
-        f"{ticker} {interval} ({df.index.values[0]}~{df.index.values[-1]})",
+        f"{symbol} {interval} ({df.index.values[0]}~{df.index.values[-1]})",
         y=0.93
     )
 
@@ -112,110 +115,6 @@ def plot(ticker='TSLA', period='1y', interval='1d', legend_loc='best'):
     fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
     fig.savefig(f'{out_dir}/{fn}.png')
 
-
-#------------------------------------------------------------------------------
-# Help Functions
-#------------------------------------------------------------------------------
-
-def calculate_bull_run(df):
-    """
-    Calculate the bull-run for each 'Close' price in the dataframe.
-
-    Parameters
-    ----------
-    df : pandas.DataFrame
-        DataFrame containing stock data with a 'Close' column.
-
-    Returns
-    -------
-    pandas.Series
-        Series representing the bull-run values.
-    """
-    df['Daily_Return'] = df['Close'].pct_change()
-    df['Cumulative_Return'] = (1 + df['Daily_Return']).cumprod()
-    df['Drawdown'] = df['Cumulative_Return'] / df['Cumulative_Return'].cummax() - 1
-    drawdown_threshold = np.percentile(df['Drawdown'].dropna(), 80)
-
-    bull_run = 0
-    max_price = df['Close'].iloc[0]
-    bull_runs = []
-
-    for price, returns in zip(df['Close'], df['Daily_Return']):
-        if price > max_price:
-            max_price = price
-
-        if returns > 0:
-            bull_run += returns
-        elif (max_price - price) / max_price > drawdown_threshold:
-            bull_run = 0
-            max_price = price
-
-        bull_runs.append(bull_run)
-
-    return bull_runs
-
-
-def calculate_rolling_drawdown(data, window=60):
-    """
-    Calculate the rolling drawdown for each price in the dataframe.
-
-    Parameters
-    ----------
-    df : pandas.DataFrame
-        DataFrame containing stock data with a 'High', 'Close' columns.
-    window: int
-        window size to rolling.
-
-    Returns
-    -------
-    pandas.Series
-        Series representing the rolling drawdown values.
-    """
-    rolling_max = data['High'].rolling(window=window, min_periods=1).max()
-    drawdown = (data['Close'] - rolling_max) / rolling_max
-    return drawdown
-
-
-def calculate_drawdown(df):
-    """
-    Calculate the drawdown for each price in the dataframe.
-
-    Parameters
-    ----------
-    df : pandas.DataFrame
-        DataFrame containing stock data with a 'High', 'Close' columns.
-
-    Returns
-    -------
-    pandas.Series
-        Series representing the drawdown values.
-    """
-    peak = df['High'].expanding(min_periods=1).max()
-    drawdown = (df['Close'] - peak) / peak
-    return drawdown
-
-
-def calculate_drawdown_v2(df):
-    """
-    Calculate the drawdown for each price in the dataframe.
-
-    Parameters
-    ----------
-    df : pandas.DataFrame
-        DataFrame containing stock data with a 'Close' column.
-
-    Returns
-    -------
-    pandas.Series
-        Series representing the drawdown values.
-    """
-    peak = df['Close'].expanding(min_periods=1).max()
-    drawdown = (df['Close'] - peak) / peak
-    return drawdown
-
-#------------------------------------------------------------------------------
-# Test
-#------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     plot('TSLA')
