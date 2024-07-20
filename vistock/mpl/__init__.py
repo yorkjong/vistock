@@ -3,9 +3,9 @@ Initialize vistock.mpl package.
 """
 
 __all__ = [
-    'rsi',          # Plot a 3-split (price, volume, RSI) stock chart.
-    'profile',      # Plot a price-by-volume stock chart.
-    'bull_draw',    # Plot a bull-run-and-drawdown stock chart.
+    'rsi',          # A 3-split (price, volume, RSI) stock chart.
+    'profile',      # Price-by-volume stock chart.
+    'bull_draw',    # Bull-run & drawdown stock chart.
 ]
 
 from . import rsi
