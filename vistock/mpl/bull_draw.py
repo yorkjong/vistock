@@ -20,11 +20,12 @@ from ..bull_draw_util import calculate_bull_run, calculate_drawdown
 
 def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
          out_dir='out'):
-    """Visualize bull run and drawdown indicators on a stock price chart.
+    """Plot a stock figure that consists of two subplots: a price subplot and
+    a volume subplot.
 
-    This function downloads stock data for the specified period and interval,
-    calculates the drawdown and bull run indicators, and visualizes them using
-    mplfinance.
+    The price subplot includes price lines, bull-run bar cahrt, and drawdown
+    bar chart, while the volume subplot includes a volume histogram and a
+    volume moving average line.
 
     Parameters
     ----------
@@ -52,8 +53,8 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         the output directory for saving figure.
     """
     # Download stock data
-    symbol = tw.as_yfinance(symbol)
-    df = yf.Ticker(symbol).history(period=period, interval=interval)
+    ticker = tw.as_yfinance(symbol)
+    df = yf.Ticker(ticker).history(period=period, interval=interval)
 
     # Calculate drawdown and bull run
     df['Drawdown'] = calculate_drawdown(df)
