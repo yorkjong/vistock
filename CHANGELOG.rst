@@ -2,6 +2,10 @@ Change Log
 ==========
 TODO
 ----
+0.3.1
+------------------
+* Added the suport of bull-run and drawdown stock chart
+
 0.3.0 [2024-07-19]
 ------------------
 * Added Turnover Profile feature
