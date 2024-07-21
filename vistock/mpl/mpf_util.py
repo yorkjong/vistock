@@ -39,6 +39,7 @@ def decide_mpf_style(base_mpf_style='yahoo',
     )
 
     # Define a new style with reversed colors
-    style = mpf.make_mpf_style(base_mpf_style='yahoo', marketcolors=reversed_mk_colors)
+    style = mpf.make_mpf_style(base_mpf_style='yahoo',
+                               marketcolors=reversed_mk_colors)
     return style
 
