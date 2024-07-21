@@ -66,12 +66,18 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
     df['Drawdown'] = calculate_drawdown(df)
     df['BullRun'] = calculate_bull_run(df)
 
+    # Make a customized color style
+    mc_style = decide_market_color_style(ticker, market_color_style)
+    mpf_style = decide_mpf_style(base_mpf_style='yahoo', market_color_style=mc_style)
+
     # Add Bull Run and Drawdown indicators
+    cl_bullrun = get_bullrun_color(mc_style)
+    cl_drawdown = get_drawdown_color(mc_style)
     bull_run_addplot = mpf.make_addplot(
-        df['BullRun'], type='bar', color='blue', alpha=0.5,
+        df['BullRun'], type='bar', color=cl_bullrun, alpha=0.5,
         panel=0, secondary_y=True, ylabel='BullRun and Drawdown')
     drawdown_addplot = mpf.make_addplot(
-        df['Drawdown'], type='bar', color='orange', alpha=0.5,
+        df['Drawdown'], type='bar', color=cl_drawdown, alpha=0.5,
         panel=0, secondary_y=True)
 
     # Add Volume Moving Average
@@ -79,10 +85,6 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         df['Volume'], mav=50,
         type='line', linestyle='', color='purple',
         panel=1)
-
-    # Make a customized color style
-    mc_style = decide_market_color_style(ticker, market_color_style)
-    mpf_style = decide_mpf_style(base_mpf_style='yahoo', market_color_style=mc_style)
 
     # Plot candlesticks price, bull-run, drawdown, volume, and volume MA
     fig, axes = mpf.plot(
@@ -103,8 +105,8 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
 
     # Plot legend
     legend = [
-        Line2D([0], [0], color='blue', lw=4, label='Bull Run'),
-        Line2D([0], [0], color='orange', lw=4, label='Drawdown'),
+        Line2D([0], [0], color=cl_bullrun, lw=4, label='BullRun'),
+        Line2D([0], [0], color=cl_drawdown, lw=4, label='Drawdown'),
     ]
     axes[0].legend(handles=legend, loc=legend_loc)
 
@@ -125,6 +127,20 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
     out_dir = file_util.make_dir(out_dir)
     fn = file_util.gen_fn_info(ticker, interval, df.index.values[-1], __file__)
     fig.savefig(f'{out_dir}/{fn}.png')
+
+
+def get_bullrun_color(market_color_style=MarketColorStyle.WESTERN):
+    if market_color_style == MarketColorStyle.WESTERN:
+        return 'blue'
+    else:
+        return 'orange'
+
+
+def get_drawdown_color(market_color_style=MarketColorStyle.WESTERN):
+    if market_color_style == MarketColorStyle.WESTERN:
+        return 'orange'
+    else:
+        return 'blue'
 
 
 if __name__ == '__main__':
