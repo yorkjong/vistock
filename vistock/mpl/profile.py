@@ -17,18 +17,21 @@ import mplfinance as mpf
 
 from .. import tw
 from .. import file_util
+from ..util import MarketColorStyle, decide_market_color_style
+from .mpf_util import decide_mpf_style
 
 
-def _plot(df, profile_field='Volume', period='12mo', interval='1d',
+def _plot(df, mpf_style, profile_field='Volume', period='12mo', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-          total_bins=42, legend_loc='best'):
+          total_bins=42, legend_loc='best',
+          market_color_style=MarketColorStyle.AUTO):
     # Add Volume Moving Average
     vma = mpf.make_addplot(df['Volume'], mav=vma_nitems,
                            type='line', linestyle='', color='purple', panel=1)
 
     # Make a customized color style
-    mc = mpf.make_marketcolors(base_mpf_style='yahoo')
-    s = mpf.make_mpf_style(base_mpf_style='nightclouds', marketcolors=mc)
+    s = mpf.make_mpf_style(base_mpf_style='nightclouds',
+                           marketcolors=mpf_style['marketcolors'])
 
     # Plot candlesticks MA, volume, volume MA, RSI
     colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
@@ -74,7 +77,8 @@ class Volume:
     @staticmethod
     def plot(symbol='TSLA', period='12mo', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-            total_bins=42, legend_loc='best', out_dir='out'):
+             total_bins=42, legend_loc='best',
+             market_color_style=MarketColorStyle.AUTO, out_dir='out'):
         """Plot a price-by-volume, PBV (also called volume profile) figure for a
         given stock.
 
@@ -135,17 +139,22 @@ class Volume:
             * 'upper center'
             * 'center'
 
+        market_color_style (MarketColorStyle): The market color style to use.
+            Default is MarketColorStyle.AUTO.
         out_dir: str
             the output directory for saving figure.
         """
         # Download stock data
-        symbol = tw.as_yfinance(symbol)
-        df = yf.Ticker(symbol).history(period=period, interval=interval)
+        ticker = tw.as_yfinance(symbol)
+        df = yf.Ticker(ticker).history(period=period, interval=interval)
 
         # Plot
-        fig = _plot(df, 'Volume', period, interval, ma_nitems, vma_nitems,
-                    total_bins, legend_loc)
-        fig.suptitle(f"{symbol} {interval} "
+        mc_style = decide_market_color_style(ticker, market_color_style)
+        mpf_style = decide_mpf_style(base_mpf_style='yahoo',
+                                     market_color_style=mc_style)
+        fig = _plot(df, mpf_style, 'Volume', period, interval, ma_nitems, vma_nitems,
+                    total_bins, legend_loc, market_color_style, )
+        fig.suptitle(f"{ticker} {interval} "
                      f"({df.index.values[0]}~{df.index.values[-1]})",
                      y=0.93)
 
@@ -154,7 +163,7 @@ class Volume:
 
         # Write the figure to an PNG file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1],
+        fn = file_util.gen_fn_info(ticker, interval, df.index.values[-1],
                                    'volume_prf')
         fig.savefig(f'{out_dir}/{fn}.png')
 
@@ -167,7 +176,8 @@ class Turnover:
     @staticmethod
     def plot(symbol='TSLA', period='12mo', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-            total_bins=42, legend_loc='best', out_dir='out'):
+             total_bins=42, legend_loc='best',
+             market_color_style=MarketColorStyle.AUTO, out_dir='out'):
         """Plot a turnover profile figure for a given stock.
 
         Here the provile is overlaid with the price subplot. This figure
@@ -228,18 +238,23 @@ class Turnover:
             * 'upper center'
             * 'center'
 
+        market_color_style (MarketColorStyle): The market color style to use.
+            Default is MarketColorStyle.AUTO.
         out_dir: str
             the output directory for saving figure.
         """
         # Download stock data
-        symbol = tw.as_yfinance(symbol)
-        df = yf.Ticker(symbol).history(period=period, interval=interval)
+        ticker = tw.as_yfinance(symbol)
+        df = yf.Ticker(ticker).history(period=period, interval=interval)
         df['Turnover'] = df['Close'] * df['Volume']
 
         # Plot
-        fig = _plot(df, 'Turnover', period, interval, ma_nitems, vma_nitems,
-                    total_bins, legend_loc)
-        fig.suptitle(f"{symbol} {interval} "
+        mc_style = decide_market_color_style(ticker, market_color_style)
+        mpf_style = decide_mpf_style(base_mpf_style='yahoo',
+                                     market_color_style=mc_style)
+        fig = _plot(df, mpf_style, 'Turnover', period, interval, ma_nitems, vma_nitems,
+                    total_bins, legend_loc, market_color_style)
+        fig.suptitle(f"{ticker} {interval} "
                      f"({df.index.values[0]}~{df.index.values[-1]})",
                      y=0.93)
 
@@ -248,7 +263,7 @@ class Turnover:
 
         # Write the figure to an PNG file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1],
+        fn = file_util.gen_fn_info(ticker, interval, df.index.values[-1],
                                    'turnover_prf')
         fig.savefig(f'{out_dir}/{fn}.png')
 

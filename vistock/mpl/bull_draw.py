@@ -16,9 +16,12 @@ import mplfinance as mpf
 from .. import tw
 from .. import file_util
 from ..bull_draw_util import calculate_bull_run, calculate_drawdown
+from ..util import MarketColorStyle, decide_market_color_style
+from .mpf_util import decide_mpf_style
 
 
 def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
+         market_color_style=MarketColorStyle.AUTO,
          out_dir='out'):
     """Plot a stock figure that consists of two subplots: a price subplot and
     a volume subplot.
@@ -49,6 +52,9 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
             lower center
             upper center
             center
+
+    market_color_style (MarketColorStyle): The market color style to use.
+        Default is MarketColorStyle.AUTO.
     out_dir: str
         the output directory for saving figure.
     """
@@ -71,14 +77,18 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
     # Add Volume Moving Average
     vma = mpf.make_addplot(
         df['Volume'], mav=50,
-        type='line', linestyle='',
+        type='line', linestyle='', color='purple',
         panel=1)
+
+    # Make a customized color style
+    mc_style = decide_market_color_style(ticker, market_color_style)
+    mpf_style = decide_mpf_style(base_mpf_style='yahoo', market_color_style=mc_style)
 
     # Plot candlesticks price, bull-run, drawdown, volume, and volume MA
     fig, axes = mpf.plot(
         df, type='line',
         volume=True, addplot=[bull_run_addplot, drawdown_addplot, vma],
-        style='yahoo', figsize=(16, 8),
+        style=mpf_style, figsize=(16, 8),
         returnfig=True
     )
 
@@ -104,7 +114,7 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
     else:
         df.index = df.index.strftime('%Y-%m-%d')
     fig.suptitle(
-        f"{symbol} {interval} ({df.index.values[0]}~{df.index.values[-1]})",
+        f"{ticker} {interval} ({df.index.values[0]}~{df.index.values[-1]})",
         y=0.93
     )
 
@@ -113,7 +123,7 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
 
     # Write the figure to an PNG file
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info(ticker, interval, df.index.values[-1], __file__)
     fig.savefig(f'{out_dir}/{fn}.png')
 
 

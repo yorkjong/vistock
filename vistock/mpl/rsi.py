@@ -18,6 +18,8 @@ import mplfinance as mpf
 
 from .. import tw
 from .. import file_util
+from ..util import MarketColorStyle, decide_market_color_style
+from .mpf_util import decide_mpf_style
 
 
 def installed(module_name):
@@ -33,7 +35,8 @@ def installed(module_name):
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-         legend_loc='best', out_dir='out'):
+         legend_loc='best',
+         market_color_style=MarketColorStyle.AUTO, out_dir='out'):
     """Plot a stock figure that consists 3 suplots: a price subplot, a
     volume subplot, and a RSI subplot.
 
@@ -90,12 +93,14 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         * 'upper center'
         * 'center'
 
+    market_color_style (MarketColorStyle): The market color style to use.
+        Default is MarketColorStyle.AUTO.
     out_dir: str
         the output directory for saving figure.
     """
     # Download stock data
-    symbol = tw.as_yfinance(symbol)
-    df = yf.Ticker(symbol).history(period=period, interval=interval)
+    ticker = tw.as_yfinance(symbol)
+    df = yf.Ticker(ticker).history(period=period, interval=interval)
 
     # Add Volume Moving Average
     vma = mpf.make_addplot(df['Volume'], mav=vma_nitems,
@@ -111,13 +116,17 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     else:
         print('Please install "talib" package.')
 
+    # Make a customized color style
+    mc_style = decide_market_color_style(ticker, market_color_style)
+    mpf_style = decide_mpf_style(base_mpf_style='yahoo', market_color_style=mc_style)
+
     # Plot candlesticks MA, volume, volume MA, RSI
     colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
     fig, axes = mpf.plot(
         df, type='candle',                  # candlesticks
         mav=ma_nitems, mavcolors=colors,    # moving average lines
         volume=True, addplot=addplot,       # volume, volume MA, RSI
-        style='yahoo', figsize=(16, 8),
+        style=mpf_style, figsize=(16, 8),
         returnfig=True
     )
     axes[0].legend([f'MA {d}' for d in ma_nitems], loc=legend_loc)
@@ -127,7 +136,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         df.index = df.index.strftime('%Y-%m-%d %H:%M')
     else:
         df.index = df.index.strftime('%Y-%m-%d')
-    fig.suptitle(f"{symbol} {interval} "
+    fig.suptitle(f"{ticker} {interval} "
                  f"({df.index.values[0]}~{df.index.values[-1]})",
                  y=0.93)
 
@@ -136,7 +145,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
 
     # Write the figure to an PNG file
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info(ticker, interval, df.index.values[-1], __file__)
     fig.savefig(f'{out_dir}/{fn}.png')
 
 
