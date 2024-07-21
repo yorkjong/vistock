@@ -2,9 +2,9 @@
 Initialize vistock package.
 """
 __software__ = "Visualizing Stocks"
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/07/19 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/07/22 (last revision)"
 
 __all__ = [
     'mpl',      # plot with mplfinance (using matplotlib internal)
