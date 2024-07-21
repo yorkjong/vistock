@@ -20,9 +20,11 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_util
 from . import fig_util as futil
+from ..util import MarketColorStyle, decide_market_color_style
 
 
-def _plot(df, profile_field='Volume', period='12mo', interval='1d',
+def _plot(df, ticker, market_color_style, profile_field='Volume',
+          period='12mo', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
           hides_nontrading=True, hbar_align_on_right=True):
     # Initialize empty plot with a marginal subplot
@@ -39,11 +41,14 @@ def _plot(df, profile_field='Volume', period='12mo', interval='1d',
     )
 
     # Plot the candlestick chart
+    mc_style = decide_market_color_style(ticker, market_color_style)
+    mc_colors = futil.get_candlestick_colors(mc_style)
     candlestick = go.Candlestick(
         x=df.index,
         open=df['Open'], high=df['High'], low=df['Low'], close=df['Close'],
         name='OHLC',
         xaxis='x2', yaxis='y2',
+        **mc_colors
     )
     fig.add_trace(candlestick)
 
@@ -78,8 +83,9 @@ def _plot(df, profile_field='Volume', period='12mo', interval='1d',
     fig.add_trace(vp)
 
     # Add volume trace to 2nd row
-    colors = ['green' if c >= o
-            else 'red' for o, c in zip(df['Open'], df['Close'])]
+    cl = futil.get_volume_colors(mc_style)
+    colors = [cl['up'] if c >= o
+              else cl['down'] for o, c in zip(df['Open'], df['Close'])]
     volume = go.Bar(
         x=df.index, y=df['Volume'], name='Volume',
         marker_color=colors, opacity=0.7,
@@ -149,7 +155,9 @@ class Volume:
     """
     def plot(symbol='TSLA', period='12mo', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
-             hides_nontrading=True, hbar_align_on_right=True, out_dir='out'):
+             hides_nontrading=True, hbar_align_on_right=True,
+             market_color_style=MarketColorStyle.AUTO,
+             out_dir='out'):
         """Plot a price-by-volume, PBV  (also called volume profile) figure for
         a given stock. This figure shows the volume distribution across price
         levels for a stock.
@@ -202,16 +210,18 @@ class Volume:
             decide if the price-by-volume bars align on right. True to set the
             starting position of the horizontal bars to the right; False the
             left.
+        market_color_style (MarketColorStyle): The market color style to use.
+            Default is MarketColorStyle.AUTO.
         out_dir: str
             the output directory for saving figure.
         """
         # Download stock data
-        symbol = tw.as_yfinance(symbol)
-        df = yf.Ticker(symbol).history(period=period, interval=interval)
+        ticker = tw.as_yfinance(symbol)
+        df = yf.Ticker(ticker).history(period=period, interval=interval)
 
         # Plot
-        fig = _plot(df, 'Volume', period, interval,
-                    ma_nitems, vma_nitems, total_bins,
+        fig = _plot(df, ticker, market_color_style, 'Volume',
+                    period, interval, ma_nitems, vma_nitems, total_bins,
                     hides_nontrading, hbar_align_on_right)
         fig.update_layout(
             title=f'{symbol} {interval} '
@@ -236,7 +246,9 @@ class Turnover:
     '''
     def plot(symbol='TSLA', period='12mo', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
-             hides_nontrading=True, hbar_align_on_right=True, out_dir='out'):
+             hides_nontrading=True, hbar_align_on_right=True,
+             market_color_style=MarketColorStyle.AUTO,
+             out_dir='out'):
         """Plot a price-by-volume, PBV  (also called volume profile) figure for
         a given stock. This figure shows the volume distribution across price
         levels for a stock.
@@ -289,17 +301,19 @@ class Turnover:
             decide if the price-by-volume bars align on right. True to set the
             starting position of the horizontal bars to the right; False the
             left.
+        market_color_style (MarketColorStyle): The market color style to use.
+            Default is MarketColorStyle.AUTO.
         out_dir: str
             the output directory for saving figure.
         """
         # Download stock data
-        symbol = tw.as_yfinance(symbol)
-        df = yf.Ticker(symbol).history(period=period, interval=interval)
+        ticker = tw.as_yfinance(symbol)
+        df = yf.Ticker(ticker).history(period=period, interval=interval)
         df['Turnover'] = df['Close'] * df['Volume']
 
         # Plot
-        fig = _plot(df, 'Turnover', period, interval,
-                    ma_nitems, vma_nitems, total_bins,
+        fig = _plot(df, ticker, market_color_style, 'Turnover',
+                    period, interval, ma_nitems, vma_nitems, total_bins,
                     hides_nontrading, hbar_align_on_right)
         fig.update_layout(
             title=f'{symbol} {interval} '

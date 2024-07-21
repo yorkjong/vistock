@@ -19,11 +19,13 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_util
 from . import fig_util as futil
+from ..util import MarketColorStyle, decide_market_color_style
 
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-         hides_nontrading=True, out_dir='out'):
+         hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
+         out_dir='out'):
     """Plot a stock figure that consists of two subplots: a price subplot and
     a volume subplot.
 
@@ -67,12 +69,14 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         the number of data items to calculate the volume moving average.
     hides_nontrading: bool
         decide if hides non-trading time-periods.
+    market_color_style (MarketColorStyle): The market color style to use.
+        Default is MarketColorStyle.AUTO.
     out_dir: str
         the output directory for saving figure.
     """
     # Download stock data
-    symbol = tw.as_yfinance(symbol)
-    df = yf.Ticker(symbol).history(period=period, interval=interval)
+    ticker = tw.as_yfinance(symbol)
+    df = yf.Ticker(ticker).history(period=period, interval=interval)
 
     # Initialize empty plot with a marginal subplot
     fig = make_subplots(
@@ -85,10 +89,13 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     #print(fig)
 
     # Plot the candlestick chart
+    mc_style = decide_market_color_style(ticker, market_color_style)
+    mc_colors = futil.get_candlestick_colors(mc_style)
     candlestick = go.Candlestick(
         x=df.index,
         open=df['Open'], high=df['High'], low=df['Low'], close=df['Close'],
-        name='OHLC'
+        name='OHLC',
+        **mc_colors
     )
     fig.add_trace(candlestick)
 
@@ -101,8 +108,9 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         fig.add_trace(ma)
 
     # Add volume trace to 2nd row
-    colors = ['green' if c >= o
-              else 'red' for o, c in zip(df['Open'], df['Close'])]
+    cl = futil.get_volume_colors(mc_style)
+    colors = [cl['up'] if c >= o
+              else cl['down'] for o, c in zip(df['Open'], df['Close'])]
     volume = go.Bar(x=df.index, y=df['Volume'], name='Volume',
                     marker_color=colors, opacity=0.5)
     fig.add_trace(volume, row=2, col=1)

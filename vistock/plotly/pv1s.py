@@ -5,9 +5,9 @@ Show a price-and-volume overlaid stock chart.
 * Plot with Plotly (for candlestick, MA, volume, volume MA)
 """
 __software__ = "Price and Volume overlaid stock chart"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/07/13 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/07/22 (last revision)"
 
 __all__ = ['plot']
 
@@ -18,11 +18,13 @@ import plotly.graph_objs as go
 from .. import tw
 from .. import file_util
 from . import fig_util as futil
+from ..util import MarketColorStyle, decide_market_color_style
 
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-         hides_nontrading=True, out_dir='out'):
+         hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
+         out_dir='out'):
     """Plot a stock figure overlaying charts in a single subplot.
 
     These charts include candlesticks, price moving-average lines, a volume
@@ -64,18 +66,23 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         the number of data items to calculate the volume moving average.
     hides_nontrading: bool
         decide if hides non-trading time-periods.
+    market_color_style (MarketColorStyle): The market color style to use.
+        Default is MarketColorStyle.AUTO.
     out_dir: str
         the output directory for saving figure.
     """
     # Download stock data
-    symbol = tw.as_yfinance(symbol)
-    df = yf.Ticker(symbol).history(period=period, interval=interval)
+    ticker = tw.as_yfinance(symbol)
+    df = yf.Ticker(ticker).history(period=period, interval=interval)
 
     # Add the candlestick chart
+    mc_style = decide_market_color_style(ticker, market_color_style)
+    mc_colors = futil.get_candlestick_colors(mc_style)
     candlestick = go.Candlestick(
         x=df.index,
         open=df['Open'], high=df['High'], low=df['Low'], close=df['Close'],
-        name='OHLC'
+        name='OHLC',
+        **mc_colors
     )
     fig = go.Figure(data=[candlestick])
 

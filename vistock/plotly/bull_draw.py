@@ -17,11 +17,13 @@ from .. import tw
 from .. import file_util
 from . import fig_util as futil
 from ..bull_draw_util import calculate_bull_run, calculate_drawdown
+from ..util import MarketColorStyle, decide_market_color_style
 
 
 def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-         hides_nontrading=True, out_dir='out'):
+         hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
+         out_dir='out'):
     """Plot a stock figure that consists of two subplots: a price subplot and
     a volume subplot.
 
@@ -65,6 +67,8 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         the number of data items to calculate the volume moving average.
     hides_nontrading: bool
         decide if hides non-trading time-periods.
+    market_color_style (MarketColorStyle): The market color style to use.
+        Default is MarketColorStyle.AUTO.
     out_dir: str
         the output directory for saving figure.
     """
@@ -90,35 +94,43 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
             )
     fig.add_trace(price)
 
+    # Automaticly decide market color style
+    mc_style = decide_market_color_style(ticker, market_color_style)
+
     # Add bull-run trace to the figure
+    cl = get_bullrun_color(mc_style)
     df['BullRun'] = calculate_bull_run(df)
     drawdown = go.Bar(x=df.index, y=df['BullRun'], name='BullRun',
-                    marker_color='blue', opacity=0.5)
+                    marker_color=cl, opacity=0.5)
     fig.add_trace(drawdown)
 
     # Add drawdown trace to the figure
+    cl = get_drawdown_color(mc_style)
     df['Drawdown'] = calculate_drawdown(df)
     drawdown = go.Bar(x=df.index, y=df['Drawdown'], name='Drawdown',
-                    marker_color='orange', opacity=0.5)
+                    marker_color=cl, opacity=0.5)
     fig.add_trace(drawdown)
 
-    # Add close-high diff trace to the figure
-    df['Close-High'] = (df['Close'] - df['High']) / df['Close']
-    diff = go.Bar(x=df.index, y=df['Close-High'], name='Close-High',
-                    marker_color='red', opacity=0.5)
-    fig.add_trace(diff)
+    # Get volume colors
+    cl = futil.get_volume_colors(mc_style)
 
     # Add close-low diff trace to the figure
     df['Close-Low'] = (df['Close'] - df['Low']) / df['Close']
     diff = go.Bar(x=df.index, y=df['Close-Low'], name='Close-Low',
-                  marker_color='green', opacity=0.5)
+                  marker_color=cl['up'], opacity=0.5)
+    fig.add_trace(diff)
+
+    # Add close-high diff trace to the figure
+    df['Close-High'] = (df['Close'] - df['High']) / df['Close']
+    diff = go.Bar(x=df.index, y=df['Close-High'], name='Close-High',
+                    marker_color=cl['down'], opacity=0.5)
     fig.add_trace(diff)
 
     fig.update_layout(barmode='overlay')
 
     # Add volume trace to 2nd row
-    colors = ['green' if c >= o
-              else 'red' for o, c in zip(df['Open'], df['Close'])]
+    colors = [cl['up'] if c >= o
+              else cl['down'] for o, c in zip(df['Open'], df['Close'])]
     volume = go.Bar(x=df.index, y=df['Volume'], name='Volume',
                     marker_color=colors, opacity=0.5)
     fig.add_trace(volume, row=2, col=1)
@@ -163,6 +175,20 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     out_dir = file_util.make_dir(out_dir)
     fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
     fig.write_html(f'{out_dir}/{fn}.html')
+
+
+def get_bullrun_color(market_color_style=MarketColorStyle.WESTERN):
+    if market_color_style == MarketColorStyle.WESTERN:
+        return 'blue'
+    else:
+        return 'orange'
+
+
+def get_drawdown_color(market_color_style=MarketColorStyle.WESTERN):
+    if market_color_style == MarketColorStyle.WESTERN:
+        return 'orange'
+    else:
+        return 'blue'
 
 
 if __name__ == '__main__':

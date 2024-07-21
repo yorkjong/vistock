@@ -5,13 +5,47 @@ __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/09 (initial version) ~ 2024/07/13 (last revision)"
 
 __all__ = [
+    'get_candlestick_colors',
+    'get_volume_colors',
     'hide_nontrading_periods',
     'add_crosshair_cursor',
     'add_hovermode_menu',
 ]
 
 import pandas as pd
+from ..util import MarketColorStyle
 
+
+def get_candlestick_colors(market_color_style=MarketColorStyle.WESTERN):
+    colors = {
+        'increasing_line_color': '#32a455',
+        'increasing_fillcolor': 'rgba(50, 164, 85, 0.4)',
+        'decreasing_line_color': '#d71917',
+        'decreasing_fillcolor': 'rgba(215, 25, 23, 0.4)'
+    }
+
+    if market_color_style == MarketColorStyle.WESTERN:
+        return colors
+    else:
+        return {
+            'increasing_line_color': colors['decreasing_line_color'],
+            'increasing_fillcolor': colors['decreasing_fillcolor'],
+            'decreasing_line_color': colors['increasing_line_color'],
+            'decreasing_fillcolor': colors['increasing_fillcolor'],
+        }
+
+
+def get_volume_colors(market_color_style=MarketColorStyle.WESTERN):
+    if market_color_style == MarketColorStyle.WESTERN:
+        return {
+            'up': 'green',
+            'down': 'red'
+        }
+    else:
+        return {
+            'up': 'red',
+            'down': 'green'
+        }
 
 #------------------------------------------------------------------------------
 

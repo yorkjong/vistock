@@ -2,11 +2,11 @@ Change Log
 ==========
 TODO
 ----
-* vistock/plotly: To add market_color_style argument to stock plot functions
 
 0.3.2
 ------------------
 * vistock/mpl: Added market_color_style argument to stock plot functions
+* vistock/plotly: Added market_color_style argument to stock plot functions
 
 0.3.1 [2024-07-21]
 ------------------
