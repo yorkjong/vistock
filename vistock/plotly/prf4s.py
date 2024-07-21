@@ -3,9 +3,9 @@ Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
 4-section layout for a given stock.
 """
 __software__ = "Volume Profile with Plotly 2x2 subplots"
-__version__ = "2.0"
+__version__ = "2.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/07/19 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/07/22 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -56,7 +56,7 @@ def _plot(df, profile_field='Volume', period='12mo', interval='1d',
         fig.add_trace(ma, row=1, col=1)
 
     # Add volume trace to 2nd row
-    colors = ['green' if c - o >= 0
+    colors = ['green' if c >= o
             else 'red' for o, c in zip(df['Open'], df['Close'])]
     volume = go.Bar(x=df.index, y=df['Volume'], name='Volume',
                     marker_color=colors)

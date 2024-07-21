@@ -5,9 +5,9 @@ Show a price-and-volume separated stock chart.
 * Plot with Plotly (for candlestick, MA, volume, volume MA)
 """
 __software__ = "Price and Volume separated stock chart"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/07/13 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/07/22 (last revision)"
 
 __all__ = ['plot']
 
@@ -101,7 +101,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
         fig.add_trace(ma)
 
     # Add volume trace to 2nd row
-    colors = ['green' if c - o >= 0
+    colors = ['green' if c >= o
               else 'red' for o, c in zip(df['Open'], df['Close'])]
     volume = go.Bar(x=df.index, y=df['Volume'], name='Volume',
                     marker_color=colors, opacity=0.5)

@@ -2,9 +2,9 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/21 (initial version) ~ 2024/07/21 (last revision)"
+__date__ = "2024/07/21 (initial version) ~ 2024/07/22 (last revision)"
 
 __all__ = [ 'plot' ]
 
@@ -117,7 +117,7 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
     fig.update_layout(barmode='overlay')
 
     # Add volume trace to 2nd row
-    colors = ['green' if c - o >= 0
+    colors = ['green' if c >= o
               else 'red' for o, c in zip(df['Open'], df['Close'])]
     volume = go.Bar(x=df.index, y=df['Volume'], name='Volume',
                     marker_color=colors, opacity=0.5)
