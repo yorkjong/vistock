@@ -2,9 +2,9 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/21 (initial version) ~ 2024/07/21 (last revision)"
+__date__ = "2024/07/21 (initial version) ~ 2024/07/22 (last revision)"
 
 __all__ = [ 'plot' ]
 
@@ -86,7 +86,7 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         type='line', linestyle='', color='purple',
         panel=1)
 
-    # Plot candlesticks price, bull-run, drawdown, volume, and volume MA
+    # Plot price, bull-run, drawdown, volume, and volume MA
     fig, axes = mpf.plot(
         df, type='line',
         volume=True, addplot=[bull_run_addplot, drawdown_addplot, vma],
