@@ -3,6 +3,10 @@ Change Log
 TODO
 ----
 
+0.3.3
+------------------
+* vistock/util.py: Added the support of .TWO to decide_market_color_style
+
 0.3.2 [2024-07-22]
 ------------------
 * vistock/mpl: Added market_color_style argument to stock plot functions
