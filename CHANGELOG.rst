@@ -6,6 +6,7 @@ TODO
 0.3.3
 ------------------
 * vistock/util.py: Added the support of .TWO to decide_market_color_style
+* vistock/util.py: Added doctest to decide_market_color_style
 
 0.3.2 [2024-07-22]
 ------------------

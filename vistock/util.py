@@ -32,6 +32,14 @@ def decide_market_color_style(ticker='TSLA', style=MarketColorStyle.AUTO):
     Returns:
         MarketColorStyle: The determined market color style (EASTERN, WESTERN,
         or based on the ticker if AUTO is chosen).
+
+    Examples:
+        >>> decide_market_color_style('TSLA')
+        <MarketColorStyle.WESTERN: 'western'>
+        >>> decide_market_color_style('2330.TW')
+        <MarketColorStyle.EASTERN: 'eastern'>
+        >>> decide_market_color_style('8069.TWO')
+        <MarketColorStyle.EASTERN: 'eastern'>
     """
     if style != MarketColorStyle.AUTO:
         return style
@@ -48,4 +56,14 @@ def decide_market_color_style(ticker='TSLA', style=MarketColorStyle.AUTO):
 
     # Default to US market colors for unspecified markets or tickers without suffix
     return MarketColorStyle.WESTERN
+
+
+#------------------------------------------------------------------------------
+# Test
+#------------------------------------------------------------------------------
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
 
