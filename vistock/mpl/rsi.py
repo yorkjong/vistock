@@ -23,17 +23,6 @@ from .mpf_util import decide_mpf_style
 from .. import ta
 
 
-def installed(module_name):
-    """Decides if a module is installed.
-    """
-    import importlib
-    try:
-        importlib.import_module(module_name)
-        return True
-    except ImportError:
-        return False
-
-
 def plot(symbol='TSLA', period='12mo', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
          legend_loc='best',
