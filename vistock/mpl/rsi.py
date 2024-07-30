@@ -6,9 +6,9 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * RSI from TA-Lib
 """
 __software__ = "Stock chart of price, volume, and RSI"
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/07/22 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2023/07/31 (last revision)"
 
 __all__ = ['plot']
 
@@ -20,6 +20,7 @@ from .. import tw
 from .. import file_util
 from ..util import MarketColorStyle, decide_market_color_style
 from .mpf_util import decide_mpf_style
+from .. import ta
 
 
 def installed(module_name):
@@ -107,14 +108,13 @@ def plot(symbol='TSLA', period='12mo', interval='1d',
                            type='line', linestyle='', color='purple', panel=1)
     addplot = [vma]
 
-    if installed('talib'):
-        from talib import abstract
-        # Add RSI
-        RSI = lambda df, period: abstract.RSI(df, timeperiod=period)
-        rsi = mpf.make_addplot(RSI(df['Close'], 14), panel=2, ylabel='RSI')
-        addplot.append(rsi)
-    else:
-        print('Please install "talib" package.')
+    # Add RSI
+    rsi = [
+        mpf.make_addplot(ta.rsi(df['Close']), panel=2, ylabel='RSI'),
+        mpf.make_addplot([70] * len(df), panel=2, color='red', linestyle='--'),
+        mpf.make_addplot([30] * len(df), panel=2, color='green', linestyle='--')
+    ]
+    addplot.extend(rsi)
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)

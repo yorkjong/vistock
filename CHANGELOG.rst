@@ -7,6 +7,8 @@ TODO
 ------------------
 * vistock/util.py: Added the support of .TWO to decide_market_color_style
 * vistock/util.py: Added doctest to decide_market_color_style
+* vistock/mpl/rsi.py: Created ta module and replaced talib package with ta
+  module
 
 0.3.2 [2024-07-22]
 ------------------
