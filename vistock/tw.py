@@ -358,6 +358,8 @@ def similar_stocks(symbol):
     Examples:
         >>> similar_stocks('印度')
         [('富邦印度', '00652'), ('富邦印度正2', '00653L'), ('富邦印度反1', '00654R')]
+        >>> similar_stocks('永豐美國')
+        [('永豐美國500大', '00858'), ('永豐美國科技', '00886')]
     """
     # for listed stocks
     similar_listed_stocks = functools.partial(
