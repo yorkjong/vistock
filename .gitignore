@@ -165,6 +165,7 @@ cython_debug/
 # pyenv files
 .python-version
 
-# module generated figure files
+# module generated files
 out/
+output/
 
