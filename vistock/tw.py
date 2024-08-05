@@ -3,7 +3,7 @@ Handle stocks of Taiwan markets.
 """
 __version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2023/02/20 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2024/08/06 (last revision)"
 
 __all__ = [
     'as_yfinance',
@@ -197,7 +197,7 @@ class OpenAPI:
         OTC_stock_code = functools.partial(
             OpenAPI.value_from_key,
             url='https://www.tpex.org.tw/openapi/v1/'
-                'tpex_mainboard_daily_close_quotes',
+                'tpex_daily_market_value',
             key_field='CompanyName',
             value_field='SecuritiesCompanyCode'
         )
@@ -207,7 +207,7 @@ class OpenAPI:
         ESB_stock_code = functools.partial(
             OpenAPI.value_from_key,
             url='https://www.tpex.org.tw/openapi/v1/'
-                'tpex_esb_latest_statistics',
+                'tpex_esb_capitals_rank',
             key_field='CompanyName',
             value_field='SecuritiesCompanyCode'
         )
@@ -294,7 +294,7 @@ OpenAPI.listed_stock_name = functools.partial(
 OpenAPI.OTC_stock_name = functools.partial(
     OpenAPI.value_from_key,
     url='https://www.tpex.org.tw/openapi/v1/'
-        'tpex_mainboard_daily_close_quotes',
+        'tpex_daily_market_value',
     key_field='SecuritiesCompanyCode',
     value_field='CompanyName'
 )
@@ -302,7 +302,7 @@ OpenAPI.OTC_stock_name = functools.partial(
 # for an ESB stock
 OpenAPI.ESB_stock_name = functools.partial(
     OpenAPI.value_from_key,
-    url='https://www.tpex.org.tw/openapi/v1/tpex_esb_latest_statistics',
+    url='https://www.tpex.org.tw/openapi/v1/tpex_esb_capitals_rank',
     key_field='SecuritiesCompanyCode',
     value_field='CompanyName'
 )
@@ -371,7 +371,7 @@ def similar_stocks(symbol):
     similar_OTC_stocks = functools.partial(
         OpenAPI.similar_keys,
         url='https://www.tpex.org.tw/openapi/v1/'
-            'tpex_mainboard_daily_close_quotes',
+            'tpex_daily_market_value',
         key_field='CompanyName',
         value_field='SecuritiesCompanyCode'
     )
@@ -379,7 +379,7 @@ def similar_stocks(symbol):
     # for ESB stocks
     similar_ESB_stocks = functools.partial(
         OpenAPI.similar_keys,
-        url='https://www.tpex.org.tw/openapi/v1/tpex_esb_latest_statistics',
+        url='https://www.tpex.org.tw/openapi/v1/tpex_esb_capitals_rank',
         key_field='CompanyName',
         value_field='SecuritiesCompanyCode'
     )
