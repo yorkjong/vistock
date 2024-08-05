@@ -106,7 +106,8 @@ class Crawler:
         if code:
             return f'{code}.TWO'
 
-        # for an emerging OTC stock
+        # for an ESB stock. ESB stands for Emerging Stock Board (also called
+        # Emerging Stock Market, or Emerging OTC)
         _, code = Crawler._get_name_code_pair(symbol, 5)
         if code:
             return f'{code}.TWO'
@@ -201,8 +202,9 @@ class OpenAPI:
             value_field='SecuritiesCompanyCode'
         )
 
-        # for an emerging OTC stock
-        EOTC_stock_code = functools.partial(
+        # for an ESB stock. ESB stands for Emerging Stock Board (also called
+        # Emerging Stock Market, or Emerging OTC)
+        ESB_stock_code = functools.partial(
             OpenAPI.value_from_key,
             url='https://www.tpex.org.tw/openapi/v1/'
                 'tpex_esb_latest_statistics',
@@ -216,7 +218,7 @@ class OpenAPI:
         code = OTC_stock_code(name)
         if code:
             return f'{code}.TWO'
-        code = EOTC_stock_code(name)
+        code = ESB_stock_code(name)
         if code:
             return f'{code}.TWO'
         return name
@@ -246,7 +248,7 @@ class OpenAPI:
         name = OpenAPI.OTC_stock_name(code)
         if name:
             return name
-        name = OpenAPI.EOTC_stock_name(code)
+        name = OpenAPI.ESB_stock_name(code)
         if name:
             return name
         return code
@@ -274,7 +276,7 @@ class OpenAPI:
         name = OpenAPI.OTC_stock_name(code)
         if name:
             return f'{code}.TWO'
-        name = OpenAPI.EOTC_stock_name(code)
+        name = OpenAPI.ESB_stock_name(code)
         if name:
             return f'{code}.TWO'
         return code
@@ -297,8 +299,8 @@ OpenAPI.OTC_stock_name = functools.partial(
     value_field='CompanyName'
 )
 
-# for an emerging OTC stock
-OpenAPI.EOTC_stock_name = functools.partial(
+# for an ESB stock
+OpenAPI.ESB_stock_name = functools.partial(
     OpenAPI.value_from_key,
     url='https://www.tpex.org.tw/openapi/v1/tpex_esb_latest_statistics',
     key_field='SecuritiesCompanyCode',
@@ -374,8 +376,8 @@ def similar_stocks(symbol):
         value_field='SecuritiesCompanyCode'
     )
 
-    # for emerging OTC stocks
-    similar_EOTC_stocks = functools.partial(
+    # for ESB stocks
+    similar_ESB_stocks = functools.partial(
         OpenAPI.similar_keys,
         url='https://www.tpex.org.tw/openapi/v1/tpex_esb_latest_statistics',
         key_field='CompanyName',
@@ -389,7 +391,7 @@ def similar_stocks(symbol):
     stocks = similar_OTC_stocks(name)
     if stocks:
         return stocks
-    return similar_EOTC_stocks(name)
+    return similar_ESB_stocks(name)
 
 
 #------------------------------------------------------------------------------
