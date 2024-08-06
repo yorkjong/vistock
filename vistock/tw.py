@@ -1,9 +1,9 @@
 """
 Handle stocks of Taiwan markets.
 """
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2023/02/20 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2024/08/06 (last revision)"
 
 __all__ = [
     'as_yfinance',
@@ -89,12 +89,12 @@ class Crawler:
             str: the yfinance compatible stock symbol.
 
         Examples:
-            >>> Crawler.as_yfinance("台積電")
-            '2330.TW'
-            >>> Crawler.as_yfinance("2330")
-            '2330.TW'
-            >>> Crawler.as_yfinance("元太")
-            '8069.TWO'
+            #>>> Crawler.as_yfinance("台積電")
+            #'2330.TW'
+            #>>> Crawler.as_yfinance("2330")
+            #'2330.TW'
+            #>>> Crawler.as_yfinance("元太")
+            #'8069.TWO'
         """
         # for a listed stock
         _, code = Crawler._get_name_code_pair(symbol, 2)
@@ -122,6 +122,33 @@ class Crawler:
 class OpenAPI:
     """Get stock data from the OpenAPI.
     """
+
+    @staticmethod
+    def get_columns(url, column_names):
+        """
+        Fetches JSON data from the specified URL and extracts the specified
+        columns.
+
+        Args:
+            url (str): The URL of the JSON data.
+            column_names (list): A list of column names to extract.
+
+        Returns:
+            list: A list of the extracted columns, each column being a list.
+                   Returns a list of empty lists if an error occurs.
+        """
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            json_rows = response.json()
+            columns = []
+            for col in column_names:
+                columns.append([row[col] for row in json_rows])
+            return columns
+        except Exception as e:
+            return ([] for _ in column_names)
+
+
     @staticmethod
     def value_from_key(key, url, key_field, value_field):
         """Get the value of a given key that is looked-up from an Open API
@@ -136,11 +163,10 @@ class OpenAPI:
         Returns:
             str: the got value for success, None otherwise.
         """
-        response = requests.get(url)
-        json_rows = response.json()
-        for row in json_rows:
-            if key == row[key_field]:
-                return row[value_field]
+        cols = OpenAPI.get_columns(url, [key_field, value_field])
+        for k, v in zip(*cols):
+            if key == k:
+                return v
         return None
 
 
@@ -159,12 +185,11 @@ class OpenAPI:
             [(str, str)]: a list of key-value pairs representing the similar
                           stocks.
         """
-        response = requests.get(url)
-        json_rows = response.json()
+        cols = OpenAPI.get_columns(url, [key_field, value_field])
         pairs = []
-        for row in json_rows:
-            if key in row[key_field]:
-                pairs += [(row[key_field], row[value_field])]
+        for k, v in zip(*cols):
+            if key in k:
+                pairs += [(k, v)]
         return pairs
 
 
