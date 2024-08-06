@@ -10,13 +10,13 @@ __all__ = [
     'mpl',              # plot with mplfinance (using matplotlib internal)
     'plotly',           # plot with Plotly
     'tw',               # handle stocks of Taiwan markets
-    #'ibd',              # functions for IBD RS and IBD RS Rating
-    #'stock_indices',    # functions for Stock Indices
+    'ibd',              # functions for IBD RS and IBD RS Rating
+    'stock_indices',    # functions for Stock Indices
 ]
 
 from . import mpl
 from . import plotly
 from . import tw
-#from . import ibd
-#from . import stock_indices
+from . import ibd
+from . import stock_indices
 
