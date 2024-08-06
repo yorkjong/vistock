@@ -8,6 +8,9 @@ __date__ = "2023/02/19 (initial version) ~ 2024/08/06 (last revision)"
 __all__ = [
     'as_yfinance',
     'similar_stocks',
+    'get_twse_tickers',
+    'get_tpex_tickers',
+    'get_esb_tickers',
 ]
 
 import functools
@@ -419,6 +422,66 @@ def similar_stocks(symbol):
     if stocks:
         return stocks
     return similar_ESB_stocks(name)
+
+
+def get_twse_tickers():
+    """
+    Fetches the list of tickers for companies listed on the Taiwan Stock
+    Exchange (TWSE).
+
+    Retrieves ticker symbols from the TWSE Open API.
+
+    Returns:
+        list: A list of TWSE ticker symbols.
+
+    Examples:
+        >>> tickers = get_twse_tickers()
+        >>> print(tickers[:5])
+        ['0050.TW', '0051.TW', '0052.TW', '0053.TW', '0055.TW']
+    """
+    url = "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
+    (codes,) = OpenAPI.get_columns(url, ["Code"])
+    return [f'{c}.TW' for c in codes]
+
+
+def get_tpex_tickers():
+    """
+    Fetches the list of tickers for companies listed on the Taipei Exchange
+    (TPEx).
+
+    Retrieves ticker symbols from the TPEx Open API.
+
+    Returns:
+        list: A list of TPEx ticker symbols.
+
+    Examples:
+        >>> tickers = get_tpex_tickers()
+        >>> print(tickers[:5])
+        ['8069.TWO', '6488.TWO', '5347.TWO', '3293.TWO', '3529.TWO']
+    """
+    url = "https://www.tpex.org.tw/openapi/v1/tpex_daily_market_value"
+    (codes,) = OpenAPI.get_columns(url, ["SecuritiesCompanyCode"])
+    return [f'{c}.TWO' for c in codes]
+
+
+def get_esb_tickers():
+    """
+    Fetches the list of tickers for companies listed on the Emerging Stock
+    Board (ESB) of the Taipei Exchange.
+
+    Retrieves ticker symbols from the TPEx Open API.
+
+    Returns:
+        list: A list of ESB ticker symbols.
+
+    Examples:
+        >>> tickers = get_esb_tickers()
+        >>> print(tickers[:5])
+        ['9957.TWO', '2646.TWO', '5859.TWO', '6434.TWO', '1480.TWO']
+    """
+    url = "https://www.tpex.org.tw/openapi/v1/tpex_esb_capitals_rank"
+    (codes,) = OpenAPI.get_columns(url, ["SecuritiesCompanyCode"])
+    return [f'{c}.TWO' for c in codes]
 
 
 #------------------------------------------------------------------------------
