@@ -5,11 +5,14 @@ TODO
 
 0.4.0
 ------------------
+* Added ibd module to support IBD Rating and Ranking
+* Added stock_indices module to get tickers of a given source index
+* Extended tw module to get tickers of a given source exchange
+* Added ibd_demo.ipynb to demo ibd module
 * vistock/util.py: Added the support of .TWO to decide_market_color_style
 * vistock/util.py: Added doctest to decide_market_color_style
 * vistock/mpl/rsi.py: Created ta module and replaced talib package with ta
   module
-* Add features of IBD RS and IBD RS Rating
 
 0.3.2 [2024-07-22]
 ------------------
