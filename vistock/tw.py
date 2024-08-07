@@ -1,9 +1,32 @@
 """
 Handle stocks of Taiwan markets.
+
+This module provides functions and classes to interact with Taiwan stock markets,
+including TWSE (Taiwan Stock Exchange), TPEx (Taipei Exchange), and ESB (Emerging
+Stock Board). It offers functionality to convert stock symbols, fetch stock data,
+and retrieve lists of tickers for different markets.
+
+Main features:
+- Convert stock symbols to yfinance compatible format
+- Fetch stock data from various Taiwan stock markets
+- Retrieve lists of tickers for TWSE, TPEx, and ESB
+- Find similar stocks based on name or code
+
+Usage:
+    import tw
+
+    # Convert a stock symbol
+    yf_symbol = tw.as_yfinance('台積電')
+
+    # Find similar stocks
+    similar = tw.similar_stocks('印度')
+
+    # Get TWSE tickers
+    twse_tickers = tw.get_twse_tickers()
 """
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2024/08/06 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2024/08/07 (last revision)"
 
 __all__ = [
     'as_yfinance',
@@ -47,7 +70,13 @@ def is_chinese(char):
 #------------------------------------------------------------------------------
 
 class Crawler:
-    """Crawl stock data from 'https://isin.twse.com.tw/isin/C_public.jsp'.
+    """
+    A class for crawling stock data from Taiwan stock market websites.
+
+    This class provides methods to fetch stock information and convert
+    stock symbols to yfinance compatible format.
+
+    stock data is from 'https://isin.twse.com.tw/isin/C_public.jsp'.
     """
     @staticmethod
     def _get_name_code_pair(symbol, str_mode):
@@ -123,7 +152,11 @@ class Crawler:
 #------------------------------------------------------------------------------
 
 class OpenAPI:
-    """Get stock data from the OpenAPI.
+    """
+    A class for interacting with Taiwan stock market Open APIs.
+
+    This class provides methods to fetch stock data, convert symbols,
+    and retrieve stock information using various Open APIs.
     """
 
     @staticmethod
@@ -344,6 +377,16 @@ OpenAPI.ESB_stock_name = functools.partial(
 def as_yfinance(symbol):
     """
     Convert a given stock symbol into yfinance compatible stock symbol.
+
+    This function handles different types of input:
+    - If the input is already in yfinance format (ends with .TW or .TWO), it's
+        returned as is.
+    - If the input is in Chinese, it's treated as a stock name and converted to
+        a code.
+    - If the input starts with a digit, it's treated as a Taiwan stock code and
+        the appropriate suffix (.TW or .TWO) is added.
+    - For other inputs (e.g., non-Taiwan stocks), the symbol is returned
+        unchanged.
 
     Args:
         symbol (str): the input symbol.
