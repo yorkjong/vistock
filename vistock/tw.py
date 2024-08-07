@@ -15,6 +15,9 @@ Main features:
 Usage:
     import tw
 
+    # Get the stock name from its code
+    name = tw.stock_name('2330.TW')
+
     # Convert a stock symbol
     yf_symbol = tw.as_yfinance('台積電')
 
@@ -27,11 +30,12 @@ Usage:
     # Get TWSE tickers
     tickers = tw.get_tickers('TWSE')
 """
-__version__ = "1.4"
+__version__ = "1.5"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2024/08/07 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2024/08/08 (last revision)"
 
 __all__ = [
+    'stock_name',
     'as_yfinance',
     'similar_stocks',
     'get_twse_tickers',
@@ -377,6 +381,30 @@ OpenAPI.emerging_stock_name = functools.partial(
 #------------------------------------------------------------------------------
 # Public Functions
 #------------------------------------------------------------------------------
+
+def stock_name(code):
+    """Get stock name from its code.
+
+    Args:
+        code (str): a Taiwan stock code.
+    Returns:
+        str: the Taiwan stock name.
+    Examples:
+        >>> stock_name('2330.TW')
+        '台積電'
+        >>> stock_name('8069.TWO')
+        '元太'
+        >>> stock_name('2646.TWO')
+        '星宇航空'
+        >>> stock_name('2330')
+        '台積電'
+        >>> stock_name('8069')
+        '元太'
+        >>> stock_name('2646')
+        '星宇航空'
+    """
+    return OpenAPI.stock_name(code)
+
 
 @functools.lru_cache
 def as_yfinance(symbol):
