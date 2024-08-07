@@ -38,6 +38,7 @@ __all__ = [
 
 import functools
 import unicodedata
+
 import requests
 from bs4 import BeautifulSoup
 
