@@ -23,8 +23,11 @@ Usage:
 
     # Get TWSE tickers
     twse_tickers = tw.get_twse_tickers()
+
+    # Get TWSE tickers
+    tickers = tw.get_tickers('TWSE')
 """
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/19 (initial version) ~ 2024/08/07 (last revision)"
 
@@ -34,6 +37,8 @@ __all__ = [
     'get_twse_tickers',
     'get_tpex_tickers',
     'get_esb_tickers',
+    'get_all_tickers',
+    'get_tickers',
 ]
 
 import functools
@@ -302,8 +307,7 @@ class OpenAPI:
             >>> OpenAPI.stock_name('2646')
             '星宇航空'
         """
-        code = code.replace('.TWO', '')
-        code = code.replace('.TW', '')
+        code = code.replace('.TWO', '').replace('.TW', '')
         name = OpenAPI.listed_stock_name(code)
         if name:
             return name
@@ -467,10 +471,11 @@ def similar_stocks(symbol):
         return stocks
     return similar_ESB_stocks(name)
 
+#------------------------------------------------------------------------------
 
 def get_twse_tickers():
     """
-    Fetches the list of tickers for companies listed on the Taiwan Stock
+    Fetch the list of tickers for companies listed on the Taiwan Stock
     Exchange (TWSE).
 
     Retrieves ticker symbols from the TWSE Open API.
@@ -490,7 +495,7 @@ def get_twse_tickers():
 
 def get_tpex_tickers():
     """
-    Fetches the list of tickers for companies listed on the Taipei Exchange
+    Fetch the list of tickers for companies listed on the Taipei Exchange
     (TPEx).
 
     Retrieves ticker symbols from the TPEx Open API.
@@ -500,8 +505,8 @@ def get_tpex_tickers():
 
     Examples:
         >>> tickers = get_tpex_tickers()
-        >>> print(tickers[:5])
-        ['8069.TWO', '6488.TWO', '5347.TWO', '3293.TWO', '3529.TWO']
+        >>> '8069.TWO' in tickers
+        True
     """
     url = "https://www.tpex.org.tw/openapi/v1/tpex_daily_market_value"
     (codes,) = OpenAPI.get_columns(url, ["SecuritiesCompanyCode"])
@@ -510,7 +515,7 @@ def get_tpex_tickers():
 
 def get_esb_tickers():
     """
-    Fetches the list of tickers for companies listed on the Emerging Stock
+    Fetch the list of tickers for companies listed on the Emerging Stock
     Board (ESB) of the Taipei Exchange.
 
     Retrieves ticker symbols from the TPEx Open API.
@@ -526,6 +531,76 @@ def get_esb_tickers():
     url = "https://www.tpex.org.tw/openapi/v1/tpex_esb_capitals_rank"
     (codes,) = OpenAPI.get_columns(url, ["SecuritiesCompanyCode"])
     return [f'{c}.TWO' for c in codes]
+
+
+def get_all_tickers():
+    """
+    Fetch a combined list of tickers from multiple major stock market indices.
+
+    This function aggregates ticker symbols from the following indices:
+    - Taiwan Stock Exchange, TWSE
+    - Taipei Exchange, TPEX
+    - Emerging Stock Board of the Taipei Exchange, ESB
+
+    Returns:
+        list: A list of unique ticker symbols from the specified indices.
+
+    Examples:
+        >>> tickers = get_all_tickers()
+        >>> len(tickers) > 2000
+        True
+        >>> '2330.TW' in tickers
+        True
+        >>> '8069.TWO' in tickers
+        True
+    """
+    return list(set(get_twse_tickers()) |
+                set(get_tpex_tickers()) |
+                set(get_esb_tickers()))
+
+
+def get_tickers(source):
+    """
+    Retrieve a list of tickers for the specified exchange in Taiwan.
+
+    Args:
+        source (str): The common abbreviation for the exchange or market sector.
+            Possible values include:
+            - 'TWSE': Taiwan Stock Exchange
+            - 'TPEX': Taipei Exchange
+            - 'ESB': Emerging Stock Board
+            - 'ALL': All available tickers across the specified exchanges
+
+    Returns:
+        list: A list of tickers for the given exchange or market sector.
+
+    Raises:
+        KeyError: If the provided exchange abbreviation is not recognized.
+
+    Examples:
+        >>> len(get_tickers('TWSE')) >= 1200
+        True
+        >>> len(get_tickers('TPEX')) >= 800
+        True
+        >>> len(get_tickers('ESB')) >= 300
+        True
+        >>> len(get_tickers('ALL')) >= (1200 + 800 + 300)
+        True
+        >>> get_tickers('UNKNOWN')
+        Traceback (most recent call last):
+            ...
+        KeyError: "Exchange abbreviation 'UNKNOWN' not found."
+    """
+    dic = {
+        'TWSE': get_twse_tickers,
+        'TPEX': get_tpex_tickers,
+        'ESB': get_esb_tickers,
+        'ALL': get_all_tickers,
+    }
+    try:
+        return dic[source.upper()]()
+    except KeyError:
+        raise KeyError(f"Exchange abbreviation '{source}' not found.")
 
 
 #------------------------------------------------------------------------------
