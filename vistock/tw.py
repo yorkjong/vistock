@@ -635,8 +635,22 @@ def get_tickers(source):
 # Test
 #------------------------------------------------------------------------------
 
+def use_requests_cache():
+    try:
+        import requests_cache
+        cache_installed = True
+    except ImportError:
+        cache_installed = False
+
+    if cache_installed:
+        requests_cache.install_cache('test_cache', expire_after=3600)
+
 
 if __name__ == '__main__':
-    import doctest
+    import doctest, time
+
+    start_time = time.time()
+    use_requests_cache()
     doctest.testmod()
+    print(f"Execution time: {time.time() - start_time:.4f} seconds")
 
