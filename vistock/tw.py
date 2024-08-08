@@ -20,7 +20,6 @@ Public Functions:
     - get_twse_tickers(): Get a list of tickers for the TWSE.
     - get_tpex_tickers(): Get a list of tickers for the TPEx.
     - get_esb_tickers(): Get a list of tickers for the ESB.
-    - get_all_tickers(): Get a list of all available tickers.
     - get_tickers(market): Retrieve tickers for a specified market (TWSE, TPEx,
         or ESB).
 
@@ -53,7 +52,6 @@ __all__ = [
     'get_twse_tickers',
     'get_tpex_tickers',
     'get_esb_tickers',
-    'get_all_tickers',
     'get_tickers',
 ]
 
@@ -573,74 +571,52 @@ def get_esb_tickers():
     return [f'{c}.TWO' for c in codes]
 
 
-def get_all_tickers():
-    """
-    Fetch a combined list of tickers from multiple major stock market indices.
-
-    This function aggregates ticker symbols from the following indices:
-    - Taiwan Stock Exchange, TWSE
-    - Taipei Exchange, TPEX
-    - Emerging Stock Board of the Taipei Exchange, ESB
-
-    Returns:
-        list: A list of unique ticker symbols from the specified indices.
-
-    Examples:
-        >>> tickers = get_all_tickers()
-        >>> len(tickers) > 2000
-        True
-        >>> '2330.TW' in tickers
-        True
-        >>> '8069.TWO' in tickers
-        True
-    """
-    return list(set(get_twse_tickers()) |
-                set(get_tpex_tickers()) |
-                set(get_esb_tickers()))
-
-
 def get_tickers(source):
     """
-    Retrieve a list of tickers for the specified exchange in Taiwan.
+    Retrieve a list of tickers for the specified exchange(s) in Taiwan,
+    removing duplicates.
 
     Args:
-        source (str): The common abbreviation for the exchange or market sector.
-            Possible values include:
+        source (str): The common abbreviation(s) for the exchange or market
+            sector.  Possible values include:
             - 'TWSE': Taiwan Stock Exchange
             - 'TPEX': Taipei Exchange
             - 'ESB': Emerging Stock Board
-            - 'ALL': All available tickers across the specified exchanges
+
+            Can also be combined with '+' (e.g., 'TWSE+TPEX', 'TWSE+TPEX+ESB').
 
     Returns:
-        list: A list of tickers for the given exchange or market sector.
+        list: A list of unique tickers for the given exchange(s) or market
+            sector(s).
 
     Raises:
-        KeyError: If the provided exchange abbreviation is not recognized.
+        KeyError: If any of the provided exchange abbreviations are not
+            recognized.
 
     Examples:
-        >>> len(get_tickers('TWSE')) >= 1200
-        True
-        >>> len(get_tickers('TPEX')) >= 800
+        >>> len(get_tickers('TWSE+TPEX')) >= 2000
         True
         >>> len(get_tickers('ESB')) >= 300
         True
-        >>> len(get_tickers('ALL')) >= (1200 + 800 + 300)
+        >>> len(get_tickers('TWSE+TPEX+ESB')) >= (1200 + 800 + 300)
         True
-        >>> get_tickers('UNKNOWN')
-        Traceback (most recent call last):
-            ...
-        KeyError: "Exchange abbreviation 'UNKNOWN' not found."
     """
     dic = {
         'TWSE': get_twse_tickers,
         'TPEX': get_tpex_tickers,
         'ESB': get_esb_tickers,
-        'ALL': get_all_tickers,
     }
-    try:
-        return dic[source.upper()]()
-    except KeyError:
-        raise KeyError(f"Exchange abbreviation '{source}' not found.")
+
+    sources = [s.strip().upper() for s in source.split('+')]
+    tickers = set()
+
+    for s in sources:
+        if s in dic:
+            tickers.update(dic[s]())
+        else:
+            raise KeyError(f"Exchange abbreviation '{s}' not found.")
+
+    return list(tickers)
 
 
 #------------------------------------------------------------------------------
