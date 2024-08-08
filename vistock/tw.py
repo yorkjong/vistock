@@ -600,6 +600,10 @@ def get_tickers(source):
         True
         >>> len(get_tickers('TWSE+TPEX+ESB')) >= (1200 + 800 + 300)
         True
+        >>> get_tickers('^UNKNOWN')
+        Traceback (most recent call last):
+            ...
+        KeyError: "Exchange abbreviation '^UNKNOWN' not found."
     """
     dic = {
         'TWSE': get_twse_tickers,
