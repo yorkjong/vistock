@@ -1,33 +1,45 @@
 """
-Handle stocks of Taiwan markets.
+tw.py - Module for handling Taiwan stock market data.
 
-This module provides functions and classes to interact with Taiwan stock markets,
-including TWSE (Taiwan Stock Exchange), TPEx (Taipei Exchange), and ESB (Emerging
-Stock Board). It offers functionality to convert stock symbols, fetch stock data,
-and retrieve lists of tickers for different markets.
+This module provides functionalities for interacting with various Taiwan Stock
+markets,including the Taiwan Stock Exchange (TWSE), Taipei Exchange (TPEx), and
+Emerging Stock Board (ESB). It supports converting stock symbols, fetching
+stock data, and retrieving ticker lists from these markets.
 
-Main features:
-- Convert stock symbols to yfinance compatible format
-- Fetch stock data from various Taiwan stock markets
-- Retrieve lists of tickers for TWSE, TPEx, and ESB
-- Find similar stocks based on name or code
+Main Features:
+- Convert Taiwan stock symbols to yfinance-compatible format.
+- Fetch historical and real-time stock data from TWSE, TPEx, and ESB.
+- Retrieve lists of tickers for TWSE, TPEx, and ESB.
+- Find stocks similar to a given name or code.
 
-Usage:
+Public Functions:
+    - stock_name(code): Retrieve the name of a stock given its code.
+    - as_yfinance(symbol): Convert a Taiwan stock symbol to yfinance format.
+    - similar_stocks(name_or_code): Find stocks similar to the provided name
+        or code.
+    - get_twse_tickers(): Get a list of tickers for the TWSE.
+    - get_tpex_tickers(): Get a list of tickers for the TPEx.
+    - get_esb_tickers(): Get a list of tickers for the ESB.
+    - get_all_tickers(): Get a list of all available tickers.
+    - get_tickers(market): Retrieve tickers for a specified market (TWSE, TPEx,
+        or ESB).
+
+Usage Examples:
     import tw
 
     # Get the stock name from its code
     name = tw.stock_name('2330.TW')
 
-    # Convert a stock symbol
+    # Convert a stock symbol to yfinance format
     yf_symbol = tw.as_yfinance('台積電')
 
-    # Find similar stocks
+    # Find stocks similar to a given name or code
     similar = tw.similar_stocks('印度')
 
-    # Get TWSE tickers
+    # Get a list of tickers for the TWSE
     twse_tickers = tw.get_twse_tickers()
 
-    # Get TWSE tickers
+    # Get a list of tickers for a specified market
     tickers = tw.get_tickers('TWSE')
 """
 __version__ = "1.5"
