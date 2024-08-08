@@ -9,6 +9,7 @@ TODO
 * Added stock_indices module to get tickers of a given source index
 * Extended tw module to get tickers of a given source exchange
 * Added ibd_demo.ipynb to demo ibd module
+* Apply requests_cache to improve the execxution time
 * vistock/util.py: Added the support of .TWO to decide_market_color_style
 * vistock/util.py: Added doctest to decide_market_color_style
 * vistock/mpl/rsi.py: Created ta module and replaced talib package with ta
