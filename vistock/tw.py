@@ -41,9 +41,9 @@ Usage Examples:
     # Get a list of tickers for a specified market
     tickers = tw.get_tickers('TWSE')
 """
-__version__ = "1.5"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2024/08/08 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2024/08/11 (last revision)"
 
 __all__ = [
     'stock_name',
@@ -178,11 +178,73 @@ class OpenAPI:
     This class provides methods to fetch stock data, convert symbols,
     and retrieve stock information using various Open APIs.
     """
+    _lookup_cache = {}
+
+
+    @staticmethod
+    def clear_cache():
+        OpenAPI._lookup_cache.clear()
+
+
+    @staticmethod
+    def value_from_key(key, url, key_field, value_field):
+        """Get the value of a given key that is looked-up from an Open API
+        response table.
+
+        Args:
+            key (str): a key to look-up
+            url (str): the URL of an Open API request.
+            key_field (str): the name of a key field.
+            value_field (str): the name of a value field.
+
+        Returns:
+            str: the got value for success, None otherwise.
+        """
+        cache_key = (url, key_field, value_field)
+
+        if cache_key not in OpenAPI._lookup_cache:
+            cols = OpenAPI.get_columns(url, [key_field, value_field])
+            OpenAPI._lookup_cache[cache_key] = dict(zip(*cols))
+        cache = OpenAPI._lookup_cache[cache_key]
+
+        if key in cache:
+            return cache[key]
+        return None
+
+
+    @staticmethod
+    def similar_keys(key, url, key_field, value_field):
+        """Get (key, value) pairs with similar keys that are looked-up from an
+        Open API response table.
+
+        Args:
+            key (str): the key to look-up
+            url (str): the URL of an Open API request.
+            key_field (str): the name of a key field.
+            value_field (str): the name of a value field.
+
+        Returns:
+            [(str, str)]: a list of key-value pairs representing the similar
+                          stocks.
+        """
+        cache_key = (url, key_field, value_field)
+
+        if cache_key not in OpenAPI._lookup_cache:
+            cols = OpenAPI.get_columns(url, [key_field, value_field])
+            OpenAPI._lookup_cache[cache_key] = dict(zip(*cols))
+        cache = OpenAPI._lookup_cache[cache_key]
+
+        pairs = []
+        for k, v in cache.items():
+            if key in k:
+                pairs += [(k, v)]
+        return pairs
+
 
     @staticmethod
     def get_columns(url, column_names):
         """
-        Fetches JSON data from the specified URL and extracts the specified
+        Fetch JSON data from the specified URL and extracts the specified
         columns.
 
         Args:
@@ -203,50 +265,6 @@ class OpenAPI:
             return columns
         except Exception as e:
             return ([] for _ in column_names)
-
-
-    @staticmethod
-    def value_from_key(key, url, key_field, value_field):
-        """Get the value of a given key that is looked-up from an Open API
-        response table.
-
-        Args:
-            key (str): a key to look-up
-            url (str): the URL of an Open API request.
-            key_field (str): the name of a key field.
-            value_field (str): the name of a value field.
-
-        Returns:
-            str: the got value for success, None otherwise.
-        """
-        cols = OpenAPI.get_columns(url, [key_field, value_field])
-        for k, v in zip(*cols):
-            if key == k:
-                return v
-        return None
-
-
-    @staticmethod
-    def similar_keys(key, url, key_field, value_field):
-        """Get (key, value) pairs with similar keys that are looked-up from an
-        Open API response table.
-
-        Args:
-            key (str): the key to look-up
-            url (str): the URL of an Open API request.
-            key_field (str): the name of a key field.
-            value_field (str): the name of a value field.
-
-        Returns:
-            [(str, str)]: a list of key-value pairs representing the similar
-                          stocks.
-        """
-        cols = OpenAPI.get_columns(url, [key_field, value_field])
-        pairs = []
-        for k, v in zip(*cols):
-            if key in k:
-                pairs += [(k, v)]
-        return pairs
 
 
     @staticmethod
