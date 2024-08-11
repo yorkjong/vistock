@@ -5,6 +5,7 @@ TODO
 
 0.4.0
 ------------------
+* Added caching mechanism to value_from_key and similar_keys methods
 * Added ibd module to support IBD Rating and Ranking
 * Added stock_indices module to get tickers of a given source index
 * Extended tw module to get tickers of a given source exchange
