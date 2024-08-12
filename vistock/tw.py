@@ -14,6 +14,7 @@ Main Features:
 
 Public Functions:
     - stock_name(code): Retrieve the name of a stock given its code.
+    - stock_price(code): Retrive the price of a stock given its code.
     - as_yfinance(symbol): Convert a Taiwan stock symbol to yfinance format.
     - similar_stocks(name_or_code): Find stocks similar to the provided name
         or code.
@@ -41,12 +42,13 @@ Usage Examples:
     # Get a list of tickers for a specified market
     tickers = tw.get_tickers('TWSE')
 """
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2024/08/11 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2024/08/12 (last revision)"
 
 __all__ = [
     'stock_name',
+    'stock_price',
     'as_yfinance',
     'similar_stocks',
     'get_twse_tickers',
@@ -353,6 +355,62 @@ class OpenAPI:
 
 
     @staticmethod
+    def stock_price(code):
+        """Get stock price from its code.
+
+        Args:
+            code (str): a Taiwan stock code.
+        Returns:
+            str: the price of given code.
+        Examples:
+            >>> OpenAPI.stock_price("2330") > 900
+            True
+            >>> OpenAPI.stock_price('8069') > 200
+            True
+            >>> OpenAPI.stock_price('2646') > 10
+            True
+        """
+        # for a listed stock
+        listed_stock_price = functools.partial(
+            OpenAPI.value_from_key,
+            url='https://openapi.twse.com.tw/v1/'
+                'exchangeReport/STOCK_DAY_AVG_ALL',
+            key_field='Code',
+            value_field='ClosingPrice'
+        )
+
+        # for an OTC stock
+        OTC_stock_price = functools.partial(
+            OpenAPI.value_from_key,
+            url='https://www.tpex.org.tw/openapi/v1/'
+                'tpex_mainboard_daily_close_quotes',
+            key_field='SecuritiesCompanyCode',
+            value_field='Close'
+        )
+
+        # for an ESB stock. ESB stands for Emerging Stock Board (also called
+        # Emerging Stock Market, or Emerging OTC)
+        emerging_stock_price = functools.partial(
+            OpenAPI.value_from_key,
+            url='https://www.tpex.org.tw/openapi/v1/'
+                'tpex_esb_latest_statistics',
+            key_field='SecuritiesCompanyCode',
+            value_field='LatestPrice'
+        )
+
+        price = listed_stock_price(code)
+        if price:
+            return float(price)
+        price = OTC_stock_price(code)
+        if price:
+            return float(price)
+        price = emerging_stock_price(code)
+        if price:
+            return float(price)
+        return ""
+
+
+    @staticmethod
     def yfinance_symbol_from_code(code):
         """Get yfinance compatible symbol from a Taiwan stock code.
 
@@ -434,7 +492,20 @@ def stock_name(code):
     return OpenAPI.stock_name(code)
 
 
-@functools.lru_cache
+def stock_price(code):
+    """Get stock price from its code.
+
+    Args:
+        code (str): a Taiwan stock code.
+    Returns:
+        str: the price of given code.
+    Examples:
+        >>> stock_price("2330") > 900
+        True
+    """
+    return OpenAPI.stock_price(code)
+
+
 def as_yfinance(symbol):
     """
     Convert a given stock symbol into yfinance compatible stock symbol.
@@ -596,7 +667,9 @@ def get_tickers(source):
 
     Args:
         source (str): The common abbreviation(s) for the exchange or market
-            sector.  Possible values include:
+            sector.
+
+            Possible values include:
             - 'TWSE': Taiwan Stock Exchange
             - 'TPEX': Taipei Exchange
             - 'ESB': Emerging Stock Board
