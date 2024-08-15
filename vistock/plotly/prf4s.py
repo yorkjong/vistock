@@ -24,7 +24,7 @@ from ..util import MarketColorStyle, decide_market_color_style
 
 
 def _plot(df, ticker, market_color_style, profile_field='Volume',
-          period='12mo', interval='1d',
+          period='1y', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
           hides_nontrading=True):
     # Initialize empty plot with marginal subplots
@@ -136,7 +136,7 @@ def _plot(df, ticker, market_color_style, profile_field='Volume',
 class Volume:
     """Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
     """
-    def plot(symbol='TSLA', period='12mo', interval='1d',
+    def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
          hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
          out_dir='out'):
@@ -222,7 +222,7 @@ class Turnover:
 
     Here "turnover" means "trading value" (= price * volume)
     '''
-    def plot(symbol='TSLA', period='12mo', interval='1d',
+    def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
          hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
          out_dir='out'):

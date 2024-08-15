@@ -23,7 +23,7 @@ from .mpf_util import decide_mpf_style
 from .. import ta
 
 
-def plot(symbol='TSLA', period='12mo', interval='1d',
+def plot(symbol='TSLA', period='1y', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
          legend_loc='best',
          market_color_style=MarketColorStyle.AUTO, out_dir='out'):
