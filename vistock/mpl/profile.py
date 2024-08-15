@@ -21,7 +21,7 @@ from ..util import MarketColorStyle, decide_market_color_style
 from .mpf_util import decide_mpf_style
 
 
-def _plot(df, mpf_style, profile_field='Volume', period='12mo', interval='1d',
+def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
           total_bins=42, legend_loc='best',
           market_color_style=MarketColorStyle.AUTO):
@@ -75,7 +75,7 @@ class Volume:
     """Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
     """
     @staticmethod
-    def plot(symbol='TSLA', period='12mo', interval='1d',
+    def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
              total_bins=42, legend_loc='best',
              market_color_style=MarketColorStyle.AUTO, out_dir='out'):
@@ -174,7 +174,7 @@ class Turnover:
     Here "turnover" means "trading value" (= price * volume)
     '''
     @staticmethod
-    def plot(symbol='TSLA', period='12mo', interval='1d',
+    def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
              total_bins=42, legend_loc='best',
              market_color_style=MarketColorStyle.AUTO, out_dir='out'):
