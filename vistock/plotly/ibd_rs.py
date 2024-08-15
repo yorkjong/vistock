@@ -1,3 +1,27 @@
+"""
+ibd_rs.py - Provides IBD-compatible stock charts.
+
+This module contains a primary function, `plot`, which generates and displays
+an interactive plot of stock performance. The plot includes candlestick charts,
+moving averages, volume analysis, and Relative Strength (RS) metrics.
+
+Functions
+---------
+- plot: Generates a comprehensive stock analysis plot, including candlestick
+  charts, moving averages, volume, and Relative Strength.
+
+The `plot` function performs the following tasks:
+- Downloads stock data.
+- Calculates moving averages and volume moving averages.
+- Creates traces for candlestick charts, moving averages, volume, and Relative
+  Strength.
+- Generates and displays a detailed interactive Plotly figure.
+"""
+__software__ = "IBD-compatible stock chart"
+__version__ = "1.0"
+__author__ = "York <york.jong@gmail.com>"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/16 (last revision)"
+
 __all__ = ['plot']
 
 import pandas as pd
@@ -115,8 +139,48 @@ def is_taiwan_stock(ticker):
 def plot(symbol, period='2y', interval='1d', ref_ticker=None,
          hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
          out_dir='out'):
-    """Plot stock analysis with MAs, volume, and Relative Strength (RS)"""
+    """Generate and display a stock analysis plot with candlestick charts,
+    moving averages, volume analysis, and Relative Strength (RS) metrics.
 
+    Creates an interactive Plotly figure showing:
+        - Candlestick chart of the stock with moving averages.
+        - Relative Strength (RS) indicator in a separate subplot.
+        - Volume and volume moving average in another subplot.
+
+    The figure is saved as an HTML file in the specified output directory.
+
+    Parameters
+    ----------
+    symbol: str
+        The stock symbol to analyze.
+    period: str
+        the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+        1y, 2y, 5y, 10y, ytd, max.
+
+        * d   -- days
+        * mo  -- monthes
+        * y   -- years
+        * ytd -- year to date
+        * max -- all data
+    interval: str
+        The interval for data points ('1d' for daily, '1wk' for weekly; default
+        is '1d').
+    ref_ticker : str, optional
+        The reference ticker for calculating Relative Strength. Defaults to
+        '^GSPC' (S&P 500) or '^TWII' (Taiwan Weighted Index) for Taiwan stocks.
+    hides_nontrading : bool, optional
+        Whether to hide non-trading periods. Default is True.
+    market_color_style : MarketColorStyle, optional
+        Color style for market data visualization. Default is
+        MarketColorStyle.AUTO.
+    out_dir : str, optional
+        Directory to save the output HTML file. Default is 'out'.
+
+    Raises
+    ------
+    ValueError
+        If an unsupported interval is provided.
+    """
     ticker = tw.as_yfinance(symbol)
     if not ref_ticker:
         ref_ticker = '^GSPC'      # S&P 500 Index
