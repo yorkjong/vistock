@@ -120,7 +120,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
         title_x=0.5, title_y=.9,
         legend=dict(yanchor='top', xanchor="left", x=1.042),
 
-        yaxis=dict(title='Price (USD)', side='right', overlaying='y2'),
+        yaxis=dict(title='Price', side='right', overlaying='y2'),
         yaxis2=dict(title='Volume', side='left', showgrid=False),
 
         xaxis_rangeslider_visible=False,
