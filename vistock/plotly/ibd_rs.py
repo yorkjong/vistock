@@ -1,21 +1,18 @@
 """
 ibd_rs.py - Provides IBD-compatible stock charts.
 
-This module contains a primary function, `plot`, which generates and displays
-an interactive plot of stock performance. The plot includes candlestick charts,
-moving averages, volume analysis, and Relative Strength (RS) metrics.
+This module provides functionality for analyzing and plotting stock data
+with a focus on Investor's Business Daily (IBD) Relative Strength metrics.
+It includes capabilities for generating candlestick charts with moving averages,
+volume analysis, and relative strength comparisons.
 
-Functions
----------
-- plot: Generates a comprehensive stock analysis plot, including candlestick
-  charts, moving averages, volume, and Relative Strength.
+The main function 'plot' allows users to visualize stock performance
+over various time periods and intervals, with customizable reference indexes
+and styling options.
 
-The `plot` function performs the following tasks:
-- Downloads stock data.
-- Calculates moving averages and volume moving averages.
-- Creates traces for candlestick charts, moving averages, volume, and Relative
-  Strength.
-- Generates and displays a detailed interactive Plotly figure.
+Usage:
+    from vistock.plotly import ibd_rs
+    ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
 __version__ = "1.0"
@@ -41,7 +38,18 @@ from ..ibd import relative_strength
 #------------------------------------------------------------------------------
 
 def calc_window_size(interval, days):
-    """Calculate window size based on interval"""
+    """Calculate window size based on interval.
+
+    Args:
+        interval (str): The data interval ('1d' or '1wk').
+        days (int): Number of days for the window.
+
+    Returns:
+        int: Calculated window size.
+
+    Raises:
+        ValueError: If an unsupported interval is provided.
+    """
     if interval == '1d':
         return days
     elif interval == '1wk':
@@ -154,14 +162,14 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     symbol: str
         The stock symbol to analyze.
     period: str
-        the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
-        1y, 2y, 5y, 10y, ytd, max.
+        the period data to download. Valid values are 6mo, 1y, 2y, 5y, 10y,
+        ytd, max.
 
-        * d   -- days
         * mo  -- monthes
         * y   -- years
         * ytd -- year to date
         * max -- all data
+
     interval: str
         The interval for data points ('1d' for daily, '1wk' for weekly; default
         is '1d').
@@ -228,7 +236,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         legend=dict(yanchor='bottom', y=0.01, xanchor="left", x=0.01),
 
         xaxis=dict(anchor='free'),
-        yaxis=dict(anchor='x3', title='Price (USD)', side='right'),
+        yaxis=dict(anchor='x3', title='Price', side='right'),
         xaxis2=dict(anchor='free'),
         yaxis2=dict(title='IBD Relative Strength', side='right'),
         yaxis3=dict(title='Volume', side='right'),

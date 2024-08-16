@@ -1,3 +1,26 @@
+"""
+ibd_rs.py - IBD Relative Strength Analysis and Plotting Module
+
+This module provides functionality for analyzing and plotting stock data
+with a focus on Investor's Business Daily (IBD) Relative Strength metrics.
+It includes capabilities for generating candlestick charts with moving averages,
+volume analysis, and relative strength comparisons.
+
+The main function 'plot' allows users to visualize stock performance
+over various time periods and intervals, with customizable reference indexes
+and styling options.
+
+Usage:
+    from vistock.mpl import ibd_rs
+    ibd_rs.plot('TSLA', period='1y', interval='1d')
+"""
+__software__ = "IBD-compatible stock chart"
+__version__ = "1.0"
+__author__ = "York <york.jong@gmail.com>"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/16 (last revision)"
+
+__all__ = ['plot']
+
 import pandas as pd
 import yfinance as yf
 import mplfinance as mpf
@@ -14,7 +37,18 @@ from ..ibd import relative_strength
 #------------------------------------------------------------------------------
 
 def calc_window_size(interval, days):
-    """Calculate window size based on interval"""
+    """Calculate window size based on interval.
+
+    Args:
+        interval (str): The data interval ('1d' or '1wk').
+        days (int): Number of days for the window.
+
+    Returns:
+        int: Calculated window size.
+
+    Raises:
+        ValueError: If an unsupported interval is provided.
+    """
     if interval == '1d':
         return days
     elif interval == '1wk':
@@ -24,6 +58,7 @@ def calc_window_size(interval, days):
 
 
 def is_taiwan_stock(ticker):
+    """Check if the given ticker represents a Taiwan stock."""
     ticker = ticker.replace('.TWO', '').replace('.TW', '')
     return ticker.isdigit()
 
@@ -36,22 +71,31 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
          legend_loc='best',
          market_color_style=MarketColorStyle.AUTO, out_dir='out'):
     """
-    Generate and display a stock analysis plot with candlestick charts, moving averages, volume analysis,
-    and Relative Strength (RS) metrics.
+    Generate and display a stock analysis plot with candlestick charts, moving
+    averages, volume analysis, and Relative Strength (RS) metrics.
 
     Parameters
     ----------
     symbol : str
         The stock symbol to analyze.
     period : str, optional
-        The period of historical data to fetch. Valid values are '1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'.
-        Default is '2y'.
+        The period of historical data to fetch. Valid values are '6mo', '1y',
+        '2y', '5y', '10y', 'ytd', 'max'.  Default is '2y'.
+
+        * mo  -- monthes
+        * y   -- years
+        * ytd -- year to date
+        * max -- all data
+
     interval : str, optional
-        The interval for data points. Valid values are '1d' for daily or '1wk' for weekly. Default is '1d'.
+        The interval for data points. Valid values are '1d' for daily or '1wk'
+        for weekly. Default is '1d'.
     ref_ticker : str, optional
-        The reference ticker for calculating Relative Strength. Defaults to '^GSPC' (S&P 500) or '^TWII' (Taiwan Weighted Index) for Taiwan stocks.
+        The reference ticker for calculating Relative Strength. Defaults to
+        '^GSPC' (S&P 500) or '^TWII' (Taiwan Weighted Index) for Taiwan stocks.
     market_color_style : MarketColorStyle, optional
-        Color style for market data visualization. Default is MarketColorStyle.AUTO.
+        Color style for market data visualization. Default is
+        MarketColorStyle.AUTO.
     out_dir : str, optional
         Directory to save the output image file. Default is 'out'.
 
@@ -103,7 +147,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     mpf_style = decide_mpf_style(base_mpf_style='yahoo',
                                  market_color_style=mc_style)
 
-    # Plot candlesticks MA, volume, volume MA, RS
+    # Plot candlesticks, MA, volume, volume MA, and RS
     fig, axes = mpf.plot(
         df, type='candle',              # candlesticks
         volume=True, addplot=addplot,   # MA, volume, volume MA, RS
