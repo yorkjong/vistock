@@ -58,6 +58,21 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     ref_ticker : str, optional
         The reference ticker for calculating Relative Strength. Defaults to
         '^GSPC' (S&P 500) or '^TWII' (Taiwan Weighted Index) for Taiwan stocks.
+    legend_loc: str
+        the location of the legend. Valid locations are
+
+        * 'best'
+        * 'upper right'
+        * 'upper left'
+        * 'lower left'
+        * 'lower right'
+        * 'right'
+        * 'center left'
+        * 'center right'
+        * 'lower center'
+        * 'upper center'
+        * 'center'
+
     market_color_style : MarketColorStyle, optional
         Color style for market data visualization. Default is
         MarketColorStyle.AUTO.
@@ -89,7 +104,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
     # Calculate volume moving averaage
     vma_nitems = ma_window_size(interval, 50)
-    df[f'VMA {vma_nitems}'] = df['Close'].rolling(window=vma_nitems).mean()
+    df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems).mean()
 
     addplot = [
         # Plot of Price Moving Average
@@ -118,8 +133,11 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         volume=True, addplot=addplot,   # MA, volume, volume MA, RS
         style=mpf_style,
         figsize=(16, 8), returnfig=True,
-        #show_nontrading=True,
     )
+    # Set location of legends
+    for ax in axes:
+        if ax.legend_ is not None:
+            ax.legend(loc=legend_loc)
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
