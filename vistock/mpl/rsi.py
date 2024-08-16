@@ -8,7 +8,7 @@ Plot a 3-split (price, volume, RSI) stock chart.
 __software__ = "Stock chart of price, volume, and RSI"
 __version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2023/07/31 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/16 (last revision)"
 
 __all__ = ['plot']
 
@@ -92,33 +92,45 @@ def plot(symbol='TSLA', period='1y', interval='1d',
     ticker = tw.as_yfinance(symbol)
     df = yf.Ticker(ticker).history(period=period, interval=interval)
 
-    # Add Volume Moving Average
-    vma = mpf.make_addplot(df['Volume'], mav=vma_nitems,
-                           type='line', linestyle='', color='purple', panel=1)
-    addplot = [vma]
+    # Calculate price moving average
+    for n in ma_nitems:
+        df[f'MA {n}'] = df['Close'].rolling(window=n).mean()
+    colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
 
-    # Add RSI
-    rsi = [
+    # Calculate volume moving averaage
+    df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems).mean()
+
+    # Create subplots
+    addplot = [
+        # Plot of Price Moving Average
+        *[mpf.make_addplot(df[f'MA {n}'], panel=0, label=f'MA {n}', color=c)
+            for n, c in zip(ma_nitems, colors)],
+
+        # Plot of Volume Moving Average
+        mpf.make_addplot(df[f'VMA {vma_nitems}'], panel=1,
+                         label=f'VMA {vma_nitems}', color='purple'),
+
+        # Plot of RSI
         mpf.make_addplot(ta.rsi(df['Close']), panel=2, ylabel='RSI'),
         mpf.make_addplot([70] * len(df), panel=2, color='red', linestyle='--'),
         mpf.make_addplot([30] * len(df), panel=2, color='green', linestyle='--')
     ]
-    addplot.extend(rsi)
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)
     mpf_style = decide_mpf_style(base_mpf_style='yahoo', market_color_style=mc_style)
 
     # Plot candlesticks MA, volume, volume MA, RSI
-    colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
     fig, axes = mpf.plot(
         df, type='candle',                  # candlesticks
-        mav=ma_nitems, mavcolors=colors,    # moving average lines
-        volume=True, addplot=addplot,       # volume, volume MA, RSI
+        volume=True, addplot=addplot,       # MA, volume, volume MA, RSI
         style=mpf_style, figsize=(16, 8),
         returnfig=True
     )
-    axes[0].legend([f'MA {d}' for d in ma_nitems], loc=legend_loc)
+    # Set location of legends
+    for ax in axes:
+        if ax.legend_:
+            ax.legend(loc=legend_loc)
 
     # Convert datetime index to string format suitable for display
     if interval.endswith('m') or interval.endswith('h'):

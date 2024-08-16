@@ -114,10 +114,10 @@ def _plot(df, ticker, market_color_style, profile_field='Volume',
         legend=dict(yanchor='top', xanchor="left", x=1),
 
         xaxis=dict(side='top', title='Bin Comulative Volume'),
-        yaxis=dict(side='left', title='Bin Price (USD)'),
+        yaxis=dict(side='left', title='Bin Price'),
 
         xaxis2=dict(overlaying='x', side='bottom'),     # datetime
-        yaxis2=dict(side='right', title='Price (USD)'),
+        yaxis2=dict(side='right', title='Price'),
         yaxis3=dict(side='right', title='Volume'),
 
         xaxis_rangeslider_visible=False,

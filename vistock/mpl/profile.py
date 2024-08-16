@@ -2,9 +2,9 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "2.1"
+__version__ = "2.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/07/22 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/16 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -25,24 +25,41 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
           total_bins=42, legend_loc='best',
           market_color_style=MarketColorStyle.AUTO):
-    # Add Volume Moving Average
-    vma = mpf.make_addplot(df['Volume'], mav=vma_nitems,
-                           type='line', linestyle='', color='purple', panel=1)
+
+    # Calculate price moving average
+    for n in ma_nitems:
+        df[f'MA {n}'] = df['Close'].rolling(window=n).mean()
+    colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
+
+    # Calculate volume moving averaage
+    df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems).mean()
+
+    # Create subplots
+    addplot = [
+        # Plot of Price Moving Average
+        *[mpf.make_addplot(df[f'MA {n}'], panel=0, label=f'MA {n}', color=c)
+            for n, c in zip(ma_nitems, colors)],
+
+        # Plot of Volume Moving Average
+        mpf.make_addplot(df[f'VMA {vma_nitems}'], panel=1,
+                         label=f'VMA {vma_nitems}', color='purple'),
+    ]
 
     # Make a customized color style
     s = mpf.make_mpf_style(base_mpf_style='nightclouds',
                            marketcolors=mpf_style['marketcolors'])
 
     # Plot candlesticks MA, volume, volume MA, RSI
-    colors = ('orange', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow')
     fig, axes = mpf.plot(
-        df, type='candle',                  # candlesticks
-        mav=ma_nitems, mavcolors=colors,    # moving average lines
-        volume=True, addplot=[vma],         # volume, volume MA
-        style=s, figsize=(16, 8),
-        returnfig=True
+        df, type='candle',              # candlesticks
+        volume=True, addplot=addplot,   # MA, volume, volume MA
+        style=s,
+        figsize=(16, 8), returnfig=True,
     )
-    axes[0].legend([f'MA {d}' for d in ma_nitems], loc=legend_loc)
+    # Set location of legends
+    for ax in axes:
+        if ax.legend_:
+            ax.legend(loc=legend_loc)
 
     # Convert datetime index to string format suitable for display
     if interval.endswith('m') or interval.endswith('h'):

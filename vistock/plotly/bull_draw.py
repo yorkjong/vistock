@@ -154,7 +154,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
         xaxis=dict(anchor='free'),
         yaxis=dict(title='BullRun and Drawdown', side='left', anchor='x3'),
-        yaxis2=dict(title='Price (USD)', side='right', anchor='x3'),
+        yaxis2=dict(title='Price', side='right', anchor='x3'),
         yaxis3=dict(title='Volume', side='right'),
 
         legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
