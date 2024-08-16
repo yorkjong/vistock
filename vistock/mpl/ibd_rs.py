@@ -27,7 +27,7 @@ import mplfinance as mpf
 
 from .. import tw
 from .. import file_util
-from ..util import MarketColorStyle, decide_market_color_style
+from ..util import MarketColorStyle, decide_market_color_style, is_taiwan_stock
 from .mpf_util import decide_mpf_style
 from ..ibd import relative_strength
 
@@ -55,12 +55,6 @@ def calc_window_size(interval, days):
         return days // 5  # 1 week = 5 trading days
     else:
         raise ValueError("Unsupported interval")
-
-
-def is_taiwan_stock(ticker):
-    """Check if the given ticker represents a Taiwan stock."""
-    ticker = ticker.replace('.TWO', '').replace('.TW', '')
-    return ticker.isdigit()
 
 
 #------------------------------------------------------------------------------

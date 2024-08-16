@@ -1,17 +1,19 @@
 """
 Utility Functions for vistock package.
 """
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/22 (initial version) ~ 2024/07/24 (last revision)"
+__date__ = "2024/07/22 (initial version) ~ 2024/08/16 (last revision)"
 
 __all__ = [
     'MarketColorStyle',
     'decide_market_color_style',
+    'is_taiwan_stock',
 ]
 
 from enum import Enum
 
+#------------------------------------------------------------------------------
 
 # Enum for market color styles
 class MarketColorStyle(Enum):
@@ -56,6 +58,27 @@ def decide_market_color_style(ticker='TSLA', style=MarketColorStyle.AUTO):
 
     # Default to US market colors for unspecified markets or tickers without suffix
     return MarketColorStyle.WESTERN
+
+#------------------------------------------------------------------------------
+
+def is_taiwan_stock(ticker):
+    """
+    Check if the given ticker represents a Taiwan stock.
+
+    Args:
+        ticker (str): Stock ticker symbol.
+
+    Returns:
+        bool: True if it's a Taiwan stock, False otherwise.
+
+    Examples:
+        >>> is_taiwan_stock('2330.TW')
+        True
+        >>> is_taiwan_stock('NVDA')
+        False
+    """
+    ticker = ticker.replace('.TWO', '').replace('.TW', '')
+    return ticker.isdigit()
 
 
 #------------------------------------------------------------------------------

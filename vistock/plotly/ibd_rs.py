@@ -29,7 +29,7 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_util
 from . import fig_util as futil
-from ..util import MarketColorStyle, decide_market_color_style
+from ..util import MarketColorStyle, decide_market_color_style, is_taiwan_stock
 from ..ibd import relative_strength
 
 
@@ -133,11 +133,6 @@ def create_rs_trace(rs_ratio):
         mode='lines', name='RS',
         line=dict(color='green', width=2)
     )
-
-
-def is_taiwan_stock(ticker):
-    ticker = ticker.replace('.TWO', '').replace('.TW', '')
-    return ticker.isdigit()
 
 
 #------------------------------------------------------------------------------
