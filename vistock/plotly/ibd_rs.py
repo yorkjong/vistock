@@ -30,33 +30,12 @@ from .. import tw
 from .. import file_util
 from . import fig_util as futil
 from ..util import MarketColorStyle, decide_market_color_style, is_taiwan_stock
-from ..ibd import relative_strength
+from ..ibd import relative_strength, ma_window_size
 
 
 #------------------------------------------------------------------------------
 # Helper Functions
 #------------------------------------------------------------------------------
-
-def ma_window_size(interval, days):
-    """Calculate window size based on interval.
-
-    Args:
-        interval (str): The data interval ('1d' or '1wk').
-        days (int): Number of days for the window.
-
-    Returns:
-        int: Calculated window size.
-
-    Raises:
-        ValueError: If an unsupported interval is provided.
-    """
-    if interval == '1d':
-        return days
-    elif interval == '1wk':
-        return days // 5  # 1 week = 5 trading days
-    else:
-        raise ValueError("Unsupported interval")
-
 
 def calc_moving_averages(df, interval, window_days):
     """Calculate moving averages based on window days"""

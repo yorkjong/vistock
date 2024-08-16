@@ -29,37 +29,8 @@ from .. import tw
 from .. import file_util
 from ..util import MarketColorStyle, decide_market_color_style, is_taiwan_stock
 from .mpf_util import decide_mpf_style
-from ..ibd import relative_strength
+from ..ibd import relative_strength, ma_window_size
 
-
-#------------------------------------------------------------------------------
-# Helper Functions
-#------------------------------------------------------------------------------
-
-def ma_window_size(interval, days):
-    """Calculate window size based on interval.
-
-    Args:
-        interval (str): The data interval ('1d' or '1wk').
-        days (int): Number of days for the window.
-
-    Returns:
-        int: Calculated window size.
-
-    Raises:
-        ValueError: If an unsupported interval is provided.
-    """
-    if interval == '1d':
-        return days
-    elif interval == '1wk':
-        return days // 5  # 1 week = 5 trading days
-    else:
-        raise ValueError("Unsupported interval")
-
-
-#------------------------------------------------------------------------------
-# Main Plot Function
-#------------------------------------------------------------------------------
 
 def plot(symbol, period='2y', interval='1d', ref_ticker=None,
          legend_loc='best',
