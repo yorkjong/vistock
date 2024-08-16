@@ -36,7 +36,7 @@ from ..ibd import relative_strength
 # Helper Functions
 #------------------------------------------------------------------------------
 
-def calc_window_size(interval, days):
+def ma_window_size(interval, days):
     """Calculate window size based on interval.
 
     Args:
@@ -112,12 +112,12 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     df['RS'] = relative_strength(df['Close'], def_ref['Close'], interval)
 
     # Calculate price moving average
-    ma_nitems = [calc_window_size(interval, days) for days in (50, 200)]
+    ma_nitems = [ma_window_size(interval, days) for days in (50, 200)]
     for n in ma_nitems:
         df[f'MA {n}'] = df['Close'].rolling(window=n).mean()
 
     # Calculate volume moving averaage
-    vma_nitems = calc_window_size(interval, 50)
+    vma_nitems = ma_window_size(interval, 50)
     df[f'VMA {vma_nitems}'] = df['Close'].rolling(window=vma_nitems).mean()
 
     addplot = [

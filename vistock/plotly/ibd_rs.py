@@ -37,7 +37,7 @@ from ..ibd import relative_strength
 # Helper Functions
 #------------------------------------------------------------------------------
 
-def calc_window_size(interval, days):
+def ma_window_size(interval, days):
     """Calculate window size based on interval.
 
     Args:
@@ -61,14 +61,14 @@ def calc_window_size(interval, days):
 def calc_moving_averages(df, interval, window_days):
     """Calculate moving averages based on window days"""
     for days in window_days:
-        window_size = calc_window_size(interval, days)
+        window_size = ma_window_size(interval, days)
         df[f'{days}d_MA'] = df['Close'].rolling(window=window_size).mean()
     return df
 
 
 def calc_volume_moving_average(df, interval, days):
     """Calculate volume moving average based on interval"""
-    window_size = calc_window_size(interval, days)
+    window_size = ma_window_size(interval, days)
     df[f'Volume_MA{days}'] = df['Volume'].rolling(window=window_size).mean()
     return df
 
