@@ -136,7 +136,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     )
     # Set location of legends
     for ax in axes:
-        if ax.legend_ is not None:
+        if ax.legend_:
             ax.legend(loc=legend_loc)
 
     # Convert datetime index to string format suitable for display
