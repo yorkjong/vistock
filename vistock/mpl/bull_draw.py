@@ -2,9 +2,9 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/21 (initial version) ~ 2024/07/22 (last revision)"
+__date__ = "2024/07/21 (initial version) ~ 2024/08/16 (last revision)"
 
 __all__ = [ 'plot' ]
 
@@ -74,11 +74,11 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
     cl_bullrun = get_bullrun_color(mc_style)
     cl_drawdown = get_drawdown_color(mc_style)
     bull_run_addplot = mpf.make_addplot(
-        df['BullRun'], type='bar', color=cl_bullrun, alpha=0.5,
+        df['BullRun'], type='bar', color=cl_bullrun, alpha=0.5, label='BullRun',
         panel=0, secondary_y=True, ylabel='BullRun and Drawdown')
     drawdown_addplot = mpf.make_addplot(
         df['Drawdown'], type='bar', color=cl_drawdown, alpha=0.5,
-        panel=0, secondary_y=True)
+        label='DrawDown', panel=0, secondary_y=True)
 
     # Add Volume Moving Average
     vma = mpf.make_addplot(
@@ -102,13 +102,6 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         else:
             ax.yaxis.tick_right()
             ax.yaxis.set_label_position("right")
-
-    # Plot legend
-    legend = [
-        Line2D([0], [0], color=cl_bullrun, lw=4, label='BullRun'),
-        Line2D([0], [0], color=cl_drawdown, lw=4, label='Drawdown'),
-    ]
-    axes[0].legend(handles=legend, loc=legend_loc)
 
     # Convert datetime index to string format suitable for display
     if interval.endswith('m') or interval.endswith('h'):
@@ -145,5 +138,4 @@ def get_drawdown_color(market_color_style=MarketColorStyle.WESTERN):
 
 if __name__ == '__main__':
     plot('TSLA')
-
 
