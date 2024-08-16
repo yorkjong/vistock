@@ -93,6 +93,10 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         style=mpf_style, figsize=(16, 8),
         returnfig=True
     )
+    # Set location of legends
+    for ax in axes:
+        if ax.legend_:
+            ax.legend(loc=legend_loc)
 
     # Move indicators y-axis to the left and price & volume y-axis to the right
     for ax in axes:
