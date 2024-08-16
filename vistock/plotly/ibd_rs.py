@@ -136,8 +136,8 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     symbol: str
         The stock symbol to analyze.
     period: str
-        the period data to download. Valid values are 6mo, 1y, 2y, 5y, 10y,
-        ytd, max.
+        the period data to download. . Defaults to '2y'. Valid values are
+        6mo, 1y, 2y, 5y, 10y, ytd, max.
 
         * mo  -- monthes
         * y   -- years
@@ -148,8 +148,9 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         The interval for data points ('1d' for daily, '1wk' for weekly; default
         is '1d').
     ref_ticker : str, optional
-        The reference ticker for calculating Relative Strength. Defaults to
-        '^GSPC' (S&P 500) or '^TWII' (Taiwan Weighted Index) for Taiwan stocks.
+        The ticker symbol of the reference index. If None, defaults to S&P
+        500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
+        is a Taiwan stock.
     hides_nontrading : bool, optional
         Whether to hide non-trading periods. Default is True.
     market_color_style : MarketColorStyle, optional
