@@ -5,12 +5,15 @@ TODO
 
 0.4.0
 ------------------
+* Added ibd_rs_cmp modules (both mpl and plotly version) to plot IBD RS
+  Comparison lines
+* Added ibd_rs modules (both mpl and plotly version) to plot IBD RS line
 * Added caching mechanism to value_from_key and similar_keys methods
+* Applied requests_cache to improve the execxution time
 * Added ibd module to support IBD Rating and Ranking
 * Added stock_indices module to get tickers of a given source index
 * Extended tw module to get tickers of a given source exchange
-* Added ibd_demo.ipynb to demo ibd module
-* Apply requests_cache to improve the execxution time
+* Added ibd_rs_rating.ipynb to demo ibd module
 * vistock/util.py: Added the support of .TWO to decide_market_color_style
 * vistock/util.py: Added doctest to decide_market_color_style
 * vistock/mpl/rsi.py: Created ta module and replaced talib package with ta
