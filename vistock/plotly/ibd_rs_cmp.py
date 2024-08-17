@@ -100,12 +100,18 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
 
+    ref_name = {
+        '^GSPC': 'S&P 500',
+        '^TWII': 'Taiwan Weighted Index'
+    }.get(ref_ticker, ref_ticker)
+
     # Update layout
     fig.update_layout(
         title=f'IBD Relative Strength Comparison - {interval} '
               f'({df.index.values[0]} to {df.index.values[-1]})',
         title_x=0.5, title_y=0.87,
-        yaxis=dict(title='RS Value', side='right'),
+        yaxis=dict(title=f'Relative Strength (Compared to {ref_name})',
+                   side='right'),
         #template='plotly_dark',
         #height=600,
         legend_title='Stocks',
