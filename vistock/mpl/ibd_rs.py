@@ -15,7 +15,7 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -140,15 +140,15 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         *[mpf.make_addplot(df[f'MA {n}'], panel=0, label=f'MA {n}')
             for n in ma_nitems],
 
-        # Plot of Volume Moving Average
-        mpf.make_addplot(df[f'VMA {vma_nitems}'], panel=1,
-                         label=f'VMA {vma_nitems}', color='purple'),
-
         # Plot of Relative Strength
-        mpf.make_addplot(df['RS'], panel=2, label=ticker,
+        mpf.make_addplot(df['RS'], panel=1, label=ticker,
                          color='green', ylabel='Relative Strength'),
-        mpf.make_addplot([100]*len(df), panel=2, label=ref_name,
+        mpf.make_addplot([100]*len(df), panel=1, label=ref_name,
                          linestyle='--', color='gray'),
+
+        # Plot of Volume Moving Average
+        mpf.make_addplot(df[f'VMA {vma_nitems}'], panel=2,
+                         label=f'VMA {vma_nitems}', color='purple'),
     ]
 
     # Make a customized color style
@@ -159,8 +159,10 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     # Plot candlesticks, MA, volume, volume MA, and RS
     fig, axes = mpf.plot(
         df, type='candle',              # candlesticks
-        volume=True, addplot=addplot,   # MA, volume, volume MA, RS
-        figsize=(16, 8),
+        volume=True, volume_panel=2,    # volume
+        addplot=addplot,                # MA, RS, and Volume MA
+        panel_ratios=(5, 3, 2),
+        figratio=(2, 1), figscale=1.2,
         style=mpf_style,
         show_nontrading=not hides_nontrading,
         returnfig=True,
