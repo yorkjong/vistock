@@ -16,7 +16,7 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -33,7 +33,7 @@ from ..ibd import relative_strength
 
 
 def plot(symbols, period='2y', interval='1d', ref_ticker=None,
-         hides_nontrading=True, out_dir='out'):
+         style='checkers', hides_nontrading=True, out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
     index using mplfinance.
@@ -48,6 +48,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     ------------
     symbols : list of str
         List of stock symbols to compare. Can include both US and Taiwan stocks.
+
     period : str, optional
         The period of historical data to fetch. Valid values are '6mo', '1y',
         '2y', '5y', '10y', 'ytd', 'max'.  Default is '2y'.
@@ -60,10 +61,31 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     interval : str, optional
         The interval for data points. Valid values are '1d' for daily or '1wk'
         for weekly. Default is '1d'.
+
     ref_ticker : str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
+
+    style: str, optional
+        The chart style to use. Common styles include:
+        - 'yahoo': Yahoo Finance style
+        - 'charles': Charles style
+        - 'mike': Mike style
+        - 'blueskies': Blue Skies style
+        - 'dark': Dark mode style
+        - 'checkers': Checkered style
+        - 'ibd': Investor's Business Daily style
+        - 'binance': Binance style
+        - 'binancedark': Binance dark mode style
+        - 'starsandstripes': Stars and Stripes style
+        - 'tradingview': TradingView style
+        - 'kenan': Kenan style
+        - 'brasil': Brasil style
+        - 'sas': SAS style
+        - 'nightclouds': Dark mode with sleek appearance
+      Default is 'checkers'.
+
     hides_nontrading : bool, optional
         Whether to hide non-trading periods. Default is True.
     out_dir : str, optional
@@ -92,7 +114,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         ticker = tw.as_yfinance(symbol)
         df = yf.Ticker(ticker).history(period=period, interval=interval)
         rs = relative_strength(df['Close'], df_ref['Close'], interval)
-        add_plots.append(mpf.make_addplot(rs, label=f'{symbol}'))
+        add_plots.append(mpf.make_addplot(rs, label=f'{ticker}'))
     if not add_plots:
         return
     df['Close'] = rs    # for hiding 'Close' line from the mpf.plot call
@@ -101,14 +123,14 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         df, type='line',
         volume=False, addplot=add_plots,
         figratio=(12, 6), figscale=1.2,
-        style='charles', # classic, charles, nightclouds, yahoo, check
+        style=style,
         show_nontrading=not hides_nontrading,
         returnfig=True,
     )
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
-    fig.suptitle(f"IBD Relative Strength Comparision {interval} "
+    fig.suptitle(f"IBD Relative Strength Comparison {interval} "
                  f"({df.index.values[0]}~{df.index.values[-1]})", y=0.93)
 
     # Show the figure

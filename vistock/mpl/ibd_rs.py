@@ -34,7 +34,7 @@ from ..ibd import relative_strength, ma_window_size
 
 def plot(symbol, period='2y', interval='1d', ref_ticker=None,
          legend_loc='best', market_color_style=MarketColorStyle.AUTO,
-         hides_nontrading=True, out_dir='out'):
+         style='yahoo', hides_nontrading=True, out_dir='out'):
     """
     Generate and display a stock analysis plot with candlestick charts, moving
     averages, volume analysis, and Relative Strength (RS) metrics.
@@ -55,10 +55,12 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     interval : str, optional
         The interval for data points. Valid values are '1d' for daily or '1wk'
         for weekly. Default is '1d'.
+
     ref_ticker : str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
+
     legend_loc: str
         the location of the legend. Valid locations are
 
@@ -77,6 +79,26 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     market_color_style : MarketColorStyle, optional
         Color style for market data visualization. Default is
         MarketColorStyle.AUTO.
+
+    style: str, optional
+        The chart style to use. Common styles include:
+        - 'yahoo': Yahoo Finance style
+        - 'charles': Charles style
+        - 'mike': Mike style
+        - 'blueskies': Blue Skies style
+        - 'dark': Dark mode style
+        - 'checkers': Checkered style
+        - 'ibd': Investor's Business Daily style
+        - 'binance': Binance style
+        - 'binancedark': Binance dark mode style
+        - 'starsandstripes': Stars and Stripes style
+        - 'tradingview': TradingView style
+        - 'kenan': Kenan style
+        - 'brasil': Brasil style
+        - 'sas': SAS style
+        - 'nightclouds': Dark mode with sleek appearance
+      Default is 'yahoo'.
+
     hides_nontrading : bool, optional
         Whether to hide non-trading periods. Default is True.
     out_dir : str, optional
@@ -127,7 +149,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)
-    mpf_style = decide_mpf_style(base_mpf_style='yahoo',
+    mpf_style = decide_mpf_style(base_mpf_style=style,
                                  market_color_style=mc_style)
 
     # Plot candlesticks, MA, volume, volume MA, and RS
