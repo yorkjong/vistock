@@ -2,7 +2,7 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "2.3"
+__version__ = "2.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -23,9 +23,7 @@ from .mpf_util import decide_mpf_style
 
 def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-          total_bins=42, legend_loc='best',
-          market_color_style=MarketColorStyle.AUTO, hides_nontrading=True):
-
+          total_bins=42, legend_loc='best', hides_nontrading=True):
     # Calculate price moving average
     for n in ma_nitems:
         df[f'MA {n}'] = df['Close'].rolling(window=n).mean()
@@ -45,16 +43,12 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
                          label=f'VMA {vma_nitems}', color='purple'),
     ]
 
-    # Make a customized color style
-    s = mpf.make_mpf_style(base_mpf_style='nightclouds',
-                           marketcolors=mpf_style['marketcolors'])
-
     # Plot candlesticks MA, volume, volume MA, RSI
     fig, axes = mpf.plot(
         df, type='candle',              # candlesticks
         volume=True, addplot=addplot,   # MA, volume, volume MA
         figsize=(16, 8),
-        style=s,
+        style=mpf_style,
         show_nontrading=not hides_nontrading,
         returnfig=True,
     )
@@ -98,7 +92,7 @@ class Volume:
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
              total_bins=42, legend_loc='best',
              market_color_style=MarketColorStyle.AUTO,
-             hides_nontrading=True, out_dir='out'):
+             style='binancedark', hides_nontrading=True, out_dir='out'):
         """Plot a price-by-volume, PBV (also called volume profile) figure for a
         given stock.
 
@@ -111,6 +105,7 @@ class Volume:
         ----------
         symbol: str
             the stock symbol.
+
         period: str
             the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
             1y, 2y, 5y, 10y, ytd, max.
@@ -144,6 +139,7 @@ class Volume:
             the number of data items to calculate the volume moving average.
         total_bins: int
             the number of bins to calculate comulative volume for bins.
+
         legend_loc: str
             the location of the legend. Valid locations are
 
@@ -161,6 +157,25 @@ class Volume:
 
         market_color_style (MarketColorStyle): The market color style to use.
             Default is MarketColorStyle.AUTO.
+
+        style: str, optional
+            The chart style to use. Common styles include:
+            - 'yahoo': Yahoo Finance style
+            - 'charles': Charles style
+            - 'mike': Mike style
+            - 'blueskies': Blue Skies style
+            - 'checkers': Checkered style
+            - 'ibd': Investor's Business Daily style
+            - 'binance': Binance style
+            - 'binancedark': Binance dark mode style
+            - 'starsandstripes': Stars and Stripes style
+            - 'tradingview': TradingView style
+            - 'kenan': Kenan style
+            - 'brasil': Brasil style
+            - 'sas': SAS style
+            - 'nightclouds': Dark mode with sleek appearance
+            Default is 'binancedark'.
+
         hides_nontrading : bool, optional
             Whether to hide non-trading periods. Default is True.
         out_dir: str
@@ -172,11 +187,11 @@ class Volume:
 
         # Plot
         mc_style = decide_market_color_style(ticker, market_color_style)
-        mpf_style = decide_mpf_style(base_mpf_style='yahoo',
+        mpf_style = decide_mpf_style(base_mpf_style=style,
                                      market_color_style=mc_style)
         fig = _plot(df, mpf_style, 'Volume', period, interval,
                     ma_nitems, vma_nitems, total_bins,
-                    legend_loc, market_color_style, hides_nontrading)
+                    legend_loc, hides_nontrading)
         fig.suptitle(f"{ticker} {interval} "
                      f"({df.index.values[0]}~{df.index.values[-1]})",
                      y=0.93)
@@ -201,7 +216,7 @@ class Turnover:
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
              total_bins=42, legend_loc='best',
              market_color_style=MarketColorStyle.AUTO,
-             hides_nontrading=True, out_dir='out'):
+             style='binancedark', hides_nontrading=True, out_dir='out'):
         """Plot a turnover profile figure for a given stock.
 
         Here the provile is overlaid with the price subplot. This figure
@@ -214,6 +229,7 @@ class Turnover:
         ----------
         symbol: str
             the stock symbol.
+
         period: str
             the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
             1y, 2y, 5y, 10y, ytd, max.
@@ -247,6 +263,7 @@ class Turnover:
             the number of data items to calculate the volume moving average.
         total_bins: int
             the number of bins to calculate comulative volume for bins.
+
         legend_loc: str
             the location of the legend. Valid locations are
 
@@ -264,6 +281,25 @@ class Turnover:
 
         market_color_style (MarketColorStyle): The market color style to use.
             Default is MarketColorStyle.AUTO.
+
+        style: str, optional
+            The chart style to use. Common styles include:
+            - 'yahoo': Yahoo Finance style
+            - 'charles': Charles style
+            - 'mike': Mike style
+            - 'blueskies': Blue Skies style
+            - 'checkers': Checkered style
+            - 'ibd': Investor's Business Daily style
+            - 'binance': Binance style
+            - 'binancedark': Binance dark mode style
+            - 'starsandstripes': Stars and Stripes style
+            - 'tradingview': TradingView style
+            - 'kenan': Kenan style
+            - 'brasil': Brasil style
+            - 'sas': SAS style
+            - 'nightclouds': Dark mode with sleek appearance
+            Default is 'binancedark'.
+
         hides_nontrading : bool, optional
             Whether to hide non-trading periods. Default is True.
         out_dir: str
@@ -276,11 +312,11 @@ class Turnover:
 
         # Plot
         mc_style = decide_market_color_style(ticker, market_color_style)
-        mpf_style = decide_mpf_style(base_mpf_style='yahoo',
+        mpf_style = decide_mpf_style(base_mpf_style=style,
                                      market_color_style=mc_style)
         fig = _plot(df, mpf_style, 'Turnover', period, interval,
                     ma_nitems, vma_nitems, total_bins,
-                    legend_loc, market_color_style, hides_nontrading)
+                    legend_loc, hides_nontrading)
         fig.suptitle(f"{ticker} {interval} "
                      f"({df.index.values[0]}~{df.index.values[-1]})",
                      y=0.93)

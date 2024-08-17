@@ -6,7 +6,7 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * RSI from TA-Lib
 """
 __software__ = "Stock chart of price, volume, and RSI"
-__version__ = "1.8"
+__version__ = "1.9"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -27,7 +27,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
          legend_loc='best',
          market_color_style=MarketColorStyle.AUTO,
-         hides_nontrading=True, out_dir='out'):
+         style='yahoo', hides_nontrading=True, out_dir='out'):
     """Plot a stock figure that consists 3 suplots: a price subplot, a
     volume subplot, and a RSI subplot.
 
@@ -39,6 +39,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
     ----------
     symbol: str
         the stock symbol.
+
     period: str
         the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
         1y, 2y, 5y, 10y, ytd, max.
@@ -69,6 +70,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
         a sequence to list the number of data items to calclate moving averges.
     vma_nitems: int
         the number of data items to calculate the volume moving average.
+
     legend_loc: str
         the location of the legend. Valid locations are
 
@@ -86,6 +88,25 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
     market_color_style (MarketColorStyle): The market color style to use.
         Default is MarketColorStyle.AUTO.
+
+    style: str, optional
+        The chart style to use. Common styles include:
+        - 'yahoo': Yahoo Finance style
+        - 'charles': Charles style
+        - 'mike': Mike style
+        - 'blueskies': Blue Skies style
+        - 'checkers': Checkered style
+        - 'ibd': Investor's Business Daily style
+        - 'binance': Binance style
+        - 'binancedark': Binance dark mode style
+        - 'starsandstripes': Stars and Stripes style
+        - 'tradingview': TradingView style
+        - 'kenan': Kenan style
+        - 'brasil': Brasil style
+        - 'sas': SAS style
+        - 'nightclouds': Dark mode with sleek appearance
+        Default is 'yahoo'.
+
     hides_nontrading : bool, optional
         Whether to hide non-trading periods. Default is True.
     out_dir: str
@@ -121,7 +142,8 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)
-    mpf_style = decide_mpf_style(base_mpf_style='yahoo', market_color_style=mc_style)
+    mpf_style = decide_mpf_style(base_mpf_style=style,
+                                 market_color_style=mc_style)
 
     # Plot candlesticks MA, volume, volume MA, RSI
     fig, axes = mpf.plot(

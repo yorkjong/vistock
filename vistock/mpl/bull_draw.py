@@ -2,7 +2,7 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.4"
+__version__ = "1.5"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/07/21 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -22,7 +22,7 @@ from .mpf_util import decide_mpf_style
 
 def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
          market_color_style=MarketColorStyle.AUTO,
-         hides_nontrading=True, out_dir='out'):
+         style='yahoo', hides_nontrading=True, out_dir='out'):
     """Plot a stock figure that consists of two subplots: a price subplot and
     a volume subplot.
 
@@ -38,6 +38,7 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         the period (default is '1y' that means 1 year)
     interval
         the interval (default is '1d' that means 1 day)
+
     legend_loc
         the location of the legend (default is 'best')
         Valid locations are
@@ -55,6 +56,25 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
 
     market_color_style (MarketColorStyle): The market color style to use.
         Default is MarketColorStyle.AUTO.
+
+    style: str, optional
+        The chart style to use. Common styles include:
+        - 'yahoo': Yahoo Finance style
+        - 'charles': Charles style
+        - 'mike': Mike style
+        - 'blueskies': Blue Skies style
+        - 'checkers': Checkered style
+        - 'ibd': Investor's Business Daily style
+        - 'binance': Binance style
+        - 'binancedark': Binance dark mode style
+        - 'starsandstripes': Stars and Stripes style
+        - 'tradingview': TradingView style
+        - 'kenan': Kenan style
+        - 'brasil': Brasil style
+        - 'sas': SAS style
+        - 'nightclouds': Dark mode with sleek appearance
+        Default is 'yahoo'.
+
     hides_nontrading : bool, optional
         Whether to hide non-trading periods. Default is True.
     out_dir: str
@@ -70,7 +90,8 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)
-    mpf_style = decide_mpf_style(base_mpf_style='yahoo', market_color_style=mc_style)
+    mpf_style = decide_mpf_style(base_mpf_style=style,
+                                 market_color_style=mc_style)
 
     # Add Bull Run and Drawdown indicators
     cl_bullrun = get_bullrun_color(mc_style)
