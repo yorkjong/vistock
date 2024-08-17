@@ -118,10 +118,16 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         return
     df['Close'] = rs    # for hiding 'Close' line from the mpf.plot call
 
+    ref_name = {
+        '^GSPC': 'S&P 500',
+        '^TWII': 'Taiwan Weighted Index'
+    }.get(ref_ticker, ref_ticker)
+
     fig, axes = mpf.plot(
         df, type='line',
         volume=False, addplot=add_plots,
-        figratio=(12, 6), figscale=1.2,
+        ylabel=f'Relative Strength (Compared to {ref_name})',
+        figratio=(2, 1), figscale=1.2,
         style=style,
         show_nontrading=not hides_nontrading,
         returnfig=True,
