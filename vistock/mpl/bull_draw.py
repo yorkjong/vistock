@@ -2,9 +2,9 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.3"
+__version__ = "1.5"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/21 (initial version) ~ 2024/08/16 (last revision)"
+__date__ = "2024/07/21 (initial version) ~ 2024/08/17 (last revision)"
 
 __all__ = [ 'plot' ]
 
@@ -22,7 +22,7 @@ from .mpf_util import decide_mpf_style
 
 def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
          market_color_style=MarketColorStyle.AUTO,
-         out_dir='out'):
+         style='yahoo', hides_nontrading=True, out_dir='out'):
     """Plot a stock figure that consists of two subplots: a price subplot and
     a volume subplot.
 
@@ -38,6 +38,7 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         the period (default is '1y' that means 1 year)
     interval
         the interval (default is '1d' that means 1 day)
+
     legend_loc
         the location of the legend (default is 'best')
         Valid locations are
@@ -55,6 +56,27 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
 
     market_color_style (MarketColorStyle): The market color style to use.
         Default is MarketColorStyle.AUTO.
+
+    style: str, optional
+        The chart style to use. Common styles include:
+        - 'yahoo': Yahoo Finance style
+        - 'charles': Charles style
+        - 'tradingview': TradingView style
+        - 'binance': Binance style
+        - 'binancedark': Binance dark mode style
+        - 'mike': Mike style (dark mode)
+        - 'nightclouds': Dark mode with sleek appearance
+        - 'checkers': Checkered style
+        - 'ibd': Investor's Business Daily style
+        - 'sas': SAS style
+        - 'starsandstripes': Stars and Stripes style
+        - 'kenan': Kenan style
+        - 'blueskies': Blue Skies style
+        - 'brasil': Brasil style
+        Default is 'yahoo'.
+
+    hides_nontrading : bool, optional
+        Whether to hide non-trading periods. Default is True.
     out_dir: str
         the output directory for saving figure.
     """
@@ -68,7 +90,8 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)
-    mpf_style = decide_mpf_style(base_mpf_style='yahoo', market_color_style=mc_style)
+    mpf_style = decide_mpf_style(base_mpf_style=style,
+                                 market_color_style=mc_style)
 
     # Add Bull Run and Drawdown indicators
     cl_bullrun = get_bullrun_color(mc_style)
@@ -90,7 +113,9 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
     fig, axes = mpf.plot(
         df, type='line',
         volume=True, addplot=[bull_run_addplot, drawdown_addplot, vma],
-        style=mpf_style, figsize=(16, 8),
+        figsize=(16, 8),
+        style=mpf_style,
+        show_nontrading=not hides_nontrading,
         returnfig=True
     )
     # Set location of legends
