@@ -33,8 +33,8 @@ from ..ibd import relative_strength, ma_window_size
 
 
 def plot(symbol, period='2y', interval='1d', ref_ticker=None,
-         legend_loc='best',
-         market_color_style=MarketColorStyle.AUTO, out_dir='out'):
+         legend_loc='best', market_color_style=MarketColorStyle.AUTO,
+         hides_nontrading=True, out_dir='out'):
     """
     Generate and display a stock analysis plot with candlestick charts, moving
     averages, volume analysis, and Relative Strength (RS) metrics.
@@ -77,6 +77,8 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     market_color_style : MarketColorStyle, optional
         Color style for market data visualization. Default is
         MarketColorStyle.AUTO.
+    hides_nontrading : bool, optional
+        Whether to hide non-trading periods. Default is True.
     out_dir : str, optional
         Directory to save the output image file. Default is 'out'.
 
@@ -132,8 +134,10 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     fig, axes = mpf.plot(
         df, type='candle',              # candlesticks
         volume=True, addplot=addplot,   # MA, volume, volume MA, RS
+        figsize=(16, 8),
         style=mpf_style,
-        figsize=(16, 8), returnfig=True,
+        show_nontrading=not hides_nontrading,
+        returnfig=True,
     )
     # Set location of legends
     for ax in axes:
@@ -155,5 +159,6 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
 
 if __name__ == '__main__':
+    plot('TSLA', interval='1d', hides_nontrading=True)
     plot('TSLA', interval='1wk')
 
