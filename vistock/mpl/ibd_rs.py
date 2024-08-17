@@ -30,6 +30,7 @@ from .. import file_util
 from ..util import MarketColorStyle, decide_market_color_style, is_taiwan_stock
 from .mpf_util import decide_mpf_style
 from ..ibd import relative_strength, ma_window_size
+from .. import stock_indices as si
 
 
 def plot(symbol, period='2y', interval='1d', ref_ticker=None,
@@ -130,11 +131,6 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     vma_nitems = ma_window_size(interval, 50)
     df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems).mean()
 
-    ref_name = {
-        '^GSPC': 'S&P 500',
-        '^TWII': 'Taiwan Weighted Index'
-    }.get(ref_ticker, ref_ticker)
-
     addplot = [
         # Plot of Price Moving Average
         *[mpf.make_addplot(df[f'MA {n}'], panel=0, label=f'MA {n}')
@@ -143,7 +139,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         # Plot of Relative Strength
         mpf.make_addplot(df['RS'], panel=1, label=ticker,
                          color='green', ylabel='Relative Strength'),
-        mpf.make_addplot([100]*len(df), panel=1, label=ref_name,
+        mpf.make_addplot([100]*len(df), panel=1, label=si.get_name(ref_ticker),
                          linestyle='--', color='gray'),
 
         # Plot of Volume Moving Average
@@ -159,6 +155,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     # Plot candlesticks, MA, volume, volume MA, and RS
     fig, axes = mpf.plot(
         df, type='candle',              # candlesticks
+        #main_panel=0,
         volume=True, volume_panel=2,    # volume
         addplot=addplot,                # MA, RS, and Volume MA
         panel_ratios=(5, 3, 2),

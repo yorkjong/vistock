@@ -16,7 +16,7 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -30,6 +30,7 @@ from .. import tw
 from .. import file_util
 from ..util import is_taiwan_stock
 from ..ibd import relative_strength
+from .. import stock_indices as si
 
 
 def plot(symbols, period='2y', interval='1d', ref_ticker=None,
@@ -118,15 +119,10 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         return
     df['Close'] = rs    # for hiding 'Close' line from the mpf.plot call
 
-    ref_name = {
-        '^GSPC': 'S&P 500',
-        '^TWII': 'Taiwan Weighted Index'
-    }.get(ref_ticker, ref_ticker)
-
     fig, axes = mpf.plot(
         df, type='line',
         volume=False, addplot=add_plots,
-        ylabel=f'Relative Strength (Compared to {ref_name})',
+        ylabel=f'Relative Strength (Compared to {si.get_name(ref_ticker)})',
         figratio=(2, 1), figscale=1.2,
         style=style,
         show_nontrading=not hides_nontrading,

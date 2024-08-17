@@ -16,7 +16,7 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -32,6 +32,7 @@ from .. import file_util
 from . import fig_util as futil
 from ..util import is_taiwan_stock
 from ..ibd import relative_strength
+from .. import stock_indices as si
 
 
 def plot(symbols, period='2y', interval='1d', ref_ticker=None,
@@ -100,10 +101,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
 
-    ref_name = {
-        '^GSPC': 'S&P 500',
-        '^TWII': 'Taiwan Weighted Index'
-    }.get(ref_ticker, ref_ticker)
+    ref_name = si.get_name(ref_ticker)
 
     # Update layout
     fig.update_layout(
