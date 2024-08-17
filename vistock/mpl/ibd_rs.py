@@ -130,6 +130,11 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     vma_nitems = ma_window_size(interval, 50)
     df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems).mean()
 
+    ref_name = {
+        '^GSPC': 'S&P 500',
+        '^TWII': 'Taiwan Weighted Index'
+    }.get(ref_ticker, ref_ticker)
+
     addplot = [
         # Plot of Price Moving Average
         *[mpf.make_addplot(df[f'MA {n}'], panel=0, label=f'MA {n}')
@@ -142,7 +147,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         # Plot of Relative Strength
         mpf.make_addplot(df['RS'], panel=2, label=ticker,
                          color='green', ylabel='Relative Strength'),
-        mpf.make_addplot([100]*len(df), panel=2, label=ref_ticker,
+        mpf.make_addplot([100]*len(df), panel=2, label=ref_name,
                          linestyle='--', color='gray'),
     ]
 
@@ -181,5 +186,5 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
 if __name__ == '__main__':
     plot('TSLA', interval='1d', hides_nontrading=True)
-    plot('TSLA', interval='1wk')
+    plot('台積電', interval='1wk')
 
