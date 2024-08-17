@@ -16,7 +16,7 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -102,8 +102,8 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 
     # Update layout
     fig.update_layout(
-        title=f'IBD Relative Strength Comparison {interval} '
-              f'({df.index.values[0]}~{df.index.values[-1]})',
+        title=f'IBD Relative Strength Comparison - {interval} '
+              f'({df.index.values[0]} to {df.index.values[-1]})',
         title_x=0.5, title_y=0.87,
         yaxis=dict(title='RS Value', side='right'),
         #template='plotly_dark',

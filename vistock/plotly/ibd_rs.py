@@ -15,9 +15,9 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/16 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
 
 __all__ = ['plot']
 
@@ -205,8 +205,8 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
     # Update layout
     fig.update_layout(
-        title=f'{symbol} {interval} '
-              f'({df.index.values[0]}~{df.index.values[-1]})',
+        title=f'{symbol} - {interval} '
+              f'({df.index.values[0]} to {df.index.values[-1]})',
         title_x=0.5, title_y=0.92,
         legend=dict(yanchor='bottom', y=0.01, xanchor="left", x=0.01),
 

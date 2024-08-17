@@ -16,7 +16,7 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
 
@@ -135,8 +135,8 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
-    fig.suptitle(f"IBD Relative Strength Comparison {interval} "
-                 f"({df.index.values[0]}~{df.index.values[-1]})", y=0.93)
+    fig.suptitle(f"IBD Relative Strength Comparison - {interval} "
+                 f"({df.index.values[0]} to {df.index.values[-1]})", y=0.93)
 
     # Show the figure
     mpf.show()
