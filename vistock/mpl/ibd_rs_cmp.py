@@ -16,9 +16,9 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
 
 __all__ = ['plot']
 
@@ -101,26 +101,30 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     >>> symbols = ['NVDA', 'MSFT', 'META', 'AAPL', 'TSM']
     >>> plot(symbols)
     """
-
     if not ref_ticker:
         ref_ticker = '^GSPC'      # S&P 500 Index
         if is_taiwan_stock(tw.as_yfinance(symbols[0])):
             ref_ticker = '^TWII'  # Taiwan Weighted Index
 
-    df_ref = yf.download(ref_ticker, period=period, interval=interval)
+    tickers = [tw.as_yfinance(s) for s in symbols]
+    df = yf.download([ref_ticker]+tickers, period=period, interval=interval)
+
+    df_ref = df.xs(ref_ticker, level=1, axis=1)
 
     add_plots = []
-    for symbol in symbols:
-        ticker = tw.as_yfinance(symbol)
-        df = yf.download(ticker, period=period, interval=interval)
-        rs = relative_strength(df['Close'], df_ref['Close'], interval)
+    for ticker in tickers:
+        rs = relative_strength(df['Close'][ticker], df_ref['Close'], interval)
         add_plots.append(mpf.make_addplot(rs, label=f'{ticker}'))
     if not add_plots:
         return
-    df['Close'] = rs    # for hiding 'Close' line from the mpf.plot call
+
+    # for hiding 'Close' line from the mpf.plot call
+    df_dummy = df.xs(tickers[0], level=1, axis=1).copy()
+    for col in ['Open', 'High', 'Low', 'Close']:
+        df_dummy[col] = rs
 
     fig, axes = mpf.plot(
-        df, type='line',
+        df_dummy, type='line',
         volume=False, addplot=add_plots,
         ylabel=f'Relative Strength (Compared to {si.get_name(ref_ticker)})',
         figratio=(2, 1), figscale=1.2,
@@ -139,7 +143,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 
     # Save the figure
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(symbol, interval, df.index[-1], __file__)
+    fn = file_util.gen_fn_info('cmp', interval, df.index[-1], __file__)
     fig.savefig(f'{out_dir}/{fn}.png', bbox_inches='tight')
 
 

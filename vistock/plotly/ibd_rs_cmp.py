@@ -16,9 +16,9 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
 
 __all__ = ['plot']
 
@@ -88,14 +88,14 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         if is_taiwan_stock(tw.as_yfinance(symbols[0])):
             ref_ticker = '^TWII'  # Taiwan Weighted Index
 
-    df_ref = yf.download(ref_ticker, period=period, interval=interval)
+    tickers = [tw.as_yfinance(s) for s in symbols]
+    df = yf.download([ref_ticker]+tickers, period=period, interval=interval)
+
+    df_ref = df.xs(ref_ticker, level=1, axis=1)
 
     fig = go.Figure()
-
-    for symbol in symbols:
-        ticker = tw.as_yfinance(symbol)
-        df = yf.download(ticker, period=period, interval=interval)
-        rs = relative_strength(df['Close'], df_ref['Close'], interval)
+    for ticker, symbol in zip(tickers, symbols):
+        rs = relative_strength(df['Close'][ticker], df_ref['Close'], interval)
         fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines', name=symbol))
 
     # Convert datetime index to string format suitable for display
@@ -128,7 +128,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 
     # Write the figure to an HTML file
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info('cmp', interval, df.index.values[-1], __file__)
     fig.write_html(f'{out_dir}/{fn}.html')
 
 
