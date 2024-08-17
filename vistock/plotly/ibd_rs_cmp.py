@@ -87,13 +87,13 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         if is_taiwan_stock(tw.as_yfinance(symbols[0])):
             ref_ticker = '^TWII'  # Taiwan Weighted Index
 
-    df_ref = yf.Ticker(ref_ticker).history(period=period, interval=interval)
+    df_ref = yf.download(ref_ticker, period=period, interval=interval)
 
     fig = go.Figure()
 
     for symbol in symbols:
         ticker = tw.as_yfinance(symbol)
-        df = yf.Ticker(ticker).history(period=period, interval=interval)
+        df = yf.download(ticker, period=period, interval=interval)
         rs = relative_strength(df['Close'], df_ref['Close'], interval)
         fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines', name=symbol))
 

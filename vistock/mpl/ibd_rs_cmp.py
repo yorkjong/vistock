@@ -106,12 +106,12 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         if is_taiwan_stock(tw.as_yfinance(symbols[0])):
             ref_ticker = '^TWII'  # Taiwan Weighted Index
 
-    df_ref = yf.Ticker(ref_ticker).history(period=period, interval=interval)
+    df_ref = yf.download(ref_ticker, period=period, interval=interval)
 
     add_plots = []
     for symbol in symbols:
         ticker = tw.as_yfinance(symbol)
-        df = yf.Ticker(ticker).history(period=period, interval=interval)
+        df = yf.download(ticker, period=period, interval=interval)
         rs = relative_strength(df['Close'], df_ref['Close'], interval)
         add_plots.append(mpf.make_addplot(rs, label=f'{ticker}'))
     if not add_plots:
