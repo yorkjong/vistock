@@ -78,7 +78,7 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
         height=0.75*bin_size,
         align='center',
         color='cyan',
-        alpha=0.4
+        alpha=0.2
     )
 
     return fig
