@@ -6,9 +6,9 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * RSI from TA-Lib
 """
 __software__ = "Stock chart of price, volume, and RSI"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/16 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/17 (last revision)"
 
 __all__ = ['plot']
 
@@ -26,7 +26,8 @@ from .. import ta
 def plot(symbol='TSLA', period='1y', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
          legend_loc='best',
-         market_color_style=MarketColorStyle.AUTO, out_dir='out'):
+         market_color_style=MarketColorStyle.AUTO,
+         hides_nontrading=True, out_dir='out'):
     """Plot a stock figure that consists 3 suplots: a price subplot, a
     volume subplot, and a RSI subplot.
 
@@ -85,6 +86,8 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
     market_color_style (MarketColorStyle): The market color style to use.
         Default is MarketColorStyle.AUTO.
+    hides_nontrading : bool, optional
+        Whether to hide non-trading periods. Default is True.
     out_dir: str
         the output directory for saving figure.
     """
@@ -124,7 +127,9 @@ def plot(symbol='TSLA', period='1y', interval='1d',
     fig, axes = mpf.plot(
         df, type='candle',                  # candlesticks
         volume=True, addplot=addplot,       # MA, volume, volume MA, RSI
-        style=mpf_style, figsize=(16, 8),
+        figsize=(16, 8),
+        style=mpf_style,
+        show_nontrading=not hides_nontrading,
         returnfig=True
     )
     # Set location of legends

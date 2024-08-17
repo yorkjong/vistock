@@ -2,9 +2,9 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "2.2"
+__version__ = "2.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/16 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/17 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -24,7 +24,7 @@ from .mpf_util import decide_mpf_style
 def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
           total_bins=42, legend_loc='best',
-          market_color_style=MarketColorStyle.AUTO):
+          market_color_style=MarketColorStyle.AUTO, hides_nontrading=True):
 
     # Calculate price moving average
     for n in ma_nitems:
@@ -53,8 +53,10 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
     fig, axes = mpf.plot(
         df, type='candle',              # candlesticks
         volume=True, addplot=addplot,   # MA, volume, volume MA
+        figsize=(16, 8),
         style=s,
-        figsize=(16, 8), returnfig=True,
+        show_nontrading=not hides_nontrading,
+        returnfig=True,
     )
     # Set location of legends
     for ax in axes:
@@ -95,7 +97,8 @@ class Volume:
     def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
              total_bins=42, legend_loc='best',
-             market_color_style=MarketColorStyle.AUTO, out_dir='out'):
+             market_color_style=MarketColorStyle.AUTO,
+             hides_nontrading=True, out_dir='out'):
         """Plot a price-by-volume, PBV (also called volume profile) figure for a
         given stock.
 
@@ -158,6 +161,8 @@ class Volume:
 
         market_color_style (MarketColorStyle): The market color style to use.
             Default is MarketColorStyle.AUTO.
+        hides_nontrading : bool, optional
+            Whether to hide non-trading periods. Default is True.
         out_dir: str
             the output directory for saving figure.
         """
@@ -169,8 +174,9 @@ class Volume:
         mc_style = decide_market_color_style(ticker, market_color_style)
         mpf_style = decide_mpf_style(base_mpf_style='yahoo',
                                      market_color_style=mc_style)
-        fig = _plot(df, mpf_style, 'Volume', period, interval, ma_nitems, vma_nitems,
-                    total_bins, legend_loc, market_color_style, )
+        fig = _plot(df, mpf_style, 'Volume', period, interval,
+                    ma_nitems, vma_nitems, total_bins,
+                    legend_loc, market_color_style, hides_nontrading)
         fig.suptitle(f"{ticker} {interval} "
                      f"({df.index.values[0]}~{df.index.values[-1]})",
                      y=0.93)
@@ -194,7 +200,8 @@ class Turnover:
     def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
              total_bins=42, legend_loc='best',
-             market_color_style=MarketColorStyle.AUTO, out_dir='out'):
+             market_color_style=MarketColorStyle.AUTO,
+             hides_nontrading=True, out_dir='out'):
         """Plot a turnover profile figure for a given stock.
 
         Here the provile is overlaid with the price subplot. This figure
@@ -257,6 +264,8 @@ class Turnover:
 
         market_color_style (MarketColorStyle): The market color style to use.
             Default is MarketColorStyle.AUTO.
+        hides_nontrading : bool, optional
+            Whether to hide non-trading periods. Default is True.
         out_dir: str
             the output directory for saving figure.
         """
@@ -269,8 +278,9 @@ class Turnover:
         mc_style = decide_market_color_style(ticker, market_color_style)
         mpf_style = decide_mpf_style(base_mpf_style='yahoo',
                                      market_color_style=mc_style)
-        fig = _plot(df, mpf_style, 'Turnover', period, interval, ma_nitems, vma_nitems,
-                    total_bins, legend_loc, market_color_style)
+        fig = _plot(df, mpf_style, 'Turnover', period, interval,
+                    ma_nitems, vma_nitems, total_bins,
+                    legend_loc, market_color_style, hides_nontrading)
         fig.suptitle(f"{ticker} {interval} "
                      f"({df.index.values[0]}~{df.index.values[-1]})",
                      y=0.93)
