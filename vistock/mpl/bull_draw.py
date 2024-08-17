@@ -61,18 +61,18 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         The chart style to use. Common styles include:
         - 'yahoo': Yahoo Finance style
         - 'charles': Charles style
-        - 'mike': Mike style
-        - 'blueskies': Blue Skies style
-        - 'checkers': Checkered style
-        - 'ibd': Investor's Business Daily style
+        - 'tradingview': TradingView style
         - 'binance': Binance style
         - 'binancedark': Binance dark mode style
-        - 'starsandstripes': Stars and Stripes style
-        - 'tradingview': TradingView style
-        - 'kenan': Kenan style
-        - 'brasil': Brasil style
-        - 'sas': SAS style
+        - 'mike': Mike style (dark mode)
         - 'nightclouds': Dark mode with sleek appearance
+        - 'checkers': Checkered style
+        - 'ibd': Investor's Business Daily style
+        - 'sas': SAS style
+        - 'starsandstripes': Stars and Stripes style
+        - 'kenan': Kenan style
+        - 'blueskies': Blue Skies style
+        - 'brasil': Brasil style
         Default is 'yahoo'.
 
     hides_nontrading : bool, optional
