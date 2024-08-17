@@ -15,9 +15,9 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
 
 __all__ = ['plot']
 
@@ -171,11 +171,12 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
             ref_ticker = '^TWII'  # Taiwan Weighted Index
 
     # Download data
-    df = yf.download(ticker, period=period, interval=interval)
-    def_ref = yf.download(ref_ticker, period=period, interval=interval)
+    df = yf.download([ref_ticker, ticker], period=period, interval=interval)
+    df_ref = df.xs(ref_ticker, level=1, axis=1)
+    df = df.xs(ticker, level=1, axis=1)
 
     # Calculate Relative Strength (RS)
-    rs_ratio = relative_strength(df['Close'], def_ref['Close'], interval)
+    rs_ratio = relative_strength(df['Close'], df_ref['Close'], interval)
 
     # Calculate moving averages
     df = calc_moving_averages(df, interval, [50, 200])
@@ -235,5 +236,6 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
 
 if __name__ == '__main__':
-    plot('TSLA', interval='1wk')
+    plot('TSLA', interval='1d')
+    plot('台積電', interval='1wk')
 
