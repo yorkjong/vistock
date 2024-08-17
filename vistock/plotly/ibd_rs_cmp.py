@@ -15,7 +15,7 @@ Usage:
     To use this module, call the `plot` function with a list of stock symbols
     and desired parameters.
 """
-__software__ = "IBD RS Comparision chart"
+__software__ = "IBD RS Comparison chart"
 __version__ = "1.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/17 (last revision)"
