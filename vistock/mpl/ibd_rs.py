@@ -56,8 +56,9 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         The interval for data points. Valid values are '1d' for daily or '1wk'
         for weekly. Default is '1d'.
     ref_ticker : str, optional
-        The reference ticker for calculating Relative Strength. Defaults to
-        '^GSPC' (S&P 500) or '^TWII' (Taiwan Weighted Index) for Taiwan stocks.
+        The ticker symbol of the reference index. If None, defaults to S&P
+        500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
+        a Taiwan stock.
     legend_loc: str
         the location of the legend. Valid locations are
 
