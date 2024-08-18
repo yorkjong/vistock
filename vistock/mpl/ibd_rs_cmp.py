@@ -16,7 +16,7 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.4"
+__version__ = "1.5"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
 
@@ -34,7 +34,7 @@ from .. import stock_indices as si
 
 
 def plot(symbols, period='2y', interval='1d', ref_ticker=None,
-         style='checkers', hides_nontrading=True, out_dir='out'):
+         legend_loc='best', style='checkers', hides_nontrading=True, out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
     index using mplfinance.
@@ -67,6 +67,21 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
+
+    legend_loc: str
+        the location of the legend. Valid locations are
+
+        * 'best'
+        * 'upper right'
+        * 'upper left'
+        * 'lower left'
+        * 'lower right'
+        * 'right'
+        * 'center left'
+        * 'center right'
+        * 'lower center'
+        * 'upper center'
+        * 'center'
 
     style: str, optional
         The chart style to use. Common styles include:
@@ -132,6 +147,10 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         show_nontrading=not hides_nontrading,
         returnfig=True,
     )
+    # Set location of legends
+    for ax in axes:
+        if ax.legend_:
+            ax.legend(loc=legend_loc)
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
