@@ -171,7 +171,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 #------------------------------------------------------------------------------
 
 def main():
-    symbols = ['NVDA', 'MSFT', 'META', '^GSPC', '^NDX']
+    symbols = ['NVDA', 'MSFT', 'META', '^GSPC', '^NDX', '^TWII']
     plot(symbols)
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     plot(symbols, interval='1wk')
