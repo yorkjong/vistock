@@ -5,9 +5,9 @@ Show a price-and-volume overlaid stock chart.
 * Plot with Plotly (for candlestick, MA, volume, volume MA)
 """
 __software__ = "Price and Volume overlaid stock chart"
-__version__ = "1.8"
+__version__ = "1.9"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/07/22 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/18 (last revision)"
 
 __all__ = ['plot']
 
@@ -116,7 +116,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
     fig.update_layout(
         height=720,
         title=f'{symbol} {interval} '
-              f'({df.index.values[0]}~{df.index.values[-1]})',
+              f'({df.index[0]}~{df.index[-1]})',
         title_x=0.5, title_y=.9,
         legend=dict(yanchor='top', xanchor="left", x=1.042),
 
@@ -137,7 +137,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
     # Write the figure to an HTML file
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info(symbol, interval, df.index[-1], __file__)
     fig.write_html(f'{out_dir}/{fn}.html')
 
 
