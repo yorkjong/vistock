@@ -16,7 +16,7 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.5"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
 
@@ -162,7 +162,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 
     # Save the figure
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info('cmp', interval, df.index[-1], __file__)
+    fn = file_util.gen_fn_info('stocks', interval, df.index[-1], __file__)
     fig.savefig(f'{out_dir}/{fn}.png', bbox_inches='tight')
 
 

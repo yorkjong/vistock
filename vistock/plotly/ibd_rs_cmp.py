@@ -16,7 +16,7 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
 
@@ -128,7 +128,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 
     # Write the figure to an HTML file
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info('cmp', interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info('stocks', interval, df.index[-1], __file__)
     fig.write_html(f'{out_dir}/{fn}.html')
 
 
