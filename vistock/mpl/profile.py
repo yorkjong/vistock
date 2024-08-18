@@ -2,9 +2,9 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "2.4"
+__version__ = "2.5"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/17 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/18 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -193,7 +193,7 @@ class Volume:
                     ma_nitems, vma_nitems, total_bins,
                     legend_loc, hides_nontrading)
         fig.suptitle(f"{ticker} {interval} "
-                     f"({df.index.values[0]}~{df.index.values[-1]})",
+                     f"({df.index[0]}~{df.index[-1]})",
                      y=0.93)
 
         # Show the figure
@@ -201,7 +201,7 @@ class Volume:
 
         # Write the figure to an PNG file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(ticker, interval, df.index.values[-1],
+        fn = file_util.gen_fn_info(ticker, interval, df.index[-1],
                                    'volume_prf')
         fig.savefig(f'{out_dir}/{fn}.png')
 
@@ -318,7 +318,7 @@ class Turnover:
                     ma_nitems, vma_nitems, total_bins,
                     legend_loc, hides_nontrading)
         fig.suptitle(f"{ticker} {interval} "
-                     f"({df.index.values[0]}~{df.index.values[-1]})",
+                     f"({df.index[0]}~{df.index[-1]})",
                      y=0.93)
 
         # Show the figure
@@ -326,7 +326,7 @@ class Turnover:
 
         # Write the figure to an PNG file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(ticker, interval, df.index.values[-1],
+        fn = file_util.gen_fn_info(ticker, interval, df.index[-1],
                                    'turnover_prf')
         fig.savefig(f'{out_dir}/{fn}.png')
 
