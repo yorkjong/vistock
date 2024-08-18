@@ -16,7 +16,7 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
 
@@ -129,7 +129,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     add_plots = []
     for ticker in tickers:
         rs = relative_strength(df['Close'][ticker], df_ref['Close'], interval)
-        add_plots.append(mpf.make_addplot(rs, label=f'{ticker}'))
+        add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(ticker)}'))
     if not add_plots:
         return
 
@@ -171,7 +171,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 #------------------------------------------------------------------------------
 
 def main():
-    symbols = ['NVDA', 'MSFT', 'META', 'AAPL', 'TSM']
+    symbols = ['NVDA', 'MSFT', 'META', '^GSPC', '^NDX']
     plot(symbols)
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     plot(symbols, interval='1wk')
