@@ -5,6 +5,7 @@ TODO
 
 0.4.0
 ------------------
+* Added ibd_rs_line.ipynb to test IBD relative functions
 * Added style parameter for plot functions (mplfinance version)
 * Added hides_nontrading parameter for plot functions (mplfinance version)
 * Added ibd_rs_cmp modules (both mpl and plotly version) to plot IBD RS
