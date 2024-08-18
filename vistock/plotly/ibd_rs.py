@@ -207,7 +207,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     # Update layout
     fig.update_layout(
         title=f'{symbol} - {interval} '
-              f'({df.index.values[0]} to {df.index.values[-1]})',
+              f'({df.index[0]} to {df.index[-1]})',
         title_x=0.5, title_y=0.92,
         legend=dict(yanchor='bottom', y=0.01, xanchor="left", x=0.01),
 
@@ -231,7 +231,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
     # Write the figure to an HTML file
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info(symbol, interval, df.index[-1], __file__)
     fig.write_html(f'{out_dir}/{fn}.html')
 
 

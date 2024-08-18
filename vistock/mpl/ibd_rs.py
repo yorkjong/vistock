@@ -173,7 +173,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
     fig.suptitle(f"{ticker} - {interval} "
-                 f"({df.index.values[0]} to {df.index.values[-1]})", y=0.93)
+                 f"({df.index[0]} to {df.index[-1]})", y=0.93)
 
     # Show the figure
     mpf.show()
