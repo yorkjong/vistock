@@ -2,9 +2,9 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/21 (initial version) ~ 2024/07/22 (last revision)"
+__date__ = "2024/07/21 (initial version) ~ 2024/08/19 (last revision)"
 
 __all__ = [ 'plot' ]
 
@@ -149,7 +149,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
     # Update layout
     fig.update_layout(
-        title=f'{symbol} {interval} ({df.index.values[0]}~{df.index.values[-1]})',
+        title=f'{symbol} - {interval} ({df.index[0]} to {df.index[-1]})',
         title_x=0.5, title_y=.9,
 
         xaxis=dict(anchor='free'),
@@ -173,7 +173,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
     # Write the figure to an HTML file
     out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1], __file__)
+    fn = file_util.gen_fn_info(symbol, interval, df.index[-1], __file__)
     fig.write_html(f'{out_dir}/{fn}.html')
 
 

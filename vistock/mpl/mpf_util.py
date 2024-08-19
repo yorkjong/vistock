@@ -2,9 +2,11 @@
 Utility for mplfinance.
 """
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/22 (initial version) ~ 2024/07/22 (last revision)"
+__date__ = "2024/07/22 (initial version) ~ 2024/08/19 (last revision)"
 
 __all__ = [ 'decide_mpf_style' ]
+
+import copy
 
 import mplfinance as mpf
 from ..util import MarketColorStyle
@@ -29,17 +31,16 @@ def decide_mpf_style(base_mpf_style='yahoo',
         return style
 
     mk_colors = style['marketcolors']
-    reversed_mk_colors = mpf.make_marketcolors(
-        up=mk_colors['candle']['down'],
-        down=mk_colors['candle']['up'],
-        edge={'up': mk_colors['edge']['down'], 'down': mk_colors['edge']['up']},
-        wick={'up': mk_colors['wick']['down'], 'down': mk_colors['wick']['up']},
-        ohlc={'up': mk_colors['ohlc']['down'], 'down': mk_colors['ohlc']['up']},
-        volume={'up': mk_colors['volume']['down'], 'down': mk_colors['volume']['up']},
-    )
+
+    reversed_mk_colors = copy.deepcopy(mk_colors)
+    for i in ['candle', 'edge', 'wick', 'ohlc', 'volume', 'vcedge']:
+        reversed_mk_colors[i] = {
+            'up': mk_colors[i]['down'],
+            'down': mk_colors[i]['up']
+        }
 
     # Define a new style with reversed colors
-    style = mpf.make_mpf_style(base_mpf_style='yahoo',
+    style = mpf.make_mpf_style(base_mpf_style=base_mpf_style,
                                marketcolors=reversed_mk_colors)
     return style
 

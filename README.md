@@ -25,8 +25,9 @@
       * The vistock will be installed automatically if it is not done yet.
       * After running a cell manually, it will auto-run if you change the selected parameter value.
 
-<video src="https://user-images.githubusercontent.com/11453572/218294149-ab0fc959-c40d-41b7-bc29-188ee5a2800f.mov"  doncontrols="controls" style="max-width: 730px;">
+<video src="https://github.com/user-attachments/assets/21e44415-a489-4a72-a813-31a340788443"  doncontrols="controls" style="max-width: 640px;">
 </video>
+
 
 ## Dive into it on your computer.
 

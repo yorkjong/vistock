@@ -3,9 +3,9 @@ Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
 2-section layout for a given stock.
 """
 __software__ = "Profile with Plotly 2 subplots"
-__version__ = "2.0.2"
+__version__ = "2.0.5"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/07/22 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -113,7 +113,7 @@ def _plot(df, ticker, market_color_style, profile_field='Volume',
     fig.update_layout(
         legend=dict(yanchor='top', xanchor="left", x=1),
 
-        xaxis=dict(side='top', title='Bin Comulative Volume'),
+        xaxis=dict(side='top', title=f'Bin Comulative {profile_field}'),
         yaxis=dict(side='left', title='Bin Price'),
 
         xaxis2=dict(overlaying='x', side='bottom'),     # datetime
@@ -136,8 +136,8 @@ def _plot(df, ticker, market_color_style, profile_field='Volume',
         # change the starting position of the horizontal bars to the right
         fig.update_layout(xaxis=dict(autorange='reversed'))
         fig.update_layout(
-            yaxis=dict(side='right', title='Bin Price (USD)'),
-            yaxis2=dict(side='left', title='Price (USD)'),
+            yaxis=dict(side='right', title='Bin Price'),
+            yaxis2=dict(side='left', title='Price'),
         )
 
     if hides_nontrading:
@@ -224,8 +224,7 @@ class Volume:
                     period, interval, ma_nitems, vma_nitems, total_bins,
                     hides_nontrading, hbar_align_on_right)
         fig.update_layout(
-            title=f'{symbol} {interval} '
-                  f'({df.index.values[0]}~{df.index.values[-1]})',
+            title=f'{symbol} - {interval} ({df.index[0]} to {df.index[-1]})',
             title_x=0.5, title_y=.98
         )
 
@@ -234,7 +233,7 @@ class Volume:
 
         # Write the figure to an HTML file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1],
+        fn = file_util.gen_fn_info(symbol, interval, df.index[-1],
                                    'volume_prf')
         fig.write_html(f'{out_dir}/{fn}.html')
 
@@ -316,8 +315,7 @@ class Turnover:
                     period, interval, ma_nitems, vma_nitems, total_bins,
                     hides_nontrading, hbar_align_on_right)
         fig.update_layout(
-            title=f'{symbol} {interval} '
-                  f'({df.index.values[0]}~{df.index.values[-1]})',
+            title=f'{symbol} - {interval} ({df.index[0]} to {df.index[-1]})',
             title_x=0.5, title_y=.98,
             xaxis=dict(title='Bin Comulative Turnover (Price*Volume)'),
         )
@@ -327,7 +325,7 @@ class Turnover:
 
         # Write the figure to an HTML file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1],
+        fn = file_util.gen_fn_info(symbol, interval, df.index[-1],
                                    'turnover_prf')
         fig.write_html(f'{out_dir}/{fn}.html')
 

@@ -2,9 +2,9 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "2.5"
+__version__ = "3.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/18 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -47,7 +47,7 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
     fig, axes = mpf.plot(
         df, type='candle',              # candlesticks
         volume=True, addplot=addplot,   # MA, volume, volume MA
-        figsize=(16, 8),
+        figratio=(2, 1), figscale=1.2,
         style=mpf_style,
         show_nontrading=not hides_nontrading,
         returnfig=True,
@@ -68,10 +68,7 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
     bin_round = lambda x: bin_size * round(x / bin_size)
     bin = df[profile_field].groupby(
             df['Close'].apply(lambda x: bin_round(x))).sum()
-
-    ax = fig.add_axes(axes[0].get_position())
-    ax.set_axis_off()
-    ax.set_xlim(right=1.2*max(bin.values))
+    ax = fig.add_axes(axes[0].get_position(), sharey=axes[0], frameon=False)
     ax.barh(
         y=bin.keys(),       # price
         width=bin.values,   # bin comulative volume/turnover
@@ -80,6 +77,19 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
         color='cyan',
         alpha=0.2
     )
+
+    # Set x ticks of the Profile
+    ax.set_xlim(right=1.2*max(bin.values))
+    ax.tick_params(top=True, labeltop=True, bottom=False, labelbottom=False)
+
+    # Set x label of the Profile
+    ax.set_xlabel(f'Bin Cumulative {profile_field}')
+    if profile_field == 'Turnover':
+        ax.set_xlabel('Bin Cumulative Turnover (Price*Volume)')
+    ax.xaxis.set_label_position('top')
+
+    # Disable gridlines on the secondary ax
+    ax.grid(False)
 
     return fig
 
@@ -192,9 +202,9 @@ class Volume:
         fig = _plot(df, mpf_style, 'Volume', period, interval,
                     ma_nitems, vma_nitems, total_bins,
                     legend_loc, hides_nontrading)
-        fig.suptitle(f"{ticker} {interval} "
-                     f"({df.index[0]}~{df.index[-1]})",
-                     y=0.93)
+        fig.suptitle(
+            f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+        )
 
         # Show the figure
         mpf.show()
@@ -317,9 +327,9 @@ class Turnover:
         fig = _plot(df, mpf_style, 'Turnover', period, interval,
                     ma_nitems, vma_nitems, total_bins,
                     legend_loc, hides_nontrading)
-        fig.suptitle(f"{ticker} {interval} "
-                     f"({df.index[0]}~{df.index[-1]})",
-                     y=0.93)
+        fig.suptitle(
+            f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+        )
 
         # Show the figure
         mpf.show()
@@ -333,5 +343,5 @@ class Turnover:
 
 if __name__ == '__main__':
     Volume.plot('TSLA')
-    Turnover.plot('TSLA')
+    Turnover.plot('台積電')
 
