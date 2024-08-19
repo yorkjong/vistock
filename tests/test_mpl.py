@@ -13,7 +13,11 @@ modules = (
 )
 
 for m in modules:
+<<<<<<< HEAD
     #m.plot('TSLA')
+=======
+    m.plot('TSLA')
+>>>>>>> main
     #m.plot('TSLA', period="6mo", interval="1d")
     #m.plot('台積電', period="6mo", interval="1d")
     #m.plot('台積電', period="3d", interval="5m")
