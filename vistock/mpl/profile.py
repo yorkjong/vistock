@@ -2,9 +2,9 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "2.5"
+__version__ = "2.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/18 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -192,9 +192,10 @@ class Volume:
         fig = _plot(df, mpf_style, 'Volume', period, interval,
                     ma_nitems, vma_nitems, total_bins,
                     legend_loc, hides_nontrading)
-        fig.suptitle(f"{ticker} {interval} "
-                     f"({df.index[0]}~{df.index[-1]})",
-                     y=0.93)
+        fig.suptitle(
+            f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+            y=0.93
+        )
 
         # Show the figure
         mpf.show()
@@ -317,9 +318,10 @@ class Turnover:
         fig = _plot(df, mpf_style, 'Turnover', period, interval,
                     ma_nitems, vma_nitems, total_bins,
                     legend_loc, hides_nontrading)
-        fig.suptitle(f"{ticker} {interval} "
-                     f"({df.index[0]}~{df.index[-1]})",
-                     y=0.93)
+        fig.suptitle(
+            f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+            y=0.93
+        )
 
         # Show the figure
         mpf.show()

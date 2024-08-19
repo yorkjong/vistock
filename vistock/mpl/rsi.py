@@ -6,9 +6,9 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * RSI from TA-Lib
 """
 __software__ = "Stock chart of price, volume, and RSI"
-__version__ = "1.10"
+__version__ = "1.11"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/18 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
 
 __all__ = ['plot']
 
@@ -164,8 +164,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
         df.index = df.index.strftime('%Y-%m-%d %H:%M')
     else:
         df.index = df.index.strftime('%Y-%m-%d')
-    fig.suptitle(f"{ticker} {interval} "
-                 f"({df.index[0]}~{df.index[-1]})",
+    fig.suptitle(f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
                  y=0.93)
 
     # Show the figure

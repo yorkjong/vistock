@@ -3,9 +3,9 @@ Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
 4-section layout for a given stock.
 """
 __software__ = "Volume Profile with Plotly 2x2 subplots"
-__version__ = "2.2"
+__version__ = "2.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/18 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -202,8 +202,7 @@ class Volume:
                     period, interval, ma_nitems, vma_nitems,
                     total_bins, hides_nontrading)
         fig.update_layout(
-            title=f'{symbol} {interval} '
-                  f'({df.index[0]}~{df.index[-1]})',
+            title=f'{symbol} - {interval} ({df.index[0]} to {df.index[-1]})',
             title_x=0.5, title_y=.9,
         )
 
@@ -289,8 +288,7 @@ class Turnover:
                     period, interval, ma_nitems, vma_nitems,
                     total_bins, hides_nontrading)
         fig.update_layout(
-            title=f'{symbol} {interval} '
-                  f'({df.index[0]}~{df.index[-1]})',
+            title=f'{symbol} - {interval} ({df.index[0]} to {df.index[-1]})',
             title_x=0.5, title_y=.9,
             xaxis2=dict(title='Bin Comulative Turnover'),
         )

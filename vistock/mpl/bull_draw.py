@@ -2,9 +2,9 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/21 (initial version) ~ 2024/08/18 (last revision)"
+__date__ = "2024/07/21 (initial version) ~ 2024/08/19 (last revision)"
 
 __all__ = [ 'plot' ]
 
@@ -137,10 +137,8 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         df.index = df.index.strftime('%Y-%m-%d %H:%M')
     else:
         df.index = df.index.strftime('%Y-%m-%d')
-    fig.suptitle(
-        f"{ticker} {interval} ({df.index[0]}~{df.index[-1]})",
-        y=0.93
-    )
+    fig.suptitle(f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+                 y=0.93)
 
     # Show
     mpf.show()  # plt.show()
