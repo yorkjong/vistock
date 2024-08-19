@@ -2,7 +2,7 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "2.6"
+__version__ = "3.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
 
@@ -47,7 +47,7 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
     fig, axes = mpf.plot(
         df, type='candle',              # candlesticks
         volume=True, addplot=addplot,   # MA, volume, volume MA
-        figsize=(16, 8),
+        figratio=(2, 1), figscale=1.2,
         style=mpf_style,
         show_nontrading=not hides_nontrading,
         returnfig=True,
@@ -70,8 +70,6 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
             df['Close'].apply(lambda x: bin_round(x))).sum()
 
     ax = fig.add_axes(axes[0].get_position())
-    ax.set_axis_off()
-    ax.set_xlim(right=1.2*max(bin.values))
     ax.barh(
         y=bin.keys(),       # price
         width=bin.values,   # bin comulative volume/turnover
@@ -80,6 +78,15 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
         color='cyan',
         alpha=0.2
     )
+
+    # Set x ticks of the profile
+    ax.set_xlim(right=1.2*max(bin.values))
+    ax.tick_params(top=True, labeltop=True, bottom=False, labelbottom=False)
+
+    # Set x label of the profile
+    ax.set_xlabel('Cumulative Volume' if profile_field == 'Volume'
+                                    else 'Cumulative Turnover')
+    ax.xaxis.set_label_position('top')
 
     return fig
 
@@ -194,7 +201,6 @@ class Volume:
                     legend_loc, hides_nontrading)
         fig.suptitle(
             f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
-            y=0.93
         )
 
         # Show the figure
@@ -320,7 +326,6 @@ class Turnover:
                     legend_loc, hides_nontrading)
         fig.suptitle(
             f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
-            y=0.93
         )
 
         # Show the figure
