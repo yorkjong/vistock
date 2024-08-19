@@ -3,7 +3,7 @@ Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
 2-section layout for a given stock.
 """
 __software__ = "Profile with Plotly 2 subplots"
-__version__ = "2.0.3"
+__version__ = "2.0.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
 
@@ -113,7 +113,7 @@ def _plot(df, ticker, market_color_style, profile_field='Volume',
     fig.update_layout(
         legend=dict(yanchor='top', xanchor="left", x=1),
 
-        xaxis=dict(side='top', title='Bin Comulative Volume'),
+        xaxis=dict(side='top', title=f'Bin Comulative {profile_field}'),
         yaxis=dict(side='left', title='Bin Price'),
 
         xaxis2=dict(overlaying='x', side='bottom'),     # datetime
