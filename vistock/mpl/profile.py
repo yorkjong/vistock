@@ -2,7 +2,7 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "3.1"
+__version__ = "3.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
 
@@ -68,7 +68,7 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
     bin_round = lambda x: bin_size * round(x / bin_size)
     bin = df[profile_field].groupby(
             df['Close'].apply(lambda x: bin_round(x))).sum()
-    ax = fig.add_axes(axes[0].get_position())
+    ax = fig.add_axes(axes[0].get_position(), frameon=False)
     ax.barh(
         y=bin.keys(),       # price
         width=bin.values,   # bin comulative volume/turnover
@@ -87,6 +87,7 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
     if profile_field == 'Turnover':
         ax.set_xlabel('Bin Cumulative Turnover (Price*Volume)')
     ax.xaxis.set_label_position('top')
+    #ax.set_axis_off()
 
     return fig
 
