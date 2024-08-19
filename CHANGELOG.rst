@@ -2,25 +2,32 @@ Change Log
 ==========
 TODO
 ----
+* To support Stan Weinstein's Relative Strength and stock chart convention
+* To support Alexander Elder's technical indicators, such as Force Index,
+  Elder Ray Index and stock charts with his trading systems.
+* To support other useful Technical Indicators.
 
-0.4.0
+0.4.0 [2024-08-19]
 ------------------
-* Added ibd_rs_line.ipynb to test IBD relative functions
-* Added style parameter for plot functions (mplfinance version)
-* Added hides_nontrading parameter for plot functions (mplfinance version)
-* Added ibd_rs_cmp modules (both mpl and plotly version) to plot IBD RS
-  Comparison lines
-* Added ibd_rs modules (both mpl and plotly version) to plot IBD RS line
-* Added caching mechanism to value_from_key and similar_keys methods
-* Applied requests_cache to improve the execxution time
-* Added ibd module to support IBD Rating and Ranking
-* Added stock_indices module to get tickers of a given source index
-* Extended tw module to get tickers of a given source exchange
-* Added ibd_rs_rating.ipynb to demo ibd module
-* vistock/util.py: Added the support of .TWO to decide_market_color_style
-* vistock/util.py: Added doctest to decide_market_color_style
-* vistock/mpl/rsi.py: Created ta module and replaced talib package with ta
-  module
+* Added the support the stock chart and table with IBD RS line and rating.
+  * Added ibd_rs_line.ipynb to test IBD relative functions
+  * Added ibd_rs_cmp modules (both mpl and plotly version) to plot IBD RS
+  * Added ibd_rs modules (both mpl and plotly version) to plot IBD RS line
+  * Added ibd module to support IBD Rating and Ranking
+  * Added ibd_rs_rating.ipynb to demo ibd module
+  * Added stock_indices module to get tickers of a given source index
+  * Extended tw module to get tickers of a given source exchange
+* Improved Performance
+  * Applied requests_cache to improve the execxution time
+  * Added caching mechanism to value_from_key and similar_keys methods
+* Other features
+  * Added style parameter for plot functions (mplfinance version)
+  * Added hides_nontrading parameter for plot functions (mplfinance version)
+    Comparison lines
+  * vistock/util.py: Added the support of .TWO to decide_market_color_style
+  * vistock/util.py: Added doctest to decide_market_color_style
+  * vistock/mpl/rsi.py: Created ta module and replaced talib package with ta
+    module
 
 0.3.2 [2024-07-22]
 ------------------
