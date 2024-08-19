@@ -164,5 +164,6 @@ def get_drawdown_color(market_color_style=MarketColorStyle.WESTERN):
 
 
 if __name__ == '__main__':
-    plot('TSLA')
+    plot('TSLA', style='binancedark')
+    plot('台積電', style='binancedark')
 

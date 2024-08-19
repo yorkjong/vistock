@@ -343,5 +343,5 @@ class Turnover:
 
 if __name__ == '__main__':
     Volume.plot('TSLA')
-    Turnover.plot('TSLA')
+    Turnover.plot('台積電')
 
