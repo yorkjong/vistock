@@ -32,17 +32,7 @@
     pip install git+https://github.com/YorkJong/vistock.git
     ```
 
-2. Install TA-Lib optionally (used only by vistock.mpl.rsi module)
-
-    Install TA-Lib on macOS
-    ```sh
-    brew install ta-lib
-    pip install Ta-Lib
-    ```
-
-    Install on other platform Please ref. [Installation of Ta-Lib in Python: A Complete Guide for all Platforms](https://blog.quantinsti.com/install-ta-lib-python).
-
-3. Run a test code.
+2. Run a test code.
 
     There are two test code in `vistock/tests` folder.
 
@@ -60,7 +50,7 @@
 
 ![TSLA_1d_20230227_0000_pbv2s](https://user-images.githubusercontent.com/11453572/224471104-c6a998eb-368a-4de5-ac01-409bbe04be77.png)
 
-4. Enjoy the demo code.
+3. Enjoy the demo code.
     The demo code called [vstock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb). You can open it on your Jupyter Notebook environment.
 
 [//]: # (This may be the most platform independent comment)
