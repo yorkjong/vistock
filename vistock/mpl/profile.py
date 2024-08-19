@@ -87,7 +87,9 @@ def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
     if profile_field == 'Turnover':
         ax.set_xlabel('Bin Cumulative Turnover (Price*Volume)')
     ax.xaxis.set_label_position('top')
-    #ax.set_axis_off()
+
+    # Disable gridlines on the secondary ax
+    ax.grid(False)
 
     return fig
 
