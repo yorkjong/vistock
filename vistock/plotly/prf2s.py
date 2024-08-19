@@ -233,7 +233,7 @@ class Volume:
 
         # Write the figure to an HTML file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1],
+        fn = file_util.gen_fn_info(symbol, interval, df.index[-1],
                                    'volume_prf')
         fig.write_html(f'{out_dir}/{fn}.html')
 
@@ -325,7 +325,7 @@ class Turnover:
 
         # Write the figure to an HTML file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(symbol, interval, df.index.values[-1],
+        fn = file_util.gen_fn_info(symbol, interval, df.index[-1],
                                    'turnover_prf')
         fig.write_html(f'{out_dir}/{fn}.html')
 
