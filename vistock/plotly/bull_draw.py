@@ -2,9 +2,9 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/21 (initial version) ~ 2024/08/19 (last revision)"
+__date__ = "2024/07/21 (initial version) ~ 2024/08/20 (last revision)"
 
 __all__ = [ 'plot' ]
 
@@ -22,8 +22,8 @@ from ..util import MarketColorStyle, decide_market_color_style
 
 def plot(symbol='TSLA', period='1y', interval='1d',
          ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50,
-         hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
-         out_dir='out'):
+         market_color_style=MarketColorStyle.AUTO,
+         template='plotly', hides_nontrading=True, out_dir='out'):
     """Plot a stock figure that consists of two subplots: a price subplot and
     a volume subplot.
 
@@ -65,12 +65,30 @@ def plot(symbol='TSLA', period='1y', interval='1d',
         a sequence to list the number of data items to calclate moving averges.
     vma_nitems: int
         the number of data items to calculate the volume moving average.
-    hides_nontrading: bool
-        decide if hides non-trading time-periods.
-    market_color_style (MarketColorStyle): The market color style to use.
-        Default is MarketColorStyle.AUTO.
-    out_dir: str
-        the output directory for saving figure.
+    market_color_style : MarketColorStyle, optional
+        Color style for market data visualization. Default is
+        MarketColorStyle.AUTO.
+
+    template: str, optional:
+        The Plotly template to use for styling the chart.
+        Defaults to 'plotly'. Available templates include:
+
+        - 'plotly': Default Plotly template with interactive plots.
+        - 'plotly_white': Light theme with a white background.
+        - 'plotly_dark': Dark theme for the chart background.
+        - 'ggplot2': Style similar to ggplot2 from R.
+        - 'seaborn': Style similar to Seaborn in Python.
+        - 'simple_white': Minimal white style with no gridlines.
+        - 'presentation': Designed for presentations with a clean look.
+        - 'xgridoff': Plot with x-axis gridlines turned off.
+        - 'ygridoff': Plot with y-axis gridlines turned off.
+
+        For more details on templates, refer to Plotly's official documentation.
+
+    hides_nontrading : bool, optional
+        Whether to hide non-trading periods. Default is True.
+    out_dir : str, optional
+        Directory to save the output HTML file. Default is 'out'.
     """
     # Download stock data
     ticker = tw.as_yfinance(symbol)
@@ -160,6 +178,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
         legend=dict(yanchor='middle', y=0.5, xanchor="left", x=0.01),
         xaxis_rangeslider_visible=False,
         xaxis2_rangeslider_visible=False,
+        template=template,
     )
     if hides_nontrading:
         futil.hide_nontrading_periods(fig, df, interval)

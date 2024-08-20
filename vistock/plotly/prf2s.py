@@ -3,9 +3,9 @@ Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
 2-section layout for a given stock.
 """
 __software__ = "Profile with Plotly 2 subplots"
-__version__ = "2.0.5"
+__version__ = "2.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/08/20 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -26,7 +26,8 @@ from ..util import MarketColorStyle, decide_market_color_style
 def _plot(df, ticker, market_color_style, profile_field='Volume',
           period='1y', interval='1d',
           ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
-          hides_nontrading=True, hbar_align_on_right=True):
+          hbar_align_on_right=True,
+          template='plotly', hides_nontrading=True):
     # Initialize empty plot with a marginal subplot
     fig = make_subplots(
         rows=2, cols=1,
@@ -122,6 +123,7 @@ def _plot(df, ticker, market_color_style, profile_field='Volume',
 
         xaxis_rangeslider_visible=False,
         xaxis2_rangeslider_visible=False,
+        template=template,
     )
 
     # Update the layout to set the same range for both y-axes
@@ -155,9 +157,9 @@ class Volume:
     """
     def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
-             hides_nontrading=True, hbar_align_on_right=True,
+             hbar_align_on_right=True,
              market_color_style=MarketColorStyle.AUTO,
-             out_dir='out'):
+             template='plotly', hides_nontrading=True, out_dir='out'):
         """Plot a price-by-volume, PBV  (also called volume profile) figure for
         a given stock. This figure shows the volume distribution across price
         levels for a stock.
@@ -204,16 +206,34 @@ class Volume:
             the number of data items to calculate the volume moving average.
         total_bins: int
             the number of bins to calculate comulative volume for bins.
-        hides_nontrading: bool
-            decide if hides non-trading time-periods.
         hbar_align_on_right: bool
             decide if the price-by-volume bars align on right. True to set the
             starting position of the horizontal bars to the right; False the
             left.
-        market_color_style (MarketColorStyle): The market color style to use.
-            Default is MarketColorStyle.AUTO.
-        out_dir: str
-            the output directory for saving figure.
+        market_color_style : MarketColorStyle, optional
+            Color style for market data visualization. Default is
+            MarketColorStyle.AUTO.
+
+        template: str, optional:
+            The Plotly template to use for styling the chart.
+            Defaults to 'plotly'. Available templates include:
+
+            - 'plotly': Default Plotly template with interactive plots.
+            - 'plotly_white': Light theme with a white background.
+            - 'plotly_dark': Dark theme for the chart background.
+            - 'ggplot2': Style similar to ggplot2 from R.
+            - 'seaborn': Style similar to Seaborn in Python.
+            - 'simple_white': Minimal white style with no gridlines.
+            - 'presentation': Designed for presentations with a clean look.
+            - 'xgridoff': Plot with x-axis gridlines turned off.
+            - 'ygridoff': Plot with y-axis gridlines turned off.
+
+            For more details on templates, refer to Plotly's official documentation.
+
+        hides_nontrading : bool, optional
+            Whether to hide non-trading periods. Default is True.
+        out_dir : str, optional
+            Directory to save the output HTML file. Default is 'out'.
         """
         # Download stock data
         ticker = tw.as_yfinance(symbol)
@@ -222,7 +242,7 @@ class Volume:
         # Plot
         fig = _plot(df, ticker, market_color_style, 'Volume',
                     period, interval, ma_nitems, vma_nitems, total_bins,
-                    hides_nontrading, hbar_align_on_right)
+                    hbar_align_on_right, template, hides_nontrading)
         fig.update_layout(
             title=f'{symbol} - {interval} ({df.index[0]} to {df.index[-1]})',
             title_x=0.5, title_y=.98
@@ -245,9 +265,9 @@ class Turnover:
     '''
     def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
-             hides_nontrading=True, hbar_align_on_right=True,
+             hbar_align_on_right=True,
              market_color_style=MarketColorStyle.AUTO,
-             out_dir='out'):
+             template='plotly', hides_nontrading=True, out_dir='out'):
         """Plot a price-by-volume, PBV  (also called volume profile) figure for
         a given stock. This figure shows the volume distribution across price
         levels for a stock.
@@ -294,16 +314,34 @@ class Turnover:
             the number of data items to calculate the volume moving average.
         total_bins: int
             the number of bins to calculate comulative volume for bins.
-        hides_nontrading: bool
-            decide if hides non-trading time-periods.
         hbar_align_on_right: bool
             decide if the price-by-volume bars align on right. True to set the
             starting position of the horizontal bars to the right; False the
             left.
-        market_color_style (MarketColorStyle): The market color style to use.
-            Default is MarketColorStyle.AUTO.
-        out_dir: str
-            the output directory for saving figure.
+        market_color_style : MarketColorStyle, optional
+            Color style for market data visualization. Default is
+            MarketColorStyle.AUTO.
+
+        template: str, optional:
+            The Plotly template to use for styling the chart.
+            Defaults to 'plotly'. Available templates include:
+
+            - 'plotly': Default Plotly template with interactive plots.
+            - 'plotly_white': Light theme with a white background.
+            - 'plotly_dark': Dark theme for the chart background.
+            - 'ggplot2': Style similar to ggplot2 from R.
+            - 'seaborn': Style similar to Seaborn in Python.
+            - 'simple_white': Minimal white style with no gridlines.
+            - 'presentation': Designed for presentations with a clean look.
+            - 'xgridoff': Plot with x-axis gridlines turned off.
+            - 'ygridoff': Plot with y-axis gridlines turned off.
+
+            For more details on templates, refer to Plotly's official documentation.
+
+        hides_nontrading : bool, optional
+            Whether to hide non-trading periods. Default is True.
+        out_dir : str, optional
+            Directory to save the output HTML file. Default is 'out'.
         """
         # Download stock data
         ticker = tw.as_yfinance(symbol)
@@ -313,7 +351,7 @@ class Turnover:
         # Plot
         fig = _plot(df, ticker, market_color_style, 'Turnover',
                     period, interval, ma_nitems, vma_nitems, total_bins,
-                    hides_nontrading, hbar_align_on_right)
+                    hbar_align_on_right, template, hides_nontrading)
         fig.update_layout(
             title=f'{symbol} - {interval} ({df.index[0]} to {df.index[-1]})',
             title_x=0.5, title_y=.98,
