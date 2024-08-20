@@ -6,6 +6,7 @@ TODO
 * To support Alexander Elder's technical indicators, such as Force Index,
   Elder Ray Index and stock charts with his trading systems.
 * To support other useful Technical Indicators.
+* To support IBD EPS RS
 
 0.4.1
 ------------------
