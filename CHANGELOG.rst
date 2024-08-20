@@ -12,6 +12,9 @@ TODO
 ------------------
 * Add 'template' parameter to plot function (plotly version) and update test
   cases.
+* Update .rst files with sphinx-apidoc
+  * `sphinx-apidoc -o docs vistock`
+* Updated docstrings to conform to reStructuredText standards
 
 0.4.0 [2024-08-19]
 ------------------
