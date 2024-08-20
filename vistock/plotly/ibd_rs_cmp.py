@@ -69,7 +69,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
 
-    - template: str, optional:
+    template: str, optional:
         The Plotly template to use for styling the chart.
         Defaults to 'plotly'. Available templates include:
 
