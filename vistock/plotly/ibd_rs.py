@@ -15,7 +15,7 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.5"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
 
@@ -83,9 +83,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         - 'simple_white': Minimal white style with no gridlines.
         - 'presentation': Designed for presentations with a clean look.
         - 'xgridoff': Plot with x-axis gridlines turned off.
-        - 'xgridon': Plot with x-axis gridlines turned on.
         - 'ygridoff': Plot with y-axis gridlines turned off.
-        - 'ygridon': Plot with y-axis gridlines turned on.
 
         For more details on templates, refer to Plotly's official documentation.
 
