@@ -116,30 +116,30 @@ class Volume:
         symbol: str
             the stock symbol.
 
-        period: str
-            the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
-            1y, 2y, 5y, 10y, ytd, max.
+        period: str, optional
+            the period data to download (default is '1y'). Valid values are
+            1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.
 
-            * d   -- days
-            * mo  -- monthes
-            * y   -- years
-            * ytd -- year to date
-            * max -- all data
+            - d   -- days
+            - mo  -- monthes
+            - y   -- years
+            - ytd -- year to date
+            - max -- all data
 
-        interval: str
-            the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
-            60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
+        interval: str, optional
+            the interval of an OHLC item (default is '1d'). Valid values are
+            1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
 
-            * m  -- minutes
-            * h  -- hours
-            * wk -- weeks
-            * mo -- monthes
+            - m  -- minutes
+            - h  -- hours
+            - wk -- weeks
+            - mo -- monthes
 
             Intraday data cannot extend last 60 days:
 
-            * 1m - max 7 days within last 30 days
-            * up to 90m - max 60 days
-            * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
+            - 1m - max 7 days within last 30 days
+            - up to 90m - max 60 days
+            - 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
               Yahoo does)
 
         ma_nitems: sequence of int
@@ -150,26 +150,28 @@ class Volume:
         total_bins: int
             the number of bins to calculate comulative volume for bins.
 
-        legend_loc: str
-            the location of the legend. Valid locations are
+        legend_loc: str, optional
+            the location of the legend (default is 'best').
+            Valid locations are
 
-            * 'best'
-            * 'upper right'
-            * 'upper left'
-            * 'lower left'
-            * 'lower right'
-            * 'right'
-            * 'center left'
-            * 'center right'
-            * 'lower center'
-            * 'upper center'
-            * 'center'
+            - 'best'
+            - 'upper right'
+            - 'upper left'
+            - 'lower left'
+            - 'lower right'
+            - 'right'
+            - 'center left'
+            - 'center right'
+            - 'lower center'
+            - 'upper center'
+            - 'center'
 
-        market_color_style (MarketColorStyle): The market color style to use.
-            Default is MarketColorStyle.AUTO.
+        market_color_style: MarketColorStyle, optional
+            The market color style to use. Default is MarketColorStyle.AUTO.
 
         style: str, optional
             The chart style to use. Common styles include:
+
             - 'yahoo': Yahoo Finance style
             - 'charles': Charles style
             - 'tradingview': TradingView style
@@ -184,11 +186,12 @@ class Volume:
             - 'kenan': Kenan style
             - 'blueskies': Blue Skies style
             - 'brasil': Brasil style
-            Default is 'binancedark'.
+
+            Default is 'yahoo'.
 
         hides_nontrading : bool, optional
             Whether to hide non-trading periods. Default is True.
-        out_dir: str
+        out_dir: str, optional
             the output directory for saving figure.
         """
         # Download stock data
@@ -240,30 +243,30 @@ class Turnover:
         symbol: str
             the stock symbol.
 
-        period: str
-            the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
-            1y, 2y, 5y, 10y, ytd, max.
+        period: str, optional
+            the period data to download (default is '1y'). Valid values are
+            1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.
 
-            * d   -- days
-            * mo  -- monthes
-            * y   -- years
-            * ytd -- year to date
-            * max -- all data
+            - d   -- days
+            - mo  -- monthes
+            - y   -- years
+            - ytd -- year to date
+            - max -- all data
 
-        interval: str
-            the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
-            60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
+        interval: str, optional
+            the interval of an OHLC item (default is '1d'). Valid values are
+            1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
 
-            * m  -- minutes
-            * h  -- hours
-            * wk -- weeks
-            * mo -- monthes
+            - m  -- minutes
+            - h  -- hours
+            - wk -- weeks
+            - mo -- monthes
 
             Intraday data cannot extend last 60 days:
 
-            * 1m - max 7 days within last 30 days
-            * up to 90m - max 60 days
-            * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
+            - 1m - max 7 days within last 30 days
+            - up to 90m - max 60 days
+            - 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
               Yahoo does)
 
         ma_nitems: sequence of int
@@ -274,26 +277,28 @@ class Turnover:
         total_bins: int
             the number of bins to calculate comulative volume for bins.
 
-        legend_loc: str
-            the location of the legend. Valid locations are
+        legend_loc: str, optional
+            the location of the legend (default is 'best').
+            Valid locations are
 
-            * 'best'
-            * 'upper right'
-            * 'upper left'
-            * 'lower left'
-            * 'lower right'
-            * 'right'
-            * 'center left'
-            * 'center right'
-            * 'lower center'
-            * 'upper center'
-            * 'center'
+            - 'best'
+            - 'upper right'
+            - 'upper left'
+            - 'lower left'
+            - 'lower right'
+            - 'right'
+            - 'center left'
+            - 'center right'
+            - 'lower center'
+            - 'upper center'
+            - 'center'
 
-        market_color_style (MarketColorStyle): The market color style to use.
-            Default is MarketColorStyle.AUTO.
+        market_color_style: MarketColorStyle, optional
+            The market color style to use. Default is MarketColorStyle.AUTO.
 
         style: str, optional
             The chart style to use. Common styles include:
+
             - 'yahoo': Yahoo Finance style
             - 'charles': Charles style
             - 'tradingview': TradingView style
@@ -308,11 +313,12 @@ class Turnover:
             - 'kenan': Kenan style
             - 'blueskies': Blue Skies style
             - 'brasil': Brasil style
-            Default is 'binancedark'.
+
+            Default is 'yahoo'.
 
         hides_nontrading : bool, optional
             Whether to hide non-trading periods. Default is True.
-        out_dir: str
+        out_dir: str, optional
             the output directory for saving figure.
         """
         # Download stock data

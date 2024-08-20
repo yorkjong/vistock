@@ -48,10 +48,10 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         The period of historical data to fetch. Valid values are '6mo', '1y',
         '2y', '5y', '10y', 'ytd', 'max'.  Default is '2y'.
 
-        * mo  -- monthes
-        * y   -- years
-        * ytd -- year to date
-        * max -- all data
+        - mo  -- monthes
+        - y   -- years
+        - ytd -- year to date
+        - max -- all data
 
     interval : str, optional
         The interval for data points. Valid values are '1d' for daily or '1wk'
@@ -62,27 +62,28 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
 
-    legend_loc: str
-        the location of the legend. Valid locations are
+    legend_loc: str, optional
+        the location of the legend (default is 'best').
+        Valid locations are
 
-        * 'best'
-        * 'upper right'
-        * 'upper left'
-        * 'lower left'
-        * 'lower right'
-        * 'right'
-        * 'center left'
-        * 'center right'
-        * 'lower center'
-        * 'upper center'
-        * 'center'
+        - 'best'
+        - 'upper right'
+        - 'upper left'
+        - 'lower left'
+        - 'lower right'
+        - 'right'
+        - 'center left'
+        - 'center right'
+        - 'lower center'
+        - 'upper center'
+        - 'center'
 
-    market_color_style : MarketColorStyle, optional
-        Color style for market data visualization. Default is
-        MarketColorStyle.AUTO.
+    market_color_style: MarketColorStyle, optional
+        The market color style to use. Default is MarketColorStyle.AUTO.
 
     style: str, optional
         The chart style to use. Common styles include:
+
         - 'yahoo': Yahoo Finance style
         - 'charles': Charles style
         - 'tradingview': TradingView style
@@ -97,12 +98,13 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         - 'kenan': Kenan style
         - 'blueskies': Blue Skies style
         - 'brasil': Brasil style
+
         Default is 'yahoo'.
 
     hides_nontrading : bool, optional
         Whether to hide non-trading periods. Default is True.
-    out_dir : str, optional
-        Directory to save the output image file. Default is 'out'.
+    out_dir: str, optional
+        the output directory for saving figure.
 
     Raises
     ------
