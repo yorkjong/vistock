@@ -15,7 +15,7 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
 
@@ -31,92 +31,8 @@ from .. import file_util
 from . import fig_util as futil
 from ..util import MarketColorStyle, decide_market_color_style, is_taiwan_stock
 from ..ibd import relative_strength, ma_window_size
+from .. import stock_indices as si
 
-
-#------------------------------------------------------------------------------
-# Helper Functions
-#------------------------------------------------------------------------------
-
-def calc_moving_averages(df, interval, window_days):
-    """Calculate moving averages based on window days"""
-    for days in window_days:
-        window_size = ma_window_size(interval, days)
-        df[f'{days}d_MA'] = df['Close'].rolling(window=window_size).mean()
-    return df
-
-
-def calc_volume_moving_average(df, interval, days):
-    """Calculate volume moving average based on interval"""
-    window_size = ma_window_size(interval, days)
-    df[f'Volume_MA{days}'] = df['Volume'].rolling(window=window_size).mean()
-    return df
-
-#------------------------------------------------------------------------------
-
-def create_candlestick_trace(df, mc_style):
-    """Create candlestick trace"""
-    mc_colors = futil.get_candlestick_colors(mc_style)
-    return go.Candlestick(
-        x=df.index,
-        open=df['Open'], high=df['High'], low=df['Low'], close=df['Close'],
-        name='OHLC',
-        **mc_colors
-    )
-
-
-def create_moving_average_traces(df, interval):
-    """Create moving average traces with names adjusted for interval"""
-    traces = []
-    for ma_col in ['50d_MA', '200d_MA']:
-        if ma_col in df.columns:
-            # Extract the number of days from column name
-            days = int(ma_col.split('d')[0])
-
-            name = {
-                '1d': f'{days} day MA',
-                '1wk': f'{days//5} week MA',
-            }[interval]
-            traces.append(go.Scatter(
-                x=df.index, y=df[ma_col],
-                mode='lines', name=name,
-                line=dict(color='blue' if '50d' in ma_col else 'red', width=2)
-            ))
-    return traces
-
-
-def create_volume_trace(df, mc_style):
-    """Create volume trace"""
-    cl = futil.get_volume_colors(mc_style)
-    colors = [cl['up'] if c >= o
-              else cl['down'] for o, c in zip(df['Open'], df['Close'])]
-    return go.Bar(x=df.index, y=df['Volume'], name='Volume',
-                  marker_color=colors, opacity=0.5)
-
-
-def create_volume_ma_trace(df, interval):
-    """Create volume moving average trace with name adjusted for interval"""
-    name = '50-day Volume MA'
-    if interval == '1wk':
-        name = '10-week Volume MA'
-    return go.Scatter(
-        x=df.index, y=df['Volume_MA50'],
-        mode='lines', name=name,
-        line=dict(color='purple', width=2)
-    )
-
-
-def create_rs_trace(rs_ratio):
-    """Create Relative Strength trace"""
-    return go.Scatter(
-        x=rs_ratio.index, y=rs_ratio,
-        mode='lines', name='RS',
-        line=dict(color='green', width=2)
-    )
-
-
-#------------------------------------------------------------------------------
-# The Plot Function
-#------------------------------------------------------------------------------
 
 def plot(symbol, period='2y', interval='1d', ref_ticker=None,
          hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
@@ -176,11 +92,17 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     df = df.xs(ticker, level='Ticker', axis=1)
 
     # Calculate Relative Strength (RS)
-    rs_ratio = relative_strength(df['Close'], df_ref['Close'], interval)
+    df['RS'] = relative_strength(df['Close'], df_ref['Close'], interval)
+    df[f'RS {ref_ticker}'] = 100
 
-    # Calculate moving averages
-    df = calc_moving_averages(df, interval, [50, 200])
-    df = calc_volume_moving_average(df, interval, 50)
+    # Calculate price moving average
+    ma_nitems = [ma_window_size(interval, days) for days in (50, 200)]
+    for n in ma_nitems:
+        df[f'MA {n}'] = df['Close'].rolling(window=n).mean()
+
+    # Calculate volume moving averaage
+    vma_nitems = ma_window_size(interval, 50)
+    df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems).mean()
 
     # Create subplots
     fig = make_subplots(rows=3, cols=1, shared_xaxes=True,
@@ -190,16 +112,38 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
     # Add traces
     mc_style = decide_market_color_style(ticker, market_color_style)
+    mc_colors = futil.get_candlestick_colors(mc_style)
 
-    fig.add_trace(create_candlestick_trace(df, mc_style))
-    for trace in create_moving_average_traces(df, interval):
-        fig.add_trace(trace)
+    cl = futil.get_volume_colors(mc_style)
+    vol_colors = [cl['up'] if c >= o
+                  else cl['down'] for o, c in zip(df['Open'], df['Close'])]
 
-    fig.add_trace(create_rs_trace(rs_ratio), row=2, col=1)
-    fig.add_hline(y=100, line_dash="dash", line_color="gray", row=2, col=1)
+    main_row, rs_row, vol_row = 1, 2, 3
+    traces = [
+        # Main subplot
+        (go.Candlestick(x=df.index, open=df['Open'], high=df['High'],
+                        low=df['Low'], close=df['Close'], name='Candle',
+                        **mc_colors), main_row),
+        *[(go.Scatter(x=df.index, y=df[f'MA {n}'],
+                      mode='lines', name=f'MA {n}'), main_row)
+          for n in ma_nitems],
 
-    fig.add_trace(create_volume_trace(df, mc_style), row=3, col=1)
-    fig.add_trace(create_volume_ma_trace(df, interval), row=3, col=1)
+        # RS subplot
+        (go.Scatter(x=df.index, y=df['RS'], mode='lines', name='RS',
+                    line=dict(color='green', width=2)), rs_row),
+        (go.Scatter(x=df.index, y=df[f'RS {ref_ticker}'],
+                    mode='lines', name=si.get_name(ref_ticker),
+                    line=dict(dash='dash', color='gray')), rs_row),
+
+        # Volume subplot
+        (go.Bar(x=df.index, y=df['Volume'], name='Volume',
+               marker_color=vol_colors, opacity=0.5), vol_row),
+        (go.Scatter(x=df.index, y=df[f'VMA {vma_nitems}'],
+                   mode='lines', name=f'VMA {vma_nitems}',
+                   line=dict(color='purple', width=2)), vol_row),
+    ]
+    for trace, row in traces:
+        fig.add_trace(trace, row=row, col=1)
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
