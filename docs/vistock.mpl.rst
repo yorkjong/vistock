@@ -4,10 +4,42 @@ vistock.mpl package
 Submodules
 ----------
 
-vistock.mpl.pbv module
-----------------------
+vistock.mpl.bull\_draw module
+-----------------------------
 
-.. automodule:: vistock.mpl.pbv
+.. automodule:: vistock.mpl.bull_draw
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+vistock.mpl.ibd\_rs module
+--------------------------
+
+.. automodule:: vistock.mpl.ibd_rs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+vistock.mpl.ibd\_rs\_cmp module
+-------------------------------
+
+.. automodule:: vistock.mpl.ibd_rs_cmp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+vistock.mpl.mpf\_util module
+----------------------------
+
+.. automodule:: vistock.mpl.mpf_util
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+vistock.mpl.profile module
+--------------------------
+
+.. automodule:: vistock.mpl.profile
    :members:
    :undoc-members:
    :show-inheritance:
