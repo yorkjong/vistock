@@ -114,7 +114,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
     candlestick = go.Candlestick(
         x=df.index,
         open=df['Open'], high=df['High'], low=df['Low'], close=df['Close'],
-        name='OHLC',
+        name='Candle',
         **mc_colors
     )
     fig.add_trace(candlestick)

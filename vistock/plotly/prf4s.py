@@ -47,7 +47,7 @@ def _plot(df, ticker, market_color_style, profile_field='Volume',
     candlestick = go.Candlestick(
         x=df.index,
         open=df['Open'], high=df['High'], low=df['Low'], close=df['Close'],
-        name='OHLC',
+        name='Candle',
         **mc_colors
     )
     fig.add_trace(candlestick, row=1, col=1)
