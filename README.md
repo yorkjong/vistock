@@ -4,17 +4,17 @@
 
 - **Website:** [vistock.netlify.app](https://vistock.netlify.app) (or [vistock.vercel.app](https://vistock.vercel.app))
 - **Usage demo:**
-  - [github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb)
+  - [github.com/yorkjong/vistock/blob/main/notebooks/vistock_demo.ipynb](https://github.com/yorkjong/vistock/blob/main/notebooks/vistock_demo.ipynb)
   - [github.com/yorkjong/vistock/blob/main/notebooks/profile_demo.ipynb](https://github.com/yorkjong/vistock/blob/main/notebooks/profile_demo.ipynb)
   - [github.com/yorkjong/vistock/blob/main/notebooks/bull_draw.ipynb](https://github.com/yorkjong/vistock/blob/main/notebooks/bull_draw.ipynb)
-- **Test code:** [github.com/YorkJong/vistock/tree/main/tests](https://github.com/YorkJong/vistock/tree/main/tests)
+- **Test code:** [github.com/yorkjong/vistock/tree/main/tests](https://github.com/yorkjong/vistock/tree/main/tests)
 - **Documentation:** [vistock.netlify.app/modules.html](https://vistock.netlify.app/modules.html) (or [vistock.vercel.app/modules.html](https://vistock.vercel.app/modules.html))
-- **Source code:** [github.com/YorkJong/vistock](https://github.com/YorkJong/vistock)
-- **Bug reports:** [github.com/YorkJong/vistock/issues](https://github.com/YorkJong/vistock/issues)
+- **Source code:** [github.com/yorkjong/vistock](https://github.com/yorkjong/vistock)
+- **Bug reports:** [github.com/yorkjong/vistock/issues](https://github.com/yorkjong/vistock/issues)
 
 ## Getting Started on Colab
 
-1. Click [vistock_demo.ipynb](https://colab.research.google.com/github/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb) to open it in Colab.
+1. Click [vistock_demo.ipynb](https://colab.research.google.com/github/yorkjong/vistock/blob/main/notebooks/vistock_demo.ipynb) to open it in Colab.
 2. Sign in your Google account if required.
 3. Follow the steps in the demonstration video below.
    1. ~Install vistock from GitHub~
@@ -34,15 +34,15 @@
 1. Install vistock from GitHub
 
     ```sh
-    pip install git+https://github.com/YorkJong/vistock.git
+    pip install git+https://github.com/yorkjong/vistock.git
     ```
 
 2. Run a test code.
 
     There are two test code in `vistock/tests` folder.
 
-    * [test_plotly.py](https://github.com/YorkJong/vistock/blob/main/tests/test_plotly.py) -- for Plotly version
-    * [test_mpl.py](https://github.com/YorkJong/vistock/blob/main/tests/test_mpl.py) -- for mplfinance version
+    * [test_plotly.py](https://github.com/yorkjong/vistock/blob/main/tests/test_plotly.py) -- for Plotly version
+    * [test_mpl.py](https://github.com/yorkjong/vistock/blob/main/tests/test_mpl.py) -- for mplfinance version
 
     Run a test code:
     ```sh
@@ -56,6 +56,6 @@
 ![TSLA_1d_20230227_0000_pbv2s](https://user-images.githubusercontent.com/11453572/224471104-c6a998eb-368a-4de5-ac01-409bbe04be77.png)
 
 3. Enjoy the demo code.
-    The demo code called [vstock_demo.ipynb](https://github.com/YorkJong/vistock/blob/main/notebooks/vistock_demo.ipynb). You can open it on your Jupyter Notebook environment.
+    The demo code called [vstock_demo.ipynb](https://github.com/yorkjong/vistock/blob/main/notebooks/vistock_demo.ipynb). You can open it on your Jupyter Notebook environment.
 
 [//]: # (This may be the most platform independent comment)

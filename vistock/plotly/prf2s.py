@@ -173,30 +173,31 @@ class Volume:
         ----------
         symbol: str
             the stock symbol.
-        period: str
+
+        period: str, optional
             the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
-            1y, 2y, 5y, 10y, ytd, max.
+            1y, 2y, 5y, 10y, ytd, max. Default is '1y'.
 
-            * d   -- days
-            * mo  -- monthes
-            * y   -- years
-            * ytd -- year to date
-            * max -- all data
+            - d   -- days
+            - mo  -- monthes
+            - y   -- years
+            - ytd -- year to date
+            - max -- all data
 
-        interval: str
+        interval: str, optional
             the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
-            60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
+            60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is '1d'.
 
-            * m  -- minutes
-            * h  -- hours
-            * wk -- weeks
-            * mo -- monthes
+            - m  -- minutes
+            - h  -- hours
+            - wk -- weeks
+            - mo -- monthes
 
             Intraday data cannot extend last 60 days:
 
-            * 1m - max 7 days within last 30 days
-            * up to 90m - max 60 days
-            * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
+            - 1m - max 7 days within last 30 days
+            - up to 90m - max 60 days
+            - 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
               Yahoo does)
 
         ma_nitems: sequence of int
@@ -228,7 +229,8 @@ class Volume:
             - 'xgridoff': Plot with x-axis gridlines turned off.
             - 'ygridoff': Plot with y-axis gridlines turned off.
 
-            For more details on templates, refer to Plotly's official documentation.
+            For more details on templates, refer to Plotly's official
+            documentation.
 
         hides_nontrading : bool, optional
             Whether to hide non-trading periods. Default is True.
@@ -281,30 +283,31 @@ class Turnover:
         ----------
         symbol: str
             the stock symbol.
-        period: str
+
+        period: str, optional
             the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
-            1y, 2y, 5y, 10y, ytd, max.
+            1y, 2y, 5y, 10y, ytd, max. Default is '1y'.
 
-            * d   -- days
-            * mo  -- monthes
-            * y   -- years
-            * ytd -- year to date
-            * max -- all data
+            - d   -- days
+            - mo  -- monthes
+            - y   -- years
+            - ytd -- year to date
+            - max -- all data
 
-        interval: str
+        interval: str, optional
             the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
-            60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
+            60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is '1d'.
 
-            * m  -- minutes
-            * h  -- hours
-            * wk -- weeks
-            * mo -- monthes
+            - m  -- minutes
+            - h  -- hours
+            - wk -- weeks
+            - mo -- monthes
 
             Intraday data cannot extend last 60 days:
 
-            * 1m - max 7 days within last 30 days
-            * up to 90m - max 60 days
-            * 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
+            - 1m - max 7 days within last 30 days
+            - up to 90m - max 60 days
+            - 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
               Yahoo does)
 
         ma_nitems: sequence of int

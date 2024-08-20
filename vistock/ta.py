@@ -14,18 +14,19 @@ def rsi(data, periods=14):
     """
     Calculate the Relative Strength Index (RSI) for a given dataset.
 
-    RSI is a momentum oscillator that measures the speed and change of price movements.
-    It oscillates between 0 and 100 and is typically used to identify overbought or oversold
-    conditions in a market.
+    RSI is a momentum oscillator that measures the speed and change of price
+    movements.  It oscillates between 0 and 100 and is typically used to
+    identify overbought or oversold conditions in a market.
 
     Parameters:
     -----------
     data : pandas.Series
-        A pandas Series containing the price data (typically closing prices) for which the RSI
-        is to be calculated.
+        A pandas Series containing the price data (typically closing prices)
+        for which the RSI is to be calculated.
 
     periods : int, optional, default: 14
-        The number of periods to use for the RSI calculation. A typical value is 14.
+        The number of periods to use for the RSI calculation. A typical value
+        is 14.
 
     Returns:
     --------

@@ -56,10 +56,10 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         the period data to download. . Defaults to '2y'. Valid values are
         6mo, 1y, 2y, 5y, 10y, ytd, max.
 
-        * mo  -- monthes
-        * y   -- years
-        * ytd -- year to date
-        * max -- all data
+        - mo  -- monthes
+        - y   -- years
+        - ytd -- year to date
+        - max -- all data
 
     interval : str, optional
         The interval for data points ('1d' for daily, '1wk' for weekly; default
@@ -83,7 +83,8 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         - 'xgridoff': Plot with x-axis gridlines turned off.
         - 'ygridoff': Plot with y-axis gridlines turned off.
 
-        For more details on templates, refer to Plotly's official documentation.
+        For more details on templates, refer to Plotly's official
+        documentation.
 
     hides_nontrading : bool, optional
         Whether to hide non-trading periods on the plot. Defaults to True.

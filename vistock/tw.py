@@ -7,24 +7,29 @@ Emerging Stock Board (ESB). It supports converting stock symbols, fetching
 stock data, and retrieving ticker lists from these markets.
 
 Main Features:
+
 - Convert Taiwan stock symbols to yfinance-compatible format.
 - Fetch historical and real-time stock data from TWSE, TPEx, and ESB.
 - Retrieve lists of tickers for TWSE, TPEx, and ESB.
 - Find stocks similar to a given name or code.
 
 Public Functions:
-    - stock_name(code): Retrieve the name of a stock given its code.
-    - stock_price(code): Retrive the price of a stock given its code.
-    - as_yfinance(symbol): Convert a Taiwan stock symbol to yfinance format.
-    - similar_stocks(name_or_code): Find stocks similar to the provided name
-        or code.
-    - get_twse_tickers(): Get a list of tickers for the TWSE.
-    - get_tpex_tickers(): Get a list of tickers for the TPEx.
-    - get_esb_tickers(): Get a list of tickers for the ESB.
-    - get_tickers(market): Retrieve tickers for a specified market (TWSE, TPEx,
-        or ESB).
+
+- stock_name(code): Retrieve the name of a stock given its code.
+- stock_price(code): Retrive the price of a stock given its code.
+- as_yfinance(symbol): Convert a Taiwan stock symbol to yfinance format.
+- similar_stocks(name_or_code): Find stocks similar to the provided name
+  or code.
+- get_twse_tickers(): Get a list of tickers for the TWSE.
+- get_tpex_tickers(): Get a list of tickers for the TPEx.
+- get_esb_tickers(): Get a list of tickers for the ESB.
+- get_tickers(market): Retrieve tickers for a specified market (TWSE, TPEx,
+  or ESB).
 
 Usage Examples:
+
+::
+
     import tw
 
     # Get the stock name from its code
@@ -511,14 +516,15 @@ def as_yfinance(symbol):
     Convert a given stock symbol into yfinance compatible stock symbol.
 
     This function handles different types of input:
+
     - If the input is already in yfinance format (ends with .TW or .TWO), it's
-        returned as is.
+      returned as is.
     - If the input is in Chinese, it's treated as a stock name and converted to
-        a code.
+      a code.
     - If the input starts with a digit, it's treated as a Taiwan stock code and
-        the appropriate suffix (.TW or .TWO) is added.
+      the appropriate suffix (.TW or .TWO) is added.
     - For other inputs (e.g., non-Taiwan stocks), the symbol is returned
-        unchanged.
+      unchanged.
 
     Args:
         symbol (str): the input symbol.
@@ -670,6 +676,7 @@ def get_tickers(source):
             sector.
 
             Possible values include:
+
             - 'TWSE': Taiwan Stock Exchange
             - 'TPEX': Taipei Exchange
             - 'ESB': Emerging Stock Board

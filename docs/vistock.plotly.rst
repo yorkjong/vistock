@@ -4,6 +4,14 @@ vistock.plotly package
 Submodules
 ----------
 
+vistock.plotly.bull\_draw module
+--------------------------------
+
+.. automodule:: vistock.plotly.bull_draw
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 vistock.plotly.fig\_util module
 -------------------------------
 
@@ -12,18 +20,34 @@ vistock.plotly.fig\_util module
    :undoc-members:
    :show-inheritance:
 
-vistock.plotly.pbv2s module
----------------------------
+vistock.plotly.ibd\_rs module
+-----------------------------
 
-.. automodule:: vistock.plotly.pbv2s
+.. automodule:: vistock.plotly.ibd_rs
    :members:
    :undoc-members:
    :show-inheritance:
 
-vistock.plotly.pbv4s module
+vistock.plotly.ibd\_rs\_cmp module
+----------------------------------
+
+.. automodule:: vistock.plotly.ibd_rs_cmp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+vistock.plotly.prf2s module
 ---------------------------
 
-.. automodule:: vistock.plotly.pbv4s
+.. automodule:: vistock.plotly.prf2s
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+vistock.plotly.prf4s module
+---------------------------
+
+.. automodule:: vistock.plotly.prf4s
    :members:
    :undoc-members:
    :show-inheritance:
