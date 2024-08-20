@@ -16,9 +16,9 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
 
 __all__ = ['plot']
 
@@ -124,7 +124,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     tickers = [tw.as_yfinance(s) for s in symbols]
     df = yf.download([ref_ticker]+tickers, period=period, interval=interval)
 
-    df_ref = df.xs(ref_ticker, level=1, axis=1)
+    df_ref = df.xs(ref_ticker, level='Ticker', axis=1)
 
     add_plots = []
     for ticker in tickers:
@@ -134,7 +134,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         return
 
     # for hiding 'Close' line from the mpf.plot call
-    df_dummy = df.xs(tickers[0], level=1, axis=1).copy()
+    df_dummy = df.xs(tickers[0], level='Ticker', axis=1).copy()
     for col in ['Open', 'High', 'Low', 'Close']:
         df_dummy[col] = rs
 

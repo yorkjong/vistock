@@ -16,9 +16,9 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.5"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/18 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
 
 __all__ = ['plot']
 
@@ -91,7 +91,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     tickers = [tw.as_yfinance(s) for s in symbols]
     df = yf.download([ref_ticker]+tickers, period=period, interval=interval)
 
-    df_ref = df.xs(ref_ticker, level=1, axis=1)
+    df_ref = df.xs(ref_ticker, level='Ticker', axis=1)
 
     fig = go.Figure()
     for ticker, symbol in zip(tickers, symbols):
