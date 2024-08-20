@@ -15,7 +15,7 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.4"
+__version__ = "1.5"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
 
@@ -35,8 +35,8 @@ from .. import stock_indices as si
 
 
 def plot(symbol, period='2y', interval='1d', ref_ticker=None,
-         hides_nontrading=True, market_color_style=MarketColorStyle.AUTO,
-         out_dir='out'):
+         market_color_style=MarketColorStyle.AUTO,
+         template='plotly', hides_nontrading=True, out_dir='out'):
     """Generate and display a stock analysis plot with candlestick charts,
     moving averages, volume analysis, and Relative Strength (RS) metrics.
 
@@ -67,11 +67,30 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
-    hides_nontrading : bool, optional
-        Whether to hide non-trading periods. Default is True.
     market_color_style : MarketColorStyle, optional
         Color style for market data visualization. Default is
         MarketColorStyle.AUTO.
+
+    - template: str, optional:
+        The Plotly template to use for styling the chart.
+        Defaults to 'plotly'. Available templates include:
+
+        - 'plotly': Default Plotly template with interactive plots.
+        - 'plotly_white': Light theme with a white background.
+        - 'plotly_dark': Dark theme for the chart background.
+        - 'ggplot2': Style similar to ggplot2 from R.
+        - 'seaborn': Style similar to Seaborn in Python.
+        - 'simple_white': Minimal white style with no gridlines.
+        - 'presentation': Designed for presentations with a clean look.
+        - 'xgridoff': Plot with x-axis gridlines turned off.
+        - 'xgridon': Plot with x-axis gridlines turned on.
+        - 'ygridoff': Plot with y-axis gridlines turned off.
+        - 'ygridon': Plot with y-axis gridlines turned on.
+
+        For more details on templates, refer to Plotly's official documentation.
+
+    hides_nontrading : bool, optional
+        Whether to hide non-trading periods. Default is True.
     out_dir : str, optional
         Directory to save the output HTML file. Default is 'out'.
 
@@ -162,6 +181,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         yaxis3=dict(title='Volume', side='right'),
 
         xaxis_rangeslider_visible=False,
+        template=template,
     )
     if hides_nontrading:
         futil.hide_nontrading_periods(fig, df, interval)
@@ -180,6 +200,6 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
 
 
 if __name__ == '__main__':
-    plot('TSLA', interval='1d')
-    plot('台積電', interval='1wk')
+    plot('TSLA', interval='1d', template='simple_white')
+    plot('台積電', interval='1wk', template='presentation')
 

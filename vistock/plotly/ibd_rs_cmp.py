@@ -16,7 +16,7 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
 
@@ -36,7 +36,7 @@ from .. import stock_indices as si
 
 
 def plot(symbols, period='2y', interval='1d', ref_ticker=None,
-         hides_nontrading=True, out_dir='out'):
+         template='plotly', hides_nontrading=True, out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
     index.
@@ -68,6 +68,25 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
+
+    - template: str, optional:
+        The Plotly template to use for styling the chart.
+        Defaults to 'plotly'. Available templates include:
+
+        - 'plotly': Default Plotly template with interactive plots.
+        - 'plotly_white': Light theme with a white background.
+        - 'plotly_dark': Dark theme for the chart background.
+        - 'ggplot2': Style similar to ggplot2 from R.
+        - 'seaborn': Style similar to Seaborn in Python.
+        - 'simple_white': Minimal white style with no gridlines.
+        - 'presentation': Designed for presentations with a clean look.
+        - 'xgridoff': Plot with x-axis gridlines turned off.
+        - 'xgridon': Plot with x-axis gridlines turned on.
+        - 'ygridoff': Plot with y-axis gridlines turned off.
+        - 'ygridon': Plot with y-axis gridlines turned on.
+
+        For more details on templates, refer to Plotly's official documentation.
+
     hides_nontrading : bool, optional
         Whether to hide non-trading periods on the plot. Defaults to True.
     out_dir : str, optional
@@ -109,11 +128,11 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         yaxis=dict(title='Relative Strength '
                          f'(Compared to {si.get_name(ref_ticker)})',
                    side='right'),
-        #template='plotly_dark',
         #height=600,
         legend_title='Stocks',
         legend=dict(yanchor='top', y=.98, xanchor="left", x=0.01),
         xaxis_rangeslider_visible=False,
+        template=template,
     )
     if hides_nontrading:
         futil.hide_nontrading_periods(fig, df, interval)
@@ -137,9 +156,9 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 
 def main():
     symbols = ['NVDA', 'MSFT', 'META', '^NDX', '^TWII']
-    plot(symbols)
+    plot(symbols, template='plotly_dark')
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
-    plot(symbols, interval='1wk')
+    plot(symbols, interval='1wk', template='xgridoff')
 
 
 if __name__ == '__main__':
