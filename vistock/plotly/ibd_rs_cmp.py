@@ -16,7 +16,7 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
 
@@ -90,12 +90,11 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 
     tickers = [tw.as_yfinance(s) for s in symbols]
     df = yf.download([ref_ticker]+tickers, period=period, interval=interval)
-
-    df_ref = df.xs(ref_ticker, level='Ticker', axis=1)
+    df = df.xs('Close', level='Price', axis=1)
 
     fig = go.Figure()
     for ticker, symbol in zip(tickers, symbols):
-        rs = relative_strength(df['Close'][ticker], df_ref['Close'], interval)
+        rs = relative_strength(df[ticker], df[ref_ticker], interval)
         fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines',
                                  name=si.get_name(symbol)))
 
@@ -137,7 +136,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
 #------------------------------------------------------------------------------
 
 def main():
-    symbols = ['NVDA', 'MSFT', 'META', '^GSPC', '^NDX', '^TWII']
+    symbols = ['NVDA', 'MSFT', 'META', '^NDX', '^TWII']
     plot(symbols)
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     plot(symbols, interval='1wk')
