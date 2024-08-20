@@ -71,7 +71,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         Color style for market data visualization. Default is
         MarketColorStyle.AUTO.
 
-    - template: str, optional:
+    template: str, optional:
         The Plotly template to use for styling the chart.
         Defaults to 'plotly'. Available templates include:
 

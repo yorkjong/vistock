@@ -7,6 +7,11 @@ TODO
   Elder Ray Index and stock charts with his trading systems.
 * To support other useful Technical Indicators.
 
+0.4.1
+------------------
+* Add 'template' parameter to plot function (plotly version) and update test
+  cases.
+
 0.4.0 [2024-08-19]
 ------------------
 * Added the support the stock chart and table with IBD RS line and rating.
