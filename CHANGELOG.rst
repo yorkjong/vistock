@@ -15,6 +15,7 @@ TODO
 * Update .rst files with sphinx-apidoc
   * `sphinx-apidoc -o docs vistock`
 * Updated docstrings to conform to reStructuredText standards
+* Improved the UI of ibs_rs_line.ipynb
 
 0.4.0 [2024-08-19]
 ------------------
