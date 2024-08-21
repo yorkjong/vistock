@@ -103,7 +103,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         - 'blueskies': Blue Skies style
         - 'brasil': Brasil style
 
-        Default is 'yahoo'.
+        Default is 'checkers'.
 
     hides_nontrading : bool, optional
         Whether to hide non-trading periods. Default is True.
