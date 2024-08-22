@@ -8,7 +8,7 @@ TODO
 * To support other useful Technical Indicators.
 * To support IBD EPS RS
 
-0.4.1
+0.4.1 [2024-08-22]
 ------------------
 * Add 'template' parameter to plot function (plotly version) and update test
   cases.
