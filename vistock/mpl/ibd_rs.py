@@ -33,7 +33,7 @@ from ..ibd import relative_strength, ma_window_size
 from .. import stock_indices as si
 
 
-def plot(symbol, period='2y', interval='1d', ref_ticker=None,
+def plot(symbol, period='2y', interval='1d', ticker_ref=None,
          legend_loc='best', market_color_style=MarketColorStyle.AUTO,
          style='yahoo', hides_nontrading=True, out_dir='out'):
     """
@@ -57,7 +57,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         The interval for data points. Valid values are '1d' for daily or '1wk'
         for weekly. Default is '1d'.
 
-    ref_ticker : str, optional
+    ticker_ref : str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
@@ -112,14 +112,14 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         If an unsupported interval is provided.
     """
     ticker = tw.as_yfinance(symbol)
-    if not ref_ticker:
-        ref_ticker = '^GSPC'      # S&P 500 Index
+    if not ticker_ref:
+        ticker_ref = '^GSPC'      # S&P 500 Index
         if is_taiwan_stock(ticker):
-            ref_ticker = '^TWII'  # Taiwan Weighted Index
+            ticker_ref = '^TWII'  # Taiwan Weighted Index
 
     # Download data
-    df = yf.download([ref_ticker, ticker], period=period, interval=interval)
-    df_ref = df.xs(ref_ticker, level='Ticker', axis=1)
+    df = yf.download([ticker_ref, ticker], period=period, interval=interval)
+    df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
     df = df.xs(ticker, level='Ticker', axis=1)
 
     # Calculate Relative Strength (RS)
@@ -142,7 +142,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         # Plot of Relative Strength
         mpf.make_addplot(df['RS'], panel=1, label=ticker,
                          color='green', ylabel='Relative Strength'),
-        mpf.make_addplot([100]*len(df), panel=1, label=si.get_name(ref_ticker),
+        mpf.make_addplot([100]*len(df), panel=1, label=si.get_name(ticker_ref),
                          linestyle='--', color='gray'),
 
         # Plot of Volume Moving Average

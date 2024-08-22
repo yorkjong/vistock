@@ -35,7 +35,7 @@ from ..ibd import relative_strength
 from .. import stock_indices as si
 
 
-def plot(symbols, period='2y', interval='1d', ref_ticker=None,
+def plot(symbols, period='2y', interval='1d', ticker_ref=None,
          template='plotly', hides_nontrading=True, out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
@@ -64,7 +64,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     interval : str, optional
         The interval for data points ('1d' for daily, '1wk' for weekly; default
         is '1d').
-    ref_ticker : str, optional
+    ticker_ref : str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
@@ -101,18 +101,18 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     >>> symbols = ['NVDA', 'MSFT', 'META', 'AAPL', 'TSM']
     >>> plot(symbols)
     """
-    if not ref_ticker:
-        ref_ticker = '^GSPC'      # S&P 500 Index
+    if not ticker_ref:
+        ticker_ref = '^GSPC'      # S&P 500 Index
         if is_taiwan_stock(tw.as_yfinance(symbols[0])):
-            ref_ticker = '^TWII'  # Taiwan Weighted Index
+            ticker_ref = '^TWII'  # Taiwan Weighted Index
 
     tickers = [tw.as_yfinance(s) for s in symbols]
-    df = yf.download([ref_ticker]+tickers, period=period, interval=interval)
+    df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
     df = df.xs('Close', level='Price', axis=1)
 
     fig = go.Figure()
     for ticker, symbol in zip(tickers, symbols):
-        rs = relative_strength(df[ticker], df[ref_ticker], interval)
+        rs = relative_strength(df[ticker], df[ticker_ref], interval)
         fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines',
                                  name=si.get_name(symbol)))
 
@@ -125,7 +125,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
               f'({df.index[0]} to {df.index[-1]})',
         title_x=0.5, title_y=0.87,
         yaxis=dict(title='Relative Strength '
-                         f'(Compared to {si.get_name(ref_ticker)})',
+                         f'(Compared to {si.get_name(ticker_ref)})',
                    side='right'),
         #height=600,
         legend_title='Stocks',

@@ -33,7 +33,7 @@ from ..ibd import relative_strength
 from .. import stock_indices as si
 
 
-def plot(symbols, period='2y', interval='1d', ref_ticker=None,
+def plot(symbols, period='2y', interval='1d', ticker_ref=None,
          legend_loc='best',
          style='checkers', hides_nontrading=True, out_dir='out'):
     """
@@ -64,7 +64,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
         The interval for data points. Valid values are '1d' for daily or '1wk'
         for weekly. Default is '1d'.
 
-    ref_ticker : str, optional
+    ticker_ref : str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
@@ -120,15 +120,15 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     >>> symbols = ['NVDA', 'MSFT', 'META', 'AAPL', 'TSM']
     >>> plot(symbols)
     """
-    if not ref_ticker:
-        ref_ticker = '^GSPC'      # S&P 500 Index
+    if not ticker_ref:
+        ticker_ref = '^GSPC'      # S&P 500 Index
         if is_taiwan_stock(tw.as_yfinance(symbols[0])):
-            ref_ticker = '^TWII'  # Taiwan Weighted Index
+            ticker_ref = '^TWII'  # Taiwan Weighted Index
 
     tickers = [tw.as_yfinance(s) for s in symbols]
-    df = yf.download([ref_ticker]+tickers, period=period, interval=interval)
+    df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
 
-    df_ref = df.xs(ref_ticker, level='Ticker', axis=1)
+    df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
 
     add_plots = []
     for ticker in tickers:
@@ -145,7 +145,7 @@ def plot(symbols, period='2y', interval='1d', ref_ticker=None,
     fig, axes = mpf.plot(
         df_dummy, type='line',
         volume=False, addplot=add_plots,
-        ylabel=f'Relative Strength (Compared to {si.get_name(ref_ticker)})',
+        ylabel=f'Relative Strength (Compared to {si.get_name(ticker_ref)})',
         figratio=(2, 1), figscale=1.2,
         style=style,
         show_nontrading=not hides_nontrading,

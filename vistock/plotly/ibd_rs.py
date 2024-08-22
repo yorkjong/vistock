@@ -34,7 +34,7 @@ from ..ibd import relative_strength, ma_window_size
 from .. import stock_indices as si
 
 
-def plot(symbol, period='2y', interval='1d', ref_ticker=None,
+def plot(symbol, period='2y', interval='1d', ticker_ref=None,
          market_color_style=MarketColorStyle.AUTO,
          template='plotly', hides_nontrading=True, out_dir='out'):
     """Generate and display a stock analysis plot with candlestick charts,
@@ -63,7 +63,7 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
     interval: str
         The interval for data points ('1d' for daily, '1wk' for weekly; default
         is '1d').
-    ref_ticker : str, optional
+    ticker_ref : str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
@@ -99,19 +99,19 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         If an unsupported interval is provided.
     """
     ticker = tw.as_yfinance(symbol)
-    if not ref_ticker:
-        ref_ticker = '^GSPC'      # S&P 500 Index
+    if not ticker_ref:
+        ticker_ref = '^GSPC'      # S&P 500 Index
         if is_taiwan_stock(ticker):
-            ref_ticker = '^TWII'  # Taiwan Weighted Index
+            ticker_ref = '^TWII'  # Taiwan Weighted Index
 
     # Download data
-    df = yf.download([ref_ticker, ticker], period=period, interval=interval)
-    df_ref = df.xs(ref_ticker, level='Ticker', axis=1)
+    df = yf.download([ticker_ref, ticker], period=period, interval=interval)
+    df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
     df = df.xs(ticker, level='Ticker', axis=1)
 
     # Calculate Relative Strength (RS)
     df['RS'] = relative_strength(df['Close'], df_ref['Close'], interval)
-    df[f'RS {ref_ticker}'] = 100
+    df[f'RS {ticker_ref}'] = 100
 
     # Calculate price moving average
     ma_nitems = [ma_window_size(interval, days) for days in (50, 200)]
@@ -149,8 +149,8 @@ def plot(symbol, period='2y', interval='1d', ref_ticker=None,
         # RS subplot
         (go.Scatter(x=df.index, y=df['RS'], mode='lines', name='RS',
                     line=dict(color='green', width=2)), rs_row),
-        (go.Scatter(x=df.index, y=df[f'RS {ref_ticker}'],
-                    mode='lines', name=si.get_name(ref_ticker),
+        (go.Scatter(x=df.index, y=df[f'RS {ticker_ref}'],
+                    mode='lines', name=si.get_name(ticker_ref),
                     line=dict(dash='dash', color='gray')), rs_row),
 
         # Volume subplot
