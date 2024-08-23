@@ -7,14 +7,14 @@ Emerging Stock Board (ESB). It supports converting stock symbols, fetching
 stock data, and retrieving ticker lists from these markets.
 
 Main Features:
-
+--------------
 - Convert Taiwan stock symbols to yfinance-compatible format.
 - Fetch historical and real-time stock data from TWSE, TPEx, and ESB.
 - Retrieve lists of tickers for TWSE, TPEx, and ESB.
 - Find stocks similar to a given name or code.
 
 Public Functions:
-
+-----------------
 - stock_name(code): Retrieve the name of a stock given its code.
 - stock_price(code): Retrive the price of a stock given its code.
 - as_yfinance(symbol): Convert a Taiwan stock symbol to yfinance format.
@@ -27,7 +27,7 @@ Public Functions:
   or ESB).
 
 Usage Examples:
-
+---------------
 ::
 
     import tw
