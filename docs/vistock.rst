@@ -37,6 +37,14 @@ vistock.ibd module
    :undoc-members:
    :show-inheritance:
 
+vistock.rsm module
+------------------
+
+.. automodule:: vistock.rsm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 vistock.stock\_indices module
 -----------------------------
 
