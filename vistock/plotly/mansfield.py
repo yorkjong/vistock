@@ -1,5 +1,5 @@
 """
-weinstein.py -- Stan Weinstein's Stock Charts
+Mansfield Stock Charts module
 
 This module provides functionality for generating Mansfield Stock Charts based
 on Stan Weinstein's methods outlined in the book "Secrets for Profiting in Bull
@@ -25,8 +25,8 @@ See Also:
   <https://trendspider.com/trading-tools-store/indicators/
   mansfield-relative-strength/>`_
 """
-__software__ = "Stan Weinstein's stock charts"
-__version__ = "1.0"
+__software__ = "Mansfield Stock Charts"
+__version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/24 (initial version) ~ 2024/08/25 (last revision)"
 
