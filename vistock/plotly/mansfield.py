@@ -53,7 +53,7 @@ class StockChart:
     Weinstein's methods outlined in the book "Secrets for Profiting in Bull and
     Bear Markets."
     """
-    def plot(symbol, period='2y', interval='1wk', ticker_ref="^GSPC", ma='SMA',
+    def plot(symbol, period='2y', interval='1wk', ticker_ref=None, ma='SMA',
              market_color_style=MarketColorStyle.AUTO,
              template='plotly', hides_nontrading=True, out_dir='out'):
         """Plot a Mansfield Stock Chart for a given stock symbol and time
