@@ -26,7 +26,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/24 (initial version) ~ 2024/08/25 (last revision)"
 
@@ -123,6 +123,7 @@ class StockChart:
             if is_taiwan_stock(ticker):
                 ticker_ref = '^TWII'  # Taiwan Weighted Index
 
+        # Set moving average windows based on the interval
         ma_windows = np.array([10, 30, 40]) # weekly settings
         if interval == '1mo':
             ma_windows = [10,]
@@ -137,12 +138,7 @@ class StockChart:
             raise ValueError("Invalid interval. Must be '1d', '1wk', or '1mo'.")
         vma_window = ma_windows[0]
 
-        # Fetch data for stock and index
-        df = yf.download([ticker_ref, ticker], period=period, interval=interval)
-        df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
-        df = df.xs(ticker, level='Ticker', axis=1)
-
-        # Calculate Mansfield Relative Strength (RSM)
+        # Select the RSM function based on the 'ma' parameter
         try:
             rsm = {
                 'SMA': mansfield_relative_strength,
@@ -150,6 +146,13 @@ class StockChart:
             }[ma]
         except KeyError:
             raise ValueError("Invalid interval. Must be 'SMA' or 'EMA'.")
+
+        # Fetch data for stock and index
+        df = yf.download([ticker_ref, ticker], period=period, interval=interval)
+        df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
+        df = df.xs(ticker, level='Ticker', axis=1)
+
+        # Calculate Mansfield Relative Strength (RSM)
         df['RSM'] = rsm(df['Close'], df_ref['Close'], rs_window)
         df['0'] = 0
 
