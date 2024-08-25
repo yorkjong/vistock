@@ -13,6 +13,7 @@ TODO
 * Added rsm module for rating stocks based on Mansfield Relative Strength (RSM)
   and related metrics.
 * Added `rsm_rating.ipynb` notebook to demonstrate ranking functionality
+* Added mansfield (plotly version) module for ploting Mansfield Stock Charts
 
 0.4.1 [2024-08-22]
 ------------------
