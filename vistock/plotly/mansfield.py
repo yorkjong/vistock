@@ -154,7 +154,7 @@ class StockChart:
 
         # Select the RSM function based on the 'ma' parameter
         try:
-            rsm = {
+            rsm_func = {
                 'SMA': mansfield_relative_strength,
                 'EMA': mansfield_relative_strength_with_ema
             }[ma]
@@ -167,7 +167,7 @@ class StockChart:
         df = df.xs(ticker, level='Ticker', axis=1)
 
         # Calculate Mansfield Relative Strength (RSM)
-        df['RSM'] = rsm(df['Close'], df_ref['Close'], rs_window)
+        df['RSM'] = rsm_func(df['Close'], df_ref['Close'], rs_window)
         df[f'RS {ticker_ref}'] = 0
 
         # Calculate moving averages for stock
@@ -350,7 +350,7 @@ class RelativeStrengthLines:
 
         # Select the RSM function based on the 'ma' parameter
         try:
-            rsm = {
+            rsm_func = {
                 'SMA': mansfield_relative_strength,
                 'EMA': mansfield_relative_strength_with_ema
             }[ma]
@@ -363,7 +363,7 @@ class RelativeStrengthLines:
 
         fig = go.Figure()
         for ticker, symbol in zip(tickers, symbols):
-            rs = rsm(df[ticker], df[ticker_ref], rs_window)
+            rs = rsm_func(df[ticker], df[ticker_ref], rs_window)
             fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines',
                                      name=si.get_name(symbol)))
 
