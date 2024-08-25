@@ -54,9 +54,9 @@ from .. import file_util
 from . import fig_util as futil
 from ..util import is_taiwan_stock
 from ..util import MarketColorStyle, decide_market_color_style
+from .. import stock_indices as si
 from ..rsm import mansfield_relative_strength
 from ..rsm import mansfield_relative_strength_with_ema
-from .. import stock_indices as si
 
 
 class StockChart:
