@@ -36,6 +36,14 @@ vistock.plotly.ibd\_rs\_cmp module
    :undoc-members:
    :show-inheritance:
 
+vistock.plotly.mansfield module
+-------------------------------
+
+.. automodule:: vistock.plotly.mansfield
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 vistock.plotly.prf2s module
 ---------------------------
 
