@@ -38,7 +38,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/25 (initial version) ~ 2024/08/26 (last revision)"
 
@@ -381,8 +381,11 @@ class RelativeStrengthLines:
         for ticker in tickers:
             rs = rsm_func(df['Close'][ticker], df_ref['Close'], rs_window)
             add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(ticker)}'))
-        if not add_plots:
-            return
+        add_plots.append(
+            mpf.make_addplot([0]*len(df_ref), color='gray', linestyle='--',
+                             label=f'{si.get_name(ticker_ref)}',
+                             secondary_y=False)
+        )
 
         # for hiding 'Close' line from the mpf.plot call
         df_dummy = df.xs(tickers[0], level='Ticker', axis=1).copy()
