@@ -191,7 +191,8 @@ class StockChart:
                price_row) for window in ma_windows],
 
             # RSM and zero line
-            (go.Scatter(x=df.index, y=df['RSM'], name='RS'), rsm_row),
+            (go.Scatter(x=df.index, y=df['RSM'], name='RS',
+                        line=dict(color='green', width=2)), rsm_row),
             (go.Scatter(x=df.index, y=df[f'RS {ticker_ref}'],
                         mode='lines', name=si.get_name(ticker_ref),
                         line=dict(dash='dash', color='gray')), rsm_row),
@@ -199,10 +200,9 @@ class StockChart:
             # Volume and Volume MA
             (go.Bar(x=df.index, y=df['Volume'], name='Volume',
                     marker_color=vol_colors, opacity=0.5), vol_row),
-            (go.Scatter(x=df.index,
-                        y=df[f'VMA{vma_window}'], name=f'Vol MA{vma_window}'),
-             vol_row),
-
+            (go.Scatter(x=df.index, y=df[f'VMA{vma_window}'],
+                        name=f'Vol MA{vma_window}',
+                        line=dict(color='purple', width=2)), vol_row),
         ]
         for trace, row in traces:
             fig.add_trace(trace, row=row, col=1)
@@ -222,7 +222,7 @@ class StockChart:
             yaxis2=dict(title='Relative Strength', side='right'),
             yaxis3=dict(title='Volume', side='right'),
             legend=dict(yanchor='bottom', y=0.01, xanchor="left", x=0.01),
-            height=700,
+            height=1000,
             xaxis_rangeslider_visible=False,
             template=template,
         )
