@@ -420,5 +420,8 @@ class RelativeStrengthLines:
 if __name__ == '__main__':
     #StockChart.plot('TSLA', interval='1d')
     StockChart.plot('TSLA', interval='1wk')
-    RelativeStrengthLines.plot(['NVDA', 'TSLA'], interval='1wk')
+
+    symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
+    RelativeStrengthLines.plot(symbols, interval='1d')
+
 
