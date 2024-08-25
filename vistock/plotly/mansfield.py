@@ -1,5 +1,6 @@
 """
-Mansfield Stock Chart Module
+Mansfield Stock Charts
+======================
 
 This module provides functionality for generating and plotting Mansfield Stock
 Charts and Mansfield Relative Strength (RSM) charts based on the methods
