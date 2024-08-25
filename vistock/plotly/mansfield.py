@@ -40,6 +40,7 @@ __date__ = "2024/08/24 (initial version) ~ 2024/08/26 (last revision)"
 
 __all__ = [
     'StockChart',
+    'RelativeStrengthLines',
 ]
 
 import numpy as np
