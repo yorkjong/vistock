@@ -202,6 +202,7 @@ class StockChart:
         vol_colors = [cl['up'] if c >= o
                       else cl['down'] for o, c in zip(df['Open'], df['Close'])]
 
+        # Plot the figure
         price_row, rsm_row, vol_row = 1, 2, 3
         traces = [
             # Stock Price and Moving Averages
@@ -370,10 +371,12 @@ class RelativeStrengthLines:
         except KeyError:
             raise ValueError("Invalid ma. Must be 'SMA' or 'EMA'.")
 
+        # Fetch data for stocks and index
         tickers = [tw.as_yfinance(s) for s in symbols]
         df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
         df = df.xs('Close', level='Price', axis=1)
 
+        # Plot the figure
         fig = go.Figure()
         for ticker, symbol in zip(tickers, symbols):
             rs = rsm_func(df[ticker], df[ticker_ref], rs_window)
