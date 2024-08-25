@@ -34,7 +34,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/24 (initial version) ~ 2024/08/26 (last revision)"
 
@@ -55,6 +55,7 @@ from . import fig_util as futil
 from ..util import is_taiwan_stock
 from ..util import MarketColorStyle, decide_market_color_style
 from .. import stock_indices as si
+from ..ta import simple_moving_average, exponential_moving_average
 from ..rsm import mansfield_relative_strength
 from ..rsm import mansfield_relative_strength_with_ema
 
@@ -162,6 +163,15 @@ class StockChart:
         except KeyError:
             raise ValueError("Invalid ma type. Must be 'SMA' or 'EMA'.")
 
+        # Select the MA function based on the 'ma' parameter
+        try:
+            ma_func = {
+                'SMA': simple_moving_average,
+                'EMA': exponential_moving_average,
+            }[ma]
+        except KeyError:
+            raise ValueError("Invalid ma type. Must be 'SMA' or 'EMA'.")
+        ma = ma.replace('SMA', 'MA')
 
         # Fetch data for stock and index
         df = yf.download([ticker_ref, ticker], period=period, interval=interval)
@@ -174,10 +184,10 @@ class StockChart:
 
         # Calculate moving averages for stock
         for window in ma_windows:
-            df[f'MA{window}'] = df['Close'].rolling(window=window).mean()
+            df[f'{ma}{window}'] = ma_func(df['Close'], window)
 
         # Calculate volume MA
-        df[f'VMA{vma_window}'] = df['Volume'].rolling(window=vma_window).mean()
+        df[f'Vol {ma}{vma_window}'] = ma_func(df['Volume'], vma_window)
 
         # Create subplots
         fig = make_subplots(rows=3, cols=1, shared_xaxes=True,
@@ -199,8 +209,9 @@ class StockChart:
                 x=df.index, open=df['Open'], high=df['High'],
                 low=df['Low'], close=df['Close'], name='Candle', **mc_colors),
              price_row),
-            *[(go.Scatter(x=df.index, y=df[f'MA{window}'], name=f'MA{window}'),
-               price_row) for window in ma_windows],
+            *[(go.Scatter(x=df.index, y=df[f'{ma}{window}'],
+                          name=f'{ma}{window}'), price_row)
+              for window in ma_windows],
 
             # RSM and zero line
             (go.Scatter(x=df.index, y=df['RSM'], name='RS',
@@ -212,8 +223,8 @@ class StockChart:
             # Volume and Volume MA
             (go.Bar(x=df.index, y=df['Volume'], name='Volume',
                     marker_color=vol_colors, opacity=0.5), vol_row),
-            (go.Scatter(x=df.index, y=df[f'VMA{vma_window}'],
-                        name=f'Vol MA{vma_window}',
+            (go.Scatter(x=df.index, y=df[f'Vol {ma}{vma_window}'],
+                        name=f'Vol {ma}{vma_window}',
                         line=dict(color='purple', width=2)), vol_row),
         ]
         for trace, row in traces:
