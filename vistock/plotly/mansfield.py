@@ -35,7 +35,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.5"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/24 (initial version) ~ 2024/08/26 (last revision)"
 
@@ -376,6 +376,10 @@ class RelativeStrengthLines:
             rs = rsm_func(df[ticker], df[ticker_ref], rs_window)
             fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines',
                                      name=si.get_name(symbol)))
+        df[f'RS {ticker_ref}'] = 0
+        fig.add_trace(go.Scatter(x=df.index, y=df[f'RS {ticker_ref}'],
+                                 mode='lines', name=si.get_name(ticker_ref),
+                                 line=dict(dash='dash', color='gray')))
 
         # Convert datetime index to string format suitable for display
         df.index = df.index.strftime('%Y-%m-%d')
