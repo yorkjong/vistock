@@ -158,7 +158,7 @@ class StockChart:
 
         # Calculate Mansfield Relative Strength (RSM)
         df['RSM'] = rsm(df['Close'], df_ref['Close'], rs_window)
-        df['0'] = 0
+        df[f'RS {ticker_ref}'] = 0
 
         # Calculate moving averages for stock
         for window in ma_windows:
@@ -192,7 +192,8 @@ class StockChart:
 
             # RSM and zero line
             (go.Scatter(x=df.index, y=df['RSM'], name='RS'), rsm_row),
-            (go.Scatter(x=df.index, y=df['0'], mode='lines', name='Zero Line',
+            (go.Scatter(x=df.index, y=df[f'RS {ticker_ref}'],
+                        mode='lines', name=si.get_name(ticker_ref),
                         line=dict(dash='dash', color='gray')), rsm_row),
 
             # Volume and Volume MA
