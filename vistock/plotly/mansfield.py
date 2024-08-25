@@ -142,10 +142,13 @@ class StockChart:
         df = df.xs(ticker, level='Ticker', axis=1)
 
         # Calculate Mansfield Relative Strength (RSM)
-        rsm = {
-            'SMA': mansfield_relative_strength,
-            'EMA': mansfield_relative_strength_with_ema
-        }[ma]
+        try:
+            rsm = {
+                'SMA': mansfield_relative_strength,
+                'EMA': mansfield_relative_strength_with_ema
+            }[ma]
+        except KeyError:
+            raise ValueError("Invalid interval. Must be 'SMA' or 'EMA'.")
         df['RSM'] = rsm(df['Close'], df_ref['Close'], rs_window)
         df['0'] = 0
 
