@@ -149,7 +149,7 @@ class StockChart:
             ma_windows = [50, 150, 200]
             rs_window = 200
         else:
-            raise ValueError("Invalid interval. Must be '1d', '1wk', or '1mo'.")
+            raise ValueError("Invalid ma. Must be '1d', '1wk', or '1mo'.")
         vma_window = ma_windows[0]
 
         # Select the RSM function based on the 'ma' parameter
@@ -355,7 +355,7 @@ class RelativeStrengthLines:
                 'EMA': mansfield_relative_strength_with_ema
             }[ma]
         except KeyError:
-            raise ValueError("Invalid interval. Must be 'SMA' or 'EMA'.")
+            raise ValueError("Invalid ma. Must be 'SMA' or 'EMA'.")
 
         tickers = [tw.as_yfinance(s) for s in symbols]
         df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
