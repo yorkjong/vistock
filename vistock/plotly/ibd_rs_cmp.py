@@ -16,9 +16,9 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.9"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/26 (last revision)"
 
 __all__ = ['plot']
 
@@ -115,6 +115,10 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         rs = relative_strength(df[ticker], df[ticker_ref], interval)
         fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines',
                                  name=si.get_name(symbol)))
+    df[f'RS {ticker_ref}'] = 100
+    fig.add_trace(go.Scatter(x=df.index, y=df[f'RS {ticker_ref}'],
+                             mode='lines', name=si.get_name(ticker_ref),
+                             line=dict(dash='dash', color='gray')))
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
