@@ -1,26 +1,34 @@
 """
-Mansfield Stock Charts module
+Mansfield Stock Chart Module
 
-This module provides functionality for generating Mansfield Stock Charts based
-on Stan Weinstein's methods outlined in the book "Secrets for Profiting in Bull
-and Bear Markets."
+This module provides functionality for generating and plotting Mansfield Stock
+Charts and Mansfield Relative Strength (RSM) charts based on the methods
+outlined in Stan Weinstein's book "Secrets for Profiting in Bull and Bear
+Markets." It includes two main classes for creating visualizations:
 
-It includes:
-- Downloading stock and index data.
-- Calculating Mansfield Relative Strength (RSM) using Simple Moving Average
-  (SMA) or Exponential Moving Average (EMA).
-- Plotting stock price, moving averages, Mansfield RS, and volume data using
-  Plotly.
-- Saving the resulting charts as interactive HTML files.
+1. StockChart:
+    - Generates a Mansfield Stock Chart for a given stock symbol compared to a
+      reference index.
+    - Allows customization of chart elements such as moving averages, chart
+      templates, and hiding non-trading periods.
 
-Classes:
-- StockChart: A class for creating and plotting Mansfield Stock Charts.
+2. RelativeStrengthLines:
+    - Plots the Mansfield Relative Strength (RSM) of multiple stocks compared
+      to a reference index.
+    - Allows comparison of multiple stocks’ RS values against a reference index
+      with customization options for the time period, data interval, and moving
+      average type.
 
 Usage:
-- Import the StockChart class and call the `plot` method with desired
-  parameters to generate the chart.
+------
+To generate a Mansfield Stock Chart:
+    >>> StockChart.plot('TSLA', interval='1wk')
+
+To generate a Relative Strength Lines chart for multiple stocks:
+    >>> RelativeStrengthLines.plot(['NVDA', 'MSFT', 'META'], interval='1wk')
 
 See Also:
+---------
 - `Mansfield relative strength | TrendSpider Store
   <https://trendspider.com/trading-tools-store/indicators/
   mansfield-relative-strength/>`_
