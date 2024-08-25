@@ -38,7 +38,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/25 (initial version) ~ 2024/08/26 (last revision)"
 
@@ -159,17 +159,14 @@ class StockChart:
                 ticker_ref = '^TWII'  # Taiwan Weighted Index
 
         # Set moving average windows based on the interval
-        ma_windows = np.array([10, 30, 40]) # weekly settings
-        if interval == '1mo':
-            ma_windows = [10,]
-            rs_window = 10
-        elif interval == '1wk':
-            ma_windows = [10, 30]
-            rs_window = 52
-        elif interval == '1d':
-            ma_windows = [50, 150, 200]
-            rs_window = 200
-        else:
+        try:
+            rs_window = { '1d': 200, '1wk': 52, '1mo': 10 }[interval]
+            ma_windows = {
+                '1d': [50, 150, 200],
+                '1wk': [10, 30],
+                '1mo': [10,],
+            }[interval]
+        except KeyError:
             raise ValueError("Invalid interval. "
                              "Must be '1d', '1wk', or '1mo'.")
         vma_window = ma_windows[0]
@@ -361,11 +358,7 @@ class RelativeStrengthLines:
 
         # Set moving average windows based on the interval
         try:
-            rs_window = {
-                '1d': 200,
-                '1wk': 52,
-                '1mo': 10
-            }[interval]
+            rs_window = { '1d': 200, '1wk': 52, '1mo': 10 }[interval]
         except KeyError:
             raise ValueError("Invalid interval. Must be '1d', '1wk', or '1mo'.")
 
