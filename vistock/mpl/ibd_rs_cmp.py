@@ -16,9 +16,9 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.8"
+__version__ = "1.9"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/26 (last revision)"
 
 __all__ = ['plot']
 
@@ -134,8 +134,11 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     for ticker in tickers:
         rs = relative_strength(df['Close'][ticker], df_ref['Close'], interval)
         add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(ticker)}'))
-    if not add_plots:
-        return
+    add_plots.append(
+        mpf.make_addplot([100]*len(df_ref), color='gray', linestyle='--',
+                         label=f'{si.get_name(ticker_ref)}',
+                         secondary_y=False)
+    )
 
     # for hiding 'Close' line from the mpf.plot call
     df_dummy = df.xs(tickers[0], level='Ticker', axis=1).copy()
@@ -175,7 +178,7 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 #------------------------------------------------------------------------------
 
 def main():
-    symbols = ['NVDA', 'MSFT', 'META', '^GSPC', '^NDX', '^TWII']
+    symbols = ['NVDA', 'MSFT', 'META', '^NDX', '^TWII']
     plot(symbols)
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     plot(symbols, interval='1wk')
