@@ -40,6 +40,7 @@ import yfinance as yf
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
+from .. import tw
 from .. import file_util
 from . import fig_util as futil
 from ..util import MarketColorStyle, decide_market_color_style
