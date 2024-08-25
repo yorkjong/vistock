@@ -396,7 +396,7 @@ class RelativeStrengthLines:
 
         # Write the figure to an HTML file
         out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info('stocks', interval, df.index[-1], __file__)
+        fn = file_util.gen_fn_info('stocks', interval, df.index[-1], 'RsmLines')
         fig.write_html(f'{out_dir}/{fn}.html')
 
 
