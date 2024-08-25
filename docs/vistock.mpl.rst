@@ -28,6 +28,14 @@ vistock.mpl.ibd\_rs\_cmp module
    :undoc-members:
    :show-inheritance:
 
+vistock.mpl.mansfield module
+----------------------------
+
+.. automodule:: vistock.mpl.mansfield
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 vistock.mpl.mpf\_util module
 ----------------------------
 
