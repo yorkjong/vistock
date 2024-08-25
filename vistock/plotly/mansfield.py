@@ -226,7 +226,7 @@ class StockChart:
         fig.update_layout(
             title=f'Mansfield Stock Charts: {ticker} - {interval} '
                   f'({df.index[0]} to {df.index[-1]})',
-            title_x=0.5, title_y=.9,
+            title_x=0.5, title_y=0.92,
 
             xaxis=dict(anchor='free'),
             yaxis=dict(title='Price', side='right'),
