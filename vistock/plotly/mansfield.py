@@ -85,6 +85,9 @@ class StockChart:
             500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
             is a Taiwan stock.
 
+        ma : str, optional
+            Moving average type ('SMA', 'EMA'). Default to 'SMA'.
+
         market_color_style : MarketColorStyle, optional
             Color style for market data visualization. Default is
             MarketColorStyle.AUTO.
