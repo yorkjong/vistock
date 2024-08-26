@@ -47,7 +47,7 @@ Usage Examples:
     # Get a list of tickers for a specified market
     tickers = tw.get_tickers('TWSE')
 """
-__version__ = "1.8"
+__version__ = "1.9"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/19 (initial version) ~ 2024/08/26 (last revision)"
 
@@ -190,12 +190,12 @@ class OpenAPI:
     """
     _lookup_cache = {}
 
-    @staticmethod
-    def clear_cache():
-        OpenAPI._lookup_cache.clear()
+    @classmethod
+    def clear_cache(cls):
+        cls._lookup_cache.clear()
 
-    @staticmethod
-    def value_from_key(key, url, key_field, value_field):
+    @classmethod
+    def value_from_key(cls, key, url, key_field, value_field):
         """Get the value of a given key that is looked-up from an Open API
         response table.
 
@@ -210,17 +210,17 @@ class OpenAPI:
         """
         cache_key = (url, key_field, value_field)
 
-        if cache_key not in OpenAPI._lookup_cache:
-            cols = OpenAPI.get_columns(url, [key_field, value_field])
-            OpenAPI._lookup_cache[cache_key] = dict(zip(*cols))
-        cache = OpenAPI._lookup_cache[cache_key]
+        if cache_key not in cls._lookup_cache:
+            cols = cls.get_columns(url, [key_field, value_field])
+            cls._lookup_cache[cache_key] = dict(zip(*cols))
+        cache = cls._lookup_cache[cache_key]
 
         if key in cache:
             return cache[key]
         return None
 
-    @staticmethod
-    def similar_keys(key, url, key_field, value_field):
+    @classmethod
+    def similar_keys(cls, key, url, key_field, value_field):
         """Get (key, value) pairs with similar keys that are looked-up from an
         Open API response table.
 
@@ -236,10 +236,10 @@ class OpenAPI:
         """
         cache_key = (url, key_field, value_field)
 
-        if cache_key not in OpenAPI._lookup_cache:
-            cols = OpenAPI.get_columns(url, [key_field, value_field])
-            OpenAPI._lookup_cache[cache_key] = dict(zip(*cols))
-        cache = OpenAPI._lookup_cache[cache_key]
+        if cache_key not in cls._lookup_cache:
+            cols = cls.get_columns(url, [key_field, value_field])
+            cls._lookup_cache[cache_key] = dict(zip(*cols))
+        cache = cls._lookup_cache[cache_key]
 
         pairs = []
         for k, v in cache.items():
@@ -272,8 +272,8 @@ class OpenAPI:
         except Exception as e:
             return ([] for _ in column_names)
 
-    @staticmethod
-    def yfinance_symbol_from_name(name):
+    @classmethod
+    def yfinance_symbol_from_name(cls, name):
         """Get yfinance compatible symbol from a Taiwan stock name.
 
         Args:
@@ -290,7 +290,7 @@ class OpenAPI:
         """
         # for a listed stock
         listed_stock_code = functools.partial(
-            OpenAPI.value_from_key,
+            cls.value_from_key,
             url='https://openapi.twse.com.tw/v1/'
                 'exchangeReport/STOCK_DAY_AVG_ALL',
             key_field='Name',
@@ -299,7 +299,7 @@ class OpenAPI:
 
         # for an OTC stock
         OTC_stock_code = functools.partial(
-            OpenAPI.value_from_key,
+            cls.value_from_key,
             url='https://www.tpex.org.tw/openapi/v1/'
                 'tpex_mainboard_daily_close_quotes',
             key_field='CompanyName',
@@ -309,7 +309,7 @@ class OpenAPI:
         # for an ESB stock. ESB stands for Emerging Stock Board (also called
         # Emerging Stock Market, or Emerging OTC)
         emerging_stock_code = functools.partial(
-            OpenAPI.value_from_key,
+            cls.value_from_key,
             url='https://www.tpex.org.tw/openapi/v1/'
                 'tpex_esb_latest_statistics',
             key_field='CompanyName',
@@ -327,8 +327,8 @@ class OpenAPI:
             return f'{code}.TWO'
         return name
 
-    @staticmethod
-    def stock_name(code):
+    @classmethod
+    def stock_name(cls, code):
         """Get stock name from its code.
 
         Args:
@@ -344,19 +344,19 @@ class OpenAPI:
             '星宇航空'
         """
         code = code.replace('.TWO', '').replace('.TW', '')
-        name = OpenAPI.listed_stock_name(code)
+        name = cls.listed_stock_name(code)
         if name:
             return name
-        name = OpenAPI.OTC_stock_name(code)
+        name = cls.OTC_stock_name(code)
         if name:
             return name
-        name = OpenAPI.emerging_stock_name(code)
+        name = cls.emerging_stock_name(code)
         if name:
             return name
         return code
 
-    @staticmethod
-    def stock_price(code):
+    @classmethod
+    def stock_price(cls, code):
         """Get stock price from its code.
 
         Args:
@@ -373,7 +373,7 @@ class OpenAPI:
         """
         # for a listed stock
         listed_stock_price = functools.partial(
-            OpenAPI.value_from_key,
+            cls.value_from_key,
             url='https://openapi.twse.com.tw/v1/'
                 'exchangeReport/STOCK_DAY_AVG_ALL',
             key_field='Code',
@@ -382,7 +382,7 @@ class OpenAPI:
 
         # for an OTC stock
         OTC_stock_price = functools.partial(
-            OpenAPI.value_from_key,
+            cls.value_from_key,
             url='https://www.tpex.org.tw/openapi/v1/'
                 'tpex_mainboard_daily_close_quotes',
             key_field='SecuritiesCompanyCode',
@@ -392,7 +392,7 @@ class OpenAPI:
         # for an ESB stock. ESB stands for Emerging Stock Board (also called
         # Emerging Stock Market, or Emerging OTC)
         emerging_stock_price = functools.partial(
-            OpenAPI.value_from_key,
+            cls.value_from_key,
             url='https://www.tpex.org.tw/openapi/v1/'
                 'tpex_esb_latest_statistics',
             key_field='SecuritiesCompanyCode',
@@ -410,8 +410,8 @@ class OpenAPI:
             return float(price)
         return ""
 
-    @staticmethod
-    def yfinance_symbol_from_code(code):
+    @classmethod
+    def yfinance_symbol_from_code(cls, code):
         """Get yfinance compatible symbol from a Taiwan stock code.
 
         Args:
@@ -426,13 +426,13 @@ class OpenAPI:
             >>> OpenAPI.yfinance_symbol_from_code("2646")
             '2646.TWO'
         """
-        name = OpenAPI.listed_stock_name(code)
+        name = cls.listed_stock_name(code)
         if name:
             return f'{code}.TW'
-        name = OpenAPI.OTC_stock_name(code)
+        name = cls.OTC_stock_name(code)
         if name:
             return f'{code}.TWO'
-        name = OpenAPI.emerging_stock_name(code)
+        name = cls.emerging_stock_name(code)
         if name:
             return f'{code}.TWO'
         return code
