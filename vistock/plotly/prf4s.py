@@ -137,6 +137,7 @@ def _plot(df, ticker, market_color_style, profile_field='Volume',
 class Volume:
     """Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
     """
+    @staticmethod
     def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
              market_color_style=MarketColorStyle.AUTO,
@@ -242,6 +243,7 @@ class Turnover:
 
     Here "turnover" means "trading value" (= price * volume)
     '''
+    @staticmethod
     def plot(symbol='TSLA', period='1y', interval='1d',
              ma_nitems=(5, 10, 20, 50, 150), vma_nitems=50, total_bins=42,
              market_color_style=MarketColorStyle.AUTO,

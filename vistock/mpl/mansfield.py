@@ -72,6 +72,7 @@ class StockChart:
     Weinstein. This class provides methods to fetch stock data, compute
     relative strength, and plot the resulting charts using mplfinance.
     """
+    @staticmethod
     def plot(symbol, period='2y', interval='1d', ticker_ref=None, ma='SMA',
              legend_loc='best', market_color_style=MarketColorStyle.AUTO,
              style='yahoo', hides_nontrading=True, out_dir='out'):
@@ -268,6 +269,7 @@ class RelativeStrengthLines:
     various intervals and moving average calculations (SMA and EMA) for the
     relative strength computation.
     """
+    @staticmethod
     def plot(symbols, period='2y', interval='1d', ticker_ref=None, ma='SMA',
              legend_loc='best',
              style='checkers', hides_nontrading=True, out_dir='out'):

@@ -66,6 +66,7 @@ class StockChart:
     Weinstein's methods outlined in the book "Secrets for Profiting in Bull and
     Bear Markets."
     """
+    @staticmethod
     def plot(symbol, period='2y', interval='1wk', ticker_ref=None, ma='SMA',
              market_color_style=MarketColorStyle.AUTO,
              template='plotly', hides_nontrading=True, out_dir='out'):
@@ -275,6 +276,7 @@ class RelativeStrengthLines:
     RS changes over time relative to the reference index, with options to
     customize the time period, data interval, and moving average type.
     """
+    @staticmethod
     def plot(symbols, period='2y', interval='1d', ticker_ref=None, ma='SMA',
              template='plotly', hides_nontrading=True, out_dir='out'):
         """
