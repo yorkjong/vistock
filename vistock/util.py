@@ -1,9 +1,9 @@
 """
 Utility Functions for vistock package.
 """
-__version__ = "1.2"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/22 (initial version) ~ 2024/08/16 (last revision)"
+__date__ = "2024/07/22 (initial version) ~ 2024/08/26 (last revision)"
 
 __all__ = [
     'MarketColorStyle',
@@ -47,14 +47,13 @@ def decide_market_color_style(ticker='TSLA', style=MarketColorStyle.AUTO):
         return style
 
     # Define suffixes for Eastern and Western markets
-    eastern_markets = [
+    eastern_markets = (
         '.TW', '.TWO', '.HK', '.T', '.SS', '.SZ', '.KS', '.KL', '.SI'
-    ]
+    )
 
     # Check if ticker belongs to Eastern markets
-    for suffix in eastern_markets:
-        if ticker.endswith(suffix):
-            return MarketColorStyle.EASTERN
+    if ticker.endswith(eastern_markets):
+        return MarketColorStyle.EASTERN
 
     # Default to US market colors for unspecified markets or tickers without suffix
     return MarketColorStyle.WESTERN
@@ -77,8 +76,7 @@ def is_taiwan_stock(ticker):
         >>> is_taiwan_stock('NVDA')
         False
     """
-    ticker = ticker.replace('.TWO', '').replace('.TW', '')
-    return ticker.isdigit()
+    return ticker.endswith(('TW', 'TWO')) or ticker.isdigit()
 
 
 #------------------------------------------------------------------------------
