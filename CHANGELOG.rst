@@ -15,6 +15,8 @@ TODO
 * Added `rsm_rating.ipynb` notebook to demonstrate ranking functionality
 * Added mansfield (plotly version) module for ploting Mansfield Stock Charts
 * Added mansfield (mpl version) module for ploting Mansfield Stock Charts
+* Improved the performance of ibd.rankings function with batch&multi-threaded
+  download
 
 0.4.1 [2024-08-22]
 ------------------
