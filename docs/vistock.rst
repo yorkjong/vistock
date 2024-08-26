@@ -77,6 +77,14 @@ vistock.util module
    :undoc-members:
    :show-inheritance:
 
+vistock.yf\_utils module
+------------------------
+
+.. automodule:: vistock.yf_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
