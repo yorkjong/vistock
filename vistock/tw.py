@@ -47,9 +47,9 @@ Usage Examples:
     # Get a list of tickers for a specified market
     tickers = tw.get_tickers('TWSE')
 """
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2024/08/12 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2024/08/26 (last revision)"
 
 __all__ = [
     'stock_name',
@@ -73,12 +73,16 @@ from bs4 import BeautifulSoup
 # Utility Functions
 #------------------------------------------------------------------------------
 
-def is_chinese(char):
+def is_chinese(string):
     """
-    Check if a character is a Chinese character.
+    Check if the first character of given string is a Chinese character.
+
+    This function checks if the first character in the input string is a
+    Chinese character. It does not handle empty strings and will raise an
+    `IndexError` if the input is an empty string.
 
     Args:
-        char (str): The character to be checked.
+        string (str): The string to be checked.
 
     Returns:
         bool: True if the character is Chinese, False otherwise.
@@ -89,7 +93,7 @@ def is_chinese(char):
         >>> is_chinese('中')
         True
     """
-    return unicodedata.category(char[0]) == 'Lo'
+    return unicodedata.category(string[0]) == 'Lo'
 
 
 #------------------------------------------------------------------------------
@@ -546,7 +550,7 @@ def as_yfinance(symbol):
     """
     if symbol.endswith('.TW') or symbol.endswith('.TWO'):
         return symbol
-    if is_chinese(symbol[0]):
+    if is_chinese(symbol):
         #return Crawler.as_yfinance(symbol)
         return OpenAPI.yfinance_symbol_from_name(symbol)
     if symbol[0].isdigit():
