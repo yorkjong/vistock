@@ -38,7 +38,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/25 (initial version) ~ 2024/08/26 (last revision)"
 
@@ -169,7 +169,7 @@ class StockChart:
         except KeyError:
             raise ValueError("Invalid interval. "
                              "Must be '1d', '1wk', or '1mo'.")
-        vma_window = ma_windows[0]
+        vma_window, *_ = ma_windows
 
         # Select the RSM function based on the 'ma' parameter
         try:
