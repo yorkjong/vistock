@@ -654,7 +654,7 @@ def get_esb_tickers():
     Examples:
         >>> tickers = get_esb_tickers()
         >>> print(tickers[:5])
-        ['9957.TWO', '2646.TWO', '5859.TWO', '6434.TWO', '1480.TWO']
+        ['9957.TWO', '2646.TWO', '6434.TWO', '1480.TWO', '6987.TWO']
     """
     url = "https://www.tpex.org.tw/openapi/v1/tpex_esb_capitals_rank"
     (codes,) = OpenAPI.get_columns(url, ["SecuritiesCompanyCode"])
