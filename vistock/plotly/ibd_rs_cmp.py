@@ -30,7 +30,6 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_util
 from . import fig_util as futil
-from ..util import is_taiwan_stock
 from ..ibd import relative_strength
 from .. import stock_indices as si
 
@@ -103,7 +102,7 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     """
     if not ticker_ref:
         ticker_ref = '^GSPC'      # S&P 500 Index
-        if is_taiwan_stock(tw.as_yfinance(symbols[0])):
+        if tw.is_taiwan_stock(tw.as_yfinance(symbols[0])):
             ticker_ref = '^TWII'  # Taiwan Weighted Index
 
     tickers = [tw.as_yfinance(s) for s in symbols]

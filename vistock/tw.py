@@ -52,6 +52,7 @@ __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/19 (initial version) ~ 2024/08/26 (last revision)"
 
 __all__ = [
+    'is_taiwan_stock',
     'stock_name',
     'stock_price',
     'as_yfinance',
@@ -94,6 +95,25 @@ def is_chinese(string):
         True
     """
     return unicodedata.category(string[0]) == 'Lo'
+
+
+def is_taiwan_stock(ticker):
+    """
+    Check if the given ticker represents a Taiwan stock.
+
+    Args:
+        ticker (str): Stock ticker symbol.
+
+    Returns:
+        bool: True if it's a Taiwan stock, False otherwise.
+
+    Examples:
+        >>> is_taiwan_stock('2330.TW')
+        True
+        >>> is_taiwan_stock('NVDA')
+        False
+    """
+    return ticker.endswith(('TW', 'TWO')) or ticker.isdigit()
 
 
 #------------------------------------------------------------------------------

@@ -27,7 +27,7 @@ import mplfinance as mpf
 
 from .. import tw
 from .. import file_util
-from ..util import MarketColorStyle, decide_market_color_style, is_taiwan_stock
+from ..util import MarketColorStyle, decide_market_color_style
 from .mpf_util import decide_mpf_style
 from ..ibd import relative_strength, ma_window_size
 from .. import stock_indices as si
@@ -114,7 +114,7 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None,
     ticker = tw.as_yfinance(symbol)
     if not ticker_ref:
         ticker_ref = '^GSPC'      # S&P 500 Index
-        if is_taiwan_stock(ticker):
+        if tw.is_taiwan_stock(ticker):
             ticker_ref = '^TWII'  # Taiwan Weighted Index
 
     # Download data

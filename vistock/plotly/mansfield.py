@@ -53,7 +53,6 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_util
 from . import fig_util as futil
-from ..util import is_taiwan_stock
 from ..util import MarketColorStyle, decide_market_color_style
 from .. import stock_indices as si
 from ..ta import simple_moving_average, exponential_moving_average
@@ -137,7 +136,7 @@ class StockChart:
         ticker = tw.as_yfinance(symbol)
         if not ticker_ref:
             ticker_ref = '^GSPC'      # S&P 500 Index
-            if is_taiwan_stock(ticker):
+            if tw.is_taiwan_stock(ticker):
                 ticker_ref = '^TWII'  # Taiwan Weighted Index
 
         # Set moving average windows based on the interval
@@ -349,7 +348,7 @@ class RelativeStrengthLines:
         """
         if not ticker_ref:
             ticker_ref = '^GSPC'      # S&P 500 Index
-            if is_taiwan_stock(tw.as_yfinance(symbols[0])):
+            if tw.is_taiwan_stock(tw.as_yfinance(symbols[0])):
                 ticker_ref = '^TWII'  # Taiwan Weighted Index
 
         # Set moving average windows based on the interval
