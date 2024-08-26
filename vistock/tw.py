@@ -109,8 +109,6 @@ class Crawler:
 
     stock data is from 'https://isin.twse.com.tw/isin/C_public.jsp'.
     """
-
-
     @staticmethod
     def _get_name_code_pair(symbol, str_mode):
         """Get (name, code) pair from a given symbol.
@@ -191,7 +189,6 @@ class OpenAPI:
     and retrieve stock information using various Open APIs.
     """
     _lookup_cache = {}
-
 
     @staticmethod
     def clear_cache():
