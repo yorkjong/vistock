@@ -16,7 +16,7 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.9"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/08/26 (last revision)"
 
@@ -127,15 +127,14 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 
     tickers = [tw.as_yfinance(s) for s in symbols]
     df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
-
-    df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
+    df_price = df.xs('Close', level='Price', axis=1)
 
     add_plots = []
     for ticker in tickers:
-        rs = relative_strength(df['Close'][ticker], df_ref['Close'], interval)
+        rs = relative_strength(df_price[ticker], df_price[ticker_ref], interval)
         add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(ticker)}'))
     add_plots.append(
-        mpf.make_addplot([100]*len(df_ref), color='gray', linestyle='--',
+        mpf.make_addplot([100]*len(df), color='gray', linestyle='--',
                          label=f'{si.get_name(ticker_ref)}',
                          secondary_y=False)
     )

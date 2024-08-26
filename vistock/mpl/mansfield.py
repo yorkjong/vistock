@@ -38,7 +38,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/25 (initial version) ~ 2024/08/26 (last revision)"
 
@@ -374,15 +374,15 @@ class RelativeStrengthLines:
         # Fetch data for stocks and index
         tickers = [tw.as_yfinance(s) for s in symbols]
         df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
-        df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
+        df_price = df.xs('Close', level='Price', axis=1)
 
         # Plot the figure
         add_plots = []
         for ticker in tickers:
-            rs = rsm_func(df['Close'][ticker], df_ref['Close'], rs_window)
+            rs = rsm_func(df_price[ticker], df_price[ticker_ref], rs_window)
             add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(ticker)}'))
         add_plots.append(
-            mpf.make_addplot([0]*len(df_ref), color='gray', linestyle='--',
+            mpf.make_addplot([0]*len(df), color='gray', linestyle='--',
                              label=f'{si.get_name(ticker_ref)}',
                              secondary_y=False)
         )
