@@ -109,6 +109,8 @@ class Crawler:
 
     stock data is from 'https://isin.twse.com.tw/isin/C_public.jsp'.
     """
+
+
     @staticmethod
     def _get_name_code_pair(symbol, str_mode):
         """Get (name, code) pair from a given symbol.
@@ -138,7 +140,6 @@ class Crawler:
                 if symbol == name or symbol == code:
                     return name, code
         return None, None
-
 
     @staticmethod
     def as_yfinance(symbol):
@@ -196,7 +197,6 @@ class OpenAPI:
     def clear_cache():
         OpenAPI._lookup_cache.clear()
 
-
     @staticmethod
     def value_from_key(key, url, key_field, value_field):
         """Get the value of a given key that is looked-up from an Open API
@@ -221,7 +221,6 @@ class OpenAPI:
         if key in cache:
             return cache[key]
         return None
-
 
     @staticmethod
     def similar_keys(key, url, key_field, value_field):
@@ -251,7 +250,6 @@ class OpenAPI:
                 pairs += [(k, v)]
         return pairs
 
-
     @staticmethod
     def get_columns(url, column_names):
         """
@@ -276,7 +274,6 @@ class OpenAPI:
             return columns
         except Exception as e:
             return ([] for _ in column_names)
-
 
     @staticmethod
     def yfinance_symbol_from_name(name):
@@ -333,7 +330,6 @@ class OpenAPI:
             return f'{code}.TWO'
         return name
 
-
     @staticmethod
     def stock_name(code):
         """Get stock name from its code.
@@ -361,7 +357,6 @@ class OpenAPI:
         if name:
             return name
         return code
-
 
     @staticmethod
     def stock_price(code):
@@ -417,7 +412,6 @@ class OpenAPI:
         if price:
             return float(price)
         return ""
-
 
     @staticmethod
     def yfinance_symbol_from_code(code):
