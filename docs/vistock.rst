@@ -13,18 +13,18 @@ Subpackages
 Submodules
 ----------
 
-vistock.bull\_draw\_util module
--------------------------------
+vistock.bull\_draw\_utils module
+--------------------------------
 
-.. automodule:: vistock.bull_draw_util
+.. automodule:: vistock.bull_draw_utils
    :members:
    :undoc-members:
    :show-inheritance:
 
-vistock.file\_util module
--------------------------
+vistock.file\_utils module
+--------------------------
 
-.. automodule:: vistock.file_util
+.. automodule:: vistock.file_utils
    :members:
    :undoc-members:
    :show-inheritance:
@@ -69,10 +69,10 @@ vistock.tw module
    :undoc-members:
    :show-inheritance:
 
-vistock.util module
--------------------
+vistock.utils module
+--------------------
 
-.. automodule:: vistock.util
+.. automodule:: vistock.utils
    :members:
    :undoc-members:
    :show-inheritance:

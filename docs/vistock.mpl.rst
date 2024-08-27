@@ -36,10 +36,10 @@ vistock.mpl.mansfield module
    :undoc-members:
    :show-inheritance:
 
-vistock.mpl.mpf\_util module
-----------------------------
+vistock.mpl.mpf\_utils module
+-----------------------------
 
-.. automodule:: vistock.mpl.mpf_util
+.. automodule:: vistock.mpl.mpf_utils
    :members:
    :undoc-members:
    :show-inheritance:

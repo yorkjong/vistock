@@ -12,10 +12,10 @@ vistock.plotly.bull\_draw module
    :undoc-members:
    :show-inheritance:
 
-vistock.plotly.fig\_util module
--------------------------------
+vistock.plotly.fig\_utils module
+--------------------------------
 
-.. automodule:: vistock.plotly.fig_util
+.. automodule:: vistock.plotly.fig_utils
    :members:
    :undoc-members:
    :show-inheritance:
