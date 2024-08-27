@@ -12,10 +12,10 @@ vistock.plotly.bull\_draw module
    :undoc-members:
    :show-inheritance:
 
-vistock.plotly.fig\_util module
--------------------------------
+vistock.plotly.fig\_utils module
+--------------------------------
 
-.. automodule:: vistock.plotly.fig_util
+.. automodule:: vistock.plotly.fig_utils
    :members:
    :undoc-members:
    :show-inheritance:
@@ -32,6 +32,14 @@ vistock.plotly.ibd\_rs\_cmp module
 ----------------------------------
 
 .. automodule:: vistock.plotly.ibd_rs_cmp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+vistock.plotly.mansfield module
+-------------------------------
+
+.. automodule:: vistock.plotly.mansfield
    :members:
    :undoc-members:
    :show-inheritance:

@@ -16,9 +16,9 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.8"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/26 (last revision)"
 
 __all__ = ['plot']
 
@@ -27,8 +27,7 @@ import yfinance as yf
 import mplfinance as mpf
 
 from .. import tw
-from .. import file_util
-from ..util import is_taiwan_stock
+from .. import file_utils
 from ..ibd import relative_strength
 from .. import stock_indices as si
 
@@ -122,20 +121,22 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     """
     if not ticker_ref:
         ticker_ref = '^GSPC'      # S&P 500 Index
-        if is_taiwan_stock(tw.as_yfinance(symbols[0])):
+        if tw.is_taiwan_stock(tw.as_yfinance(symbols[0])):
             ticker_ref = '^TWII'  # Taiwan Weighted Index
 
     tickers = [tw.as_yfinance(s) for s in symbols]
     df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
-
-    df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
+    df_price = df.xs('Close', level='Price', axis=1)
 
     add_plots = []
     for ticker in tickers:
-        rs = relative_strength(df['Close'][ticker], df_ref['Close'], interval)
+        rs = relative_strength(df_price[ticker], df_price[ticker_ref], interval)
         add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(ticker)}'))
-    if not add_plots:
-        return
+    add_plots.append(
+        mpf.make_addplot([100]*len(df), color='gray', linestyle='--',
+                         label=f'{si.get_name(ticker_ref)}',
+                         secondary_y=False)
+    )
 
     # for hiding 'Close' line from the mpf.plot call
     df_dummy = df.xs(tickers[0], level='Ticker', axis=1).copy()
@@ -165,8 +166,8 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     mpf.show()
 
     # Save the figure
-    out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info('stocks', interval, df.index[-1], __file__)
+    out_dir = file_utils.make_dir(out_dir)
+    fn = file_utils.gen_fn_info('stocks', interval, df.index[-1], __file__)
     fig.savefig(f'{out_dir}/{fn}.png', bbox_inches='tight')
 
 
@@ -175,7 +176,7 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 #------------------------------------------------------------------------------
 
 def main():
-    symbols = ['NVDA', 'MSFT', 'META', '^GSPC', '^NDX', '^TWII']
+    symbols = ['NVDA', 'MSFT', 'META', '^NDX', '^TWII']
     plot(symbols)
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     plot(symbols, interval='1wk')

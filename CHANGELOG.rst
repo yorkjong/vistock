@@ -8,6 +8,20 @@ TODO
 * To support other useful Technical Indicators.
 * To support IBD EPS RS
 
+0.5.0
+-----------------
+* Added rsm module for rating stocks based on Mansfield Relative Strength (RSM)
+  and related metrics.
+* Added `rsm_rating.ipynb` notebook to demonstrate ranking functionality
+* Added mansfield (plotly version) module for ploting Mansfield Stock Charts
+* Added mansfield (mpl version) module for ploting Mansfield Stock Charts
+* Improved the performance of ibd.rankings function with batch&multi-threaded
+  download
+* Refined ibd.rankings function
+  * Added 'Price' column for rankings generated stock table
+  * Added 'Name' column for rankings generated Taiwan stock table
+  * Applied batch download to improve the performance of stock data download
+
 0.4.1 [2024-08-22]
 ------------------
 * Add 'template' parameter to plot function (plotly version) and update test

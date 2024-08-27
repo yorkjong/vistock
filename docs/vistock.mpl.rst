@@ -28,10 +28,18 @@ vistock.mpl.ibd\_rs\_cmp module
    :undoc-members:
    :show-inheritance:
 
-vistock.mpl.mpf\_util module
+vistock.mpl.mansfield module
 ----------------------------
 
-.. automodule:: vistock.mpl.mpf_util
+.. automodule:: vistock.mpl.mansfield
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+vistock.mpl.mpf\_utils module
+-----------------------------
+
+.. automodule:: vistock.mpl.mpf_utils
    :members:
    :undoc-members:
    :show-inheritance:

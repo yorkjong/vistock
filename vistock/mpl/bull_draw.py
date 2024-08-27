@@ -14,10 +14,10 @@ from matplotlib.lines import Line2D
 import mplfinance as mpf
 
 from .. import tw
-from .. import file_util
-from ..bull_draw_util import calculate_bull_run, calculate_drawdown
-from ..util import MarketColorStyle, decide_market_color_style
-from .mpf_util import decide_mpf_style
+from .. import file_utils
+from ..bull_draw_utils import calculate_bull_run, calculate_drawdown
+from ..utils import MarketColorStyle, decide_market_color_style
+from .mpf_utils import decide_mpf_style
 
 
 def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
@@ -169,8 +169,8 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
     mpf.show()  # plt.show()
 
     # Write the figure to an PNG file
-    out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(ticker, interval, df.index[-1], __file__)
+    out_dir = file_utils.make_dir(out_dir)
+    fn = file_utils.gen_fn_info(ticker, interval, df.index[-1], __file__)
     fig.savefig(f'{out_dir}/{fn}.png')
 
 

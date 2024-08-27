@@ -16,9 +16,9 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "1.9"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/08/26 (last revision)"
 
 __all__ = ['plot']
 
@@ -28,9 +28,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 from .. import tw
-from .. import file_util
-from . import fig_util as futil
-from ..util import is_taiwan_stock
+from .. import file_utils
+from . import fig_utils as futil
 from ..ibd import relative_strength
 from .. import stock_indices as si
 
@@ -103,7 +102,7 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     """
     if not ticker_ref:
         ticker_ref = '^GSPC'      # S&P 500 Index
-        if is_taiwan_stock(tw.as_yfinance(symbols[0])):
+        if tw.is_taiwan_stock(tw.as_yfinance(symbols[0])):
             ticker_ref = '^TWII'  # Taiwan Weighted Index
 
     tickers = [tw.as_yfinance(s) for s in symbols]
@@ -115,6 +114,10 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         rs = relative_strength(df[ticker], df[ticker_ref], interval)
         fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines',
                                  name=si.get_name(symbol)))
+    df[f'RS {ticker_ref}'] = 100
+    fig.add_trace(go.Scatter(x=df.index, y=df[f'RS {ticker_ref}'],
+                             mode='lines', name=si.get_name(ticker_ref),
+                             line=dict(dash='dash', color='gray')))
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
@@ -144,8 +147,8 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     fig.show()
 
     # Write the figure to an HTML file
-    out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info('stocks', interval, df.index[-1], __file__)
+    out_dir = file_utils.make_dir(out_dir)
+    fn = file_utils.gen_fn_info('stocks', interval, df.index[-1], __file__)
     fig.write_html(f'{out_dir}/{fn}.html')
 
 
