@@ -18,7 +18,7 @@ import mplfinance as mpf
 from .. import tw
 from .. import file_util
 from ..util import MarketColorStyle, decide_market_color_style
-from .mpf_util import decide_mpf_style
+from .mpf_utils import decide_mpf_style
 
 
 def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
