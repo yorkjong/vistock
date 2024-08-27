@@ -17,6 +17,10 @@ TODO
 * Added mansfield (mpl version) module for ploting Mansfield Stock Charts
 * Improved the performance of ibd.rankings function with batch&multi-threaded
   download
+* Refined ibd.rankings function
+  * Added 'Price' column for rankings generated stock table
+  * Added 'Name' column for rankings generated Taiwan stock table
+  * Applied batch download to improve the performance of stock data download
 
 0.4.1 [2024-08-22]
 ------------------
