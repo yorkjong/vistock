@@ -28,7 +28,7 @@ from plotly.subplots import make_subplots
 
 from .. import tw
 from .. import file_util
-from . import fig_util as futil
+from . import fig_utils as futil
 from ..util import MarketColorStyle, decide_market_color_style
 from ..ibd import relative_strength, ma_window_size
 from .. import stock_indices as si

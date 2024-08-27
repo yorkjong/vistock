@@ -17,7 +17,7 @@ import plotly.graph_objs as go
 
 from .. import tw
 from .. import file_util
-from . import fig_util as futil
+from . import fig_utils as futil
 from ..util import MarketColorStyle, decide_market_color_style
 
 

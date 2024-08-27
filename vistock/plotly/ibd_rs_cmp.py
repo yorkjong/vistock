@@ -29,7 +29,7 @@ from plotly.subplots import make_subplots
 
 from .. import tw
 from .. import file_util
-from . import fig_util as futil
+from . import fig_utils as futil
 from ..ibd import relative_strength
 from .. import stock_indices as si
 
