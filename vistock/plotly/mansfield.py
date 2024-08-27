@@ -53,7 +53,7 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_utils
 from . import fig_utils as futil
-from ..util import MarketColorStyle, decide_market_color_style
+from ..utils import MarketColorStyle, decide_market_color_style
 from .. import stock_indices as si
 from ..ta import simple_moving_average, exponential_moving_average
 from ..rsm import mansfield_relative_strength

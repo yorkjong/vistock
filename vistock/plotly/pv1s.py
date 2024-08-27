@@ -18,7 +18,7 @@ import plotly.graph_objs as go
 from .. import tw
 from .. import file_utils
 from . import fig_utils as futil
-from ..util import MarketColorStyle, decide_market_color_style
+from ..utils import MarketColorStyle, decide_market_color_style
 
 
 def plot(symbol='TSLA', period='1y', interval='1d',

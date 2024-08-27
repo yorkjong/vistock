@@ -20,7 +20,7 @@ Dependencies:
 - pandas
 - yfinance
 - mplfinance
-- Custom modules: tw, file_utils, util, stock_indices, ta, rsm, mpf_utils
+- Custom modules: tw, file_utils, utils, stock_indices, ta, rsm, mpf_utils
 
 Usage:
 ------
@@ -54,7 +54,7 @@ import mplfinance as mpf
 
 from .. import tw
 from .. import file_utils
-from ..util import MarketColorStyle, decide_market_color_style
+from ..utils import MarketColorStyle, decide_market_color_style
 from .mpf_utils import decide_mpf_style
 from .. import stock_indices as si
 from ..ta import simple_moving_average, exponential_moving_average

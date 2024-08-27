@@ -13,7 +13,7 @@ __all__ = [
 ]
 
 import pandas as pd
-from ..util import MarketColorStyle
+from ..utils import MarketColorStyle
 
 
 def get_candlestick_colors(market_color_style=MarketColorStyle.WESTERN):

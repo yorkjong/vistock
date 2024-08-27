@@ -20,7 +20,7 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_utils
 from . import fig_utils as futil
-from ..util import MarketColorStyle, decide_market_color_style
+from ..utils import MarketColorStyle, decide_market_color_style
 
 
 def _plot(df, ticker, market_color_style, profile_field='Volume',

@@ -9,7 +9,7 @@ __all__ = [ 'decide_mpf_style' ]
 import copy
 
 import mplfinance as mpf
-from ..util import MarketColorStyle
+from ..utils import MarketColorStyle
 
 
 def decide_mpf_style(base_mpf_style='yahoo',

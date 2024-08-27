@@ -27,7 +27,7 @@ import mplfinance as mpf
 
 from .. import tw
 from .. import file_utils
-from ..util import MarketColorStyle, decide_market_color_style
+from ..utils import MarketColorStyle, decide_market_color_style
 from .mpf_utils import decide_mpf_style
 from ..ibd import relative_strength, ma_window_size
 from .. import stock_indices as si

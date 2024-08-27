@@ -16,7 +16,7 @@ import mplfinance as mpf
 from .. import tw
 from .. import file_utils
 from ..bull_draw_util import calculate_bull_run, calculate_drawdown
-from ..util import MarketColorStyle, decide_market_color_style
+from ..utils import MarketColorStyle, decide_market_color_style
 from .mpf_utils import decide_mpf_style
 
 
