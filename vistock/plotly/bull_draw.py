@@ -16,7 +16,7 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_utils
 from . import fig_utils as futil
-from ..bull_draw_util import calculate_bull_run, calculate_drawdown
+from ..bull_draw_utils import calculate_bull_run, calculate_drawdown
 from ..utils import MarketColorStyle, decide_market_color_style
 
 
