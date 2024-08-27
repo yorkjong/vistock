@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 from .. import tw
-from .. import file_util
+from .. import file_utils
 from ..util import MarketColorStyle, decide_market_color_style
 from .mpf_utils import decide_mpf_style
 
@@ -213,8 +213,8 @@ class Volume:
         mpf.show()
 
         # Write the figure to an PNG file
-        out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(ticker, interval, df.index[-1],
+        out_dir = file_utils.make_dir(out_dir)
+        fn = file_utils.gen_fn_info(ticker, interval, df.index[-1],
                                    'volume_prf')
         fig.savefig(f'{out_dir}/{fn}.png')
 
@@ -341,8 +341,8 @@ class Turnover:
         mpf.show()
 
         # Write the figure to an PNG file
-        out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(ticker, interval, df.index[-1],
+        out_dir = file_utils.make_dir(out_dir)
+        fn = file_utils.gen_fn_info(ticker, interval, df.index[-1],
                                    'turnover_prf')
         fig.savefig(f'{out_dir}/{fn}.png')
 

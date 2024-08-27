@@ -20,7 +20,7 @@ Dependencies:
 - pandas
 - yfinance
 - mplfinance
-- Custom modules: tw, file_util, util, stock_indices, ta, rsm, mpf_utils
+- Custom modules: tw, file_utils, util, stock_indices, ta, rsm, mpf_utils
 
 Usage:
 ------
@@ -53,7 +53,7 @@ import yfinance as yf
 import mplfinance as mpf
 
 from .. import tw
-from .. import file_util
+from .. import file_utils
 from ..util import MarketColorStyle, decide_market_color_style
 from .mpf_utils import decide_mpf_style
 from .. import stock_indices as si
@@ -253,8 +253,8 @@ class StockChart:
         mpf.show()
 
         # Save the figure
-        out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info(symbol, interval, df.index[-1], 'RSM')
+        out_dir = file_utils.make_dir(out_dir)
+        fn = file_utils.gen_fn_info(symbol, interval, df.index[-1], 'RSM')
         fig.savefig(f'{out_dir}/{fn}.png', bbox_inches='tight')
 
 
@@ -416,8 +416,8 @@ class RelativeStrengthLines:
         mpf.show()
 
         # Save the figure
-        out_dir = file_util.make_dir(out_dir)
-        fn = file_util.gen_fn_info('stocks', interval, df.index[-1], 'RsmLines')
+        out_dir = file_utils.make_dir(out_dir)
+        fn = file_utils.gen_fn_info('stocks', interval, df.index[-1], 'RsmLines')
         fig.savefig(f'{out_dir}/{fn}.png', bbox_inches='tight')
 
 

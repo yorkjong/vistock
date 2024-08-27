@@ -27,7 +27,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 from .. import tw
-from .. import file_util
+from .. import file_utils
 from . import fig_utils as futil
 from ..util import MarketColorStyle, decide_market_color_style
 from ..ibd import relative_strength, ma_window_size
@@ -193,8 +193,8 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None,
     fig.show()
 
     # Write the figure to an HTML file
-    out_dir = file_util.make_dir(out_dir)
-    fn = file_util.gen_fn_info(symbol, interval, df.index[-1], __file__)
+    out_dir = file_utils.make_dir(out_dir)
+    fn = file_utils.gen_fn_info(symbol, interval, df.index[-1], __file__)
     fig.write_html(f'{out_dir}/{fn}.html')
 
 
