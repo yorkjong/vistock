@@ -1,9 +1,9 @@
 """
 Technical Analysis
 """
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/31 (initial version) ~ 2024/08/24 (last revision)"
+__date__ = "2024/07/31 (initial version) ~ 2024/08/31 (last revision)"
 
 __all__ = [
     'simple_moving_average',
@@ -12,7 +12,7 @@ __all__ = [
 ]
 
 
-def simple_moving_average(values, window):
+def simple_moving_average(values, window, min_periods=1):
     """
     Calculate Simple Moving Average (SMA) for given values and window size.
 
@@ -42,10 +42,10 @@ def simple_moving_average(values, window):
     2024-01-05    115.0
     Freq: D, dtype: float64
     """
-    return values.rolling(window=window).mean()
+    return values.rolling(window=window, min_periods=min_periods).mean()
 
 
-def exponential_moving_average(values, window, adjust=False):
+def exponential_moving_average(values, window, min_periods=1, adjust=False):
     """
     Calculate Exponential Moving Average (EMA) for given values and window size.
 
@@ -79,7 +79,8 @@ def exponential_moving_average(values, window, adjust=False):
     2024-01-05    115.3125
     Freq: D, dtype: float64
     """
-    return values.ewm(span=window, adjust=adjust).mean()
+    return values.ewm(span=window, min_periods=min_periods,
+                      adjust=adjust).mean()
 
 
 def rsi(data, periods=14):
