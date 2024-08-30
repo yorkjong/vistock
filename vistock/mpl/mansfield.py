@@ -38,9 +38,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.4"
+__version__ = "1.5"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/25 (initial version) ~ 2024/08/26 (last revision)"
+__date__ = "2024/08/25 (initial version) ~ 2024/08/31 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -160,11 +160,11 @@ class StockChart:
 
         # Set moving average windows based on the interval
         try:
-            rs_window = { '1d': 200, '1wk': 52, '1mo': 10 }[interval]
+            rs_window = { '1d': 252, '1wk': 52, '1mo': 12 }[interval]
             ma_windows = {
                 '1d': [50, 150, 200],
-                '1wk': [10, 30],
-                '1mo': [10,],
+                '1wk': [10, 30, 40],
+                '1mo': [3, 8, 10],
             }[interval]
         except KeyError:
             raise ValueError("Invalid interval. "
@@ -359,7 +359,7 @@ class RelativeStrengthLines:
 
         # Set moving average windows based on the interval
         try:
-            rs_window = { '1d': 200, '1wk': 52, '1mo': 10 }[interval]
+            rs_window = { '1d': 252, '1wk': 52, '1mo': 12 }[interval]
         except KeyError:
             raise ValueError("Invalid interval. Must be '1d', '1wk', or '1mo'.")
 
