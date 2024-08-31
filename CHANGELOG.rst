@@ -6,6 +6,7 @@ TODO
   Elder Ray Index and stock charts with his trading systems.
 * To support other useful Technical Indicators.
 * To support IBD EPS RS
+* To support 3-month RS (original 1-year RS)
 
 0.5.0
 -----------------
