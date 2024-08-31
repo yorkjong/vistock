@@ -16,7 +16,10 @@ TODO
   * Added `rsm_rating.ipynb` notebook to demonstrate ranking functionality
   * Added mansfield (plotly version) module for ploting Mansfield Stock Charts
   * Added mansfield (mpl version) module for ploting Mansfield Stock Charts
-  * Added EPS RS metrics
+  * Added 'A Week Algo' columns to the ranking table
+  * Added 'Price / MA{n}' columns to the ranking table
+  * Added 'Volume / VMA{n}' column to the ranking table
+  * Added 'EPS RS (%)' column to the ranking table
 * Refined ibd.rankings function
   * Added 'Price' column for rankings generated stock table
   * Added 'Name' column for rankings generated Taiwan stock table
