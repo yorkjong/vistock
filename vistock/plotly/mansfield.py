@@ -35,9 +35,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.9"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/24 (initial version) ~ 2024/08/31 (last revision)"
+__date__ = "2024/08/24 (initial version) ~ 2024/09/01 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -225,7 +225,7 @@ class StockChart:
 
         # Update layout
         fig.update_layout(
-            title=f'Mansfield Stock Charts: {ticker} - {interval} '
+            title=f'Mansfield Stock Charts: {symbol} - {interval} '
                   f'({df.index[0]} to {df.index[-1]})',
             title_x=0.5, title_y=0.92,
 
@@ -401,6 +401,7 @@ class RelativeStrengthLines:
 if __name__ == '__main__':
     #StockChart.plot('TSLA', interval='1d')
     StockChart.plot('TSLA', interval='1wk')
+    StockChart.plot('聯發科', interval='1wk')
 
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     RelativeStrengthLines.plot(symbols, interval='1d')
