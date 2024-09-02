@@ -7,7 +7,6 @@ TODO
 * To support other useful Technical Indicators.
 * To support IBD EPS RS
 * To support 3-month RS (original 1-year RS)
-* To support Revenue growth RS
 
 0.5.0
 -----------------
@@ -22,6 +21,7 @@ TODO
   * Added 'Price / MA{n}' columns to the ranking table
   * Added 'Volume / VMA{n}' column to the ranking table
   * Added 'EPS RS (%)' column to the ranking table
+  * Added 'Rev RS (%)' column to the ranking table
 * Refined ibd.rankings function
   * Added 'Price' column for rankings generated stock table
   * Added 'Name' column for rankings generated Taiwan stock table
