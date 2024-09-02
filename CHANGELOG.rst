@@ -7,6 +7,7 @@ TODO
 * To support other useful Technical Indicators.
 * To support IBD EPS RS
 * To support 3-month RS (original 1-year RS)
+* To support Revenue growth RS
 
 0.5.0
 -----------------
