@@ -35,9 +35,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.7"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/24 (initial version) ~ 2024/08/26 (last revision)"
+__date__ = "2024/08/24 (initial version) ~ 2024/09/01 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -57,7 +57,6 @@ from ..utils import MarketColorStyle, decide_market_color_style
 from .. import stock_indices as si
 from ..ta import simple_moving_average, exponential_moving_average
 from ..rsm import mansfield_relative_strength
-from ..rsm import mansfield_relative_strength_with_ema
 
 
 class StockChart:
@@ -141,25 +140,16 @@ class StockChart:
 
         # Set moving average windows based on the interval
         try:
-            rs_window = { '1d': 200, '1wk': 52, '1mo': 10 }[interval]
+            rs_window = { '1d': 252, '1wk': 52, '1mo': 12 }[interval]
             ma_windows = {
                 '1d': [50, 150, 200],
-                '1wk': [10, 30],
-                '1mo': [10,],
+                '1wk': [10, 30, 40],
+                '1mo': [3, 8, 10],
             }[interval]
         except KeyError:
             raise ValueError("Invalid interval. "
                              "Must be '1d', '1wk', or '1mo'.")
         vma_window, *_ = ma_windows
-
-        # Select the RSM function based on the 'ma' parameter
-        try:
-            rsm_func = {
-                'SMA': mansfield_relative_strength,
-                'EMA': mansfield_relative_strength_with_ema
-            }[ma]
-        except KeyError:
-            raise ValueError("Invalid ma type. Must be 'SMA' or 'EMA'.")
 
         # Select the MA function based on the 'ma' parameter
         try:
@@ -169,7 +159,6 @@ class StockChart:
             }[ma]
         except KeyError:
             raise ValueError("Invalid ma type. Must be 'SMA' or 'EMA'.")
-        ma = ma.replace('SMA', 'MA')
 
         # Fetch data for stock and index
         df = yf.download([ticker_ref, ticker], period=period, interval=interval)
@@ -177,10 +166,12 @@ class StockChart:
         df = df.xs(ticker, level='Ticker', axis=1)
 
         # Calculate Mansfield Relative Strength (RSM)
-        df['RSM'] = rsm_func(df['Close'], df_ref['Close'], rs_window)
+        df['RSM'] = mansfield_relative_strength(df['Close'], df_ref['Close'],
+                                                rs_window, ma=ma)
         df[f'RS {ticker_ref}'] = 0
 
         # Calculate moving averages for stock
+        ma = ma.replace('SMA', 'MA')
         for window in ma_windows:
             df[f'{ma}{window}'] = ma_func(df['Close'], window)
 
@@ -234,7 +225,7 @@ class StockChart:
 
         # Update layout
         fig.update_layout(
-            title=f'Mansfield Stock Charts: {ticker} - {interval} '
+            title=f'Mansfield Stock Charts: {symbol} - {interval} '
                   f'({df.index[0]} to {df.index[-1]})',
             title_x=0.5, title_y=0.92,
 
@@ -353,18 +344,9 @@ class RelativeStrengthLines:
 
         # Set moving average windows based on the interval
         try:
-            rs_window = { '1d': 200, '1wk': 52, '1mo': 10 }[interval]
+            rs_window = { '1d': 252, '1wk': 52, '1mo': 12 }[interval]
         except KeyError:
             raise ValueError("Invalid interval. Must be '1d', '1wk', or '1mo'.")
-
-        # Select the RSM function based on the 'ma' parameter
-        try:
-            rsm_func = {
-                'SMA': mansfield_relative_strength,
-                'EMA': mansfield_relative_strength_with_ema
-            }[ma]
-        except KeyError:
-            raise ValueError("Invalid ma. Must be 'SMA' or 'EMA'.")
 
         # Fetch data for stocks and index
         tickers = [tw.as_yfinance(s) for s in symbols]
@@ -374,7 +356,8 @@ class RelativeStrengthLines:
         # Plot the figure
         fig = go.Figure()
         for ticker, symbol in zip(tickers, symbols):
-            rs = rsm_func(df[ticker], df[ticker_ref], rs_window)
+            rs = mansfield_relative_strength(df[ticker], df[ticker_ref],
+                                             rs_window, ma=ma)
             fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines',
                                      name=si.get_name(symbol)))
         df[f'RS {ticker_ref}'] = 0
@@ -418,6 +401,7 @@ class RelativeStrengthLines:
 if __name__ == '__main__':
     #StockChart.plot('TSLA', interval='1d')
     StockChart.plot('TSLA', interval='1wk')
+    StockChart.plot('聯發科', interval='1wk')
 
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     RelativeStrengthLines.plot(symbols, interval='1d')

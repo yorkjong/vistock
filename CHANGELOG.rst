@@ -2,21 +2,27 @@ Change Log
 ==========
 TODO
 ----
-* To support Stan Weinstein's Relative Strength and stock chart convention
 * To support Alexander Elder's technical indicators, such as Force Index,
   Elder Ray Index and stock charts with his trading systems.
 * To support other useful Technical Indicators.
 * To support IBD EPS RS
+* To support 3-month RS (original 1-year RS)
 
-0.5.0
------------------
-* Added rsm module for rating stocks based on Mansfield Relative Strength (RSM)
-  and related metrics.
-* Added `rsm_rating.ipynb` notebook to demonstrate ranking functionality
-* Added mansfield (plotly version) module for ploting Mansfield Stock Charts
-* Added mansfield (mpl version) module for ploting Mansfield Stock Charts
-* Improved the performance of ibd.rankings function with batch&multi-threaded
-  download
+0.5.0 [2024-09-04]
+------------------
+* Added the support of Stan Weinstein's Relative Strength and stock chart
+  convention
+  * Added rsm module for rating stocks based on Mansfield Relative Strength (RSM)
+    and related metrics.
+  * Added `rsm_rating.ipynb` notebook to demonstrate ranking functionality
+  * Added mansfield (plotly version) module for ploting Mansfield Stock Charts
+  * Added mansfield (mpl version) module for ploting Mansfield Stock Charts
+  * Added 'A Week Algo' columns to the ranking table
+  * Added 'Price / MA{n}' columns to the ranking table
+  * Added 'Volume / VMA{n}' column to the ranking table
+  * Added 'EPS RS (%)' column to the ranking table
+  * Added 'Rev RS (%)' column to the ranking table
+  * Added mansfield.ipynb to demo plots of Mansfield Stock Charts
 * Refined ibd.rankings function
   * Added 'Price' column for rankings generated stock table
   * Added 'Name' column for rankings generated Taiwan stock table
