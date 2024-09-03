@@ -8,8 +8,8 @@ TODO
 * To support IBD EPS RS
 * To support 3-month RS (original 1-year RS)
 
-0.5.0
------------------
+0.5.0 [2024-09-04]
+------------------
 * Added the support of Stan Weinstein's Relative Strength and stock chart
   convention
   * Added rsm module for rating stocks based on Mansfield Relative Strength (RSM)
@@ -22,6 +22,7 @@ TODO
   * Added 'Volume / VMA{n}' column to the ranking table
   * Added 'EPS RS (%)' column to the ranking table
   * Added 'Rev RS (%)' column to the ranking table
+  * Added mansfield.ipynb to demo plots of Mansfield Stock Charts
 * Refined ibd.rankings function
   * Added 'Price' column for rankings generated stock table
   * Added 'Name' column for rankings generated Taiwan stock table
