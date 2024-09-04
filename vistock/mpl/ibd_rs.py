@@ -15,9 +15,9 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.5"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/09/04 (last revision)"
 
 __all__ = ['plot']
 
@@ -28,7 +28,7 @@ import mplfinance as mpf
 from .. import tw
 from .. import file_utils
 from ..utils import MarketColorStyle, decide_market_color_style
-from .mpf_utils import decide_mpf_style
+from . import mpf_utils as mpfu
 from ..ibd import relative_strength, ma_window_size
 from .. import stock_indices as si
 
@@ -152,8 +152,8 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None,
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)
-    mpf_style = decide_mpf_style(base_mpf_style=style,
-                                 market_color_style=mc_style)
+    mpf_style = mpfu.decide_mpf_style(base_mpf_style=style,
+                                      market_color_style=mc_style)
 
     # Plot candlesticks, MA, volume, volume MA, and RS
     fig, axes = mpf.plot(
@@ -174,7 +174,7 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None,
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
-    fig.suptitle(f"{ticker} - {interval} "
+    fig.suptitle(f"{symbol} - {interval} "
                  f"({df.index[0]} to {df.index[-1]})", y=0.93)
 
     # Show the figure
@@ -187,6 +187,7 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None,
 
 
 if __name__ == '__main__':
+    mpfu.use_mac_chinese_font()
     plot('TSLA', interval='1d', hides_nontrading=True)
     plot('台積電', interval='1wk')
 

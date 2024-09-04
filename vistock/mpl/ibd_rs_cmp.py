@@ -16,9 +16,9 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "2.0"
+__version__ = "2.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/26 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/09/04 (last revision)"
 
 __all__ = ['plot']
 
@@ -28,6 +28,7 @@ import mplfinance as mpf
 
 from .. import tw
 from .. import file_utils
+from . import mpf_utils as mpfu
 from ..ibd import relative_strength
 from .. import stock_indices as si
 
@@ -129,9 +130,9 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     df_price = df.xs('Close', level='Price', axis=1)
 
     add_plots = []
-    for ticker in tickers:
+    for ticker, symbol in zip(tickers, symbols):
         rs = relative_strength(df_price[ticker], df_price[ticker_ref], interval)
-        add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(ticker)}'))
+        add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(symbol)}'))
     add_plots.append(
         mpf.make_addplot([100]*len(df), color='gray', linestyle='--',
                          label=f'{si.get_name(ticker_ref)}',
@@ -176,6 +177,7 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 #------------------------------------------------------------------------------
 
 def main():
+    mpfu.use_mac_chinese_font()
     symbols = ['NVDA', 'MSFT', 'META', '^NDX', '^TWII']
     plot(symbols)
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
