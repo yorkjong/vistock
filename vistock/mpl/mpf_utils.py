@@ -2,14 +2,28 @@
 Utility for mplfinance.
 """
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/22 (initial version) ~ 2024/08/19 (last revision)"
+__date__ = "2024/07/22 (initial version) ~ 2024/09/04 (last revision)"
 
-__all__ = [ 'decide_mpf_style' ]
+__all__ = [
+    'use_mac_chinese_font',
+    'decide_mpf_style',
+]
 
 import copy
+import platform
 
+import matplotlib.font_manager as fm
+import matplotlib.pyplot as plt
 import mplfinance as mpf
 from ..utils import MarketColorStyle
+
+
+def use_mac_chinese_font():
+    if platform.system() != 'Darwin':
+        return
+    font_name = 'Arial Unicode MS'
+    if font_name not in plt.rcParams['font.sans-serif']:
+        plt.rcParams['font.sans-serif'].insert(0, font_name)
 
 
 def decide_mpf_style(base_mpf_style='yahoo',
