@@ -38,9 +38,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/25 (initial version) ~ 2024/08/31 (last revision)"
+__date__ = "2024/08/25 (initial version) ~ 2024/09/04 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -55,7 +55,7 @@ import mplfinance as mpf
 from .. import tw
 from .. import file_utils
 from ..utils import MarketColorStyle, decide_market_color_style
-from .mpf_utils import decide_mpf_style
+from . import mpf_utils as mpfu
 from .. import stock_indices as si
 from ..ta import simple_moving_average, exponential_moving_average
 from ..rsm import mansfield_relative_strength
@@ -216,8 +216,8 @@ class StockChart:
 
         # Make a customized color style
         mc_style = decide_market_color_style(ticker, market_color_style)
-        mpf_style = decide_mpf_style(base_mpf_style=style,
-                                     market_color_style=mc_style)
+        mpf_style = mpfu.decide_mpf_style(base_mpf_style=style,
+                                          market_color_style=mc_style)
 
         # Plot candlesticks, MA, volume, volume MA, and RS
         fig, axes = mpf.plot(
@@ -237,7 +237,7 @@ class StockChart:
 
         # Convert datetime index to string format suitable for display
         df.index = df.index.strftime('%Y-%m-%d')
-        fig.suptitle(f"Mansfield Stock Chart: {ticker} - {interval} "
+        fig.suptitle(f"Mansfield Stock Chart: {symbol} - {interval} "
                      f"({df.index[0]} to {df.index[-1]})", y=0.93)
 
         # Show the figure
@@ -361,11 +361,12 @@ class RelativeStrengthLines:
 
         # Plot the figure
         add_plots = []
-        for ticker in tickers:
+        for ticker, symbol in zip(tickers, symbols):
             rs = mansfield_relative_strength(df_price[ticker],
                                              df_price[ticker_ref],
                                              rs_window, ma=ma)
-            add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(ticker)}'))
+            add_plots.append(mpf.make_addplot(rs,
+                                              label=f'{si.get_name(symbol)}'))
         add_plots.append(
             mpf.make_addplot([0]*len(df), color='gray', linestyle='--',
                              label=f'{si.get_name(ticker_ref)}',
@@ -410,8 +411,13 @@ if __name__ == '__main__':
     Example usage of StockChart and RelativeStrengthLines classes to generate
     plots.
     """
+    mpfu.use_mac_chinese_font()
     StockChart.plot('TSLA', interval='1wk')
+    StockChart.plot('羅昇', interval='1wk')
 
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
+    RelativeStrengthLines.plot(symbols, interval='1d')
+
+    symbols = ['^NDX', '^DJA', '^RUI', '^SOX']
     RelativeStrengthLines.plot(symbols, interval='1d')
 
