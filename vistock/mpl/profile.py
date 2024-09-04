@@ -2,9 +2,9 @@
 Visualize a Volume Profile (or Turnover Profile) for a stock.
 """
 __software__ = "Profile 2-split with mplfinace"
-__version__ = "3.2"
+__version__ = "3.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/09/05 (last revision)"
 
 __all__ = [
     'Volume',   # Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price
@@ -18,7 +18,7 @@ import mplfinance as mpf
 from .. import tw
 from .. import file_utils
 from ..utils import MarketColorStyle, decide_market_color_style
-from .mpf_utils import decide_mpf_style
+from . import mpf_utils as mpfu
 
 
 def _plot(df, mpf_style, profile_field='Volume', period='1y', interval='1d',
@@ -200,13 +200,13 @@ class Volume:
 
         # Plot
         mc_style = decide_market_color_style(ticker, market_color_style)
-        mpf_style = decide_mpf_style(base_mpf_style=style,
-                                     market_color_style=mc_style)
+        mpf_style = mpfu.decide_mpf_style(base_mpf_style=style,
+                                          market_color_style=mc_style)
         fig = _plot(df, mpf_style, 'Volume', period, interval,
                     ma_nitems, vma_nitems, total_bins,
                     legend_loc, hides_nontrading)
         fig.suptitle(
-            f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+            f"{symbol} - {interval} ({df.index[0]} to {df.index[-1]})",
         )
 
         # Show the figure
@@ -328,13 +328,13 @@ class Turnover:
 
         # Plot
         mc_style = decide_market_color_style(ticker, market_color_style)
-        mpf_style = decide_mpf_style(base_mpf_style=style,
-                                     market_color_style=mc_style)
+        mpf_style = mpfu.decide_mpf_style(base_mpf_style=style,
+                                          market_color_style=mc_style)
         fig = _plot(df, mpf_style, 'Turnover', period, interval,
                     ma_nitems, vma_nitems, total_bins,
                     legend_loc, hides_nontrading)
         fig.suptitle(
-            f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+            f"{symbol} - {interval} ({df.index[0]} to {df.index[-1]})",
         )
 
         # Show the figure
@@ -348,6 +348,8 @@ class Turnover:
 
 
 if __name__ == '__main__':
+    mpfu.use_mac_chinese_font()
     Volume.plot('TSLA')
+    Volume.plot('台積電')
     Turnover.plot('台積電')
 

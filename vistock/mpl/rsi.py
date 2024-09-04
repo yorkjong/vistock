@@ -6,9 +6,9 @@ Plot a 3-split (price, volume, RSI) stock chart.
 * RSI from TA-Lib
 """
 __software__ = "Stock chart of price, volume, and RSI"
-__version__ = "1.11"
+__version__ = "1.12"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/02 (initial version) ~ 2024/08/19 (last revision)"
+__date__ = "2023/02/02 (initial version) ~ 2024/09/05 (last revision)"
 
 __all__ = ['plot']
 
@@ -19,7 +19,7 @@ import mplfinance as mpf
 from .. import tw
 from .. import file_utils
 from ..utils import MarketColorStyle, decide_market_color_style
-from .mpf_utils import decide_mpf_style
+from . import mpf_utils as mpfu
 from .. import ta
 
 
@@ -144,8 +144,8 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)
-    mpf_style = decide_mpf_style(base_mpf_style=style,
-                                 market_color_style=mc_style)
+    mpf_style = mpfu.decide_mpf_style(base_mpf_style=style,
+                                      market_color_style=mc_style)
 
     # Plot candlesticks MA, volume, volume MA, RSI
     fig, axes = mpf.plot(
@@ -166,7 +166,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
         df.index = df.index.strftime('%Y-%m-%d %H:%M')
     else:
         df.index = df.index.strftime('%Y-%m-%d')
-    fig.suptitle(f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+    fig.suptitle(f"{symbol} - {interval} ({df.index[0]} to {df.index[-1]})",
                  y=0.93)
 
     # Show the figure
@@ -179,5 +179,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
 
 if __name__ == '__main__':
+    mpfu.use_mac_chinese_font()
+    plot('台積電')
     plot('TSLA')
 

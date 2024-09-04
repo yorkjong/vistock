@@ -2,9 +2,9 @@
 Visualize a BullRun and Drawdown for a stock.
 """
 __software__ = "BullRun & Drawdown"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/07/21 (initial version) ~ 2024/08/19 (last revision)"
+__date__ = "2024/07/21 (initial version) ~ 2024/09/05 (last revision)"
 
 __all__ = [ 'plot' ]
 
@@ -17,7 +17,7 @@ from .. import tw
 from .. import file_utils
 from ..bull_draw_utils import calculate_bull_run, calculate_drawdown
 from ..utils import MarketColorStyle, decide_market_color_style
-from .mpf_utils import decide_mpf_style
+from . import mpf_utils as mpfu
 
 
 def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
@@ -115,8 +115,8 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
 
     # Make a customized color style
     mc_style = decide_market_color_style(ticker, market_color_style)
-    mpf_style = decide_mpf_style(base_mpf_style=style,
-                                 market_color_style=mc_style)
+    mpf_style = mpfu.decide_mpf_style(base_mpf_style=style,
+                                      market_color_style=mc_style)
 
     # Add Bull Run and Drawdown indicators
     cl_bullrun = get_bullrun_color(mc_style)
@@ -162,7 +162,7 @@ def plot(symbol='TSLA', period='1y', interval='1d', legend_loc='best',
         df.index = df.index.strftime('%Y-%m-%d %H:%M')
     else:
         df.index = df.index.strftime('%Y-%m-%d')
-    fig.suptitle(f"{ticker} - {interval} ({df.index[0]} to {df.index[-1]})",
+    fig.suptitle(f"{symbol} - {interval} ({df.index[0]} to {df.index[-1]})",
                  y=0.93)
 
     # Show
@@ -189,6 +189,7 @@ def get_drawdown_color(market_color_style=MarketColorStyle.WESTERN):
 
 
 if __name__ == '__main__':
+    mpfu.use_mac_chinese_font()
     plot('TSLA', style='binancedark')
     plot('台積電', style='binancedark')
 
