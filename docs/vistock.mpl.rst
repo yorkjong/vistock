@@ -12,6 +12,14 @@ vistock.mpl.bull\_draw module
    :undoc-members:
    :show-inheritance:
 
+vistock.mpl.financials module
+-----------------------------
+
+.. automodule:: vistock.mpl.financials
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 vistock.mpl.ibd\_rs module
 --------------------------
 
