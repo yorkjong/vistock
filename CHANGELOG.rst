@@ -8,8 +8,7 @@ TODO
 * To support IBD EPS RS
 * To support 3-month RS (original 1-year RS)
 
-
-0.5.1
+0.5.1 [2024-09-07]
 ------------------
 * Added Chinese character support to charts using mplfinance.
 * Added financial chart to visualize financial data for a stock.
