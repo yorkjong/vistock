@@ -11,6 +11,8 @@ over various time periods and intervals, with customizable reference indexes
 and styling options.
 
 Usage:
+::
+
     from vistock.plotly import ibd_rs
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
