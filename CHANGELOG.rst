@@ -2,7 +2,6 @@ Change Log
 ==========
 TODO
 ----
-* To add stock charts of financials
 * To support Alexander Elder's technical indicators, such as Force Index,
   Elder Ray Index and stock charts with his trading systems.
 * To support other useful Technical Indicators.
@@ -12,7 +11,8 @@ TODO
 
 0.5.1
 ------------------
-* Added Chinese character support to charts using mplfinance
+* Added Chinese character support to charts using mplfinance.
+* Added financial chart to visualize financial data for a stock.
 
 0.5.0 [2024-09-04]
 ------------------
