@@ -20,6 +20,14 @@ vistock.plotly.fig\_utils module
    :undoc-members:
    :show-inheritance:
 
+vistock.plotly.financials module
+--------------------------------
+
+.. automodule:: vistock.plotly.financials
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 vistock.plotly.ibd\_rs module
 -----------------------------
 
