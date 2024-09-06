@@ -22,7 +22,7 @@ See Also:
   external_axes.ipynb>`_
 """
 __software__ = "Financial Chart"
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/09/07 (initial version) ~ 2024/09/07 (last revision)"
 
@@ -78,6 +78,8 @@ def plot(symbol, style='yahoo', out_dir='out'):
     out_dir : str, optional
         Directory to save the output HTML file. Default is 'out'.
     """
+    ticker = tw.as_yfinance(symbol)
+
     # Create an mplfinance figure with style and figsize
     fig = mpf.figure(style=style, figsize=(10, 8))
     ax1 = fig.add_subplot(2, 1, 1)  # Add first subplot
@@ -85,7 +87,7 @@ def plot(symbol, style='yahoo', out_dir='out'):
 
     for ax, freq in zip([ax1, ax2], ['quarterly', 'annual']):
         df = fetch_financials(
-            symbol, fields=['Basic EPS', 'Operating Revenue'], frequency=freq
+            ticker, fields=['Basic EPS', 'Operating Revenue'], frequency=freq
         )
         if df.empty:
             continue
@@ -122,5 +124,6 @@ def plot(symbol, style='yahoo', out_dir='out'):
 
 if __name__ == "__main__":
     mpfu.use_mac_chinese_font()
+    plot('台積電')
     plot('AAPL')
 
