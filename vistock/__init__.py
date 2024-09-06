@@ -2,7 +2,7 @@
 Initialize vistock package.
 """
 __software__ = "Visualizing Stocks"
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/02 (initial version) ~ 2024/08/24 (last revision)"
 
