@@ -2,8 +2,7 @@
 This module provides functions to plot financial data for a given stock symbol
 using Plotly. The financial data includes Basic EPS and Operating Revenue, and
 the plots are divided into quarterly and annual sections. The generated plots
-can be customized with different Plotly templates and saved as HTML and PNG
-files.
+can be customized with different Plotly templates and saved as HTML files.
 """
 __software__ = "Financial Chart"
 __version__ = "1.0"
@@ -97,7 +96,7 @@ def plot(symbol, template='plotly', out_dir='out'):
     # Save the figure
     out_dir = file_utils.make_dir(out_dir)
     fn = file_utils.gen_fn_info(symbol, '', df.index[-1], __file__)
-    fig.savefig(f'{out_dir}/{fn}.png', bbox_inches='tight')
+    fig.write_html(f'{out_dir}/{fn}.html')
 
 
 if __name__ == "__main__":
