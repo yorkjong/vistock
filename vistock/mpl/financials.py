@@ -1,19 +1,15 @@
 """
 This module provides a function to plot financial data for a given stock symbol
-using mplfinance. The financial data includes Basic EPS and Operating Revenue,
-and the plots are generated with different chart styles as specified by the `style` parameter.
-The function supports saving plots as PNG files in a specified directory.
+using mplfinance. The data includes Basic EPS, Operating Revenue, Trailing EPS,
+and Forward EPS (if available). The function allows customization of chart
+styles via the `style` parameter and supports saving the plots as PNG files.
 
-The main function in this module is `plot`, which generates financial charts
-for a stock symbol with support for various mplfinance styles and saves the
-plots as PNG files.
+The `plot` function generates two subplots:
 
-The plot includes two subplots:
 1. Quarterly financial data.
-2. Annual financial data.
+2. Annual financial data, with markers for Trailing EPS and Forward EPS.
 
-The function also saves the plot as a PNG file in the specified `out_dir`
-after generating the chart using mplfinance.
+The plot is saved in the specified `out_dir` as a PNG file.
 
 See Also:
 
@@ -22,13 +18,14 @@ See Also:
   external_axes.ipynb>`_
 """
 __software__ = "Financial Chart"
-__version__ = "1.2"
+__version__ = "1.3"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/09/07 (initial version) ~ 2024/09/07 (last revision)"
 
 __all__ = ['plot']
 
 import pandas as pd
+import yfinance as yf
 import mplfinance as mpf
 
 from .. import tw
@@ -40,12 +37,12 @@ from ..yf_utils import fetch_financials
 def plot(symbol, style='yahoo', out_dir='out'):
     """Plots the financial data of a stock symbol using mplfinance.
 
-    The function fetches Basic EPS and Operating Revenue for the given stock
-    symbol from Yahoo Finance, with data divided into quarterly and annual
-    segments. The data is plotted using mplfinance with different chart styles
-    as specified by the `style` parameter. Dummy OHLC data is generated for
-    plotting purposes, with Basic EPS and Operating Revenue plotted on
-    separate y-axes.
+    The function fetches Basic EPS, Operating Revenue, Trailing EPS, and
+    Forward EPS for the given stock symbol from Yahoo Finance, with data
+    divided into quarterly and annual segments. The data is plotted using
+    mplfinance with different chart styles as specified by the `style`
+    parameter. Dummy OHLC data is generated for plotting purposes, with Basic
+    EPS and Operating Revenue plotted on separate y-axes.
 
     The function also saves the plot as a PNG file in the specified `out_dir`
     after generating the chart using mplfinance.
@@ -80,6 +77,11 @@ def plot(symbol, style='yahoo', out_dir='out'):
     """
     ticker = tw.as_yfinance(symbol)
 
+    # Fetch trailing and forward EPS from yf.info
+    info = yf.Ticker(ticker).info
+    trailing_eps = info.get('trailingEps', '')
+    forward_eps = info.get('forwardEps', '')
+
     # Create an mplfinance figure with style and figsize
     fig = mpf.figure(style=style, figsize=(10, 8))
     ax1 = fig.add_subplot(2, 1, 1)  # Add first subplot
@@ -90,7 +92,7 @@ def plot(symbol, style='yahoo', out_dir='out'):
             ticker, fields=['Basic EPS', 'Operating Revenue'], frequency=freq
         )
         if df.empty:
-            continue
+            return
 
         # Plot Basic EPS on primary y-axis
         ax.plot(df.index, df['Basic EPS'],
@@ -102,6 +104,19 @@ def plot(symbol, style='yahoo', out_dir='out'):
         ax_twin.plot(df.index, df['Operating Revenue'],
                      label='Operating Revenue', linestyle='--', color='green')
         ax_twin.set_ylabel('Operating Revenue', color='green')
+
+        # Add Trailing EPS and Forward EPS to the annual subplot
+        if freq == 'quarterly':
+            # Trailing EPS: last available date in the quarterly data
+            last_date = df.index[-1]
+        elif trailing_eps and forward_eps:   # freq == 'annual'
+            ax.plot([last_date], [trailing_eps], 'ro',
+                    label='Trailing EPS', markersize=8)
+
+            # Forward EPS: one year after the last available date
+            future_date = last_date + pd.DateOffset(years=1)
+            ax.plot([future_date], [forward_eps], 'rx',
+                    label='Forward EPS', markersize=8)
 
         # Disable grid for the secondary y-axis
         ax_twin.grid(False)
