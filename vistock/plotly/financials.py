@@ -5,12 +5,14 @@ the plots are divided into quarterly and annual sections. The generated plots
 can be customized with different Plotly templates and saved as HTML files.
 """
 __software__ = "Financial Chart"
-__version__ = "1.0"
+__version__ = "1.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/09/07 (initial version) ~ 2024/09/07 (last revision)"
 
 __all__ = ['plot']
 
+import pandas as pd
+import yfinance as yf
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
@@ -22,12 +24,12 @@ from ..yf_utils import fetch_financials
 def plot(symbol, template='plotly', out_dir='out'):
     """Plots the financial data of a stock symbol using Plotly.
 
-    The function fetches Basic EPS and Operating Revenue for the given stock
-    symbol from Yahoo Finance, with data divided into quarterly and annual
-    segments. The data is plotted using two subplots, one for each frequency.
-    The primary y-axis displays Basic EPS, and the secondary y-axis displays
-    Operating Revenue. The chart's layout is customizable through the
-    `template` parameter.
+    The function fetches Basic EPS, Operating Revenue, Trailing EPS, and
+    Forward EPS for the given stock symbol from Yahoo Finance, with data
+    divided into quarterly and annual segments. The data is plotted using two
+    subplots, one for each frequency. The primary y-axis displays Basic EPS,
+    and the secondary y-axis displays Operating Revenue. The chart's layout is
+    customizable through the `template` parameter.
 
     The function also saves the plot as a PNG file in the specified `out_dir`
     after generating the HTML plot using Plotly.
@@ -58,6 +60,11 @@ def plot(symbol, template='plotly', out_dir='out'):
     """
     ticker = tw.as_yfinance(symbol)
 
+    # Fetch trailing and forward EPS from yf.info
+    info = yf.Ticker(ticker).info
+    trailing_eps = info.get('trailingEps', '')
+    forward_eps = info.get('forwardEps', '')
+
     fig = make_subplots(
         rows=2, cols=1,
         row_heights=[0.5, 0.5],
@@ -71,11 +78,36 @@ def plot(symbol, template='plotly', out_dir='out'):
             frequency=freq
         )
         if df.empty:
-            continue
+            return
+
+        # Add Basic EPS trace
         fig.add_trace(
             go.Scatter(x=df.index, y=df['Basic EPS'], name='Basic EPS'),
             row=row, col=1
         )
+
+        # Add Trailing EPS and Forward EPS to the annual subplot
+        if freq == 'quarterly':
+            # Trailing EPS: last available date in the quarterly data
+            last_date = df.index[-1]
+        elif trailing_eps and forward_eps:   # freq == 'annual'
+            fig.add_trace(
+                go.Scatter(x=[last_date], y=[trailing_eps],  mode='markers',
+                           marker=dict(color='red', symbol='circle'),
+                           name='Trailing EPS'),
+                row=row, col=1
+            )
+
+            # Forward EPS: one year after the last available date
+            future_date = last_date + pd.DateOffset(years=1)
+            fig.add_trace(
+                go.Scatter(x=[future_date], y=[forward_eps],  mode='markers',
+                           marker=dict(color='orange', symbol='x'),
+                           name='Forward EPS'),
+                row=row, col=1
+            )
+
+        # Add Operating Revenue trace
         fig.add_trace(
             go.Scatter(x=df.index, y=df['Operating Revenue'],
                        name='Operating Revenue', line=dict(dash='dot')),
@@ -100,5 +132,6 @@ def plot(symbol, template='plotly', out_dir='out'):
 
 
 if __name__ == "__main__":
-    plot('AAPL')
+    plot('NVDA')
+    plot('聯發科')
 
