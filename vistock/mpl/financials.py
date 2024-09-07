@@ -1,19 +1,14 @@
 """
 This module provides a function to plot financial data for a given stock symbol
-using mplfinance. The financial data includes Basic EPS and Operating Revenue,
-and the plots are generated with different chart styles as specified by the `style` parameter.
-The function supports saving plots as PNG files in a specified directory.
+using mplfinance. The data includes Basic EPS, Operating Revenue, Trailing EPS,
+and Forward EPS (if available). The function allows customization of chart
+styles via the `style` parameter and supports saving the plots as PNG files.
 
-The main function in this module is `plot`, which generates financial charts
-for a stock symbol with support for various mplfinance styles and saves the
-plots as PNG files.
-
-The plot includes two subplots:
+The `plot` function generates two subplots:
 1. Quarterly financial data.
-2. Annual financial data.
+2. Annual financial data, with markers for Trailing EPS and Forward EPS.
 
-The function also saves the plot as a PNG file in the specified `out_dir`
-after generating the chart using mplfinance.
+The plot is saved in the specified `out_dir` as a PNG file.
 
 See Also:
 

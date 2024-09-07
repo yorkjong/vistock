@@ -1,8 +1,15 @@
 """
-This module provides functions to plot financial data for a given stock symbol
-using Plotly. The financial data includes Basic EPS and Operating Revenue, and
-the plots are divided into quarterly and annual sections. The generated plots
-can be customized with different Plotly templates and saved as HTML files.
+This module provides a function to plot financial data for a given stock symbol
+using Plotly. The data includes Basic EPS, Operating Revenue, Trailing EPS,
+and Forward EPS (if available), plotted on two subplots with customizable
+styles via the `template` parameter.
+
+The `plot` function generates:
+1. Quarterly financial data.
+2. Annual financial data, with markers for Trailing EPS and Forward EPS.
+
+The plot is saved as an HTML file in the specified `out_dir`, with support
+for interactive exploration.
 """
 __software__ = "Financial Chart"
 __version__ = "1.2"
