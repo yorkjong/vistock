@@ -5,6 +5,7 @@ and Forward EPS (if available). The function allows customization of chart
 styles via the `style` parameter and supports saving the plots as PNG files.
 
 The `plot` function generates two subplots:
+
 1. Quarterly financial data.
 2. Annual financial data, with markers for Trailing EPS and Forward EPS.
 

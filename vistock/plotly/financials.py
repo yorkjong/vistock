@@ -5,6 +5,7 @@ and Forward EPS (if available), plotted on two subplots with customizable
 styles via the `template` parameter.
 
 The `plot` function generates:
+
 1. Quarterly financial data.
 2. Annual financial data, with markers for Trailing EPS and Forward EPS.
 
