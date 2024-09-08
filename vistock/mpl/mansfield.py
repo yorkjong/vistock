@@ -14,14 +14,6 @@ Classes:
 - RelativeStrengthLines : A class for plotting Mansfield Relative Strength
   (RSM) lines of multiple stocks compared to a reference index.
 
-Dependencies:
--------------
-- numpy
-- pandas
-- yfinance
-- mplfinance
-- Custom modules: tw, file_utils, utils, stock_indices, ta, rsm, mpf_utils
-
 Usage:
 ------
 To generate a Mansfield Stock Chart for a single stock:
@@ -38,9 +30,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.7"
+__version__ = "1.8"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/25 (initial version) ~ 2024/09/04 (last revision)"
+__date__ = "2024/08/25 (initial version) ~ 2024/09/08 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -224,6 +216,7 @@ class StockChart:
             df, type='candle',              # candlesticks
             volume=True, volume_panel=2,    # volume
             addplot=addplot,                # MA, RS, and Volume MA
+            ylabel=f"Price ({yf.Ticker(ticker).info['currency']})",
             panel_ratios=(5, 3, 2),
             figratio=(2, 1), figscale=1.4,
             style=mpf_style,
