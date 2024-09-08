@@ -8,6 +8,14 @@ TODO
 * To support IBD EPS RS
 * To support 3-month RS (original 1-year RS)
 
+0.5.2
+------------------
+* mansfield branch
+  * Added fileds of 'TTM EPS', 'TTM RPS', and 'TTM PE' to the generated table
+  * Refined functions in yf_utils module
+  * Refined relative_strength_vs_benchmark
+  * Added currency label to y-axis in plot function
+
 0.5.1 [2024-09-07]
 ------------------
 * Added Chinese character support to charts using mplfinance.
