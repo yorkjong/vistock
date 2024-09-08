@@ -12,6 +12,8 @@ TODO
 ------------------
 * mansfield branch
   * Added fileds of 'TTM EPS', 'TTM RPS', and 'TTM PE' to the generated table
+  * Added '9 Months Algo' filed
+  * Removed Rank fields of ' 1 Week Algo', ' 1 Months Algo', '6 Months Algo'
   * Refined functions in yf_utils module
   * Refined relative_strength_vs_benchmark
   * Added currency label to y-axis in plot function
