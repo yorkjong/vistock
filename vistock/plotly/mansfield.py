@@ -35,9 +35,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "2.0"
+__version__ = "2.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/24 (initial version) ~ 2024/09/01 (last revision)"
+__date__ = "2024/08/24 (initial version) ~ 2024/09/08 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -230,7 +230,8 @@ class StockChart:
             title_x=0.5, title_y=0.92,
 
             xaxis=dict(anchor='free'),
-            yaxis=dict(title='Price', side='right'),
+            yaxis=dict(title=f"Price ({yf.Ticker(ticker).info['currency']})",
+                       side='right'),
             xaxis2=dict(anchor='free'),
             yaxis2=dict(title='Relative Strength', side='right'),
             yaxis3=dict(title='Volume', side='right'),
