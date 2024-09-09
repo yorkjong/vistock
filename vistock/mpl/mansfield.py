@@ -30,9 +30,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.8"
+__version__ = "1.9"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/25 (initial version) ~ 2024/09/08 (last revision)"
+__date__ = "2024/08/25 (initial version) ~ 2024/09/09 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -64,7 +64,7 @@ class StockChart:
     """
     @staticmethod
     def plot(symbol, period='2y', interval='1d', ticker_ref=None, ma='SMA',
-             legend_loc='best', market_color_style=MarketColorStyle.AUTO,
+             legend_loc='upper left', market_color_style=MarketColorStyle.AUTO,
              style='yahoo', hides_nontrading=True, out_dir='out'):
         """Plot a Mansfield Stock Chart for a given stock symbol and time
         period.
@@ -95,7 +95,7 @@ class StockChart:
             Moving average type ('SMA', 'EMA'). Default to 'SMA'.
 
         legend_loc: str, optional
-            the location of the legend (default is 'best').
+            the location of the legend (default is 'upper left').
             Valid locations are
 
             - 'best'
