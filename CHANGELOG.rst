@@ -8,6 +8,10 @@ TODO
 * To support IBD EPS RS
 * To support 3-month RS (original 1-year RS)
 
+0.5.2
+------------------
+* Added the support of Russell 2000 stocks
+
 0.5.2 [2024-09-09]
 ------------------
 * mansfield branch
