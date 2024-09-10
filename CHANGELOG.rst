@@ -8,11 +8,7 @@ TODO
 * To support IBD EPS RS
 * To support 3-month RS (original 1-year RS)
 
-0.5.2
-------------------
-* Added the support of Russell 2000 stocks
-
-0.5.2 [2024-09-09]
+0.5.2 [2024-09-10]
 ------------------
 * mansfield branch
   * Added fileds of 'TTM EPS', 'TTM RPS', and 'TTM PE' to the generated table
@@ -23,6 +19,9 @@ TODO
   * Refined relative_strength_vs_benchmark
   * Added currency label to y-axis in plot function
   * Switched from forward fill to interpolation for missing metric values
+  * Use mixed mplfinance and matplotlib approach to resolve legend overlap issue
+* Added the support of Russell 2000 stocks
+* Added the support of all U.S. Listed Stocks
 
 0.5.1 [2024-09-07]
 ------------------
