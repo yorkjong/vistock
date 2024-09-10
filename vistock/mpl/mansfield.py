@@ -30,9 +30,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "1.9"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/25 (initial version) ~ 2024/09/09 (last revision)"
+__date__ = "2024/08/25 (initial version) ~ 2024/09/10 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -254,8 +254,7 @@ class RelativeStrengthLines:
     """
     @staticmethod
     def plot(symbols, period='2y', interval='1d', ticker_ref=None, ma='SMA',
-             legend_loc='best',
-             style='checkers', hides_nontrading=True, out_dir='out'):
+             legend_loc='best', style='checkers', out_dir='out'):
         """
         Plot the Mansfield Relative Strength (RSM) of multiple stocks compared
         to a reference index.
@@ -321,8 +320,6 @@ class RelativeStrengthLines:
 
             Default is 'checkers'.
 
-        hides_nontrading : bool, optional
-            Whether to hide non-trading periods. Default is True.
         out_dir : str, optional
             Directory to save the image file. Defaults to 'out'.
 
@@ -352,38 +349,29 @@ class RelativeStrengthLines:
         df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
         df_price = df.xs('Close', level='Price', axis=1)
 
-        # Plot the figure
-        add_plots = []
+        fig = mpf.figure(style=style, figsize=(12, 6))
+        ax = fig.add_subplot()  # Add first subplot
+
+        # Plot Relative Strength Lines
         for ticker, symbol in zip(tickers, symbols):
             rs = mansfield_relative_strength(df_price[ticker],
                                              df_price[ticker_ref],
                                              rs_window, ma=ma)
-            add_plots.append(mpf.make_addplot(rs,
-                                              label=f'{si.get_name(symbol)}'))
-        add_plots.append(
-            mpf.make_addplot([0]*len(df), color='gray', linestyle='--',
-                             label=f'{si.get_name(ticker_ref)}',
-                             secondary_y=False)
-        )
+            ax.plot(rs.index, rs, label=f'{si.get_name(symbol)}')
 
-        # for hiding 'Close' line from the mpf.plot call
-        df_dummy = df.xs(tickers[0], level='Ticker', axis=1).copy()
-        for col in ['Open', 'High', 'Low', 'Close']:
-            df_dummy[col] = rs
+        # Plot the Reference Line
+        ax.plot(rs.index, [0]*len(df), label=f'{si.get_name(ticker_ref)}',
+                color='gray', linestyle='--')
 
-        fig, axes = mpf.plot(
-            df_dummy, type='line',
-            volume=False, addplot=add_plots,
-            ylabel=f'Relative Strength (Compared to {si.get_name(ticker_ref)})',
-            figratio=(2, 1), figscale=1.2,
-            style=style,
-            show_nontrading=not hides_nontrading,
-            returnfig=True,
-        )
+        # Set Y axis
+        ax.set_ylabel('Relative Strength '
+                      f'(Compared to {si.get_name(ticker_ref)})')
+        ax.yaxis.set_label_position("right")
+        ax.yaxis.tick_right()
+        ax.tick_params(axis='y', labelright=True, labelleft=False)
+
         # Set location of legends
-        for ax in axes:
-            if ax.legend_:
-                ax.legend(loc=legend_loc)
+        ax.legend(loc=legend_loc)
 
         # Convert datetime index to string format suitable for display
         df.index = df.index.strftime('%Y-%m-%d')
