@@ -30,9 +30,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "2.0"
+__version__ = "2.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/25 (initial version) ~ 2024/09/10 (last revision)"
+__date__ = "2024/08/25 (initial version) ~ 2024/09/11 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -42,6 +42,7 @@ __all__ = [
 import numpy as np
 import pandas as pd
 import yfinance as yf
+import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 from .. import tw
@@ -349,8 +350,10 @@ class RelativeStrengthLines:
         df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
         df_price = df.xs('Close', level='Price', axis=1)
 
+        # Set the figure
         fig = mpf.figure(style=style, figsize=(12, 6))
         ax = fig.add_subplot()  # Add first subplot
+        ax.set_prop_cycle(color=plt.cm.tab20.colors)
 
         # Plot Relative Strength Lines
         for ticker, symbol in zip(tickers, symbols):
@@ -400,5 +403,7 @@ if __name__ == '__main__':
     RelativeStrengthLines.plot(symbols, interval='1d')
 
     symbols = ['^NDX', '^DJA', '^RUI', '^SOX']
+    symbols = ['SOXX', 'DVY', 'IWB','IWM', 'IWV', 'IJR',
+               'ITB', 'IHI', 'IYC', 'ITA', 'IAK']
     RelativeStrengthLines.plot(symbols, interval='1d')
 
