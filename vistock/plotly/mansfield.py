@@ -332,16 +332,20 @@ class RelativeStrengthLines:
             default color sequence will be used. You can pass a list of custom
             colors or choose from Plotly's predefined color sequences.
 
+            By default, this is set to `px.colors.qualitative.Light24`, which
+            consists of 24 vibrant colors.
+
             Useful predefined color sequences include:
 
-            - px.colors.qualitative.Light24      -- 24 colors
-            - px.colors.qualitative.Dark24       -- 24 colors
-            - px.colors.qualitative.Pastel       -- 26 colors
-            - px.colors.qualitative.Bold         -- 26 colors
-            - px.colors.qualitative.Alphabet     -- 26 colors
-            - px.colors.qualitative.Set3         -- 12 colors
-            - px.colors.qualitative.G10          -- 10 colors
-            - px.colors.qualitative.T10          -- 10 colors
+            - px.colors.qualitative.Light24 (24 colors, vibrant and varied)
+            - px.colors.qualitative.Dark24 (24 colors, darker tones)
+            - px.colors.qualitative.Pastel (26 colors, soft pastel tones)
+            - px.colors.qualitative.Bold (26 colors, bold and distinct)
+            - px.colors.qualitative.Alphabet (26 colors, one for each letter)
+            - px.colors.qualitative.Set3 (12 colors, good for categorical data)
+            - px.colors.qualitative.G10 (10 colors, general use)
+            - px.colors.qualitative.T10 (10 colors, clear and bright)
+            - px.colors.qualitative.Plotly (10 colors, default Plotly colors)
 
         hides_nontrading : bool, optional
             Whether to hide non-trading periods on the plot. Defaults to True.
