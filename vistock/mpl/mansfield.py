@@ -30,9 +30,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "2.2"
+__version__ = "2.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/25 (initial version) ~ 2024/09/11 (last revision)"
+__date__ = "2024/08/25 (initial version) ~ 2024/09/12 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -255,7 +255,9 @@ class RelativeStrengthLines:
     """
     @staticmethod
     def plot(symbols, period='2y', interval='1d', ticker_ref=None, ma='SMA',
-             legend_loc='upper left', style='checkers', out_dir='out'):
+             legend_loc='upper left', style='checkers',
+             color_cycle=plt.cm.tab20c.colors,
+             out_dir='out'):
         """
         Plot the Mansfield Relative Strength (RSM) of multiple stocks compared
         to a reference index.
@@ -321,6 +323,24 @@ class RelativeStrengthLines:
 
             Default is 'checkers'.
 
+        color_cycle: list or None
+            Specifies a list of colors to be used for cycling through plot
+            lines. If None, the default matplotlib color cycle will be used.
+            You can pass a list of colors to override the default color cycle.
+            Each plot line will use the next color in the sequence.
+
+            Default color sequence:
+
+            - plt.cm.tab20c.colors (20 colors, cooler and more muted)
+
+            Other useful predefined color cycles:
+
+            - plt.cm.tab20.colors (20 colors, brighter)
+            - plt.cm.tab20b.colors (20 colors, darker)
+            - plt.cm.Paired.colors (12 colors, alternating)
+            - plt.cm.Set3.colors (12 colors, pastel-like)
+            - plt.cm.Set1.colors (9 colors, bold and highly distinct)
+
         out_dir : str, optional
             Directory to save the image file. Defaults to 'out'.
 
@@ -353,7 +373,8 @@ class RelativeStrengthLines:
         # Set the figure
         fig = mpf.figure(style=style, figsize=(12, 6))
         ax = fig.add_subplot()  # Add first subplot
-        ax.set_prop_cycle(color=plt.cm.tab20.colors)
+        if color_cycle:
+            ax.set_prop_cycle(color=color_cycle)
 
         # Plot Relative Strength Lines
         for ticker, symbol in zip(tickers, symbols):
@@ -396,14 +417,15 @@ if __name__ == '__main__':
     plots.
     """
     mpfu.use_mac_chinese_font()
-    StockChart.plot('TSLA', interval='1wk')
-    StockChart.plot('羅昇', interval='1wk')
+    #StockChart.plot('TSLA', interval='1wk')
+    #StockChart.plot('羅昇', interval='1wk')
 
-    symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
-    RelativeStrengthLines.plot(symbols, interval='1d')
+    #symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
+    #RelativeStrengthLines.plot(symbols, interval='1d')
 
-    symbols = ['^NDX', '^DJA', '^RUI', '^SOX']
+    #symbols = ['^NDX', '^DJA', '^RUI', '^SOX']
     symbols = ['SOXX', 'DVY', 'IWB','IWM', 'IWV', 'IJR',
                'ITB', 'IHI', 'IYC', 'ITA', 'IAK']
-    RelativeStrengthLines.plot(symbols, interval='1d')
+    RelativeStrengthLines.plot(symbols, interval='1d',
+                               color_cycle=plt.cm.Paired.colors)
 
