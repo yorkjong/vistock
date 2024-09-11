@@ -30,7 +30,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "2.1"
+__version__ = "2.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/25 (initial version) ~ 2024/09/11 (last revision)"
 
@@ -255,7 +255,7 @@ class RelativeStrengthLines:
     """
     @staticmethod
     def plot(symbols, period='2y', interval='1d', ticker_ref=None, ma='SMA',
-             legend_loc='best', style='checkers', out_dir='out'):
+             legend_loc='upper left', style='checkers', out_dir='out'):
         """
         Plot the Mansfield Relative Strength (RSM) of multiple stocks compared
         to a reference index.
@@ -286,7 +286,7 @@ class RelativeStrengthLines:
             Moving average type ('SMA', 'EMA'). Default to 'SMA'.
 
         legend_loc: str, optional
-            the location of the legend (default is 'best').
+            the location of the legend (default is 'upper left').
             Valid locations are
 
             - 'best'
