@@ -35,9 +35,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "2.2"
+__version__ = "2.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/24 (initial version) ~ 2024/09/11 (last revision)"
+__date__ = "2024/08/24 (initial version) ~ 2024/09/12 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -49,7 +49,7 @@ import pandas as pd
 import yfinance as yf
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-import plotly.colors as pc
+import plotly.express as px
 
 from .. import tw
 from .. import file_utils
@@ -270,7 +270,8 @@ class RelativeStrengthLines:
     """
     @staticmethod
     def plot(symbols, period='2y', interval='1d', ticker_ref=None, ma='SMA',
-             template='plotly', hides_nontrading=True, out_dir='out'):
+             template='plotly', colorway=px.colors.qualitative.Light24,
+             hides_nontrading=True, out_dir='out'):
         """
         Plot the Mansfield Relative Strength (RSM) of multiple stocks compared
         to a reference index.
@@ -309,7 +310,9 @@ class RelativeStrengthLines:
 
         template: str, optional:
             The Plotly template to use for styling the chart.
-            Defaults to 'plotly'. Available templates include:
+            Defaults to 'plotly'.
+
+            Available templates include:
 
             - 'plotly': Default Plotly template with interactive plots.
             - 'plotly_white': Light theme with a white background.
@@ -323,6 +326,26 @@ class RelativeStrengthLines:
 
             For more details on templates, refer to Plotly's official
             documentation.
+
+        colorway: list or None
+            Sets the default trace colors for the plot. If None, Plotly's
+            default color sequence will be used. You can pass a list of custom
+            colors or choose from Plotly's predefined color sequences.
+
+            By default, this is set to `px.colors.qualitative.Light24`, which
+            consists of 24 vibrant colors.
+
+            Useful predefined color sequences include:
+
+            - px.colors.qualitative.Light24 (24 colors, vibrant and varied)
+            - px.colors.qualitative.Dark24 (24 colors, darker tones)
+            - px.colors.qualitative.Pastel (26 colors, soft pastel tones)
+            - px.colors.qualitative.Bold (26 colors, bold and distinct)
+            - px.colors.qualitative.Alphabet (26 colors, one for each letter)
+            - px.colors.qualitative.Set3 (12 colors, good for categorical data)
+            - px.colors.qualitative.G10 (10 colors, general use)
+            - px.colors.qualitative.T10 (10 colors, clear and bright)
+            - px.colors.qualitative.Plotly (10 colors, default Plotly colors)
 
         hides_nontrading : bool, optional
             Whether to hide non-trading periods on the plot. Defaults to True.
@@ -383,8 +406,10 @@ class RelativeStrengthLines:
             legend=dict(yanchor='top', y=.98, xanchor="left", x=0.01),
             xaxis_rangeslider_visible=False,
             template=template,
-            colorway=pc.qualitative.Light24, # using the Light24 color sequence
         )
+        if colorway:
+            fig.update_layout(colorway=colorway)
+
         if hides_nontrading:
             futil.hide_nontrading_periods(fig, df, interval)
 
@@ -397,19 +422,21 @@ class RelativeStrengthLines:
 
         # Write the figure to an HTML file
         out_dir = file_utils.make_dir(out_dir)
-        fn = file_utils.gen_fn_info('stocks', interval, df.index[-1], 'RsmLines')
+        fn = file_utils.gen_fn_info('stocks', interval, df.index[-1],
+                                    'RsmLines')
         fig.write_html(f'{out_dir}/{fn}.html')
 
 
 if __name__ == '__main__':
     #StockChart.plot('TSLA', interval='1d')
-    StockChart.plot('TSLA', interval='1wk')
-    StockChart.plot('聯發科', interval='1wk')
+    #StockChart.plot('TSLA', interval='1wk')
+    #StockChart.plot('聯發科', interval='1wk')
 
-    symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
-    RelativeStrengthLines.plot(symbols, interval='1d')
+    #symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
+    #RelativeStrengthLines.plot(symbols, interval='1d')
 
     symbols = ['SOXX', 'DVY', 'IWB','IWM', 'IWV', 'IJR',
                'ITB', 'IHI', 'IYC', 'ITA', 'IAK']
-    RelativeStrengthLines.plot(symbols, interval='1d')
+    RelativeStrengthLines.plot(symbols, interval='1d',
+                               colorway=px.colors.qualitative.Set3)
 
