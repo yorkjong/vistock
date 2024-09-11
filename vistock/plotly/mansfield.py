@@ -35,9 +35,9 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "2.1"
+__version__ = "2.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/24 (initial version) ~ 2024/09/08 (last revision)"
+__date__ = "2024/08/24 (initial version) ~ 2024/09/11 (last revision)"
 
 __all__ = [
     'StockChart',
@@ -49,6 +49,7 @@ import pandas as pd
 import yfinance as yf
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+import plotly.colors as pc
 
 from .. import tw
 from .. import file_utils
@@ -382,6 +383,7 @@ class RelativeStrengthLines:
             legend=dict(yanchor='top', y=.98, xanchor="left", x=0.01),
             xaxis_rangeslider_visible=False,
             template=template,
+            colorway=pc.qualitative.Light24, # using the Light24 color sequence
         )
         if hides_nontrading:
             futil.hide_nontrading_periods(fig, df, interval)
@@ -407,4 +409,7 @@ if __name__ == '__main__':
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     RelativeStrengthLines.plot(symbols, interval='1d')
 
+    symbols = ['SOXX', 'DVY', 'IWB','IWM', 'IWV', 'IJR',
+               'ITB', 'IHI', 'IYC', 'ITA', 'IAK']
+    RelativeStrengthLines.plot(symbols, interval='1d')
 
