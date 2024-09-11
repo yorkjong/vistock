@@ -337,9 +337,12 @@ class RelativeStrengthLines:
 
             - plt.cm.tab20.colors (20 colors, brighter)
             - plt.cm.tab20b.colors (20 colors, darker)
-            - plt.cm.Paired.colors (12 colors, alternating)
-            - plt.cm.Set3.colors (12 colors, pastel-like)
-            - plt.cm.Set1.colors (9 colors, bold and highly distinct)
+            - plt.cm.Paired.colors (12 colors, alternating between deep and
+              pastel colors; useful for categorical data)
+            - plt.cm.Set3.colors (12 colors, pastel-like; good for categorical
+              data)
+            - plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for
+              categorical data)
 
         out_dir : str, optional
             Directory to save the image file. Defaults to 'out'.
