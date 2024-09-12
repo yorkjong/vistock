@@ -30,7 +30,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "2.3"
+__version__ = "2.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/25 (initial version) ~ 2024/09/12 (last revision)"
 
@@ -255,8 +255,8 @@ class RelativeStrengthLines:
     """
     @staticmethod
     def plot(symbols, period='2y', interval='1d', ticker_ref=None, ma='SMA',
-             legend_loc='upper left', style='checkers',
-             color_cycle=plt.cm.tab20c.colors,
+             legend_loc='upper left', style='charles',
+             color_cycle=plt.cm.Paired.colors,
              out_dir='out'):
         """
         Plot the Mansfield Relative Strength (RSM) of multiple stocks compared
@@ -321,7 +321,7 @@ class RelativeStrengthLines:
             - 'blueskies': Blue Skies style
             - 'brasil': Brasil style
 
-            Default is 'checkers'.
+            Default is 'charles'.
 
         color_cycle: list or None
             Specifies a list of colors to be used for cycling through plot
@@ -331,7 +331,7 @@ class RelativeStrengthLines:
 
             Default color sequence:
 
-            - plt.cm.tab20c.colors (20 colors, cooler and more muted)
+            - plt.cm.Paired.colors (20 colors, cooler and more muted)
 
             Other useful predefined color cycles:
 
