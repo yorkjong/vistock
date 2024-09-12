@@ -35,7 +35,7 @@ See Also:
   mansfield-relative-strength/>`_
 """
 __software__ = "Mansfield Stock Charts"
-__version__ = "2.3"
+__version__ = "2.4"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/24 (initial version) ~ 2024/09/12 (last revision)"
 
@@ -270,7 +270,7 @@ class RelativeStrengthLines:
     """
     @staticmethod
     def plot(symbols, period='2y', interval='1d', ticker_ref=None, ma='SMA',
-             template='plotly', colorway=px.colors.qualitative.Light24,
+             template='plotly_dark', colorway=px.colors.qualitative.Set3,
              hides_nontrading=True, out_dir='out'):
         """
         Plot the Mansfield Relative Strength (RSM) of multiple stocks compared
@@ -310,7 +310,7 @@ class RelativeStrengthLines:
 
         template: str, optional:
             The Plotly template to use for styling the chart.
-            Defaults to 'plotly'.
+            Defaults to 'plotly_dark'.
 
             Available templates include:
 
@@ -332,7 +332,7 @@ class RelativeStrengthLines:
             default color sequence will be used. You can pass a list of custom
             colors or choose from Plotly's predefined color sequences.
 
-            By default, this is set to `px.colors.qualitative.Light24`, which
+            By default, this is set to `px.colors.qualitative.Set3`, which
             consists of 24 vibrant colors.
 
             Useful predefined color sequences include:
