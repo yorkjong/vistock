@@ -34,7 +34,7 @@ Usage Examples:
     # Get a list of tickers for a specified market
     tickers = tw.get_tickers('TWSE')
 """
-__version__ = "2.0"
+__version__ = "2.1"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2023/02/19 (initial version) ~ 2024/09/14 (last revision)"
 
@@ -52,8 +52,10 @@ __all__ = [
 
 import functools
 import unicodedata
+import time
 
 import requests
+from urllib3.exceptions import IncompleteRead
 from bs4 import BeautifulSoup
 
 
@@ -268,17 +270,22 @@ class OpenAPI:
             list: A list of the extracted columns, each column being a list.
                    Returns a list of empty lists if an error occurs.
         """
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-            json_rows = response.json()
-            columns = []
-            for col in column_names:
-                columns.append([row[col] for row in json_rows])
-            return columns
-        except Exception as e:
-            print(f"{e}: {url}")
-            return ([] for _ in column_names)
+        for i in range(5):
+            try:
+                response = requests.get(url, timeout=60)
+                response.raise_for_status()
+                json_rows = response.json()
+            except IncompleteRead as e:
+                print(f"Attempt {i+1} failed, retrying...")
+                time.sleep(2)  # Wait a few seconds before retrying
+            except Exception as e:
+                print(f"{e}: {url}")
+                return ([] for _ in column_names)
+
+        columns = []
+        for col in column_names:
+            columns.append([row[col] for row in json_rows])
+        return columns
 
     @classmethod
     def yfinance_symbol_from_name(cls, name):
