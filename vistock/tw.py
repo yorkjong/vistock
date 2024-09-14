@@ -13,19 +13,6 @@ Main Features:
 - Retrieve lists of tickers for TWSE, TPEx, and ESB.
 - Find stocks similar to a given name or code.
 
-Public Functions:
------------------
-- stock_name(code): Retrieve the name of a stock given its code.
-- stock_price(code): Retrive the price of a stock given its code.
-- as_yfinance(symbol): Convert a Taiwan stock symbol to yfinance format.
-- similar_stocks(name_or_code): Find stocks similar to the provided name
-  or code.
-- get_twse_tickers(): Get a list of tickers for the TWSE.
-- get_tpex_tickers(): Get a list of tickers for the TPEx.
-- get_esb_tickers(): Get a list of tickers for the ESB.
-- get_tickers(market): Retrieve tickers for a specified market (TWSE, TPEx,
-  or ESB).
-
 Usage Examples:
 ---------------
 ::
@@ -47,9 +34,9 @@ Usage Examples:
     # Get a list of tickers for a specified market
     tickers = tw.get_tickers('TWSE')
 """
-__version__ = "1.9"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/19 (initial version) ~ 2024/08/26 (last revision)"
+__date__ = "2023/02/19 (initial version) ~ 2024/09/14 (last revision)"
 
 __all__ = [
     'is_taiwan_stock',
@@ -290,6 +277,7 @@ class OpenAPI:
                 columns.append([row[col] for row in json_rows])
             return columns
         except Exception as e:
+            print(e)
             return ([] for _ in column_names)
 
     @classmethod
@@ -673,8 +661,10 @@ def get_esb_tickers():
 
     Examples:
         >>> tickers = get_esb_tickers()
-        >>> print(tickers[:5])
-        ['9957.TWO', '2646.TWO', '6434.TWO', '1480.TWO', '6987.TWO']
+        >>> '2646.TWO' in tickers
+        True
+        >>> '6987.TWO' in tickers
+        True
     """
     url = "https://www.tpex.org.tw/openapi/v1/tpex_esb_capitals_rank"
     (codes,) = OpenAPI.get_columns(url, ["SecuritiesCompanyCode"])
