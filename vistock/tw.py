@@ -277,7 +277,7 @@ class OpenAPI:
                 columns.append([row[col] for row in json_rows])
             return columns
         except Exception as e:
-            print(e)
+            print(f"{e}: {url}")
             return ([] for _ in column_names)
 
     @classmethod
