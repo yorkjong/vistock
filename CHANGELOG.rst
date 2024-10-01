@@ -5,8 +5,11 @@ TODO
 * To support Alexander Elder's technical indicators, such as Force Index,
   Elder Ray Index and stock charts with his trading systems.
 * To support other useful Technical Indicators.
-* To support IBD EPS RS
 * To support 3-month RS (original 1-year RS)
+
+0.6.0 [2024-10-01]
+------------------
+* Added the support of EPS RS and Rev RS inspired by IBD's EPS Rating
 
 0.5.2 [2024-09-12]
 ------------------
