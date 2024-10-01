@@ -43,7 +43,7 @@ See Also:
 """
 __version__ = "4.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/23 (initial version) ~ 2024/09/12 (last revision)"
+__date__ = "2024/08/23 (initial version) ~ 2024/09/30 (last revision)"
 
 __all__ = [
     'mansfield_relative_strength',
@@ -282,7 +282,7 @@ def ranking(tickers, ticker_ref='^GSPC',
                                           'Operating Revenue', 'marketCap')
     #print(epses_index)
 
-    results = []
+    rows = []
     price_ma = {}
     for ticker in tickers:
         df = df_all.xs(ticker, level='Ticker', axis=1)
@@ -300,7 +300,7 @@ def ranking(tickers, ticker_ref='^GSPC',
         pe = info[ticker]['trailingPE']
         if not isinstance(pe, float):
             print(f"info[{ticker}]['trailingPE']: {pe}")
-            pe = np.NaN
+            pe = np.nan
 
         # Calculate RSM for different time periods
         end_date = rsm.index[-1]
@@ -330,10 +330,10 @@ def ranking(tickers, ticker_ref='^GSPC',
             'TTM RPS': info[ticker]['revenuePerShare'],
             'TTM PE': round(pe, 2),
         }
-        results.append(row)
+        rows.append(row)
 
-    # Combine results into a single DataFrame
-    ranking_df = pd.DataFrame(results)
+    # Combine rows into a single DataFrame
+    ranking_df = pd.DataFrame(rows)
 
     # Rank based on Relative Strength
     rank_columns = ['RS Rank (%)',]

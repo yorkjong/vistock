@@ -4,9 +4,9 @@ Utility functions for working with Yahoo Finance data.
 This module contains various utility functions for retrieving and processing
 stock data using the Yahoo Finance API via the `yfinance` library.
 """
-__version__ = "3.8"
+__version__ = "4.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/26 (initial version) ~ 2024/09/09 (last revision)"
+__date__ = "2024/08/26 (initial version) ~ 2024/09/29 (last revision)"
 
 __all__ = [
     'calc_weighted_metric',
@@ -17,16 +17,23 @@ __all__ = [
 
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import logging
 
 import numpy as np
 import pandas as pd
 import yfinance as yf
 
+# Configure logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+
 #------------------------------------------------------------------------------
 # Weighted Average Metric (e.g., EPS, Revenue)
 #------------------------------------------------------------------------------
 
-def calc_weighted_metric(financials, tickers_info, metric, weight_field):
+def calc_weighted_metric(financials, tickers_info, metric, weight_field,
+                         threshold=0.7):
     """
     Calculate the weighted average of a specified financial metric for all stock
     symbols in the provided dataset using NumPy. The weights can be based on any
@@ -47,6 +54,9 @@ def calc_weighted_metric(financials, tickers_info, metric, weight_field):
     weight_field : str
         The field name to use for weighting (e.g., 'marketCap',
         'sharesOutstanding').
+    threshold : float, optional
+        The minimum percentage of the total possible weight required for a valid
+        weighted average (default is 0.7, meaning 70%).
 
     Returns
     -------
@@ -82,7 +92,7 @@ def calc_weighted_metric(financials, tickers_info, metric, weight_field):
 
     for symbol, financial_df in financials.items():
         # Retrieve the weight based on the provided weight field
-        weight = tickers_info.get(symbol, {}).get(weight_field, 0)
+        weight = tickers_info.get(symbol, {}).get(weight_field, 0.)
 
         if (weight > 0 and financial_df is not None
                        and metric in financial_df.columns):
@@ -95,11 +105,11 @@ def calc_weighted_metric(financials, tickers_info, metric, weight_field):
             metric_list.append(metric_data.values)
             weights.append(weight)
         else:
-            print("Warning: No valid metric or "
-                  f"weight data available for {symbol}.")
+            logger.warning("No valid metric or "
+                           f"weight data available for {symbol}.")
 
     if not metric_list:
-        print("No valid metric data found for any symbol.")
+        logger.warning("No valid metric data found for any symbol.")
         return np.array([])
 
     # Ensure all metric arrays have the same length. Use NaN for padding.
@@ -116,13 +126,19 @@ def calc_weighted_metric(financials, tickers_info, metric, weight_field):
     # Calculate weighted metric using broadcasting
     weighted_metric = metric_array * weights[:, np.newaxis]
 
-    # Calculate weighted average metric
-    total_weight = weights.sum()
-    if total_weight == 0:
-        print("Total weight is zero. "
-              "Cannot calculate weighted average metric.")
-        return np.array([])
+    # Create a mask for valid (non-NaN) values in weighted_metric
+    valid_mask = ~np.isnan(weighted_metric)
 
+    # Calculate total weight for each time point
+    total_weight = np.sum(weights[:, np.newaxis] * valid_mask,
+                          axis=0).astype(float)
+    max_total_weight = weights.sum()
+
+    # Set values to NaN where total_weight is below threshold
+    below_threshold_mask = total_weight < (max_total_weight * threshold)
+    total_weight[below_threshold_mask] = np.nan
+
+    # Calculate weighted average metric
     weighted_avg_metric = np.nansum(weighted_metric, axis=0) / total_weight
 
     return weighted_avg_metric
@@ -164,10 +180,10 @@ def fetch_financials(symbol, fields=None, frequency='quarterly'):
         financials = financials.sort_index(ascending=True)
 
         if financials.empty:
-            print(f"\nWarning: {symbol}: Financials data is empty, "
-                  "returning NaN-filled DataFrame.")
+            logger.warning(f"\n{symbol}: Financials data is empty, "
+                           "returning NaN-filled DataFrame.")
             if fields:
-                return pd.DataFrame({field: [np.NaN] for field in fields})
+                return pd.DataFrame({field: [np.nan] for field in fields})
             else:
                 return pd.DataFrame()
 
@@ -176,14 +192,15 @@ def fetch_financials(symbol, fields=None, frequency='quarterly'):
             missing_fields = [field for field in fields
                               if field not in financials.columns]
             if missing_fields:
-                print(f"\nWarning:{symbol}: Missing fields: "
-                      f"{str(missing_fields)} will be filled with NaN.")
+                logger.warning(
+                    f"\n{symbol}: Missing fields: "
+                    f"{str(missing_fields)} will be filled with NaN.")
 
             # Ensure all requested fields are present,
             # adding NaNs for missing fields
             for field in fields:
                 if field not in financials.columns:
-                    financials[field] = np.NaN
+                    financials[field] = np.nan
 
             # Filter financials to include only requested fields
             financials = financials[fields]
@@ -191,8 +208,8 @@ def fetch_financials(symbol, fields=None, frequency='quarterly'):
         return financials
 
     except Exception as e:
-        print(f"\nError fetching financials for {symbol}: {e}")
-        return pd.DataFrame(np.NaN, index=[0], columns=fields)
+        logger.error(f"\nError fetching financials for {symbol}: {e}")
+        return pd.DataFrame(np.nan, index=[0], columns=fields)
 
 
 def download_financials(symbols, fields=None, frequency='quarterly',
@@ -257,7 +274,7 @@ def download_financials(symbols, fields=None, frequency='quarterly',
                     print_progress_bar(iteration, len(symbols),
                                        suffix='financials downloaded')
             except Exception as e:
-                print(f"Error fetching financials for {symbol}: {e}")
+                logger.error(f"Error fetching financials for {symbol}: {e}")
 
     return financials_dict
 
@@ -324,14 +341,15 @@ def download_tickers_info(symbols, fields=None, max_workers=8, progress=True):
                     if key in ('previousClose', 'trailingEps',
                                'revenuePerShare', 'trailingPE',
                                'marketCap', 'sharesOutstanding'):
-                        inf[key] = np.NaN  # Default for numeric fields
+                        inf[key] = np.nan  # Default for numeric fields
                     elif key in ['quoteType', 'sector', 'industry']:
                         inf[key] = ''  # Default for string fields
                     else:
                         inf[key] = None  # Default for other data types
-                        print(f"\nError fetching data for {symbol}: {e}")
+                        logger.error(
+                            f"\nError fetching data for {symbol}: {e}")
         except Exception as e:
-            print(f"\nError fetching data for {symbol}: {e}")
+            logger.error(f"\nError fetching data for {symbol}: {e}")
         return inf
 
     info_dict = {}
@@ -356,7 +374,7 @@ def download_tickers_info(symbols, fields=None, max_workers=8, progress=True):
                     print_progress_bar(iteration, len(symbols),
                                        suffix='info downloaded')
             except Exception as e:
-                print(f"Error fetching info for {symbol}: {e}")
+                logger.error(f"Error fetching info for {symbol}: {e}")
 
     return info_dict
 
