@@ -17,9 +17,9 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.6"
+__version__ = "1.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/20 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
 
 __all__ = ['plot']
 
@@ -32,11 +32,11 @@ from .. import tw
 from .. import file_utils
 from . import fig_utils as futil
 from ..utils import MarketColorStyle, decide_market_color_style
-from ..ibd import relative_strength, ma_window_size
+from ..ibd import relative_strength, relative_strength_3m, ma_window_size
 from .. import stock_indices as si
 
 
-def plot(symbol, period='2y', interval='1d', ticker_ref=None,
+def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
          market_color_style=MarketColorStyle.AUTO,
          template='plotly', hides_nontrading=True, out_dir='out'):
     """Generate and display a stock analysis plot with candlestick charts,
@@ -69,6 +69,10 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None,
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
+    rs_period : str, optional
+        Specify the period for Relative Strength calculation ('12mo' or '3mo').
+        Default to '12mo'.
+
     market_color_style : MarketColorStyle, optional
         Color style for market data visualization. Default is
         MarketColorStyle.AUTO.
@@ -111,8 +115,14 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None,
     df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
     df = df.xs(ticker, level='Ticker', axis=1)
 
+    # Select the appropriate relative strength function based on the rs_period
+    rs_func = {
+        '3mo': relative_strength_3m,
+        '12mo': relative_strength,
+    }[rs_period]
+
     # Calculate Relative Strength (RS)
-    df['RS'] = relative_strength(df['Close'], df_ref['Close'], interval)
+    df['RS'] = rs_func(df['Close'], df_ref['Close'], interval)
     df[f'RS {ticker_ref}'] = 100
 
     # Calculate price moving average
@@ -202,5 +212,5 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None,
 
 if __name__ == '__main__':
     plot('TSLA', interval='1d', template='simple_white')
-    plot('台積電', interval='1wk', template='presentation')
+    #plot('台積電', interval='1wk', template='presentation')
 

@@ -16,9 +16,9 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "2.1"
+__version__ = "2.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/09/04 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
 
 __all__ = ['plot']
 
@@ -29,12 +29,12 @@ import mplfinance as mpf
 from .. import tw
 from .. import file_utils
 from . import mpf_utils as mpfu
-from ..ibd import relative_strength
+from ..ibd import relative_strength, relative_strength_3m
 from .. import stock_indices as si
 
 
 def plot(symbols, period='2y', interval='1d', ticker_ref=None,
-         legend_loc='best',
+         rs_period='12mo', legend_loc='best',
          style='checkers', hides_nontrading=True, out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
@@ -68,6 +68,10 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
+
+    rs_period : str, optional
+        Specify the period for Relative Strength calculation ('12mo' or '3mo').
+        Default to '12mo'.
 
     legend_loc: str, optional
         the location of the legend (default is 'best').
@@ -125,13 +129,20 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         if tw.is_taiwan_stock(tw.as_yfinance(symbols[0])):
             ticker_ref = '^TWII'  # Taiwan Weighted Index
 
+    # Download data
     tickers = [tw.as_yfinance(s) for s in symbols]
     df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
     df_price = df.xs('Close', level='Price', axis=1)
 
+    # Select the appropriate relative strength function based on the rs_period
+    rs_func = {
+        '3mo': relative_strength_3m,
+        '12mo': relative_strength,
+    }[rs_period]
+
     add_plots = []
     for ticker, symbol in zip(tickers, symbols):
-        rs = relative_strength(df_price[ticker], df_price[ticker_ref], interval)
+        rs = rs_func(df_price[ticker], df_price[ticker_ref], interval)
         add_plots.append(mpf.make_addplot(rs, label=f'{si.get_name(symbol)}'))
     add_plots.append(
         mpf.make_addplot([100]*len(df), color='gray', linestyle='--',
