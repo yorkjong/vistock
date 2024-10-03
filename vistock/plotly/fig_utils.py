@@ -71,6 +71,10 @@ def hide_nontrading_periods(fig, df, interval):
         - 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
           Yahoo does)
     """
+    # If the index is not datetime, convert it back
+    if not isinstance(df.index, pd.DatetimeIndex):
+        df.index = pd.to_datetime(df.index)
+
     # Convert aliases from `interval` to `freq`
     # These aliases represent 'month', 'minute', 'hour', 'day', and 'week'.
     freq = interval
@@ -87,7 +91,7 @@ def hide_nontrading_periods(fig, df, interval):
     #print("Breaks (dt_breaks):", dt_breaks)
 
     # Calculate dvalue in milliseconds
-    dvalue = 24*60* 60 * 1000    # 1 day in milliseconds
+    dvalue = 24*60*60 * 1000    # 1 day in milliseconds
     if interval.endswith('m'):      # minute
         dvalue = 60 * int(interval.replace('m', '')) * 1000
     elif interval.endswith('h'):    # hour
