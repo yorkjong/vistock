@@ -17,7 +17,7 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.7"
+__version__ = "1.9"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
 
@@ -128,11 +128,12 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
     # Calculate price moving average
     ma_nitems = [ma_window_size(interval, days) for days in (50, 200)]
     for n in ma_nitems:
-        df[f'MA {n}'] = df['Close'].rolling(window=n).mean()
+        df[f'MA {n}'] = df['Close'].rolling(window=n, min_periods=1).mean()
 
     # Calculate volume moving averaage
     vma_nitems = ma_window_size(interval, 50)
-    df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems).mean()
+    df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems,
+                                                   min_periods=1).mean()
 
     # Create subplots
     fig = make_subplots(rows=3, cols=1, shared_xaxes=True,
