@@ -17,7 +17,7 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.9"
+__version__ = "2.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
 
@@ -176,6 +176,9 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
     for trace, row in traces:
         fig.add_trace(trace, row=row, col=1)
 
+    if hides_nontrading:
+        futil.hide_nontrading_periods(fig, df, interval)
+
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
 
@@ -195,8 +198,6 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
         xaxis_rangeslider_visible=False,
         template=template,
     )
-    if hides_nontrading:
-        futil.hide_nontrading_periods(fig, df, interval)
 
     # For Crosshair cursor
     futil.add_crosshair_cursor(fig)
@@ -212,6 +213,6 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
 
 
 if __name__ == '__main__':
-    plot('TSLA', interval='1d', template='simple_white')
-    #plot('台積電', interval='1wk', template='presentation')
+    plot('TSLA', interval='1d', period='1y', template='simple_white')
+    plot('台積電', interval='1wk', template='presentation')
 

@@ -16,7 +16,7 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "2.1"
+__version__ = "2.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
 
@@ -132,6 +132,9 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
                              mode='lines', name=si.get_name(ticker_ref),
                              line=dict(dash='dash', color='gray')))
 
+    if hides_nontrading:
+        futil.hide_nontrading_periods(fig, df, interval)
+
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
 
@@ -149,8 +152,6 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         xaxis_rangeslider_visible=False,
         template=template,
     )
-    if hides_nontrading:
-        futil.hide_nontrading_periods(fig, df, interval)
 
     # For Crosshair cursor
     futil.add_crosshair_cursor(fig)
@@ -173,7 +174,7 @@ def main():
     symbols = ['NVDA', 'MSFT', 'META', '^NDX', '^TWII']
     plot(symbols, interval='1d', template='plotly_dark')
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
-    #plot(symbols, interval='1wk', template='xgridoff')
+    plot(symbols, interval='1wk', template='xgridoff')
 
 
 if __name__ == '__main__':
