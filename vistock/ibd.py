@@ -485,10 +485,10 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
     # Calculate industry rankings
     industry_df = stock_df.groupby('Industry').agg({
         'Sector': 'first',
-        'RS': lambda x: x.mean().round(2),
-        '1M': lambda x: x.mean().round(2),
-        '3M': lambda x: x.mean().round(2),
-        '6M': lambda x: x.mean().round(2),
+        'RS': lambda x: round(x.mean(), 2),
+        '1M': lambda x: round(x.mean(), 2),
+        '3M': lambda x: round(x.mean(), 2),
+        '6M': lambda x: round(x.mean(), 2),
         'Ticker': get_sorted_tickers
     }).reset_index()
 
