@@ -16,7 +16,7 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "2.4"
+__version__ = "2.5"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/16 (initial version) ~ 2024/10/05 (last revision)"
 
@@ -37,7 +37,7 @@ from .. import stock_indices as si
 def plot(symbols, period='2y', interval='1d', ticker_ref=None,
          rs_period='12mo', legend_loc='best',
          style='checkers', color_cycle=plt.cm.Paired.colors,
-         hides_nontrading=True, out_dir='out'):
+         out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
     index using mplfinance.
@@ -132,8 +132,6 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         - plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for
           categorical data)
 
-    hides_nontrading : bool, optional
-        Whether to hide non-trading periods. Default is True.
     out_dir : str, optional
         Directory to save the image file. Defaults to 'out'.
 
