@@ -384,7 +384,7 @@ and desired parameters.</p>
 </dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="vistock.plotly.ibd_rs_cmp.plot">
-<span class="sig-prename descclassname"><span class="pre">vistock.plotly.ibd_rs_cmp.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/ibd_rs_cmp.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.ibd_rs_cmp.plot" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.ibd_rs_cmp.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorway</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['rgb(141,211,199)',</span> <span class="pre">'rgb(255,255,179)',</span> <span class="pre">'rgb(190,186,218)',</span> <span class="pre">'rgb(251,128,114)',</span> <span class="pre">'rgb(128,177,211)',</span> <span class="pre">'rgb(253,180,98)',</span> <span class="pre">'rgb(179,222,105)',</span> <span class="pre">'rgb(252,205,229)',</span> <span class="pre">'rgb(217,217,217)',</span> <span class="pre">'rgb(188,128,189)',</span> <span class="pre">'rgb(204,235,197)',</span> <span class="pre">'rgb(255,237,111)']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/ibd_rs_cmp.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.ibd_rs_cmp.plot" title="Link to this definition"></a></dt>
 <dd><p>Plot the Relative Strength (RS) of multiple stocks compared to a reference
 index.</p>
 <p>This function generates an interactive Plotly chart that compares the RS
@@ -428,6 +428,24 @@ Defaults to ‘plotly’. Available templates include:</p>
 </ul>
 <p>For more details on templates, refer to Plotly’s official
 documentation.</p>
+</p></li>
+<li><p><strong>colorway</strong> (<em>list</em><em> or </em><em>None</em>) – <p>Sets the default trace colors for the plot. If None, Plotly’s
+default color sequence will be used. You can pass a list of custom
+colors or choose from Plotly’s predefined color sequences.</p>
+<p>By default, this is set to <cite>px.colors.qualitative.Set3</cite>, which
+consists of 24 vibrant colors.</p>
+<p>Useful predefined color sequences include:</p>
+<ul>
+<li><p>px.colors.qualitative.Light24 (24 colors, vibrant and varied)</p></li>
+<li><p>px.colors.qualitative.Dark24 (24 colors, darker tones)</p></li>
+<li><p>px.colors.qualitative.Pastel (26 colors, soft pastel tones)</p></li>
+<li><p>px.colors.qualitative.Bold (26 colors, bold and distinct)</p></li>
+<li><p>px.colors.qualitative.Alphabet (26 colors, one for each letter)</p></li>
+<li><p>px.colors.qualitative.Set3 (12 colors, good for categorical data)</p></li>
+<li><p>px.colors.qualitative.G10 (10 colors, general use)</p></li>
+<li><p>px.colors.qualitative.T10 (10 colors, clear and bright)</p></li>
+<li><p>px.colors.qualitative.Plotly (10 colors, default Plotly colors)</p></li>
+</ul>
 </p></li>
 <li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods on the plot. Defaults to True.</p></li>
 <li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the HTML file. Defaults to ‘out’.</p></li>

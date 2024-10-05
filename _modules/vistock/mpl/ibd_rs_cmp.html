@@ -90,14 +90,15 @@
 <span class="sd">desired parameters.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="n">__software__</span> <span class="o">=</span> <span class="s2">&quot;IBD RS Comparison chart&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;2.2&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;2.5&quot;</span>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;York &lt;york.jong@gmail.com&gt;&quot;</span>
-<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/16 (initial version) ~ 2024/10/03 (last revision)&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/16 (initial version) ~ 2024/10/05 (last revision)&quot;</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">mplfinance</span> <span class="k">as</span> <span class="nn">mpf</span>
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">tw</span>
@@ -111,7 +112,8 @@
 <a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.ibd_rs_cmp.plot">[docs]</a>
 <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
          <span class="n">rs_period</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span>
-         <span class="n">style</span><span class="o">=</span><span class="s1">&#39;checkers&#39;</span><span class="p">,</span> <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
+         <span class="n">style</span><span class="o">=</span><span class="s1">&#39;checkers&#39;</span><span class="p">,</span> <span class="n">color_cycle</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span>
+         <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot the Relative Strength (RS) of multiple stocks compared to a reference</span>
 <span class="sd">    index using mplfinance.</span>
@@ -185,8 +187,27 @@
 
 <span class="sd">        Default is &#39;checkers&#39;.</span>
 
-<span class="sd">    hides_nontrading : bool, optional</span>
-<span class="sd">        Whether to hide non-trading periods. Default is True.</span>
+<span class="sd">    color_cycle: list or None</span>
+<span class="sd">        Specifies a list of colors to be used for cycling through plot</span>
+<span class="sd">        lines. If None, the default matplotlib color cycle will be used.</span>
+<span class="sd">        You can pass a list of colors to override the default color cycle.</span>
+<span class="sd">        Each plot line will use the next color in the sequence.</span>
+
+<span class="sd">        Default color sequence:</span>
+
+<span class="sd">        - plt.cm.Paired.colors (20 colors, cooler and more muted)</span>
+
+<span class="sd">        Other useful predefined color cycles:</span>
+
+<span class="sd">        - plt.cm.tab20.colors (20 colors, brighter)</span>
+<span class="sd">        - plt.cm.tab20b.colors (20 colors, darker)</span>
+<span class="sd">        - plt.cm.Paired.colors (12 colors, alternating between deep and</span>
+<span class="sd">          pastel colors; useful for categorical data)</span>
+<span class="sd">        - plt.cm.Set3.colors (12 colors, pastel-like; good for categorical</span>
+<span class="sd">          data)</span>
+<span class="sd">        - plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for</span>
+<span class="sd">          categorical data)</span>
+
 <span class="sd">    out_dir : str, optional</span>
 <span class="sd">        Directory to save the image file. Defaults to &#39;out&#39;.</span>
 
@@ -205,7 +226,7 @@
         <span class="k">if</span> <span class="n">tw</span><span class="o">.</span><span class="n">is_taiwan_stock</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">as_yfinance</span><span class="p">(</span><span class="n">symbols</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
             <span class="n">ticker_ref</span> <span class="o">=</span> <span class="s1">&#39;^TWII&#39;</span>  <span class="c1"># Taiwan Weighted Index</span>
 
-    <span class="c1"># Download data</span>
+    <span class="c1"># Fetch data for stocks and index</span>
     <span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="n">tw</span><span class="o">.</span><span class="n">as_yfinance</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">]</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">([</span><span class="n">ticker_ref</span><span class="p">]</span><span class="o">+</span><span class="n">tickers</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span>
     <span class="n">df_price</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="s1">&#39;Close&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Price&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -216,34 +237,30 @@
         <span class="s1">&#39;12mo&#39;</span><span class="p">:</span> <span class="n">relative_strength</span><span class="p">,</span>
     <span class="p">}[</span><span class="n">rs_period</span><span class="p">]</span>
 
-    <span class="n">add_plots</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Set the figure</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">mpf</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>  <span class="c1"># Add first subplot</span>
+    <span class="k">if</span> <span class="n">color_cycle</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color_cycle</span><span class="p">)</span>
+
+    <span class="c1"># Plot Relative Strength Lines</span>
     <span class="k">for</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">symbols</span><span class="p">):</span>
         <span class="n">rs</span> <span class="o">=</span> <span class="n">rs_func</span><span class="p">(</span><span class="n">df_price</span><span class="p">[</span><span class="n">ticker</span><span class="p">],</span> <span class="n">df_price</span><span class="p">[</span><span class="n">ticker_ref</span><span class="p">],</span> <span class="n">interval</span><span class="p">)</span>
-        <span class="n">add_plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mpf</span><span class="o">.</span><span class="n">make_addplot</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
-    <span class="n">add_plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-        <span class="n">mpf</span><span class="o">.</span><span class="n">make_addplot</span><span class="p">([</span><span class="mi">100</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span>
-                         <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                         <span class="n">secondary_y</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rs</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-    <span class="c1"># for hiding &#39;Close&#39; line from the mpf.plot call</span>
-    <span class="n">df_dummy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">tickers</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Open&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span> <span class="s1">&#39;Close&#39;</span><span class="p">]:</span>
-        <span class="n">df_dummy</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">rs</span>
+    <span class="c1"># Plot the Reference Line</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rs</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
 
-    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">mpf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-        <span class="n">df_dummy</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span>
-        <span class="n">volume</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">addplot</span><span class="o">=</span><span class="n">add_plots</span><span class="p">,</span>
-        <span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Relative Strength (Compared to </span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
-        <span class="n">figratio</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">figscale</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
-        <span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">,</span>
-        <span class="n">show_nontrading</span><span class="o">=</span><span class="ow">not</span> <span class="n">hides_nontrading</span><span class="p">,</span>
-        <span class="n">returnfig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="c1"># Set Y axis</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Relative Strength &#39;</span>
+                  <span class="sa">f</span><span class="s1">&#39;(Compared to </span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">tick_right</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelright</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
     <span class="c1"># Set location of legends</span>
-    <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend_</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">)</span>
 
     <span class="c1"># Convert datetime index to string format suitable for display</span>
     <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>

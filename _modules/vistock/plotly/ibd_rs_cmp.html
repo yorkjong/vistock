@@ -90,9 +90,9 @@
 <span class="sd">    and desired parameters.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="n">__software__</span> <span class="o">=</span> <span class="s2">&quot;IBD RS Comparison chart&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;2.3&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;2.4&quot;</span>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;York &lt;york.jong@gmail.com&gt;&quot;</span>
-<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/16 (initial version) ~ 2024/10/03 (last revision)&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/16 (initial version) ~ 2024/10/05 (last revision)&quot;</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
 
@@ -100,6 +100,7 @@
 <span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 <span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">tw</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">file_utils</span>
@@ -112,7 +113,8 @@
 <a class="viewcode-back" href="../../../vistock.plotly.html#vistock.plotly.ibd_rs_cmp.plot">[docs]</a>
 <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
          <span class="n">rs_period</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span>
-         <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly&#39;</span><span class="p">,</span> <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
+         <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly&#39;</span><span class="p">,</span> <span class="n">colorway</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Set3</span><span class="p">,</span>
+         <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot the Relative Strength (RS) of multiple stocks compared to a reference</span>
 <span class="sd">    index.</span>
@@ -166,6 +168,26 @@
 
 <span class="sd">        For more details on templates, refer to Plotly&#39;s official</span>
 <span class="sd">        documentation.</span>
+
+<span class="sd">    colorway: list or None</span>
+<span class="sd">        Sets the default trace colors for the plot. If None, Plotly&#39;s</span>
+<span class="sd">        default color sequence will be used. You can pass a list of custom</span>
+<span class="sd">        colors or choose from Plotly&#39;s predefined color sequences.</span>
+
+<span class="sd">        By default, this is set to `px.colors.qualitative.Set3`, which</span>
+<span class="sd">        consists of 24 vibrant colors.</span>
+
+<span class="sd">        Useful predefined color sequences include:</span>
+
+<span class="sd">        - px.colors.qualitative.Light24 (24 colors, vibrant and varied)</span>
+<span class="sd">        - px.colors.qualitative.Dark24 (24 colors, darker tones)</span>
+<span class="sd">        - px.colors.qualitative.Pastel (26 colors, soft pastel tones)</span>
+<span class="sd">        - px.colors.qualitative.Bold (26 colors, bold and distinct)</span>
+<span class="sd">        - px.colors.qualitative.Alphabet (26 colors, one for each letter)</span>
+<span class="sd">        - px.colors.qualitative.Set3 (12 colors, good for categorical data)</span>
+<span class="sd">        - px.colors.qualitative.G10 (10 colors, general use)</span>
+<span class="sd">        - px.colors.qualitative.T10 (10 colors, clear and bright)</span>
+<span class="sd">        - px.colors.qualitative.Plotly (10 colors, default Plotly colors)</span>
 
 <span class="sd">    hides_nontrading : bool, optional</span>
 <span class="sd">        Whether to hide non-trading periods on the plot. Defaults to True.</span>
@@ -225,6 +247,9 @@
         <span class="n">xaxis_rangeslider_visible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="k">if</span> <span class="n">colorway</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">colorway</span><span class="o">=</span><span class="n">colorway</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">hides_nontrading</span><span class="p">:</span>
         <span class="n">futil</span><span class="o">.</span><span class="n">hide_nontrading_periods</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
 
