@@ -259,8 +259,13 @@ def relative_strength_3m(closes, closes_ref, interval='1d'):
     cumsum_sotck = ema_returns_stock.cumsum()
     cumsum_ref = ema_returns_ref.cumsum()
 
+    # Calculate the cumulative growth factor
+    #cumulative_gf_stock = (1 + ema_returns_stock).cumprod()
+    #cumulative_gf_ref = (1 + ema_returns_ref).cumprod()
+
     # Calculate the relative strength (RS).
     rs = (cumsum_sotck + 1) / (cumsum_ref + 1).abs() * 100
+    #rs = cumulative_gf_stock / cumulative_gf_ref.abs() * 100
 
     return rs.round(2)  # Return the RS values rounded to two decimal places
 
