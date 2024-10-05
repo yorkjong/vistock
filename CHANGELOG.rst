@@ -5,6 +5,9 @@ TODO
 * To support Alexander Elder's technical indicators, such as Force Index,
   Elder Ray Index and stock charts with his trading systems.
 * To support other useful Technical Indicators.
+* To refine error handling on fetch_financials
+* To merge the plotly.ibd_rs_cmp and plotly.ibd_rs modules into plotly.ibd.
+* To merge the mpl.ibd_rs_cmp and mpl.ibd_rs modules into mpl.ibd.
 
 0.7.0 [2024-10-05]
 ------------------
