@@ -34,7 +34,7 @@
 1. Install vistock from GitHub
 
     ```sh
-    pip install git+https://github.com/yorkjong/vistock.git
+    git clone https://github.com/yorkjong/vistock.git
     ```
 
 2. Run a test code.
