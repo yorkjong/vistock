@@ -5,7 +5,10 @@ TODO
 * To support Alexander Elder's technical indicators, such as Force Index,
   Elder Ray Index and stock charts with his trading systems.
 * To support other useful Technical Indicators.
-* To support 3-month RS (original 1-year RS)
+
+0.7.0 [2024-10-05]
+------------------
+* Added the support of 3-month RS (original 1-year RS)
 
 0.6.0 [2024-10-01]
 ------------------
