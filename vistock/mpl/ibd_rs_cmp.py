@@ -191,9 +191,7 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         axes[0].set_prop_cycle(color=color_cycle)
 
     # Set location of legends
-    for ax in axes:
-        if ax.legend_:
-            ax.legend(loc=legend_loc)
+    axes[0].legend(loc=legend_loc)
 
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
