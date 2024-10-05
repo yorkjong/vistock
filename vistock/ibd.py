@@ -55,8 +55,6 @@ __all__ = [
     'ma_window_size',
 ]
 
-import os
-
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -605,10 +603,12 @@ def test_rankings(min_percentile=80, percentile_method='qcut',
     out_dir : str, optional
         The output directory to store CSV tables. Defaults to 'out'.
     '''
+    import os
+    from datetime import datetime
     import vistock.stock_indices as si
 
-    tickers = si.get_tickers('SOX')
-    tickers = ['2330.TW', '2401.TW']
+    code = 'SPX'
+    tickers = si.get_tickers(code)
     rank_stock, rank_indust = rankings(tickers, interval='1d',
                                        percentile_method=percentile_method,
                                        rs_period=rs_period)
@@ -625,10 +625,11 @@ def test_rankings(min_percentile=80, percentile_method='qcut',
 
     # Save to CSV
     print("\n\n***")
+    today = datetime.now().strftime('%Y%m%d')
     os.makedirs(out_dir, exist_ok=True)
     for table, kind in zip([rank_stock, rank_indust],
                            ['stocks', 'industries']):
-        filename = f'rs_{kind}.csv'
+        filename = f'rs_{kind}_{rs_period}_{percentile_method}_{today}.csv'
         table.to_csv(os.path.join(out_dir, filename), index=False)
         print(f'Your "{filename}" is in the "{out_dir}" folder.')
     print("***\n")
