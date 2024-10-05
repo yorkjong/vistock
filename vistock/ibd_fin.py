@@ -25,9 +25,9 @@ For example:
     # Example usage
     ranking_df = financial_metric_ranking(stock_data)
 """
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/09/15 (initial version) ~ 2024/10/01 (last revision)"
+__date__ = "2024/09/15 (initial version) ~ 2024/10/05 (last revision)"
 
 __all__ = [
     'metric_strength_vs_benchmark',
@@ -281,7 +281,7 @@ def financial_metric_ranking(tickers):
     ranking_df = ranking_df.sort_values(by='EPS RS (%)', ascending=False)
 
     # Rank based on Relative Strength
-    rank_columns = ['EPS RS Rank (%)', 'RPS RS Rank (%)']
+    rank_columns = ['EPS RS Rank (P)', 'RPS RS Rank (P)']
     rs_columns = ['EPS RS (%)', 'Rev RS (%)']
     for rank_col, rs_col in zip(rank_columns, rs_columns):
         rank_pct = ranking_df[rs_col].rank(pct=True)

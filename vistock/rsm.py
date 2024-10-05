@@ -33,9 +33,9 @@ See Also:
   how-to-create-the-mansfield-relative-performance-indicator>`_
 
 """
-__version__ = "4.6"
+__version__ = "4.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/23 (initial version) ~ 2024/10/04 (last revision)"
+__date__ = "2024/08/23 (initial version) ~ 2024/10/05 (last revision)"
 
 __all__ = [
     'mansfield_relative_strength',
@@ -322,15 +322,15 @@ def ranking(tickers, ticker_ref='^GSPC',
     # Combine rows into a single DataFrame
     ranking_df = pd.DataFrame(rows)
 
+    # Sort by current RS
+    ranking_df = ranking_df.sort_values(by='RS (%)', ascending=False)
+
     # Rank based on Relative Strength
-    rank_columns = ['RS Rank (%)',]
+    rank_columns = ['RS Rank (P)',]
     rs_columns = ['RS (%)',]
     for rank_col, rs_col in zip(rank_columns, rs_columns):
         rank_pct = ranking_df[rs_col].rank(pct=True)
         ranking_df[rank_col] = (rank_pct * 100).round(2)
-
-    # Sort by current rank
-    ranking_df = ranking_df.sort_values(by='RS Rank (%)', ascending=False)
 
     ranking_df = move_columns_to_end(
         ranking_df,
