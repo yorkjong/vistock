@@ -16,14 +16,15 @@ To use this module, call the `plot` function with a list of stock symbols and
 desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "2.2"
+__version__ = "2.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/10/05 (last revision)"
 
 __all__ = ['plot']
 
 import pandas as pd
 import yfinance as yf
+import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 from .. import tw
@@ -35,7 +36,8 @@ from .. import stock_indices as si
 
 def plot(symbols, period='2y', interval='1d', ticker_ref=None,
          rs_period='12mo', legend_loc='best',
-         style='checkers', hides_nontrading=True, out_dir='out'):
+         style='checkers', color_cycle=plt.cm.Paired.colors,
+         hides_nontrading=True, out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
     index using mplfinance.
@@ -109,6 +111,27 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 
         Default is 'checkers'.
 
+    color_cycle: list or None
+        Specifies a list of colors to be used for cycling through plot
+        lines. If None, the default matplotlib color cycle will be used.
+        You can pass a list of colors to override the default color cycle.
+        Each plot line will use the next color in the sequence.
+
+        Default color sequence:
+
+        - plt.cm.Paired.colors (20 colors, cooler and more muted)
+
+        Other useful predefined color cycles:
+
+        - plt.cm.tab20.colors (20 colors, brighter)
+        - plt.cm.tab20b.colors (20 colors, darker)
+        - plt.cm.Paired.colors (12 colors, alternating between deep and
+          pastel colors; useful for categorical data)
+        - plt.cm.Set3.colors (12 colors, pastel-like; good for categorical
+          data)
+        - plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for
+          categorical data)
+
     hides_nontrading : bool, optional
         Whether to hide non-trading periods. Default is True.
     out_dir : str, optional
@@ -164,6 +187,9 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         show_nontrading=not hides_nontrading,
         returnfig=True,
     )
+    if color_cycle:
+        axes[0].set_prop_cycle(color=color_cycle)
+
     # Set location of legends
     for ax in axes:
         if ax.legend_:
