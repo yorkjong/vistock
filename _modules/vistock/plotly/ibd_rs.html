@@ -112,7 +112,7 @@
 
 <div class="viewcode-block" id="plot">
 <a class="viewcode-back" href="../../../vistock.plotly.html#vistock.plotly.ibd_rs.plot">[docs]</a>
-<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rs_period</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span>
          <span class="n">market_color_style</span><span class="o">=</span><span class="n">MarketColorStyle</span><span class="o">.</span><span class="n">AUTO</span><span class="p">,</span>
          <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly&#39;</span><span class="p">,</span> <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate and display a stock analysis plot with candlestick charts,</span>
@@ -145,9 +145,9 @@
 <span class="sd">        The ticker symbol of the reference index. If None, defaults to S&amp;P</span>
 <span class="sd">        500 (&#39;^GSPC&#39;) or Taiwan Weighted Index (&#39;^TWII&#39;) if the first stock</span>
 <span class="sd">        is a Taiwan stock.</span>
-<span class="sd">    rs_period : str, optional</span>
-<span class="sd">        Specify the period for Relative Strength calculation (&#39;12mo&#39; or &#39;3mo&#39;).</span>
-<span class="sd">        Default to &#39;12mo&#39;.</span>
+<span class="sd">    rs_window : str, optional</span>
+<span class="sd">        Specify the time window (&#39;3mo&#39; or &#39;12mo&#39;) for Relative Strength</span>
+<span class="sd">        calculation. Default to &#39;12mo&#39;.</span>
 
 <span class="sd">    market_color_style : MarketColorStyle, optional</span>
 <span class="sd">        Color style for market data visualization. Default is</span>
@@ -191,11 +191,11 @@
     <span class="n">df_ref</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">ticker</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c1"># Select the appropriate relative strength function based on the rs_period</span>
+    <span class="c1"># Select the appropriate relative strength function based on the rs_window</span>
     <span class="n">rs_func</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;3mo&#39;</span><span class="p">:</span> <span class="n">relative_strength_3m</span><span class="p">,</span>
         <span class="s1">&#39;12mo&#39;</span><span class="p">:</span> <span class="n">relative_strength</span><span class="p">,</span>
-    <span class="p">}[</span><span class="n">rs_period</span><span class="p">]</span>
+    <span class="p">}[</span><span class="n">rs_window</span><span class="p">]</span>
 
     <span class="c1"># Calculate Relative Strength (RS)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;RS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rs_func</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">df_ref</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">interval</span><span class="p">)</span>

@@ -111,7 +111,7 @@
 <div class="viewcode-block" id="plot">
 <a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.ibd_rs_cmp.plot">[docs]</a>
 <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-         <span class="n">rs_period</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span>
+         <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span>
          <span class="n">style</span><span class="o">=</span><span class="s1">&#39;checkers&#39;</span><span class="p">,</span> <span class="n">color_cycle</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span>
          <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -147,9 +147,9 @@
 <span class="sd">        500 (&#39;^GSPC&#39;) or Taiwan Weighted Index (&#39;^TWII&#39;) if the first stock is</span>
 <span class="sd">        a Taiwan stock.</span>
 
-<span class="sd">    rs_period : str, optional</span>
-<span class="sd">        Specify the period for Relative Strength calculation (&#39;12mo&#39; or &#39;3mo&#39;).</span>
-<span class="sd">        Default to &#39;12mo&#39;.</span>
+<span class="sd">    rs_window : str, optional</span>
+<span class="sd">        Specify the time window (&#39;3mo&#39; or &#39;12mo&#39;) for Relative Strength</span>
+<span class="sd">        calculation. Default to &#39;12mo&#39;.</span>
 
 <span class="sd">    legend_loc: str, optional</span>
 <span class="sd">        the location of the legend (default is &#39;best&#39;).</span>
@@ -231,11 +231,11 @@
     <span class="n">df</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">([</span><span class="n">ticker_ref</span><span class="p">]</span><span class="o">+</span><span class="n">tickers</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span>
     <span class="n">df_price</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="s1">&#39;Close&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Price&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c1"># Select the appropriate relative strength function based on the rs_period</span>
+    <span class="c1"># Select the appropriate relative strength function based on the rs_window</span>
     <span class="n">rs_func</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;3mo&#39;</span><span class="p">:</span> <span class="n">relative_strength_3m</span><span class="p">,</span>
         <span class="s1">&#39;12mo&#39;</span><span class="p">:</span> <span class="n">relative_strength</span><span class="p">,</span>
-    <span class="p">}[</span><span class="n">rs_period</span><span class="p">]</span>
+    <span class="p">}[</span><span class="n">rs_window</span><span class="p">]</span>
 
     <span class="c1"># Set the figure</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">mpf</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -284,9 +284,10 @@
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">mpfu</span><span class="o">.</span><span class="n">use_mac_chinese_font</span><span class="p">()</span>
     <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;^NDX&#39;</span><span class="p">,</span> <span class="s1">&#39;^TWII&#39;</span><span class="p">]</span>
-    <span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
-    <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;羅昇&#39;</span><span class="p">,</span> <span class="s1">&#39;昆盈&#39;</span><span class="p">,</span> <span class="s1">&#39;穎漢&#39;</span><span class="p">,</span> <span class="s1">&#39;光聖&#39;</span><span class="p">,</span> <span class="s1">&#39;所羅門&#39;</span><span class="p">]</span>
-    <span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1wk&#39;</span><span class="p">)</span>
+    <span class="c1">#symbols = [&#39;NVDA&#39;, &#39;MSFT&#39;, &#39;META&#39;, &#39;^NDX&#39;]</span>
+    <span class="c1">#plot(symbols)</span>
+    <span class="c1">#symbols = [&#39;羅昇&#39;, &#39;昆盈&#39;, &#39;穎漢&#39;, &#39;光聖&#39;, &#39;所羅門&#39;]</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;3mo&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1y&#39;</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
