@@ -16,9 +16,9 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "2.3"
+__version__ = "2.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/10/05 (last revision)"
 
 __all__ = ['plot']
 
@@ -26,6 +26,7 @@ import pandas as pd
 import yfinance as yf
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import plotly.express as px
 
 from .. import tw
 from .. import file_utils
@@ -36,7 +37,8 @@ from .. import stock_indices as si
 
 def plot(symbols, period='2y', interval='1d', ticker_ref=None,
          rs_period='12mo',
-         template='plotly', hides_nontrading=True, out_dir='out'):
+         template='plotly', colorway=px.colors.qualitative.Set3,
+         hides_nontrading=True, out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
     index.
@@ -90,6 +92,26 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 
         For more details on templates, refer to Plotly's official
         documentation.
+
+    colorway: list or None
+        Sets the default trace colors for the plot. If None, Plotly's
+        default color sequence will be used. You can pass a list of custom
+        colors or choose from Plotly's predefined color sequences.
+
+        By default, this is set to `px.colors.qualitative.Set3`, which
+        consists of 24 vibrant colors.
+
+        Useful predefined color sequences include:
+
+        - px.colors.qualitative.Light24 (24 colors, vibrant and varied)
+        - px.colors.qualitative.Dark24 (24 colors, darker tones)
+        - px.colors.qualitative.Pastel (26 colors, soft pastel tones)
+        - px.colors.qualitative.Bold (26 colors, bold and distinct)
+        - px.colors.qualitative.Alphabet (26 colors, one for each letter)
+        - px.colors.qualitative.Set3 (12 colors, good for categorical data)
+        - px.colors.qualitative.G10 (10 colors, general use)
+        - px.colors.qualitative.T10 (10 colors, clear and bright)
+        - px.colors.qualitative.Plotly (10 colors, default Plotly colors)
 
     hides_nontrading : bool, optional
         Whether to hide non-trading periods on the plot. Defaults to True.
@@ -149,6 +171,9 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         xaxis_rangeslider_visible=False,
         template=template,
     )
+    if colorway:
+        fig.update_layout(colorway=colorway)
+
     if hides_nontrading:
         futil.hide_nontrading_periods(fig, df, interval)
 
