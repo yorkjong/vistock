@@ -43,9 +43,9 @@ See Also:
   <https://www.investors.com/ibd-university/
   find-evaluate-stocks/exclusive-ratings/>`_
 """
-__version__ = "4.5"
+__version__ = "4.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/05 (initial version) ~ 2024/10/05 (last revision)"
+__date__ = "2024/08/05 (initial version) ~ 2024/10/06 (last revision)"
 
 __all__ = [
     'relative_strength',
@@ -248,15 +248,19 @@ def relative_strength_3m(closes, closes_ref, interval='1d'):
     }[interval]
 
     # Calculate daily returns for the stock and reference index
-    returns_stock = closes.ffill().pct_change(fill_method=None)
-    returns_ref = closes_ref.ffill().pct_change(fill_method=None)
+    returns_stock = closes.pct_change(fill_method=None).fillna(0)
+    returns_ref = closes_ref.pct_change(fill_method=None).fillna(0)
 
     # Calculate the Exponential Moving Average (EMA) of the returns
     ema_returns_stock = returns_stock.ewm(span=span, adjust=False).mean()
     ema_returns_ref = returns_ref.ewm(span=span, adjust=False).mean()
 
+    # Calculate the cumulative sums
+    cumsum_sotck = ema_returns_stock.cumsum()
+    cumsum_ref = ema_returns_ref.cumsum()
+
     # Calculate the relative strength (RS).
-    rs = ema_returns_stock / ema_returns_ref.abs() * 100
+    rs = (cumsum_sotck + 1) / (cumsum_ref + 1).abs() * 100
 
     return rs.round(2)  # Return the RS values rounded to two decimal places
 
@@ -435,6 +439,7 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
 
     # Batch download stock info
     info = yfu.download_tickers_info(tickers, ['sector', 'industry'])
+
     # Calculate RS values for all stocks
     rs_data = []
     for ticker in tickers:
@@ -639,7 +644,7 @@ if __name__ == "__main__":
     import time
 
     start_time = time.time()
-    test_ranking(rs_period='3mo')
+    #test_ranking(rs_period='3mo')
     test_rankings(percentile_method='qcut', rs_period='3mo')
     print(f"Execution time: {time.time() - start_time:.4f} seconds")
 
