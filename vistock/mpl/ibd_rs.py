@@ -201,6 +201,6 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
 
 if __name__ == '__main__':
     mpfu.use_mac_chinese_font()
-    plot('TSLA', interval='1d', hides_nontrading=True)
-    plot('台積電', interval='1wk')
+    plot('TSLA', interval='1d', rs_period='3mo', hides_nontrading=True)
+    #plot('台積電', interval='1wk')
 

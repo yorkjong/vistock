@@ -207,9 +207,10 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 def main():
     mpfu.use_mac_chinese_font()
     symbols = ['NVDA', 'MSFT', 'META', '^NDX', '^TWII']
-    plot(symbols)
-    symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
-    plot(symbols, interval='1wk')
+    #symbols = ['NVDA', 'MSFT', 'META', '^NDX']
+    #plot(symbols)
+    #symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
+    plot(symbols, rs_period='3mo', interval='1d', period='1y')
 
 
 if __name__ == '__main__':
