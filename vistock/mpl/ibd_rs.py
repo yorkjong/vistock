@@ -35,7 +35,7 @@ from ..ibd import relative_strength, relative_strength_3m, ma_window_size
 from .. import stock_indices as si
 
 
-def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
+def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
          legend_loc='best', market_color_style=MarketColorStyle.AUTO,
          style='yahoo', hides_nontrading=True, out_dir='out'):
     """
@@ -64,9 +64,9 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
 
-    rs_period : str, optional
-        Specify the period for Relative Strength calculation ('12mo' or '3mo').
-        Default to '12mo'.
+    rs_window : str, optional
+        Specify the time window ('3mo' or '12mo') for Relative Strength
+        calculation. Default to '12mo'.
 
     legend_loc: str, optional
         the location of the legend (default is 'best').
@@ -128,11 +128,11 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
     df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
     df = df.xs(ticker, level='Ticker', axis=1)
 
-    # Select the appropriate relative strength function based on the rs_period
+    # Select the appropriate relative strength function based on the rs_window
     rs_func = {
         '3mo': relative_strength_3m,
         '12mo': relative_strength,
-    }[rs_period]
+    }[rs_window]
 
     # Calculate Relative Strength (RS)
     df['RS'] = rs_func(df['Close'], df_ref['Close'], interval)
@@ -201,6 +201,6 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
 
 if __name__ == '__main__':
     mpfu.use_mac_chinese_font()
-    plot('TSLA', interval='1d', rs_period='3mo', hides_nontrading=True)
+    plot('TSLA', interval='1d', rs_window='3mo', hides_nontrading=True)
     #plot('台積電', interval='1wk')
 

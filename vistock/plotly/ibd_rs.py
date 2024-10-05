@@ -36,7 +36,7 @@ from ..ibd import relative_strength, relative_strength_3m, ma_window_size
 from .. import stock_indices as si
 
 
-def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
+def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
          market_color_style=MarketColorStyle.AUTO,
          template='plotly', hides_nontrading=True, out_dir='out'):
     """Generate and display a stock analysis plot with candlestick charts,
@@ -69,9 +69,9 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
-    rs_period : str, optional
-        Specify the period for Relative Strength calculation ('12mo' or '3mo').
-        Default to '12mo'.
+    rs_window : str, optional
+        Specify the time window ('3mo' or '12mo') for Relative Strength
+        calculation. Default to '12mo'.
 
     market_color_style : MarketColorStyle, optional
         Color style for market data visualization. Default is
@@ -115,11 +115,11 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_period='12mo',
     df_ref = df.xs(ticker_ref, level='Ticker', axis=1)
     df = df.xs(ticker, level='Ticker', axis=1)
 
-    # Select the appropriate relative strength function based on the rs_period
+    # Select the appropriate relative strength function based on the rs_window
     rs_func = {
         '3mo': relative_strength_3m,
         '12mo': relative_strength,
-    }[rs_period]
+    }[rs_window]
 
     # Calculate Relative Strength (RS)
     df['RS'] = rs_func(df['Close'], df_ref['Close'], interval)

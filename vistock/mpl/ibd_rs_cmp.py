@@ -35,7 +35,7 @@ from .. import stock_indices as si
 
 
 def plot(symbols, period='2y', interval='1d', ticker_ref=None,
-         rs_period='12mo', legend_loc='best',
+         rs_window='12mo', legend_loc='best',
          style='checkers', color_cycle=plt.cm.Paired.colors,
          out_dir='out'):
     """
@@ -71,9 +71,9 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
 
-    rs_period : str, optional
-        Specify the period for Relative Strength calculation ('12mo' or '3mo').
-        Default to '12mo'.
+    rs_window : str, optional
+        Specify the time window ('3mo' or '12mo') for Relative Strength
+        calculation. Default to '12mo'.
 
     legend_loc: str, optional
         the location of the legend (default is 'best').
@@ -155,11 +155,11 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
     df_price = df.xs('Close', level='Price', axis=1)
 
-    # Select the appropriate relative strength function based on the rs_period
+    # Select the appropriate relative strength function based on the rs_window
     rs_func = {
         '3mo': relative_strength_3m,
         '12mo': relative_strength,
-    }[rs_period]
+    }[rs_window]
 
     # Set the figure
     fig = mpf.figure(style=style, figsize=(12, 6))
@@ -210,7 +210,7 @@ def main():
     #symbols = ['NVDA', 'MSFT', 'META', '^NDX']
     #plot(symbols)
     #symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
-    plot(symbols, rs_period='3mo', interval='1d', period='1y')
+    plot(symbols, rs_window='3mo', interval='1d', period='1y')
 
 
 if __name__ == '__main__':
