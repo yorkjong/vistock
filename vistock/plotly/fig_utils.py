@@ -2,7 +2,7 @@
 Common utility for Plotly figures.
 """
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2023/02/09 (initial version) ~ 2024/07/13 (last revision)"
+__date__ = "2023/02/09 (initial version) ~ 2024/10/03 (last revision)"
 
 __all__ = [
     'get_candlestick_colors',
@@ -71,6 +71,10 @@ def hide_nontrading_periods(fig, df, interval):
         - 60m, 1h - max 730 days (yes 1h is technically < 90m but this what
           Yahoo does)
     """
+    # If the index is not datetime, convert it back
+    if not isinstance(df.index, pd.DatetimeIndex):
+        df.index = pd.to_datetime(df.index)
+
     # Convert aliases from `interval` to `freq`
     # These aliases represent 'month', 'minute', 'hour', 'day', and 'week'.
     freq = interval
@@ -82,13 +86,16 @@ def hide_nontrading_periods(fig, df, interval):
     # Calculate nontrading time-periods
     dt_all = pd.date_range(start=df.index[0], end=df.index[-1], freq=freq)
     dt_breaks = dt_all.difference(df.index)
+    #print("All dates (dt_all):", dt_all)
+    #print("Trading dates (df.index):", df.index)
+    #print("Breaks (dt_breaks):", dt_breaks)
 
     # Calculate dvalue in milliseconds
-    dvalue = 86400 * 1000   # 1 day in milliseconds
+    dvalue = 24*60*60 * 1000    # 1 day in milliseconds
     if interval.endswith('m'):      # minute
         dvalue = 60 * int(interval.replace('m', '')) * 1000
     elif interval.endswith('h'):    # hour
-        dvalue = 3600 * int(interval.replace('h', '')) * 1000
+        dvalue = 60*60 * int(interval.replace('h', '')) * 1000
 
     # Update xaxes to hide non-trading time-periods
     fig.update_xaxes(rangebreaks=[dict(values=dt_breaks, dvalue=dvalue)])

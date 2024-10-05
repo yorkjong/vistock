@@ -1,5 +1,6 @@
 """
 Mansfield Relative Strength (RSM) Module
+-----------------------------------------
 
 This module provides functions for calculating and ranking stocks based on
 Mansfield Relative Strength (RSM) and related metrics. It includes methods
@@ -7,17 +8,8 @@ to compute Dorsey Relative Strength (RSD), Mansfield Relative Strength (RSM)
 using both Simple Moving Average (SMA) and Exponential Moving Average (EMA),
 as well as functionality to rank stocks against a benchmark index.
 
-Functions:
-----------
-- dorsey_relative_strength(closes, closes_index): Computes Dorsey Relative
-  Strength (RSD).
-- mansfield_relative_strength(closes, closes_index, window): Computes Mansfield
-  Relative Strength (RSM)
-- ranking(tickers, ticker_ref='^GSPC', period='2y', interval='1wk', ma='SMA',
-  window=52): Ranks stocks based on their RSM.
-
 Examples:
----------
+~~~~~~~~~
 To calculate RSM for a list of stock tickers and rank them:
 
 >>> tickers = ['AAPL', 'MSFT', 'GOOGL']
@@ -32,7 +24,7 @@ To compute Mansfield Relative Strength using SMA for specific close prices:
 >>> print(rsm)
 
 See Also:
----------
+~~~~~~~~~
 - `Mansfield Relative Strength | ChartMill.com
   <https://www.chartmill.com/documentation/technical-analysis/indicators/
   35-Mansfield-Relative-Strength>`_
@@ -41,9 +33,9 @@ See Also:
   how-to-create-the-mansfield-relative-performance-indicator>`_
 
 """
-__version__ = "4.4"
+__version__ = "4.7"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/23 (initial version) ~ 2024/09/30 (last revision)"
+__date__ = "2024/08/23 (initial version) ~ 2024/10/05 (last revision)"
 
 __all__ = [
     'mansfield_relative_strength',
@@ -288,6 +280,7 @@ def ranking(tickers, ticker_ref='^GSPC',
         df = df_all.xs(ticker, level='Ticker', axis=1)
         rsm = mansfield_relative_strength(df['Close'], df_ref['Close'],
                                           rs_win, ma=ma)
+
         for win in ma_wins:
             price_ma[f'{win}'] = ma_func(df['Close'], win).round(2)
         vol_div_vma = (df['Volume'] / ma_func(df['Volume'], vma_win)).round(2)
@@ -302,13 +295,7 @@ def ranking(tickers, ticker_ref='^GSPC',
             print(f"info[{ticker}]['trailingPE']: {pe}")
             pe = np.nan
 
-        # Calculate RSM for different time periods
         end_date = rsm.index[-1]
-        one_week_ago = end_date - pd.DateOffset(weeks=1)
-        one_month_ago = end_date - pd.DateOffset(months=1)
-        three_months_ago = end_date - pd.DateOffset(months=3)
-        six_months_ago = end_date - pd.DateOffset(months=6)
-        nine_months_ago = end_date - pd.DateOffset(months=9)
 
         # Construct DataFrame for current stock
         row = {
@@ -316,12 +303,12 @@ def ranking(tickers, ticker_ref='^GSPC',
             'Sector': info[ticker]['sector'],
             'Industry': info[ticker]['industry'],
             'RS (%)': rsm.asof(end_date),
-            '1 Week Ago': rsm.asof(one_week_ago),
-            '1 Month Ago': rsm.asof(one_month_ago),
-            '3 Months Ago': rsm.asof(three_months_ago),
-            '6 Months Ago': rsm.asof(six_months_ago),
-            '9 Months Ago': rsm.asof(nine_months_ago),
-            'Price': df['Close'].iloc[-1].round(2),
+            '1 Week Ago': rsm.asof(end_date - pd.DateOffset(weeks=1)),
+            '1 Month Ago': rsm.asof(end_date - pd.DateOffset(months=1)),
+            '3 Months Ago': rsm.asof(end_date - pd.DateOffset(months=3)),
+            '6 Months Ago': rsm.asof(end_date - pd.DateOffset(months=6)),
+            '9 Months Ago': rsm.asof(end_date - pd.DateOffset(months=9)),
+            'Price': df['Close'].asof(end_date).round(2),
             **{f'MA{w}': price_ma[f'{w}'].iloc[-1] for w in ma_wins},
             f'Volume / VMA{vma_win}': vol_div_vma.iloc[-1],
             'EPS RS (%)': eps_rs.iloc[-1],
@@ -335,15 +322,15 @@ def ranking(tickers, ticker_ref='^GSPC',
     # Combine rows into a single DataFrame
     ranking_df = pd.DataFrame(rows)
 
+    # Sort by current RS
+    ranking_df = ranking_df.sort_values(by='RS (%)', ascending=False)
+
     # Rank based on Relative Strength
-    rank_columns = ['RS Rank (%)',]
+    rank_columns = ['RS Rank (P)',]
     rs_columns = ['RS (%)',]
     for rank_col, rs_col in zip(rank_columns, rs_columns):
         rank_pct = ranking_df[rs_col].rank(pct=True)
         ranking_df[rank_col] = (rank_pct * 100).round(2)
-
-    # Sort by current rank
-    ranking_df = ranking_df.sort_values(by='RS Rank (%)', ascending=False)
 
     ranking_df = move_columns_to_end(
         ranking_df,

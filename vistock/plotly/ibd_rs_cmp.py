@@ -16,9 +16,9 @@ Usage:
     and desired parameters.
 """
 __software__ = "IBD RS Comparison chart"
-__version__ = "2.0"
+__version__ = "2.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/08/26 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
 
 __all__ = ['plot']
 
@@ -30,11 +30,12 @@ from plotly.subplots import make_subplots
 from .. import tw
 from .. import file_utils
 from . import fig_utils as futil
-from ..ibd import relative_strength
+from ..ibd import relative_strength, relative_strength_3m
 from .. import stock_indices as si
 
 
 def plot(symbols, period='2y', interval='1d', ticker_ref=None,
+         rs_period='12mo',
          template='plotly', hides_nontrading=True, out_dir='out'):
     """
     Plot the Relative Strength (RS) of multiple stocks compared to a reference
@@ -63,10 +64,15 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     interval : str, optional
         The interval for data points ('1d' for daily, '1wk' for weekly; default
         is '1d').
+
     ticker_ref : str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
+
+    rs_period : str, optional
+        Specify the period for Relative Strength calculation ('12mo' or '3mo').
+        Default to '12mo'.
 
     template: str, optional:
         The Plotly template to use for styling the chart.
@@ -103,15 +109,22 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     if not ticker_ref:
         ticker_ref = '^GSPC'      # S&P 500 Index
         if tw.is_taiwan_stock(tw.as_yfinance(symbols[0])):
-            ticker_ref = '^TWII'  # Taiwan Weighted Index
+            ticker_ref = '^TWII'  # Taiwan Weighted index
 
+    # Download data
     tickers = [tw.as_yfinance(s) for s in symbols]
     df = yf.download([ticker_ref]+tickers, period=period, interval=interval)
     df = df.xs('Close', level='Price', axis=1)
 
+    # Select the appropriate relative strength function based on the rs_period
+    rs_func = {
+        '3mo': relative_strength_3m,
+        '12mo': relative_strength,
+    }[rs_period]
+
     fig = go.Figure()
     for ticker, symbol in zip(tickers, symbols):
-        rs = relative_strength(df[ticker], df[ticker_ref], interval)
+        rs = rs_func(df[ticker], df[ticker_ref], interval)
         fig.add_trace(go.Scatter(x=rs.index, y=rs, mode='lines',
                                  name=si.get_name(symbol)))
     df[f'RS {ticker_ref}'] = 100
@@ -158,7 +171,7 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 
 def main():
     symbols = ['NVDA', 'MSFT', 'META', '^NDX', '^TWII']
-    plot(symbols, template='plotly_dark')
+    plot(symbols, interval='1d', template='plotly_dark')
     symbols = ['羅昇', '昆盈', '穎漢', '光聖', '所羅門']
     plot(symbols, interval='1wk', template='xgridoff')
 

@@ -1,11 +1,12 @@
 """
-ibd_fin.py -- IBD Financial Analysis Module
+IBD Financial Analysis Module
+-----------------------------
 
 This module provides functions for financial data analysis and comparison, using
 methods inspired by those used by Investors Business Daily (IBD).
 
-Key functionalities include:
-
+Key Features:
+~~~~~~~~~~~~~
 - Calculation of relative strength for various financial metrics (e.g., EPS,
   Revenue) against benchmarks such as the S&P 500.
 - Creation of comparative DataFrames that rank stocks based on their financial
@@ -14,19 +15,19 @@ Key functionalities include:
   custom ranking methods.
 
 Usage:
-
+~~~~~~
 Import this module to access functions for analyzing and ranking financial data.
 For example:
 ::
 
-from ibd_fin import financial_metric_ranking
+    from ibd_fin import financial_metric_ranking
 
-# Example usage
-ranking_df = financial_metric_ranking(stock_data)
+    # Example usage
+    ranking_df = financial_metric_ranking(stock_data)
 """
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/09/15 (initial version) ~ 2024/10/01 (last revision)"
+__date__ = "2024/09/15 (initial version) ~ 2024/10/05 (last revision)"
 
 __all__ = [
     'metric_strength_vs_benchmark',
@@ -276,11 +277,11 @@ def financial_metric_ranking(tickers):
     # Combine results into a single DataFrame
     ranking_df = pd.DataFrame(rows)
 
-    # Sort by current rank
+    # Sort by current EPS RS
     ranking_df = ranking_df.sort_values(by='EPS RS (%)', ascending=False)
 
     # Rank based on Relative Strength
-    rank_columns = ['EPS RS Rank (%)', 'RPS RS Rank (%)']
+    rank_columns = ['EPS RS Rank (P)', 'RPS RS Rank (P)']
     rs_columns = ['EPS RS (%)', 'Rev RS (%)']
     for rank_col, rs_col in zip(rank_columns, rs_columns):
         rank_pct = ranking_df[rs_col].rank(pct=True)
