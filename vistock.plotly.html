@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vistock.plotly package &mdash; vistock 0.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=fe7df9b0"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="vistock.mpl package" href="vistock.mpl.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            vistock
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Read Me</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="vistock.html">vistock package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="vistock.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="vistock.mpl.html">vistock.mpl package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">vistock.plotly package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.bull_draw_utils">vistock.bull_draw_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.file_utils">vistock.file_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.ibd">vistock.ibd module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.rsm">vistock.rsm module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.stock_indices">vistock.stock_indices module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.ta">vistock.ta module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.tw">vistock.tw module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.utils">vistock.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.yf_utils">vistock.yf_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">vistock</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Source</a></li>
+          <li class="breadcrumb-item"><a href="vistock.html">vistock package</a></li>
+      <li class="breadcrumb-item active">vistock.plotly package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/vistock.plotly.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vistock-plotly-package">
+<h1>vistock.plotly package<a class="headerlink" href="#vistock-plotly-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-vistock.plotly.bull_draw">
+<span id="vistock-plotly-bull-draw-module"></span><h2>vistock.plotly.bull_draw module<a class="headerlink" href="#module-vistock.plotly.bull_draw" title="Link to this heading"></a></h2>
+<p>Visualize a BullRun and Drawdown for a stock.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.bull_draw.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.bull_draw.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/bull_draw.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.bull_draw.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a stock figure that consists of two subplots: a price subplot and
+a volume subplot.</p>
+<p>The price subplot includes price lines, bull-run bar cahrt, and drawdown
+bar chart, while the volume subplot includes a volume histogram and a
+volume moving average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.fig_utils">
+<span id="vistock-plotly-fig-utils-module"></span><h2>vistock.plotly.fig_utils module<a class="headerlink" href="#module-vistock.plotly.fig_utils" title="Link to this heading"></a></h2>
+<p>Common utility for Plotly figures.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.fig_utils.add_crosshair_cursor">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.fig_utils.</span></span><span class="sig-name descname"><span class="pre">add_crosshair_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/fig_utils.html#add_crosshair_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.fig_utils.add_crosshair_cursor" title="Link to this definition"></a></dt>
+<dd><p>Add crosshair cursor to a given figure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fig</strong> (<em>plotly.graph_objects.Figure</em>) – the figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.fig_utils.add_hovermode_menu">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.fig_utils.</span></span><span class="sig-name descname"><span class="pre">add_hovermode_menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/fig_utils.html#add_hovermode_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.fig_utils.add_hovermode_menu" title="Link to this definition"></a></dt>
+<dd><p>Add a dropdown menu for selecting a hover mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fig</strong> (<em>plotly.graph_objects.Figure</em>) – the figure.</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – the x position of the menu</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – the y position of the menu</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.fig_utils.get_candlestick_colors">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.fig_utils.</span></span><span class="sig-name descname"><span class="pre">get_candlestick_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.WESTERN</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/fig_utils.html#get_candlestick_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.fig_utils.get_candlestick_colors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.fig_utils.get_volume_colors">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.fig_utils.</span></span><span class="sig-name descname"><span class="pre">get_volume_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.WESTERN</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/fig_utils.html#get_volume_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.fig_utils.get_volume_colors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.fig_utils.hide_nontrading_periods">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.fig_utils.</span></span><span class="sig-name descname"><span class="pre">hide_nontrading_periods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/fig_utils.html#hide_nontrading_periods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.fig_utils.hide_nontrading_periods" title="Link to this definition"></a></dt>
+<dd><p>Hide non-tranding time-periods.</p>
+<p>This function can hide certain time-periods to avoid the gaps at
+non-trading time-periods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fig</strong> (<em>plotly.graph_objects.figure</em>) – the figure</p></li>
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – the stock table</p></li>
+<li><p><strong>interval</strong> (<em>str</em>) – <p>the interval of an OHLC item.
+Valid values are 1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo,
+3mo. Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.financials">
+<span id="vistock-plotly-financials-module"></span><h2>vistock.plotly.financials module<a class="headerlink" href="#module-vistock.plotly.financials" title="Link to this heading"></a></h2>
+<p>This module provides a function to plot financial data for a given stock symbol
+using Plotly. The data includes Basic EPS, Operating Revenue, Trailing EPS,
+and Forward EPS (if available), plotted on two subplots with customizable
+styles via the <cite>template</cite> parameter.</p>
+<p>The <cite>plot</cite> function generates:</p>
+<ol class="arabic simple">
+<li><p>Quarterly financial data.</p></li>
+<li><p>Annual financial data, with markers for Trailing EPS and Forward EPS.</p></li>
+</ol>
+<p>The plot is saved as an HTML file in the specified <cite>out_dir</cite>, with support
+for interactive exploration.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.financials.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.financials.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/financials.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.financials.plot" title="Link to this definition"></a></dt>
+<dd><p>Plots the financial data of a stock symbol using Plotly.</p>
+<p>The function fetches Basic EPS, Operating Revenue, Trailing EPS, and
+Forward EPS for the given stock symbol from Yahoo Finance, with data
+divided into quarterly and annual segments. The data is plotted using two
+subplots, one for each frequency. The primary y-axis displays Basic EPS,
+and the secondary y-axis displays Operating Revenue. The chart’s layout is
+customizable through the <cite>template</cite> parameter.</p>
+<p>The function also saves the plot as a PNG file in the specified <cite>out_dir</cite>
+after generating the HTML plot using Plotly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – The stock symbol to analyze.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.ibd_rs">
+<span id="vistock-plotly-ibd-rs-module"></span><h2>vistock.plotly.ibd_rs module<a class="headerlink" href="#module-vistock.plotly.ibd_rs" title="Link to this heading"></a></h2>
+<p>ibd_rs.py - Provides IBD-compatible stock charts.</p>
+<p>This module provides functionality for analyzing and plotting stock data
+with a focus on Investor’s Business Daily (IBD) Relative Strength metrics.
+It includes capabilities for generating candlestick charts with moving averages,
+volume analysis, and relative strength comparisons.</p>
+<p>The main function ‘plot’ allows users to visualize stock performance
+over various time periods and intervals, with customizable reference indexes
+and styling options.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vistock.plotly</span> <span class="kn">import</span> <span class="n">ibd_rs</span>
+<span class="n">ibd_rs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;TSLA&#39;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.ibd_rs.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.ibd_rs.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/ibd_rs.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.ibd_rs.plot" title="Link to this definition"></a></dt>
+<dd><p>Generate and display a stock analysis plot with candlestick charts,
+moving averages, volume analysis, and Relative Strength (RS) metrics.</p>
+<dl class="simple">
+<dt>Creates an interactive Plotly figure showing:</dt><dd><ul class="simple">
+<li><p>Candlestick chart of the stock with moving averages.</p></li>
+<li><p>Relative Strength (RS) indicator in a separate subplot.</p></li>
+<li><p>Volume and volume moving average in another subplot.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The figure is saved as an HTML file in the specified output directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – The stock symbol to analyze.</p></li>
+<li><p><strong>period</strong> (<em>str</em>) – <p>the period data to download. . Defaults to ‘2y’. Valid values are
+6mo, 1y, 2y, 5y, 10y, ytd, max.</p>
+<ul>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em>) – The interval for data points (‘1d’ for daily, ‘1wk’ for weekly; default
+is ‘1d’).</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol of the reference index. If None, defaults to S&amp;P
+500 (‘^GSPC’) or Taiwan Weighted Index (‘^TWII’) if the first stock
+is a Taiwan stock.</p></li>
+<li><p><strong>rs_period</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify the period for Relative Strength calculation (‘12mo’ or ‘3mo’).
+Default to ‘12mo’.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an unsupported interval is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.ibd_rs_cmp">
+<span id="vistock-plotly-ibd-rs-cmp-module"></span><h2>vistock.plotly.ibd_rs_cmp module<a class="headerlink" href="#module-vistock.plotly.ibd_rs_cmp" title="Link to this heading"></a></h2>
+<p>ibd_rs_cmp - A module for plotting Relative Strength (RS) comparisons of
+multiple stocks.</p>
+<p>This module provides functionality to plot the Relative Strength (RS) of
+multiple stocks compared to a reference index (e.g., S&amp;P 500 or Taiwan Weighted
+Index) using Plotly. It fetches historical stock data from Yahoo Finance,
+calculates RS values, and generates an interactive Plotly chart. The resulting
+chart can be saved as an HTML file.</p>
+<p>Functions:
+- plot: Generates a Relative Strength comparison plot for multiple stocks.</p>
+<dl class="simple">
+<dt>Usage:</dt><dd><p>To use this module, call the <cite>plot</cite> function with a list of stock symbols
+and desired parameters.</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.ibd_rs_cmp.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.ibd_rs_cmp.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/ibd_rs_cmp.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.ibd_rs_cmp.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot the Relative Strength (RS) of multiple stocks compared to a reference
+index.</p>
+<p>This function generates an interactive Plotly chart that compares the RS
+values of the specified stocks against a reference index (e.g., S&amp;P 500
+or Taiwan Weighted Index).  The chart includes RS lines for each stock and
+can be customized based on the selected period and interval. The resulting
+plot is saved as an HTML file in the specified output directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbols</strong> (<em>list</em><em> of </em><em>str</em>) – List of stock symbols to compare. Can include both US and Taiwan
+stocks.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. . Defaults to ‘2y’. Valid values are
+6mo, 1y, 2y, 5y, 10y, ytd, max.</p>
+<ul>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – The interval for data points (‘1d’ for daily, ‘1wk’ for weekly; default
+is ‘1d’).</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol of the reference index. If None, defaults to S&amp;P
+500 (‘^GSPC’) or Taiwan Weighted Index (‘^TWII’) if the first stock
+is a Taiwan stock.</p></li>
+<li><p><strong>rs_period</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify the period for Relative Strength calculation (‘12mo’ or ‘3mo’).
+Default to ‘12mo’.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods on the plot. Defaults to True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the HTML file. Defaults to ‘out’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The function generates a plot and saves it as an HTML file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;TSM&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.mansfield">
+<span id="vistock-plotly-mansfield-module"></span><h2>vistock.plotly.mansfield module<a class="headerlink" href="#module-vistock.plotly.mansfield" title="Link to this heading"></a></h2>
+<section id="mansfield-stock-charts">
+<h3>Mansfield Stock Charts<a class="headerlink" href="#mansfield-stock-charts" title="Link to this heading"></a></h3>
+<p>This module provides functionality for generating and plotting Mansfield Stock
+Charts and Mansfield Relative Strength (RSM) charts based on the methods
+outlined in Stan Weinstein’s book “Secrets for Profiting in Bull and Bear
+Markets.” It includes two main classes for creating visualizations:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>StockChart:</dt><dd><ul class="simple">
+<li><p>Generates a Mansfield Stock Chart for a given stock symbol compared to a
+reference index.</p></li>
+<li><p>Allows customization of chart elements such as moving averages, chart
+templates, and hiding non-trading periods.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>RelativeStrengthLines:</dt><dd><ul class="simple">
+<li><p>Plots the Mansfield Relative Strength (RSM) of multiple stocks compared
+to a reference index.</p></li>
+<li><p>Allows comparison of multiple stocks’ RS values against a reference index
+with customization options for the time period, data interval, and moving
+average type.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<section id="usage">
+<h4>Usage:<a class="headerlink" href="#usage" title="Link to this heading"></a></h4>
+<dl>
+<dt>To generate a Mansfield Stock Chart:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">StockChart</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;TSLA&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1wk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt>To generate a Relative Strength Lines chart for multiple stocks:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RelativeStrengthLines</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">],</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1wk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="see-also">
+<h4>See Also:<a class="headerlink" href="#see-also" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://trendspider.com/trading-tools-store/indicators/mansfield-relative-strength/">Mansfield relative strength | TrendSpider Store</a></p></li>
+</ul>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.plotly.mansfield.RelativeStrengthLines">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.plotly.mansfield.</span></span><span class="sig-name descname"><span class="pre">RelativeStrengthLines</span></span><a class="reference internal" href="_modules/vistock/plotly/mansfield.html#RelativeStrengthLines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.mansfield.RelativeStrengthLines" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for plotting Mansfield Relative Strength (RSM) lines of multiple
+stocks compared to a reference index.</p>
+<p>This class generates an interactive Plotly chart that compares the Relative
+Strength (RS) of multiple stocks against a reference index (e.g., S&amp;P 500
+or Taiwan Weighted Index). It provides a visualization of how each stock’s
+RS changes over time relative to the reference index, with options to
+customize the time period, data interval, and moving average type.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.plotly.mansfield.RelativeStrengthLines.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SMA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly_dark'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorway</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['rgb(141,211,199)',</span> <span class="pre">'rgb(255,255,179)',</span> <span class="pre">'rgb(190,186,218)',</span> <span class="pre">'rgb(251,128,114)',</span> <span class="pre">'rgb(128,177,211)',</span> <span class="pre">'rgb(253,180,98)',</span> <span class="pre">'rgb(179,222,105)',</span> <span class="pre">'rgb(252,205,229)',</span> <span class="pre">'rgb(217,217,217)',</span> <span class="pre">'rgb(188,128,189)',</span> <span class="pre">'rgb(204,235,197)',</span> <span class="pre">'rgb(255,237,111)']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/mansfield.html#RelativeStrengthLines.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.mansfield.RelativeStrengthLines.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot the Mansfield Relative Strength (RSM) of multiple stocks compared
+to a reference index.</p>
+<p>This function generates an interactive Plotly chart that compares the
+RS values of the specified stocks against a reference index (e.g.,
+S&amp;P 500 or Taiwan Weighted Index).  The chart includes RS lines for
+each stock and can be customized based on the selected period and
+interval. The resulting plot is saved as an HTML file in the specified
+output directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbols</strong> (<em>list</em><em> of </em><em>str</em>) – List of stock symbols to compare. Can include both US and Taiwan
+stocks.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. . Defaults to ‘2y’. Valid values are
+6mo, 1y, 2y, 5y, 10y, ytd, max.</p>
+<ul>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – The interval for data points (‘1d’ for daily, ‘1wk’ for weekly;
+default is ‘1d’).</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol of the reference index. If None, defaults to S&amp;P
+500 (‘^GSPC’) or Taiwan Weighted Index (‘^TWII’) if the first stock
+is a Taiwan stock.</p></li>
+<li><p><strong>ma</strong> (<em>str</em><em>, </em><em>optional</em>) – Moving average type (‘SMA’, ‘EMA’). Default to ‘SMA’.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly_dark’.</p>
+<p>Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>colorway</strong> (<em>list</em><em> or </em><em>None</em>) – <p>Sets the default trace colors for the plot. If None, Plotly’s
+default color sequence will be used. You can pass a list of custom
+colors or choose from Plotly’s predefined color sequences.</p>
+<p>By default, this is set to <cite>px.colors.qualitative.Set3</cite>, which
+consists of 24 vibrant colors.</p>
+<p>Useful predefined color sequences include:</p>
+<ul>
+<li><p>px.colors.qualitative.Light24 (24 colors, vibrant and varied)</p></li>
+<li><p>px.colors.qualitative.Dark24 (24 colors, darker tones)</p></li>
+<li><p>px.colors.qualitative.Pastel (26 colors, soft pastel tones)</p></li>
+<li><p>px.colors.qualitative.Bold (26 colors, bold and distinct)</p></li>
+<li><p>px.colors.qualitative.Alphabet (26 colors, one for each letter)</p></li>
+<li><p>px.colors.qualitative.Set3 (12 colors, good for categorical data)</p></li>
+<li><p>px.colors.qualitative.G10 (10 colors, general use)</p></li>
+<li><p>px.colors.qualitative.T10 (10 colors, clear and bright)</p></li>
+<li><p>px.colors.qualitative.Plotly (10 colors, default Plotly colors)</p></li>
+</ul>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods on the plot. Defaults to True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the HTML file. Defaults to ‘out’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The function generates a plot and saves it as an HTML file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;TSM&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.plotly.mansfield.StockChart">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.plotly.mansfield.</span></span><span class="sig-name descname"><span class="pre">StockChart</span></span><a class="reference internal" href="_modules/vistock/plotly/mansfield.html#StockChart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.mansfield.StockChart" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for generating and plotting Mansfield Stock Charts based on Stan
+Weinstein’s methods outlined in the book “Secrets for Profiting in Bull and
+Bear Markets.”</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.plotly.mansfield.StockChart.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1wk'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SMA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/mansfield.html#StockChart.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.mansfield.StockChart.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a Mansfield Stock Chart for a given stock symbol and time
+period.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1y, 2y, 5y, 10y, ytd,
+max. Default is ‘2y’.</p>
+<ul>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1d, 1wk, 1mo, 3mo.
+Default is ‘1wk’.</p>
+<ul>
+<li><p>d – days</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – months</p></li>
+</ul>
+</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol of the reference index. If None, defaults to S&amp;P
+500 (‘^GSPC’) or Taiwan Weighted Index (‘^TWII’) if the first stock
+is a Taiwan stock.</p></li>
+<li><p><strong>ma</strong> (<em>str</em><em>, </em><em>optional</em>) – Moving average type (‘SMA’, ‘EMA’). Default to ‘SMA’.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an unsupported interval is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.prf2s">
+<span id="vistock-plotly-prf2s-module"></span><h2>vistock.plotly.prf2s module<a class="headerlink" href="#module-vistock.plotly.prf2s" title="Link to this heading"></a></h2>
+<p>Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
+2-section layout for a given stock.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.plotly.prf2s.Turnover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.plotly.prf2s.</span></span><span class="sig-name descname"><span class="pre">Turnover</span></span><a class="reference internal" href="_modules/vistock/plotly/prf2s.html#Turnover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.prf2s.Turnover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Turnover Profile</p>
+<p>Here “turnover” means “trading value” (= price * volume)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.plotly.prf2s.Turnover.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar_align_on_right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/prf2s.html#Turnover.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.prf2s.Turnover.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a price-by-volume, PBV  (also called volume profile) figure for
+a given stock. This figure shows the volume distribution across price
+levels for a stock.</p>
+<p>Here the PBV is overlaied with the price subplot. This figure consists
+of two subplots: a price subplot and a volume subplot. The former
+includes candlestick, moving average lines, while the latter includes
+trading volume bar chart and volume moving average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’.</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’.</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving
+averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>total_bins</strong> (<em>int</em>) – the number of bins to calculate comulative volume for bins.</p></li>
+<li><p><strong>hbar_align_on_right</strong> (<em>bool</em>) – decide if the price-by-volume bars align on right. True to set the
+starting position of the horizontal bars to the right; False the
+left.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.plotly.prf2s.Volume">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.plotly.prf2s.</span></span><span class="sig-name descname"><span class="pre">Volume</span></span><a class="reference internal" href="_modules/vistock/plotly/prf2s.html#Volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.prf2s.Volume" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.plotly.prf2s.Volume.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar_align_on_right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/prf2s.html#Volume.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.prf2s.Volume.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a price-by-volume, PBV  (also called volume profile) figure for
+a given stock. This figure shows the volume distribution across price
+levels for a stock.</p>
+<p>Here the PBV is overlaied with the price subplot. This figure consists
+of two subplots: a price subplot and a volume subplot. The former
+includes candlestick, moving average lines, while the latter includes
+trading volume bar chart and volume moving average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’.</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’.</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving
+averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>total_bins</strong> (<em>int</em>) – the number of bins to calculate comulative volume for bins.</p></li>
+<li><p><strong>hbar_align_on_right</strong> (<em>bool</em>) – decide if the price-by-volume bars align on right. True to set the
+starting position of the horizontal bars to the right; False the
+left.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.prf4s">
+<span id="vistock-plotly-prf4s-module"></span><h2>vistock.plotly.prf4s module<a class="headerlink" href="#module-vistock.plotly.prf4s" title="Link to this heading"></a></h2>
+<p>Visualize a profile chart (eigher Volume Profile or Turnover Profile) with
+4-section layout for a given stock.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.plotly.prf4s.Turnover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.plotly.prf4s.</span></span><span class="sig-name descname"><span class="pre">Turnover</span></span><a class="reference internal" href="_modules/vistock/plotly/prf4s.html#Turnover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.prf4s.Turnover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Turnover Profile</p>
+<p>Here “turnover” means “trading value” (= price * volume)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.plotly.prf4s.Turnover.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/prf4s.html#Turnover.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.prf4s.Turnover.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a price-by-volume, PBV  (also called volume profile) figure for
+a given stock. This figure shows the volume distribution across price
+levels for a stock.</p>
+<p>Here the PBV is overlaied with the price subplot. This figure consists
+of two subplots: a price subplot and a volume subplot. The former
+includes candlestick, moving average lines, while the latter includes
+trading volume bar chart and volume moving average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’.</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’.</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving
+averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>total_bins</strong> (<em>int</em>) – the number of bins to calculate comulative volume for bins.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.plotly.prf4s.Volume">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.plotly.prf4s.</span></span><span class="sig-name descname"><span class="pre">Volume</span></span><a class="reference internal" href="_modules/vistock/plotly/prf4s.html#Volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.prf4s.Volume" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.plotly.prf4s.Volume.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/prf4s.html#Volume.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.prf4s.Volume.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a price-by-volume, PBV  (also called volume profile) figure for
+a given stock. This figure shows the volume distribution across price
+levels for a stock.</p>
+<p>Here the PBV is overlaied with the price subplot. This figure consists
+of two subplots: a price subplot and a volume subplot. The former
+includes candlestick, moving average lines, while the latter includes
+trading volume bar chart and volume moving average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’.</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’.</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving
+averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>total_bins</strong> (<em>int</em>) – the number of bins to calculate comulative volume for bins.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.pv1s">
+<span id="vistock-plotly-pv1s-module"></span><h2>vistock.plotly.pv1s module<a class="headerlink" href="#module-vistock.plotly.pv1s" title="Link to this heading"></a></h2>
+<p>Show a price-and-volume overlaid stock chart.</p>
+<ul class="simple">
+<li><p>Data from yfinance</p></li>
+<li><p>Plot with Plotly (for candlestick, MA, volume, volume MA)</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.pv1s.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.pv1s.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/pv1s.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.pv1s.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a stock figure overlaying charts in a single subplot.</p>
+<p>These charts include candlesticks, price moving-average lines, a volume
+histogram, and a volume moving-average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’.</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’.</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly.pv2s">
+<span id="vistock-plotly-pv2s-module"></span><h2>vistock.plotly.pv2s module<a class="headerlink" href="#module-vistock.plotly.pv2s" title="Link to this heading"></a></h2>
+<p>Show a price-and-volume separated stock chart.</p>
+<ul class="simple">
+<li><p>Data from yfinance</p></li>
+<li><p>Plot with Plotly (for candlestick, MA, volume, volume MA)</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.plotly.pv2s.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.plotly.pv2s.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plotly'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/plotly/pv2s.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.plotly.pv2s.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a stock figure that consists of two subplots: a price subplot and
+a volume subplot.</p>
+<p>The price subplot includes candlesticks, moving average lines, while
+the volume subplot includes a volume histogram and a volume moving average
+line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’.</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’.</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – Color style for market data visualization. Default is
+MarketColorStyle.AUTO.</p></li>
+<li><p><strong>template</strong> (<em>str</em><em>, </em><em>optional:</em>) – <p>The Plotly template to use for styling the chart.
+Defaults to ‘plotly’. Available templates include:</p>
+<ul>
+<li><p>’plotly’: Default Plotly template with interactive plots.</p></li>
+<li><p>’plotly_white’: Light theme with a white background.</p></li>
+<li><p>’plotly_dark’: Dark theme for the chart background.</p></li>
+<li><p>’ggplot2’: Style similar to ggplot2 from R.</p></li>
+<li><p>’seaborn’: Style similar to Seaborn in Python.</p></li>
+<li><p>’simple_white’: Minimal white style with no gridlines.</p></li>
+<li><p>’presentation’: Designed for presentations with a clean look.</p></li>
+<li><p>’xgridoff’: Plot with x-axis gridlines turned off.</p></li>
+<li><p>’ygridoff’: Plot with y-axis gridlines turned off.</p></li>
+</ul>
+<p>For more details on templates, refer to Plotly’s official
+documentation.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.plotly">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-vistock.plotly" title="Link to this heading"></a></h2>
+<p>Initialize vistock.plotly package.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vistock.mpl.html" class="btn btn-neutral float-left" title="vistock.mpl package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, York Jong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

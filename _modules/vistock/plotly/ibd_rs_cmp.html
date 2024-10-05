@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vistock.plotly.ibd_rs_cmp &mdash; vistock 0.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=fe7df9b0"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            vistock
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Read Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Source</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">vistock</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">vistock.plotly.ibd_rs_cmp</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for vistock.plotly.ibd_rs_cmp</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ibd_rs_cmp - A module for plotting Relative Strength (RS) comparisons of</span>
+<span class="sd">multiple stocks.</span>
+
+<span class="sd">This module provides functionality to plot the Relative Strength (RS) of</span>
+<span class="sd">multiple stocks compared to a reference index (e.g., S&amp;P 500 or Taiwan Weighted</span>
+<span class="sd">Index) using Plotly. It fetches historical stock data from Yahoo Finance,</span>
+<span class="sd">calculates RS values, and generates an interactive Plotly chart. The resulting</span>
+<span class="sd">chart can be saved as an HTML file.</span>
+
+<span class="sd">Functions:</span>
+<span class="sd">- plot: Generates a Relative Strength comparison plot for multiple stocks.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    To use this module, call the `plot` function with a list of stock symbols</span>
+<span class="sd">    and desired parameters.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__software__</span> <span class="o">=</span> <span class="s2">&quot;IBD RS Comparison chart&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;2.3&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;York &lt;york.jong@gmail.com&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/16 (initial version) ~ 2024/10/03 (last revision)&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">tw</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">file_utils</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">fig_utils</span> <span class="k">as</span> <span class="n">futil</span>
+<span class="kn">from</span> <span class="nn">..ibd</span> <span class="kn">import</span> <span class="n">relative_strength</span><span class="p">,</span> <span class="n">relative_strength_3m</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stock_indices</span> <span class="k">as</span> <span class="n">si</span>
+
+
+<div class="viewcode-block" id="plot">
+<a class="viewcode-back" href="../../../vistock.plotly.html#vistock.plotly.ibd_rs_cmp.plot">[docs]</a>
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+         <span class="n">rs_period</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span>
+         <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly&#39;</span><span class="p">,</span> <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot the Relative Strength (RS) of multiple stocks compared to a reference</span>
+<span class="sd">    index.</span>
+
+<span class="sd">    This function generates an interactive Plotly chart that compares the RS</span>
+<span class="sd">    values of the specified stocks against a reference index (e.g., S&amp;P 500</span>
+<span class="sd">    or Taiwan Weighted Index).  The chart includes RS lines for each stock and</span>
+<span class="sd">    can be customized based on the selected period and interval. The resulting</span>
+<span class="sd">    plot is saved as an HTML file in the specified output directory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ------------</span>
+<span class="sd">    symbols : list of str</span>
+<span class="sd">        List of stock symbols to compare. Can include both US and Taiwan</span>
+<span class="sd">        stocks.</span>
+<span class="sd">    period : str, optional</span>
+<span class="sd">        the period data to download. . Defaults to &#39;2y&#39;. Valid values are</span>
+<span class="sd">        6mo, 1y, 2y, 5y, 10y, ytd, max.</span>
+
+<span class="sd">        - mo  -- monthes</span>
+<span class="sd">        - y   -- years</span>
+<span class="sd">        - ytd -- year to date</span>
+<span class="sd">        - max -- all data</span>
+
+<span class="sd">    interval : str, optional</span>
+<span class="sd">        The interval for data points (&#39;1d&#39; for daily, &#39;1wk&#39; for weekly; default</span>
+<span class="sd">        is &#39;1d&#39;).</span>
+
+<span class="sd">    ticker_ref : str, optional</span>
+<span class="sd">        The ticker symbol of the reference index. If None, defaults to S&amp;P</span>
+<span class="sd">        500 (&#39;^GSPC&#39;) or Taiwan Weighted Index (&#39;^TWII&#39;) if the first stock</span>
+<span class="sd">        is a Taiwan stock.</span>
+
+<span class="sd">    rs_period : str, optional</span>
+<span class="sd">        Specify the period for Relative Strength calculation (&#39;12mo&#39; or &#39;3mo&#39;).</span>
+<span class="sd">        Default to &#39;12mo&#39;.</span>
+
+<span class="sd">    template: str, optional:</span>
+<span class="sd">        The Plotly template to use for styling the chart.</span>
+<span class="sd">        Defaults to &#39;plotly&#39;. Available templates include:</span>
+
+<span class="sd">        - &#39;plotly&#39;: Default Plotly template with interactive plots.</span>
+<span class="sd">        - &#39;plotly_white&#39;: Light theme with a white background.</span>
+<span class="sd">        - &#39;plotly_dark&#39;: Dark theme for the chart background.</span>
+<span class="sd">        - &#39;ggplot2&#39;: Style similar to ggplot2 from R.</span>
+<span class="sd">        - &#39;seaborn&#39;: Style similar to Seaborn in Python.</span>
+<span class="sd">        - &#39;simple_white&#39;: Minimal white style with no gridlines.</span>
+<span class="sd">        - &#39;presentation&#39;: Designed for presentations with a clean look.</span>
+<span class="sd">        - &#39;xgridoff&#39;: Plot with x-axis gridlines turned off.</span>
+<span class="sd">        - &#39;ygridoff&#39;: Plot with y-axis gridlines turned off.</span>
+
+<span class="sd">        For more details on templates, refer to Plotly&#39;s official</span>
+<span class="sd">        documentation.</span>
+
+<span class="sd">    hides_nontrading : bool, optional</span>
+<span class="sd">        Whether to hide non-trading periods on the plot. Defaults to True.</span>
+<span class="sd">    out_dir : str, optional</span>
+<span class="sd">        Directory to save the HTML file. Defaults to &#39;out&#39;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    None</span>
+<span class="sd">        The function generates a plot and saves it as an HTML file.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; symbols = [&#39;NVDA&#39;, &#39;MSFT&#39;, &#39;META&#39;, &#39;AAPL&#39;, &#39;TSM&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; plot(symbols)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ticker_ref</span><span class="p">:</span>
+        <span class="n">ticker_ref</span> <span class="o">=</span> <span class="s1">&#39;^GSPC&#39;</span>      <span class="c1"># S&amp;P 500 Index</span>
+        <span class="k">if</span> <span class="n">tw</span><span class="o">.</span><span class="n">is_taiwan_stock</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">as_yfinance</span><span class="p">(</span><span class="n">symbols</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+            <span class="n">ticker_ref</span> <span class="o">=</span> <span class="s1">&#39;^TWII&#39;</span>  <span class="c1"># Taiwan Weighted index</span>
+
+    <span class="c1"># Download data</span>
+    <span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="n">tw</span><span class="o">.</span><span class="n">as_yfinance</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">([</span><span class="n">ticker_ref</span><span class="p">]</span><span class="o">+</span><span class="n">tickers</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="s1">&#39;Close&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Price&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Select the appropriate relative strength function based on the rs_period</span>
+    <span class="n">rs_func</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;3mo&#39;</span><span class="p">:</span> <span class="n">relative_strength_3m</span><span class="p">,</span>
+        <span class="s1">&#39;12mo&#39;</span><span class="p">:</span> <span class="n">relative_strength</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">rs_period</span><span class="p">]</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">symbols</span><span class="p">):</span>
+        <span class="n">rs</span> <span class="o">=</span> <span class="n">rs_func</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">ticker</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">ticker_ref</span><span class="p">],</span> <span class="n">interval</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">rs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span>
+                                 <span class="n">name</span><span class="o">=</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)))</span>
+    <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;RS </span><span class="si">{</span><span class="n">ticker_ref</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;RS </span><span class="si">{</span><span class="n">ticker_ref</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">],</span>
+                             <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">),</span>
+                             <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">dash</span><span class="o">=</span><span class="s1">&#39;dash&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
+
+    <span class="c1"># Convert datetime index to string format suitable for display</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Update layout</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;IBD Relative Strength Comparison - </span><span class="si">{</span><span class="n">interval</span><span class="si">}</span><span class="s1"> &#39;</span>
+              <span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
+        <span class="n">title_x</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">title_y</span><span class="o">=</span><span class="mf">0.87</span><span class="p">,</span>
+        <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Relative Strength &#39;</span>
+                         <span class="sa">f</span><span class="s1">&#39;(Compared to </span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
+                   <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">),</span>
+        <span class="c1">#height=600,</span>
+        <span class="n">legend_title</span><span class="o">=</span><span class="s1">&#39;Stocks&#39;</span><span class="p">,</span>
+        <span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">yanchor</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">.98</span><span class="p">,</span> <span class="n">xanchor</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
+        <span class="n">xaxis_rangeslider_visible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">hides_nontrading</span><span class="p">:</span>
+        <span class="n">futil</span><span class="o">.</span><span class="n">hide_nontrading_periods</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
+
+    <span class="c1"># For Crosshair cursor</span>
+    <span class="n">futil</span><span class="o">.</span><span class="n">add_crosshair_cursor</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">futil</span><span class="o">.</span><span class="n">add_hovermode_menu</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+
+    <span class="c1"># Show the figure</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1"># Write the figure to an HTML file</span>
+    <span class="n">out_dir</span> <span class="o">=</span> <span class="n">file_utils</span><span class="o">.</span><span class="n">make_dir</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">file_utils</span><span class="o">.</span><span class="n">gen_fn_info</span><span class="p">(</span><span class="s1">&#39;stocks&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="vm">__file__</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">write_html</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">out_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s1">.html&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="c1">#------------------------------------------------------------------------------</span>
+<span class="c1"># Test</span>
+<span class="c1">#------------------------------------------------------------------------------</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;^NDX&#39;</span><span class="p">,</span> <span class="s1">&#39;^TWII&#39;</span><span class="p">]</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly_dark&#39;</span><span class="p">)</span>
+    <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;羅昇&#39;</span><span class="p">,</span> <span class="s1">&#39;昆盈&#39;</span><span class="p">,</span> <span class="s1">&#39;穎漢&#39;</span><span class="p">,</span> <span class="s1">&#39;光聖&#39;</span><span class="p">,</span> <span class="s1">&#39;所羅門&#39;</span><span class="p">]</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1wk&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s1">&#39;xgridoff&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, York Jong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

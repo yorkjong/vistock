@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vistock.mpl.mansfield &mdash; vistock 0.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=fe7df9b0"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            vistock
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Read Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Source</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">vistock</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">vistock.mpl.mansfield</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for vistock.mpl.mansfield</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Mansfield Stock Charts</span>
+<span class="sd">======================</span>
+<span class="sd">This module provides tools for generating and plotting Mansfield Stock Charts</span>
+<span class="sd">based on Stan Weinstein&#39;s methods, as described in the book &quot;Secrets for</span>
+<span class="sd">Profiting in Bull and Bear Markets.&quot; It includes functionalities for</span>
+<span class="sd">calculating and plotting Mansfield Relative Strength (RSM) using `mplfinance`</span>
+<span class="sd">for visualization.</span>
+
+<span class="sd">Classes:</span>
+<span class="sd">--------</span>
+<span class="sd">- StockChart : A class for generating and plotting Mansfield Stock Charts for</span>
+<span class="sd">  individual stocks.</span>
+<span class="sd">- RelativeStrengthLines : A class for plotting Mansfield Relative Strength</span>
+<span class="sd">  (RSM) lines of multiple stocks compared to a reference index.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">------</span>
+<span class="sd">To generate a Mansfield Stock Chart for a single stock:</span>
+<span class="sd">    &gt;&gt;&gt; StockChart.plot(&#39;TSLA&#39;, interval=&#39;1wk&#39;)</span>
+
+<span class="sd">To compare the Mansfield Relative Strength of multiple stocks:</span>
+<span class="sd">    &gt;&gt;&gt; symbols = [&#39;NVDA&#39;, &#39;MSFT&#39;, &#39;META&#39;, &#39;AAPL&#39;, &#39;TSM&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; RelativeStrengthLines.plot(symbols, interval=&#39;1d&#39;)</span>
+
+<span class="sd">See Also:</span>
+<span class="sd">---------</span>
+<span class="sd">- `Mansfield relative strength | TrendSpider Store</span>
+<span class="sd">  &lt;https://trendspider.com/trading-tools-store/indicators/</span>
+<span class="sd">  mansfield-relative-strength/&gt;`_</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__software__</span> <span class="o">=</span> <span class="s2">&quot;Mansfield Stock Charts&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;2.4&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;York &lt;york.jong@gmail.com&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/25 (initial version) ~ 2024/09/12 (last revision)&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;StockChart&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;RelativeStrengthLines&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">mplfinance</span> <span class="k">as</span> <span class="nn">mpf</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">tw</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">file_utils</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">MarketColorStyle</span><span class="p">,</span> <span class="n">decide_market_color_style</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">mpf_utils</span> <span class="k">as</span> <span class="n">mpfu</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stock_indices</span> <span class="k">as</span> <span class="n">si</span>
+<span class="kn">from</span> <span class="nn">..ta</span> <span class="kn">import</span> <span class="n">simple_moving_average</span><span class="p">,</span> <span class="n">exponential_moving_average</span>
+<span class="kn">from</span> <span class="nn">..rsm</span> <span class="kn">import</span> <span class="n">mansfield_relative_strength</span>
+
+
+<div class="viewcode-block" id="StockChart">
+<a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.mansfield.StockChart">[docs]</a>
+<span class="k">class</span> <span class="nc">StockChart</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for generating and plotting Mansfield Stock Charts.</span>
+
+<span class="sd">    Mansfield Stock Charts are a method for visualizing stock trends and</span>
+<span class="sd">    relative strength compared to a reference index, as popularized by Stan</span>
+<span class="sd">    Weinstein. This class provides methods to fetch stock data, compute</span>
+<span class="sd">    relative strength, and plot the resulting charts using mplfinance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StockChart.plot">
+<a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.mansfield.StockChart.plot">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ma</span><span class="o">=</span><span class="s1">&#39;SMA&#39;</span><span class="p">,</span>
+             <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">market_color_style</span><span class="o">=</span><span class="n">MarketColorStyle</span><span class="o">.</span><span class="n">AUTO</span><span class="p">,</span>
+             <span class="n">style</span><span class="o">=</span><span class="s1">&#39;yahoo&#39;</span><span class="p">,</span> <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot a Mansfield Stock Chart for a given stock symbol and time</span>
+<span class="sd">        period.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        symbol : str</span>
+<span class="sd">            The stock symbol to analyze.</span>
+<span class="sd">        period : str, optional</span>
+<span class="sd">            The period of historical data to fetch. Valid values are &#39;6mo&#39;, &#39;1y&#39;,</span>
+<span class="sd">            &#39;2y&#39;, &#39;5y&#39;, &#39;10y&#39;, &#39;ytd&#39;, &#39;max&#39;.  Default is &#39;2y&#39;.</span>
+
+<span class="sd">            - mo  -- monthes</span>
+<span class="sd">            - y   -- years</span>
+<span class="sd">            - ytd -- year to date</span>
+<span class="sd">            - max -- all data</span>
+
+<span class="sd">        interval : str, optional</span>
+<span class="sd">            The interval for data points. Valid values are &#39;1d&#39; for daily or &#39;1wk&#39;</span>
+<span class="sd">            for weekly. Default is &#39;1d&#39;.</span>
+
+<span class="sd">        ticker_ref : str, optional</span>
+<span class="sd">            The ticker symbol of the reference index. If None, defaults to S&amp;P</span>
+<span class="sd">            500 (&#39;^GSPC&#39;) or Taiwan Weighted Index (&#39;^TWII&#39;) if the first stock is</span>
+<span class="sd">            a Taiwan stock.</span>
+
+<span class="sd">        ma : str, optional</span>
+<span class="sd">            Moving average type (&#39;SMA&#39;, &#39;EMA&#39;). Default to &#39;SMA&#39;.</span>
+
+<span class="sd">        legend_loc: str, optional</span>
+<span class="sd">            the location of the legend (default is &#39;upper left&#39;).</span>
+<span class="sd">            Valid locations are</span>
+
+<span class="sd">            - &#39;best&#39;</span>
+<span class="sd">            - &#39;upper right&#39;</span>
+<span class="sd">            - &#39;upper left&#39;</span>
+<span class="sd">            - &#39;lower left&#39;</span>
+<span class="sd">            - &#39;lower right&#39;</span>
+<span class="sd">            - &#39;right&#39;</span>
+<span class="sd">            - &#39;center left&#39;</span>
+<span class="sd">            - &#39;center right&#39;</span>
+<span class="sd">            - &#39;lower center&#39;</span>
+<span class="sd">            - &#39;upper center&#39;</span>
+<span class="sd">            - &#39;center&#39;</span>
+
+<span class="sd">        market_color_style: MarketColorStyle, optional</span>
+<span class="sd">            The market color style to use. Default is MarketColorStyle.AUTO.</span>
+
+<span class="sd">        style: str, optional</span>
+<span class="sd">            The chart style to use. Common styles include:</span>
+
+<span class="sd">            - &#39;yahoo&#39;: Yahoo Finance style</span>
+<span class="sd">            - &#39;charles&#39;: Charles style</span>
+<span class="sd">            - &#39;tradingview&#39;: TradingView style</span>
+<span class="sd">            - &#39;binance&#39;: Binance style</span>
+<span class="sd">            - &#39;binancedark&#39;: Binance dark mode style</span>
+<span class="sd">            - &#39;mike&#39;: Mike style (dark mode)</span>
+<span class="sd">            - &#39;nightclouds&#39;: Dark mode with sleek appearance</span>
+<span class="sd">            - &#39;checkers&#39;: Checkered style</span>
+<span class="sd">            - &#39;ibd&#39;: Investor&#39;s Business Daily style</span>
+<span class="sd">            - &#39;sas&#39;: SAS style</span>
+<span class="sd">            - &#39;starsandstripes&#39;: Stars and Stripes style</span>
+<span class="sd">            - &#39;kenan&#39;: Kenan style</span>
+<span class="sd">            - &#39;blueskies&#39;: Blue Skies style</span>
+<span class="sd">            - &#39;brasil&#39;: Brasil style</span>
+
+<span class="sd">            Default is &#39;yahoo&#39;.</span>
+
+<span class="sd">        hides_nontrading : bool, optional</span>
+<span class="sd">            Whether to hide non-trading periods. Default is True.</span>
+<span class="sd">        out_dir: str, optional</span>
+<span class="sd">            the output directory for saving figure.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If an unsupported interval is provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ticker</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">as_yfinance</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ticker_ref</span><span class="p">:</span>
+            <span class="n">ticker_ref</span> <span class="o">=</span> <span class="s1">&#39;^GSPC&#39;</span>      <span class="c1"># S&amp;P 500 Index</span>
+            <span class="k">if</span> <span class="n">tw</span><span class="o">.</span><span class="n">is_taiwan_stock</span><span class="p">(</span><span class="n">ticker</span><span class="p">):</span>
+                <span class="n">ticker_ref</span> <span class="o">=</span> <span class="s1">&#39;^TWII&#39;</span>  <span class="c1"># Taiwan Weighted Index</span>
+
+        <span class="c1"># Set moving average windows based on the interval</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rs_window</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;1d&#39;</span><span class="p">:</span> <span class="mi">252</span><span class="p">,</span> <span class="s1">&#39;1wk&#39;</span><span class="p">:</span> <span class="mi">52</span><span class="p">,</span> <span class="s1">&#39;1mo&#39;</span><span class="p">:</span> <span class="mi">12</span> <span class="p">}[</span><span class="n">interval</span><span class="p">]</span>
+            <span class="n">ma_windows</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;1d&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span>
+                <span class="s1">&#39;1wk&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>
+                <span class="s1">&#39;1mo&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+            <span class="p">}[</span><span class="n">interval</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid interval. &quot;</span>
+                             <span class="s2">&quot;Must be &#39;1d&#39;, &#39;1wk&#39;, or &#39;1mo&#39;.&quot;</span><span class="p">)</span>
+        <span class="n">vma_window</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">ma_windows</span>
+
+        <span class="c1"># Select the MA function based on the &#39;ma&#39; parameter</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ma_func</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;SMA&#39;</span><span class="p">:</span> <span class="n">simple_moving_average</span><span class="p">,</span>
+                <span class="s1">&#39;EMA&#39;</span><span class="p">:</span> <span class="n">exponential_moving_average</span><span class="p">,</span>
+            <span class="p">}[</span><span class="n">ma</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid ma type. Must be &#39;SMA&#39; or &#39;EMA&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Fetch data for stock and index</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">([</span><span class="n">ticker_ref</span><span class="p">,</span> <span class="n">ticker</span><span class="p">],</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span>
+        <span class="n">df_ref</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">ticker</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Calculate Mansfield Relative Strength (RSM)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;RSM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mansfield_relative_strength</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">df_ref</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span>
+                                                <span class="n">rs_window</span><span class="p">,</span> <span class="n">ma</span><span class="o">=</span><span class="n">ma</span><span class="p">)</span>
+
+        <span class="c1"># Calculate moving averages for stock</span>
+        <span class="n">ma</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;SMA&#39;</span><span class="p">,</span> <span class="s1">&#39;MA&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">ma_windows</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ma</span><span class="si">}{</span><span class="n">window</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma_func</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># Calculate volume MA</span>
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Vol </span><span class="si">{</span><span class="n">ma</span><span class="si">}{</span><span class="n">vma_window</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma_func</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Volume&#39;</span><span class="p">],</span> <span class="n">vma_window</span><span class="p">)</span>
+
+        <span class="c1"># Plot the figure</span>
+        <span class="n">addplot</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># Plot of Price Moving Average</span>
+            <span class="o">*</span><span class="p">[</span><span class="n">mpf</span><span class="o">.</span><span class="n">make_addplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ma</span><span class="si">}{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">],</span> <span class="n">panel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ma</span><span class="si">}{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+              <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">ma_windows</span><span class="p">],</span>
+
+            <span class="c1"># Plot of Relative Strength</span>
+            <span class="n">mpf</span><span class="o">.</span><span class="n">make_addplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;RSM&#39;</span><span class="p">],</span> <span class="n">panel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">ticker</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
+                             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Relative Strength&#39;</span><span class="p">),</span>
+            <span class="n">mpf</span><span class="o">.</span><span class="n">make_addplot</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">panel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                             <span class="n">label</span><span class="o">=</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">),</span>
+                             <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">secondary_y</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+
+            <span class="c1"># Plot of Volume Moving Average</span>
+            <span class="n">mpf</span><span class="o">.</span><span class="n">make_addplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Vol </span><span class="si">{</span><span class="n">ma</span><span class="si">}{</span><span class="n">vma_window</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">],</span> <span class="n">panel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                             <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Vol </span><span class="si">{</span><span class="n">ma</span><span class="si">}{</span><span class="n">vma_window</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Make a customized color style</span>
+        <span class="n">mc_style</span> <span class="o">=</span> <span class="n">decide_market_color_style</span><span class="p">(</span><span class="n">ticker</span><span class="p">,</span> <span class="n">market_color_style</span><span class="p">)</span>
+        <span class="n">mpf_style</span> <span class="o">=</span> <span class="n">mpfu</span><span class="o">.</span><span class="n">decide_mpf_style</span><span class="p">(</span><span class="n">base_mpf_style</span><span class="o">=</span><span class="n">style</span><span class="p">,</span>
+                                          <span class="n">market_color_style</span><span class="o">=</span><span class="n">mc_style</span><span class="p">)</span>
+
+        <span class="c1"># Plot candlesticks, MA, volume, volume MA, and RS</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">mpf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;candle&#39;</span><span class="p">,</span>              <span class="c1"># candlesticks</span>
+            <span class="n">volume</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">volume_panel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>    <span class="c1"># volume</span>
+            <span class="n">addplot</span><span class="o">=</span><span class="n">addplot</span><span class="p">,</span>                <span class="c1"># MA, RS, and Volume MA</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Price (</span><span class="si">{</span><span class="n">yf</span><span class="o">.</span><span class="n">Ticker</span><span class="p">(</span><span class="n">ticker</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;currency&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+            <span class="n">panel_ratios</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">figratio</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">figscale</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="n">mpf_style</span><span class="p">,</span>
+            <span class="n">show_nontrading</span><span class="o">=</span><span class="ow">not</span> <span class="n">hides_nontrading</span><span class="p">,</span>
+            <span class="n">returnfig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Set location of legends</span>
+        <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend_</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">)</span>
+
+        <span class="c1"># Convert datetime index to string format suitable for display</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mansfield Stock Chart: </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">interval</span><span class="si">}</span><span class="s2"> &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.93</span><span class="p">)</span>
+
+        <span class="c1"># Show the figure</span>
+        <span class="n">mpf</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="c1"># Save the figure</span>
+        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">file_utils</span><span class="o">.</span><span class="n">make_dir</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="n">file_utils</span><span class="o">.</span><span class="n">gen_fn_info</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;RSM&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">out_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RelativeStrengthLines">
+<a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.mansfield.RelativeStrengthLines">[docs]</a>
+<span class="k">class</span> <span class="nc">RelativeStrengthLines</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for plotting Mansfield Relative Strength (RSM) lines of multiple</span>
+<span class="sd">    stocks.</span>
+
+<span class="sd">    This class allows for the comparison of the relative strength of multiple</span>
+<span class="sd">    stocks against a reference index over a specified period. It supports</span>
+<span class="sd">    various intervals and moving average calculations (SMA and EMA) for the</span>
+<span class="sd">    relative strength computation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RelativeStrengthLines.plot">
+<a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.mansfield.RelativeStrengthLines.plot">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ma</span><span class="o">=</span><span class="s1">&#39;SMA&#39;</span><span class="p">,</span>
+             <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;charles&#39;</span><span class="p">,</span>
+             <span class="n">color_cycle</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span>
+             <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot the Mansfield Relative Strength (RSM) of multiple stocks compared</span>
+<span class="sd">        to a reference index.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ------------</span>
+<span class="sd">        symbols : list of str</span>
+<span class="sd">            List of stock symbols to compare. Can include both US and Taiwan</span>
+<span class="sd">            stocks.</span>
+<span class="sd">        period : str, optional</span>
+<span class="sd">            the period data to download. . Defaults to &#39;2y&#39;. Valid values are</span>
+<span class="sd">            6mo, 1y, 2y, 5y, 10y, ytd, max.</span>
+
+<span class="sd">            - mo  -- monthes</span>
+<span class="sd">            - y   -- years</span>
+<span class="sd">            - ytd -- year to date</span>
+<span class="sd">            - max -- all data</span>
+
+<span class="sd">        interval : str, optional</span>
+<span class="sd">            The interval for data points (&#39;1d&#39; for daily, &#39;1wk&#39; for weekly;</span>
+<span class="sd">            default is &#39;1d&#39;).</span>
+<span class="sd">        ticker_ref : str, optional</span>
+<span class="sd">            The ticker symbol of the reference index. If None, defaults to S&amp;P</span>
+<span class="sd">            500 (&#39;^GSPC&#39;) or Taiwan Weighted Index (&#39;^TWII&#39;) if the first stock</span>
+<span class="sd">            is a Taiwan stock.</span>
+
+<span class="sd">        ma : str, optional</span>
+<span class="sd">            Moving average type (&#39;SMA&#39;, &#39;EMA&#39;). Default to &#39;SMA&#39;.</span>
+
+<span class="sd">        legend_loc: str, optional</span>
+<span class="sd">            the location of the legend (default is &#39;upper left&#39;).</span>
+<span class="sd">            Valid locations are</span>
+
+<span class="sd">            - &#39;best&#39;</span>
+<span class="sd">            - &#39;upper right&#39;</span>
+<span class="sd">            - &#39;upper left&#39;</span>
+<span class="sd">            - &#39;lower left&#39;</span>
+<span class="sd">            - &#39;lower right&#39;</span>
+<span class="sd">            - &#39;right&#39;</span>
+<span class="sd">            - &#39;center left&#39;</span>
+<span class="sd">            - &#39;center right&#39;</span>
+<span class="sd">            - &#39;lower center&#39;</span>
+<span class="sd">            - &#39;upper center&#39;</span>
+<span class="sd">            - &#39;center&#39;</span>
+
+<span class="sd">        style: str, optional</span>
+<span class="sd">            The chart style to use. Common styles include:</span>
+
+<span class="sd">            - &#39;yahoo&#39;: Yahoo Finance style</span>
+<span class="sd">            - &#39;charles&#39;: Charles style</span>
+<span class="sd">            - &#39;tradingview&#39;: TradingView style</span>
+<span class="sd">            - &#39;binance&#39;: Binance style</span>
+<span class="sd">            - &#39;binancedark&#39;: Binance dark mode style</span>
+<span class="sd">            - &#39;mike&#39;: Mike style (dark mode)</span>
+<span class="sd">            - &#39;nightclouds&#39;: Dark mode with sleek appearance</span>
+<span class="sd">            - &#39;checkers&#39;: Checkered style</span>
+<span class="sd">            - &#39;ibd&#39;: Investor&#39;s Business Daily style</span>
+<span class="sd">            - &#39;sas&#39;: SAS style</span>
+<span class="sd">            - &#39;starsandstripes&#39;: Stars and Stripes style</span>
+<span class="sd">            - &#39;kenan&#39;: Kenan style</span>
+<span class="sd">            - &#39;blueskies&#39;: Blue Skies style</span>
+<span class="sd">            - &#39;brasil&#39;: Brasil style</span>
+
+<span class="sd">            Default is &#39;charles&#39;.</span>
+
+<span class="sd">        color_cycle: list or None</span>
+<span class="sd">            Specifies a list of colors to be used for cycling through plot</span>
+<span class="sd">            lines. If None, the default matplotlib color cycle will be used.</span>
+<span class="sd">            You can pass a list of colors to override the default color cycle.</span>
+<span class="sd">            Each plot line will use the next color in the sequence.</span>
+
+<span class="sd">            Default color sequence:</span>
+
+<span class="sd">            - plt.cm.Paired.colors (20 colors, cooler and more muted)</span>
+
+<span class="sd">            Other useful predefined color cycles:</span>
+
+<span class="sd">            - plt.cm.tab20.colors (20 colors, brighter)</span>
+<span class="sd">            - plt.cm.tab20b.colors (20 colors, darker)</span>
+<span class="sd">            - plt.cm.Paired.colors (12 colors, alternating between deep and</span>
+<span class="sd">              pastel colors; useful for categorical data)</span>
+<span class="sd">            - plt.cm.Set3.colors (12 colors, pastel-like; good for categorical</span>
+<span class="sd">              data)</span>
+<span class="sd">            - plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for</span>
+<span class="sd">              categorical data)</span>
+
+<span class="sd">        out_dir : str, optional</span>
+<span class="sd">            Directory to save the image file. Defaults to &#39;out&#39;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        None</span>
+<span class="sd">            The function generates a plot and saves it as an image file.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; symbols = [&#39;NVDA&#39;, &#39;MSFT&#39;, &#39;META&#39;, &#39;AAPL&#39;, &#39;TSM&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; plot(symbols)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ticker_ref</span><span class="p">:</span>
+            <span class="n">ticker_ref</span> <span class="o">=</span> <span class="s1">&#39;^GSPC&#39;</span>      <span class="c1"># S&amp;P 500 Index</span>
+            <span class="k">if</span> <span class="n">tw</span><span class="o">.</span><span class="n">is_taiwan_stock</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">as_yfinance</span><span class="p">(</span><span class="n">symbols</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+                <span class="n">ticker_ref</span> <span class="o">=</span> <span class="s1">&#39;^TWII&#39;</span>  <span class="c1"># Taiwan Weighted Index</span>
+
+        <span class="c1"># Set moving average windows based on the interval</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rs_window</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;1d&#39;</span><span class="p">:</span> <span class="mi">252</span><span class="p">,</span> <span class="s1">&#39;1wk&#39;</span><span class="p">:</span> <span class="mi">52</span><span class="p">,</span> <span class="s1">&#39;1mo&#39;</span><span class="p">:</span> <span class="mi">12</span> <span class="p">}[</span><span class="n">interval</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid interval. Must be &#39;1d&#39;, &#39;1wk&#39;, or &#39;1mo&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Fetch data for stocks and index</span>
+        <span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="n">tw</span><span class="o">.</span><span class="n">as_yfinance</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">([</span><span class="n">ticker_ref</span><span class="p">]</span><span class="o">+</span><span class="n">tickers</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span>
+        <span class="n">df_price</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="s1">&#39;Close&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Price&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Set the figure</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">mpf</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>  <span class="c1"># Add first subplot</span>
+        <span class="k">if</span> <span class="n">color_cycle</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color_cycle</span><span class="p">)</span>
+
+        <span class="c1"># Plot Relative Strength Lines</span>
+        <span class="k">for</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">symbols</span><span class="p">):</span>
+            <span class="n">rs</span> <span class="o">=</span> <span class="n">mansfield_relative_strength</span><span class="p">(</span><span class="n">df_price</span><span class="p">[</span><span class="n">ticker</span><span class="p">],</span>
+                                             <span class="n">df_price</span><span class="p">[</span><span class="n">ticker_ref</span><span class="p">],</span>
+                                             <span class="n">rs_window</span><span class="p">,</span> <span class="n">ma</span><span class="o">=</span><span class="n">ma</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rs</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Plot the Reference Line</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rs</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Set Y axis</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Relative Strength &#39;</span>
+                      <span class="sa">f</span><span class="s1">&#39;(Compared to </span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">tick_right</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelright</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Set location of legends</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">)</span>
+
+        <span class="c1"># Convert datetime index to string format suitable for display</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mansfield Relative Strength Comparison - </span><span class="si">{</span><span class="n">interval</span><span class="si">}</span><span class="s2"> &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.93</span><span class="p">)</span>
+
+        <span class="c1"># Show the figure</span>
+        <span class="n">mpf</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="c1"># Save the figure</span>
+        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">file_utils</span><span class="o">.</span><span class="n">make_dir</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="n">file_utils</span><span class="o">.</span><span class="n">gen_fn_info</span><span class="p">(</span><span class="s1">&#39;stocks&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;RsmLines&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">out_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Example usage of StockChart and RelativeStrengthLines classes to generate</span>
+<span class="sd">    plots.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mpfu</span><span class="o">.</span><span class="n">use_mac_chinese_font</span><span class="p">()</span>
+    <span class="c1">#StockChart.plot(&#39;TSLA&#39;, interval=&#39;1wk&#39;)</span>
+    <span class="c1">#StockChart.plot(&#39;羅昇&#39;, interval=&#39;1wk&#39;)</span>
+
+    <span class="c1">#symbols = [&#39;羅昇&#39;, &#39;昆盈&#39;, &#39;穎漢&#39;, &#39;光聖&#39;, &#39;所羅門&#39;]</span>
+    <span class="c1">#RelativeStrengthLines.plot(symbols, interval=&#39;1d&#39;)</span>
+
+    <span class="c1">#symbols = [&#39;^NDX&#39;, &#39;^DJA&#39;, &#39;^RUI&#39;, &#39;^SOX&#39;]</span>
+    <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SOXX&#39;</span><span class="p">,</span> <span class="s1">&#39;DVY&#39;</span><span class="p">,</span> <span class="s1">&#39;IWB&#39;</span><span class="p">,</span><span class="s1">&#39;IWM&#39;</span><span class="p">,</span> <span class="s1">&#39;IWV&#39;</span><span class="p">,</span> <span class="s1">&#39;IJR&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;ITB&#39;</span><span class="p">,</span> <span class="s1">&#39;IHI&#39;</span><span class="p">,</span> <span class="s1">&#39;IYC&#39;</span><span class="p">,</span> <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;IAK&#39;</span><span class="p">]</span>
+    <span class="n">RelativeStrengthLines</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span>
+                               <span class="n">color_cycle</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="o">.</span><span class="n">colors</span><span class="p">)</span>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, York Jong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

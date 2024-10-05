@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vistock.mpl package &mdash; vistock 0.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=fe7df9b0"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="vistock.plotly package" href="vistock.plotly.html" />
+    <link rel="prev" title="vistock package" href="vistock.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            vistock
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Read Me</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="vistock.html">vistock package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="vistock.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">vistock.mpl package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="vistock.plotly.html">vistock.plotly package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.bull_draw_utils">vistock.bull_draw_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.file_utils">vistock.file_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.ibd">vistock.ibd module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.rsm">vistock.rsm module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.stock_indices">vistock.stock_indices module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.ta">vistock.ta module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.tw">vistock.tw module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.utils">vistock.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock.yf_utils">vistock.yf_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vistock.html#module-vistock">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">vistock</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Source</a></li>
+          <li class="breadcrumb-item"><a href="vistock.html">vistock package</a></li>
+      <li class="breadcrumb-item active">vistock.mpl package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/vistock.mpl.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vistock-mpl-package">
+<h1>vistock.mpl package<a class="headerlink" href="#vistock-mpl-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-vistock.mpl.bull_draw">
+<span id="vistock-mpl-bull-draw-module"></span><h2>vistock.mpl.bull_draw module<a class="headerlink" href="#module-vistock.mpl.bull_draw" title="Link to this heading"></a></h2>
+<p>Visualize a BullRun and Drawdown for a stock.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.mpl.bull_draw.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.mpl.bull_draw.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'best'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'yahoo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/bull_draw.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.bull_draw.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a stock figure that consists of two subplots: a price subplot and
+a volume subplot.</p>
+<p>The price subplot includes price lines, bull-run bar cahrt, and drawdown
+bar chart, while the volume subplot includes a volume histogram and a
+volume moving average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the location of the legend (default is ‘best’).
+Valid locations are</p>
+<ul>
+<li><p>’best’</p></li>
+<li><p>’upper right’</p></li>
+<li><p>’upper left’</p></li>
+<li><p>’lower left’</p></li>
+<li><p>’lower right’</p></li>
+<li><p>’right’</p></li>
+<li><p>’center left’</p></li>
+<li><p>’center right’</p></li>
+<li><p>’lower center’</p></li>
+<li><p>’upper center’</p></li>
+<li><p>’center’</p></li>
+</ul>
+</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – The market color style to use. Default is MarketColorStyle.AUTO.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘yahoo’.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – the output directory for saving figure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.mpl.financials">
+<span id="vistock-mpl-financials-module"></span><h2>vistock.mpl.financials module<a class="headerlink" href="#module-vistock.mpl.financials" title="Link to this heading"></a></h2>
+<p>This module provides a function to plot financial data for a given stock symbol
+using mplfinance. The data includes Basic EPS, Operating Revenue, Trailing EPS,
+and Forward EPS (if available). The function allows customization of chart
+styles via the <cite>style</cite> parameter and supports saving the plots as PNG files.</p>
+<p>The <cite>plot</cite> function generates two subplots:</p>
+<ol class="arabic simple">
+<li><p>Quarterly financial data.</p></li>
+<li><p>Annual financial data, with markers for Trailing EPS and Forward EPS.</p></li>
+</ol>
+<p>The plot is saved in the specified <cite>out_dir</cite> as a PNG file.</p>
+<p>See Also:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/matplotlib/mplfinance/blob/master/examples/external_axes.ipynb">mplfinance/examples/external_axes.ipynb</a></p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.mpl.financials.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.mpl.financials.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'yahoo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/financials.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.financials.plot" title="Link to this definition"></a></dt>
+<dd><p>Plots the financial data of a stock symbol using mplfinance.</p>
+<p>The function fetches Basic EPS, Operating Revenue, Trailing EPS, and
+Forward EPS for the given stock symbol from Yahoo Finance, with data
+divided into quarterly and annual segments. The data is plotted using
+mplfinance with different chart styles as specified by the <cite>style</cite>
+parameter. Dummy OHLC data is generated for plotting purposes, with Basic
+EPS and Operating Revenue plotted on separate y-axes.</p>
+<p>The function also saves the plot as a PNG file in the specified <cite>out_dir</cite>
+after generating the chart using mplfinance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – The stock symbol to analyze.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘yahoo’.</p>
+</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the output HTML file. Default is ‘out’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.mpl.ibd_rs">
+<span id="vistock-mpl-ibd-rs-module"></span><h2>vistock.mpl.ibd_rs module<a class="headerlink" href="#module-vistock.mpl.ibd_rs" title="Link to this heading"></a></h2>
+<p>ibd_rs.py - IBD Relative Strength Analysis and Plotting Module</p>
+<p>This module provides functionality for analyzing and plotting stock data
+with a focus on Investor’s Business Daily (IBD) Relative Strength metrics.
+It includes capabilities for generating candlestick charts with moving averages,
+volume analysis, and relative strength comparisons.</p>
+<p>The main function ‘plot’ allows users to visualize stock performance
+over various time periods and intervals, with customizable reference indexes
+and styling options.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vistock.mpl</span> <span class="kn">import</span> <span class="n">ibd_rs</span>
+<span class="n">ibd_rs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;TSLA&#39;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.mpl.ibd_rs.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.mpl.ibd_rs.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'best'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'yahoo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/ibd_rs.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.ibd_rs.plot" title="Link to this definition"></a></dt>
+<dd><p>Generate and display a stock analysis plot with candlestick charts, moving
+averages, volume analysis, and Relative Strength (RS) metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – The stock symbol to analyze.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The period of historical data to fetch. Valid values are ‘6mo’, ‘1y’,
+‘2y’, ‘5y’, ‘10y’, ‘ytd’, ‘max’.  Default is ‘2y’.</p>
+<ul>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – The interval for data points. Valid values are ‘1d’ for daily or ‘1wk’
+for weekly. Default is ‘1d’.</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol of the reference index. If None, defaults to S&amp;P
+500 (‘^GSPC’) or Taiwan Weighted Index (‘^TWII’) if the first stock is
+a Taiwan stock.</p></li>
+<li><p><strong>rs_period</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify the period for Relative Strength calculation (‘12mo’ or ‘3mo’).
+Default to ‘12mo’.</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the location of the legend (default is ‘best’).
+Valid locations are</p>
+<ul>
+<li><p>’best’</p></li>
+<li><p>’upper right’</p></li>
+<li><p>’upper left’</p></li>
+<li><p>’lower left’</p></li>
+<li><p>’lower right’</p></li>
+<li><p>’right’</p></li>
+<li><p>’center left’</p></li>
+<li><p>’center right’</p></li>
+<li><p>’lower center’</p></li>
+<li><p>’upper center’</p></li>
+<li><p>’center’</p></li>
+</ul>
+</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – The market color style to use. Default is MarketColorStyle.AUTO.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘yahoo’.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – the output directory for saving figure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an unsupported interval is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.mpl.ibd_rs_cmp">
+<span id="vistock-mpl-ibd-rs-cmp-module"></span><h2>vistock.mpl.ibd_rs_cmp module<a class="headerlink" href="#module-vistock.mpl.ibd_rs_cmp" title="Link to this heading"></a></h2>
+<p>ibd_rs_cmp - A module for plotting IBD Relative Strength (RS) comparisons of
+multiple stocks using mplfinance.</p>
+<p>This module provides functionality to plot the Relative Strength (RS) of
+multiple stocks compared to a reference index (e.g., S&amp;P 500 or Taiwan
+Weighted Index) using mplfinance.  It fetches historical stock data from Yahoo
+Finance, calculates RS values, and generates a multi-panel chart. The resulting
+chart is saved as an image file.</p>
+<p>Functions:
+- plot: Generates a Relative Strength comparison plot for multiple stocks.</p>
+<p>Usage:
+To use this module, call the <cite>plot</cite> function with a list of stock symbols and
+desired parameters.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.mpl.ibd_rs_cmp.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.mpl.ibd_rs_cmp.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'best'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'checkers'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/ibd_rs_cmp.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.ibd_rs_cmp.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot the Relative Strength (RS) of multiple stocks compared to a reference
+index using mplfinance.</p>
+<p>This function generates a multi-panel chart that compares the RS values i
+of the specified stocks against a reference index (e.g., S&amp;P 500 or Taiwan
+Weighted Index). The chart includes RS lines for each stock, and can be
+customized based on the selected period and interval. The resulting plot is
+saved as an image file in the specified output directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbols</strong> (<em>list</em><em> of </em><em>str</em>) – List of stock symbols to compare. Can include both US and Taiwan stocks.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The period of historical data to fetch. Valid values are ‘6mo’, ‘1y’,
+‘2y’, ‘5y’, ‘10y’, ‘ytd’, ‘max’.  Default is ‘2y’.</p>
+<ul>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – The interval for data points. Valid values are ‘1d’ for daily or ‘1wk’
+for weekly. Default is ‘1d’.</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol of the reference index. If None, defaults to S&amp;P
+500 (‘^GSPC’) or Taiwan Weighted Index (‘^TWII’) if the first stock is
+a Taiwan stock.</p></li>
+<li><p><strong>rs_period</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify the period for Relative Strength calculation (‘12mo’ or ‘3mo’).
+Default to ‘12mo’.</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the location of the legend (default is ‘best’).
+Valid locations are</p>
+<ul>
+<li><p>’best’</p></li>
+<li><p>’upper right’</p></li>
+<li><p>’upper left’</p></li>
+<li><p>’lower left’</p></li>
+<li><p>’lower right’</p></li>
+<li><p>’right’</p></li>
+<li><p>’center left’</p></li>
+<li><p>’center right’</p></li>
+<li><p>’lower center’</p></li>
+<li><p>’upper center’</p></li>
+<li><p>’center’</p></li>
+</ul>
+</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘checkers’.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the image file. Defaults to ‘out’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The function generates a plot and saves it as an image file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;TSM&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-vistock.mpl.mansfield">
+<span id="vistock-mpl-mansfield-module"></span><h2>vistock.mpl.mansfield module<a class="headerlink" href="#module-vistock.mpl.mansfield" title="Link to this heading"></a></h2>
+<section id="mansfield-stock-charts">
+<h3>Mansfield Stock Charts<a class="headerlink" href="#mansfield-stock-charts" title="Link to this heading"></a></h3>
+<p>This module provides tools for generating and plotting Mansfield Stock Charts
+based on Stan Weinstein’s methods, as described in the book “Secrets for
+Profiting in Bull and Bear Markets.” It includes functionalities for
+calculating and plotting Mansfield Relative Strength (RSM) using <cite>mplfinance</cite>
+for visualization.</p>
+<section id="classes">
+<h4>Classes:<a class="headerlink" href="#classes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>StockChart : A class for generating and plotting Mansfield Stock Charts for
+individual stocks.</p></li>
+<li><p>RelativeStrengthLines : A class for plotting Mansfield Relative Strength
+(RSM) lines of multiple stocks compared to a reference index.</p></li>
+</ul>
+</section>
+<section id="usage">
+<h4>Usage:<a class="headerlink" href="#usage" title="Link to this heading"></a></h4>
+<dl>
+<dt>To generate a Mansfield Stock Chart for a single stock:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">StockChart</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;TSLA&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1wk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt>To compare the Mansfield Relative Strength of multiple stocks:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;TSM&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RelativeStrengthLines</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="see-also">
+<h4>See Also:<a class="headerlink" href="#see-also" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://trendspider.com/trading-tools-store/indicators/mansfield-relative-strength/">Mansfield relative strength | TrendSpider Store</a></p></li>
+</ul>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.mpl.mansfield.RelativeStrengthLines">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.mpl.mansfield.</span></span><span class="sig-name descname"><span class="pre">RelativeStrengthLines</span></span><a class="reference internal" href="_modules/vistock/mpl/mansfield.html#RelativeStrengthLines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.mansfield.RelativeStrengthLines" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for plotting Mansfield Relative Strength (RSM) lines of multiple
+stocks.</p>
+<p>This class allows for the comparison of the relative strength of multiple
+stocks against a reference index over a specified period. It supports
+various intervals and moving average calculations (SMA and EMA) for the
+relative strength computation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.mpl.mansfield.RelativeStrengthLines.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SMA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'upper</span> <span class="pre">left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'charles'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_cycle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">((0.6509803921568628,</span> <span class="pre">0.807843137254902,</span> <span class="pre">0.8901960784313725),</span> <span class="pre">(0.12156862745098039,</span> <span class="pre">0.47058823529411764,</span> <span class="pre">0.7058823529411765),</span> <span class="pre">(0.6980392156862745,</span> <span class="pre">0.8745098039215686,</span> <span class="pre">0.5411764705882353),</span> <span class="pre">(0.2,</span> <span class="pre">0.6274509803921569,</span> <span class="pre">0.17254901960784313),</span> <span class="pre">(0.984313725490196,</span> <span class="pre">0.6039215686274509,</span> <span class="pre">0.6),</span> <span class="pre">(0.8901960784313725,</span> <span class="pre">0.10196078431372549,</span> <span class="pre">0.10980392156862745),</span> <span class="pre">(0.9921568627450981,</span> <span class="pre">0.7490196078431373,</span> <span class="pre">0.43529411764705883),</span> <span class="pre">(1.0,</span> <span class="pre">0.4980392156862745,</span> <span class="pre">0.0),</span> <span class="pre">(0.792156862745098,</span> <span class="pre">0.6980392156862745,</span> <span class="pre">0.8392156862745098),</span> <span class="pre">(0.41568627450980394,</span> <span class="pre">0.23921568627450981,</span> <span class="pre">0.6039215686274509),</span> <span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.6),</span> <span class="pre">(0.6941176470588235,</span> <span class="pre">0.34901960784313724,</span> <span class="pre">0.1568627450980392))</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/mansfield.html#RelativeStrengthLines.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.mansfield.RelativeStrengthLines.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot the Mansfield Relative Strength (RSM) of multiple stocks compared
+to a reference index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbols</strong> (<em>list</em><em> of </em><em>str</em>) – List of stock symbols to compare. Can include both US and Taiwan
+stocks.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. . Defaults to ‘2y’. Valid values are
+6mo, 1y, 2y, 5y, 10y, ytd, max.</p>
+<ul>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – The interval for data points (‘1d’ for daily, ‘1wk’ for weekly;
+default is ‘1d’).</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol of the reference index. If None, defaults to S&amp;P
+500 (‘^GSPC’) or Taiwan Weighted Index (‘^TWII’) if the first stock
+is a Taiwan stock.</p></li>
+<li><p><strong>ma</strong> (<em>str</em><em>, </em><em>optional</em>) – Moving average type (‘SMA’, ‘EMA’). Default to ‘SMA’.</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the location of the legend (default is ‘upper left’).
+Valid locations are</p>
+<ul>
+<li><p>’best’</p></li>
+<li><p>’upper right’</p></li>
+<li><p>’upper left’</p></li>
+<li><p>’lower left’</p></li>
+<li><p>’lower right’</p></li>
+<li><p>’right’</p></li>
+<li><p>’center left’</p></li>
+<li><p>’center right’</p></li>
+<li><p>’lower center’</p></li>
+<li><p>’upper center’</p></li>
+<li><p>’center’</p></li>
+</ul>
+</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘charles’.</p>
+</p></li>
+<li><p><strong>color_cycle</strong> (<em>list</em><em> or </em><em>None</em>) – <p>Specifies a list of colors to be used for cycling through plot
+lines. If None, the default matplotlib color cycle will be used.
+You can pass a list of colors to override the default color cycle.
+Each plot line will use the next color in the sequence.</p>
+<p>Default color sequence:</p>
+<ul>
+<li><p>plt.cm.Paired.colors (20 colors, cooler and more muted)</p></li>
+</ul>
+<p>Other useful predefined color cycles:</p>
+<ul>
+<li><p>plt.cm.tab20.colors (20 colors, brighter)</p></li>
+<li><p>plt.cm.tab20b.colors (20 colors, darker)</p></li>
+<li><p>plt.cm.Paired.colors (12 colors, alternating between deep and
+pastel colors; useful for categorical data)</p></li>
+<li><p>plt.cm.Set3.colors (12 colors, pastel-like; good for categorical
+data)</p></li>
+<li><p>plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for
+categorical data)</p></li>
+</ul>
+</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the image file. Defaults to ‘out’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The function generates a plot and saves it as an image file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;TSM&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.mpl.mansfield.StockChart">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.mpl.mansfield.</span></span><span class="sig-name descname"><span class="pre">StockChart</span></span><a class="reference internal" href="_modules/vistock/mpl/mansfield.html#StockChart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.mansfield.StockChart" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for generating and plotting Mansfield Stock Charts.</p>
+<p>Mansfield Stock Charts are a method for visualizing stock trends and
+relative strength compared to a reference index, as popularized by Stan
+Weinstein. This class provides methods to fetch stock data, compute
+relative strength, and plot the resulting charts using mplfinance.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.mpl.mansfield.StockChart.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SMA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'upper</span> <span class="pre">left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'yahoo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/mansfield.html#StockChart.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.mansfield.StockChart.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a Mansfield Stock Chart for a given stock symbol and time
+period.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – The stock symbol to analyze.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The period of historical data to fetch. Valid values are ‘6mo’, ‘1y’,
+‘2y’, ‘5y’, ‘10y’, ‘ytd’, ‘max’.  Default is ‘2y’.</p>
+<ul>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – The interval for data points. Valid values are ‘1d’ for daily or ‘1wk’
+for weekly. Default is ‘1d’.</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol of the reference index. If None, defaults to S&amp;P
+500 (‘^GSPC’) or Taiwan Weighted Index (‘^TWII’) if the first stock is
+a Taiwan stock.</p></li>
+<li><p><strong>ma</strong> (<em>str</em><em>, </em><em>optional</em>) – Moving average type (‘SMA’, ‘EMA’). Default to ‘SMA’.</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the location of the legend (default is ‘upper left’).
+Valid locations are</p>
+<ul>
+<li><p>’best’</p></li>
+<li><p>’upper right’</p></li>
+<li><p>’upper left’</p></li>
+<li><p>’lower left’</p></li>
+<li><p>’lower right’</p></li>
+<li><p>’right’</p></li>
+<li><p>’center left’</p></li>
+<li><p>’center right’</p></li>
+<li><p>’lower center’</p></li>
+<li><p>’upper center’</p></li>
+<li><p>’center’</p></li>
+</ul>
+</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – The market color style to use. Default is MarketColorStyle.AUTO.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘yahoo’.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – the output directory for saving figure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an unsupported interval is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vistock.mpl.mpf_utils">
+<span id="vistock-mpl-mpf-utils-module"></span><h2>vistock.mpl.mpf_utils module<a class="headerlink" href="#module-vistock.mpl.mpf_utils" title="Link to this heading"></a></h2>
+<p>Utility for mplfinance.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.mpl.mpf_utils.decide_mpf_style">
+<span class="sig-prename descclassname"><span class="pre">vistock.mpl.mpf_utils.</span></span><span class="sig-name descname"><span class="pre">decide_mpf_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_mpf_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'yahoo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.WESTERN</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/mpf_utils.html#decide_mpf_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.mpf_utils.decide_mpf_style" title="Link to this definition"></a></dt>
+<dd><p>Determine the mplfinance style based on the base style and market color style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_mpf_style</strong> (<em>str</em>) – The base mplfinance style to use. Default is
+‘yahoo’.</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a>) – The market color style to use.
+Default is MarketColorStyle.WESTERN.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The mplfinance style dictionary with the appropriate market colors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.mpl.mpf_utils.use_mac_chinese_font">
+<span class="sig-prename descclassname"><span class="pre">vistock.mpl.mpf_utils.</span></span><span class="sig-name descname"><span class="pre">use_mac_chinese_font</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/mpf_utils.html#use_mac_chinese_font"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.mpf_utils.use_mac_chinese_font" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-vistock.mpl.profile">
+<span id="vistock-mpl-profile-module"></span><h2>vistock.mpl.profile module<a class="headerlink" href="#module-vistock.mpl.profile" title="Link to this heading"></a></h2>
+<p>Visualize a Volume Profile (or Turnover Profile) for a stock.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.mpl.profile.Turnover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.mpl.profile.</span></span><span class="sig-name descname"><span class="pre">Turnover</span></span><a class="reference internal" href="_modules/vistock/mpl/profile.html#Turnover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.profile.Turnover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Turnover Profile</p>
+<p>Here “turnover” means “trading value” (= price * volume)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.mpl.profile.Turnover.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'best'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'binancedark'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/profile.html#Turnover.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.profile.Turnover.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a turnover profile figure for a given stock.</p>
+<p>Here the provile is overlaid with the price subplot. This figure
+consists of two subplots: a price subplot and a volume subplot. The
+former includes price candlesticks, price moving average lines, while
+the latter includes a trading volume histogram and a volume moving
+average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download (default is ‘1y’). Valid values are
+1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item (default is ‘1d’). Valid values are
+1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving
+averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>total_bins</strong> (<em>int</em>) – the number of bins to calculate comulative volume for bins.</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the location of the legend (default is ‘best’).
+Valid locations are</p>
+<ul>
+<li><p>’best’</p></li>
+<li><p>’upper right’</p></li>
+<li><p>’upper left’</p></li>
+<li><p>’lower left’</p></li>
+<li><p>’lower right’</p></li>
+<li><p>’right’</p></li>
+<li><p>’center left’</p></li>
+<li><p>’center right’</p></li>
+<li><p>’lower center’</p></li>
+<li><p>’upper center’</p></li>
+<li><p>’center’</p></li>
+</ul>
+</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – The market color style to use. Default is MarketColorStyle.AUTO.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘yahoo’.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – the output directory for saving figure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vistock.mpl.profile.Volume">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.mpl.profile.</span></span><span class="sig-name descname"><span class="pre">Volume</span></span><a class="reference internal" href="_modules/vistock/mpl/profile.html#Volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.profile.Volume" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Volume Profile, i.e., PBV (Price-by-Volume) or Volume-by-Price</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vistock.mpl.profile.Volume.plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'best'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'binancedark'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/profile.html#Volume.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.profile.Volume.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a price-by-volume, PBV (also called volume profile) figure for a
+given stock.</p>
+<p>Here the PBV is overlaid with the price subplot. This figure consists of
+two subplots: a price subplot and a volume subplot. The former includes
+price candlesticks, price moving average lines, while the latter
+includes a trading volume histogram and a volume moving average line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download (default is ‘1y’). Valid values are
+1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item (default is ‘1d’). Valid values are
+1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em>) – a sequence to list the number of data items to calclate moving
+averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>total_bins</strong> (<em>int</em>) – the number of bins to calculate comulative volume for bins.</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the location of the legend (default is ‘best’).
+Valid locations are</p>
+<ul>
+<li><p>’best’</p></li>
+<li><p>’upper right’</p></li>
+<li><p>’upper left’</p></li>
+<li><p>’lower left’</p></li>
+<li><p>’lower right’</p></li>
+<li><p>’right’</p></li>
+<li><p>’center left’</p></li>
+<li><p>’center right’</p></li>
+<li><p>’lower center’</p></li>
+<li><p>’upper center’</p></li>
+<li><p>’center’</p></li>
+</ul>
+</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – The market color style to use. Default is MarketColorStyle.AUTO.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘yahoo’.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – the output directory for saving figure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vistock.mpl.rsi">
+<span id="vistock-mpl-rsi-module"></span><h2>vistock.mpl.rsi module<a class="headerlink" href="#module-vistock.mpl.rsi" title="Link to this heading"></a></h2>
+<p>Plot a 3-split (price, volume, RSI) stock chart.</p>
+<ul class="simple">
+<li><p>Data from yfinance</p></li>
+<li><p>Plot with mplfinance</p></li>
+<li><p>RSI from TA-Lib</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.mpl.rsi.plot">
+<span class="sig-prename descclassname"><span class="pre">vistock.mpl.rsi.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSLA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vma_nitems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'best'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_color_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MarketColorStyle.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'yahoo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hides_nontrading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/mpl/rsi.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.mpl.rsi.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot a stock figure that consists 3 suplots: a price subplot, a
+volume subplot, and a RSI subplot.</p>
+<p>The price subplot shows price candlesticks, and price moving-average lines.
+The volume subplot shows a volume bar chart and a volume moving average
+line. The RSI subplot shows only the RSI curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbol</strong> (<em>str</em>) – the stock symbol.</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the period data to download. Valid values are 1d, 5d, 1mo, 3mo, 6mo,
+1y, 2y, 5y, 10y, ytd, max. Default is ‘1y’</p>
+<ul>
+<li><p>d   – days</p></li>
+<li><p>mo  – monthes</p></li>
+<li><p>y   – years</p></li>
+<li><p>ytd – year to date</p></li>
+<li><p>max – all data</p></li>
+</ul>
+</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the interval of an OHLC item. Valid values are 1m, 2m, 5m, 15m, 30m,
+60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo. Default is ‘1d’</p>
+<ul>
+<li><p>m  – minutes</p></li>
+<li><p>h  – hours</p></li>
+<li><p>wk – weeks</p></li>
+<li><p>mo – monthes</p></li>
+</ul>
+<p>Intraday data cannot extend last 60 days:</p>
+<ul>
+<li><p>1m - max 7 days within last 30 days</p></li>
+<li><p>up to 90m - max 60 days</p></li>
+<li><p>60m, 1h - max 730 days (yes 1h is technically &lt; 90m but this what
+Yahoo does)</p></li>
+</ul>
+</p></li>
+<li><p><strong>ma_nitems</strong> (<em>sequence</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – a sequence to list the number of data items to calclate moving averges.</p></li>
+<li><p><strong>vma_nitems</strong> (<em>int</em><em>, </em><em>optional</em>) – the number of data items to calculate the volume moving average.</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>the location of the legend. Default is ‘best’. Valid locations are</p>
+<ul>
+<li><p>’best’</p></li>
+<li><p>’upper right’</p></li>
+<li><p>’upper left’</p></li>
+<li><p>’lower left’</p></li>
+<li><p>’lower right’</p></li>
+<li><p>’right’</p></li>
+<li><p>’center left’</p></li>
+<li><p>’center right’</p></li>
+<li><p>’lower center’</p></li>
+<li><p>’upper center’</p></li>
+<li><p>’center’</p></li>
+</ul>
+</p></li>
+<li><p><strong>market_color_style</strong> (<a class="reference internal" href="vistock.html#vistock.utils.MarketColorStyle" title="vistock.utils.MarketColorStyle"><em>MarketColorStyle</em></a><em>, </em><em>optional</em>) – The market color style to use.  Default is MarketColorStyle.AUTO.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The chart style to use. Common styles include:</p>
+<ul>
+<li><p>’yahoo’: Yahoo Finance style</p></li>
+<li><p>’charles’: Charles style</p></li>
+<li><p>’tradingview’: TradingView style</p></li>
+<li><p>’binance’: Binance style</p></li>
+<li><p>’binancedark’: Binance dark mode style</p></li>
+<li><p>’mike’: Mike style (dark mode)</p></li>
+<li><p>’nightclouds’: Dark mode with sleek appearance</p></li>
+<li><p>’checkers’: Checkered style</p></li>
+<li><p>’ibd’: Investor’s Business Daily style</p></li>
+<li><p>’sas’: SAS style</p></li>
+<li><p>’starsandstripes’: Stars and Stripes style</p></li>
+<li><p>’kenan’: Kenan style</p></li>
+<li><p>’blueskies’: Blue Skies style</p></li>
+<li><p>’brasil’: Brasil style</p></li>
+</ul>
+<p>Default is ‘yahoo’.</p>
+</p></li>
+<li><p><strong>hides_nontrading</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to hide non-trading periods. Default is True.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em>) – the output directory for saving figure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-vistock.mpl">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-vistock.mpl" title="Link to this heading"></a></h2>
+<p>Initialize vistock.mpl package.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vistock.html" class="btn btn-neutral float-left" title="vistock package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vistock.plotly.html" class="btn btn-neutral float-right" title="vistock.plotly package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, York Jong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
