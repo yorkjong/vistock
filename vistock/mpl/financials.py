@@ -72,7 +72,7 @@ def plot(symbol, style='yahoo', out_dir='out'):
 
         Default is 'yahoo'.
 
-    out_dir : str, optional
+    out_dir: str, optional
         Directory to save the output HTML file. Default is 'out'.
     """
     ticker = tw.as_yfinance(symbol)

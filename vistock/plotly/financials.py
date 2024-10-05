@@ -63,7 +63,7 @@ def plot(symbol, template='plotly', out_dir='out'):
         For more details on templates, refer to Plotly's official
         documentation.
 
-    out_dir : str, optional
+    out_dir: str, optional
         Directory to save the output HTML file. Default is 'out'.
     """
     ticker = tw.as_yfinance(symbol)

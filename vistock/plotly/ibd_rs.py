@@ -65,15 +65,15 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
     interval: str
         The interval for data points ('1d' for daily, '1wk' for weekly; default
         is '1d').
-    ticker_ref : str, optional
+    ticker_ref: str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
-    rs_window : str, optional
+    rs_window: str, optional
         Specify the time window ('3mo' or '12mo') for Relative Strength
         calculation. Default to '12mo'.
 
-    market_color_style : MarketColorStyle, optional
+    market_color_style: MarketColorStyle, optional
         Color style for market data visualization. Default is
         MarketColorStyle.AUTO.
 
@@ -94,9 +94,9 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
         For more details on templates, refer to Plotly's official
         documentation.
 
-    hides_nontrading : bool, optional
+    hides_nontrading: bool, optional
         Whether to hide non-trading periods. Default is True.
-    out_dir : str, optional
+    out_dir: str, optional
         Directory to save the output HTML file. Default is 'out'.
 
     Raises

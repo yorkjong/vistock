@@ -93,15 +93,15 @@ class StockChart:
             - wk -- weeks
             - mo -- months
 
-        ticker_ref : str, optional
+        ticker_ref: str, optional
             The ticker symbol of the reference index. If None, defaults to S&P
             500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
             is a Taiwan stock.
 
-        ma : str, optional
+        ma: str, optional
             Moving average type ('SMA', 'EMA'). Default to 'SMA'.
 
-        market_color_style : MarketColorStyle, optional
+        market_color_style: MarketColorStyle, optional
             Color style for market data visualization. Default is
             MarketColorStyle.AUTO.
 
@@ -122,9 +122,9 @@ class StockChart:
             For more details on templates, refer to Plotly's official
             documentation.
 
-        hides_nontrading : bool, optional
+        hides_nontrading: bool, optional
             Whether to hide non-trading periods. Default is True.
-        out_dir : str, optional
+        out_dir: str, optional
             Directory to save the output HTML file. Default is 'out'.
 
         Raises
@@ -285,10 +285,10 @@ class RelativeStrengthLines:
 
         Parameters
         ------------
-        symbols : list of str
+        symbols: list of str
             List of stock symbols to compare. Can include both US and Taiwan
             stocks.
-        period : str, optional
+        period: str, optional
             the period data to download. . Defaults to '2y'. Valid values are
             6mo, 1y, 2y, 5y, 10y, ytd, max.
 
@@ -297,15 +297,15 @@ class RelativeStrengthLines:
             - ytd -- year to date
             - max -- all data
 
-        interval : str, optional
+        interval: str, optional
             The interval for data points ('1d' for daily, '1wk' for weekly;
             default is '1d').
-        ticker_ref : str, optional
+        ticker_ref: str, optional
             The ticker symbol of the reference index. If None, defaults to S&P
             500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
             is a Taiwan stock.
 
-        ma : str, optional
+        ma: str, optional
             Moving average type ('SMA', 'EMA'). Default to 'SMA'.
 
         template: str, optional:
@@ -347,9 +347,9 @@ class RelativeStrengthLines:
             - px.colors.qualitative.T10 (10 colors, clear and bright)
             - px.colors.qualitative.Plotly (10 colors, default Plotly colors)
 
-        hides_nontrading : bool, optional
+        hides_nontrading: bool, optional
             Whether to hide non-trading periods on the plot. Defaults to True.
-        out_dir : str, optional
+        out_dir: str, optional
             Directory to save the HTML file. Defaults to 'out'.
 
         Returns

@@ -109,7 +109,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
 
         Default is 'yahoo'.
 
-    hides_nontrading : bool, optional
+    hides_nontrading: bool, optional
         Whether to hide non-trading periods. Default is True.
     out_dir: str
         the output directory for saving figure.

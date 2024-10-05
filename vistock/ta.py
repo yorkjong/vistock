@@ -18,10 +18,10 @@ def simple_moving_average(values, window, min_periods=1):
 
     Parameters
     ----------
-    values : pandas.Series
+    values: pandas.Series
         Series of values for which to calculate the SMA.
 
-    window : int
+    window: int
         Number of periods over which to calculate the SMA.
 
     Returns
@@ -51,13 +51,13 @@ def exponential_moving_average(values, window, min_periods=1, adjust=False):
 
     Parameters
     ----------
-    values : pandas.Series
+    values: pandas.Series
         Series of values for which to calculate the EMA.
 
-    window : int
+    window: int
         Number of periods over which to calculate the EMA.
 
-    adjust : bool, optional
+    adjust: bool, optional
         Whether to adjust the EMA calculation (default is False).
 
     Returns
@@ -93,11 +93,11 @@ def rsi(data, periods=14):
 
     Parameters
     ----------
-    data : pandas.Series
+    data: pandas.Series
         A pandas Series containing the price data (typically closing prices)
         for which the RSI is to be calculated.
 
-    periods : int, optional, default: 14
+    periods: int, optional, default: 14
         The number of periods to use for the RSI calculation. A typical value
         is 14.
 

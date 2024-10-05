@@ -9,9 +9,9 @@ for visualization.
 
 Classes:
 --------
-- StockChart : A class for generating and plotting Mansfield Stock Charts for
+- StockChart: A class for generating and plotting Mansfield Stock Charts for
   individual stocks.
-- RelativeStrengthLines : A class for plotting Mansfield Relative Strength
+- RelativeStrengthLines: A class for plotting Mansfield Relative Strength
   (RSM) lines of multiple stocks compared to a reference index.
 
 Usage:
@@ -72,9 +72,9 @@ class StockChart:
 
         Parameters
         ----------
-        symbol : str
+        symbol: str
             The stock symbol to analyze.
-        period : str, optional
+        period: str, optional
             The period of historical data to fetch. Valid values are '6mo', '1y',
             '2y', '5y', '10y', 'ytd', 'max'.  Default is '2y'.
 
@@ -83,16 +83,16 @@ class StockChart:
             - ytd -- year to date
             - max -- all data
 
-        interval : str, optional
+        interval: str, optional
             The interval for data points. Valid values are '1d' for daily or '1wk'
             for weekly. Default is '1d'.
 
-        ticker_ref : str, optional
+        ticker_ref: str, optional
             The ticker symbol of the reference index. If None, defaults to S&P
             500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
             a Taiwan stock.
 
-        ma : str, optional
+        ma: str, optional
             Moving average type ('SMA', 'EMA'). Default to 'SMA'.
 
         legend_loc: str, optional
@@ -134,7 +134,7 @@ class StockChart:
 
             Default is 'yahoo'.
 
-        hides_nontrading : bool, optional
+        hides_nontrading: bool, optional
             Whether to hide non-trading periods. Default is True.
         out_dir: str, optional
             the output directory for saving figure.
@@ -264,10 +264,10 @@ class RelativeStrengthLines:
 
         Parameters
         ------------
-        symbols : list of str
+        symbols: list of str
             List of stock symbols to compare. Can include both US and Taiwan
             stocks.
-        period : str, optional
+        period: str, optional
             the period data to download. . Defaults to '2y'. Valid values are
             6mo, 1y, 2y, 5y, 10y, ytd, max.
 
@@ -276,15 +276,15 @@ class RelativeStrengthLines:
             - ytd -- year to date
             - max -- all data
 
-        interval : str, optional
+        interval: str, optional
             The interval for data points ('1d' for daily, '1wk' for weekly;
             default is '1d').
-        ticker_ref : str, optional
+        ticker_ref: str, optional
             The ticker symbol of the reference index. If None, defaults to S&P
             500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
             is a Taiwan stock.
 
-        ma : str, optional
+        ma: str, optional
             Moving average type ('SMA', 'EMA'). Default to 'SMA'.
 
         legend_loc: str, optional
@@ -344,7 +344,7 @@ class RelativeStrengthLines:
             - plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for
               categorical data)
 
-        out_dir : str, optional
+        out_dir: str, optional
             Directory to save the image file. Defaults to 'out'.
 
         Returns

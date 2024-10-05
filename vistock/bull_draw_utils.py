@@ -13,7 +13,7 @@ def calculate_bull_run(df):
 
     Parameters
     ----------
-    df : pandas.DataFrame
+    df: pandas.DataFrame
         DataFrame containing stock data with a 'Close' column.
 
     Returns
@@ -51,7 +51,7 @@ def calculate_rolling_drawdown(data, window=60):
 
     Parameters
     ----------
-    df : pandas.DataFrame
+    df: pandas.DataFrame
         DataFrame containing stock data with a 'High', 'Close' columns.
     window: int
         window size to rolling.
@@ -72,7 +72,7 @@ def calculate_drawdown(df):
 
     Parameters
     ----------
-    df : pandas.DataFrame
+    df: pandas.DataFrame
         DataFrame containing stock data with a 'High', 'Close' columns.
 
     Returns
@@ -91,7 +91,7 @@ def calculate_drawdown_v2(df):
 
     Parameters
     ----------
-    df : pandas.DataFrame
+    df: pandas.DataFrame
         DataFrame containing stock data with a 'Close' column.
 
     Returns

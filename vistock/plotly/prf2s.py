@@ -212,7 +212,7 @@ class Volume:
             decide if the price-by-volume bars align on right. True to set the
             starting position of the horizontal bars to the right; False the
             left.
-        market_color_style : MarketColorStyle, optional
+        market_color_style: MarketColorStyle, optional
             Color style for market data visualization. Default is
             MarketColorStyle.AUTO.
 
@@ -233,9 +233,9 @@ class Volume:
             For more details on templates, refer to Plotly's official
             documentation.
 
-        hides_nontrading : bool, optional
+        hides_nontrading: bool, optional
             Whether to hide non-trading periods. Default is True.
-        out_dir : str, optional
+        out_dir: str, optional
             Directory to save the output HTML file. Default is 'out'.
         """
         # Download stock data
@@ -323,7 +323,7 @@ class Turnover:
             decide if the price-by-volume bars align on right. True to set the
             starting position of the horizontal bars to the right; False the
             left.
-        market_color_style : MarketColorStyle, optional
+        market_color_style: MarketColorStyle, optional
             Color style for market data visualization. Default is
             MarketColorStyle.AUTO.
 
@@ -343,9 +343,9 @@ class Turnover:
 
             For more details on templates, refer to Plotly's official documentation.
 
-        hides_nontrading : bool, optional
+        hides_nontrading: bool, optional
             Whether to hide non-trading periods. Default is True.
-        out_dir : str, optional
+        out_dir: str, optional
             Directory to save the output HTML file. Default is 'out'.
         """
         # Download stock data

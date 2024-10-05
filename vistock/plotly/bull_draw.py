@@ -66,7 +66,7 @@ def plot(symbol='TSLA', period='1y', interval='1d',
         a sequence to list the number of data items to calclate moving averges.
     vma_nitems: int
         the number of data items to calculate the volume moving average.
-    market_color_style : MarketColorStyle, optional
+    market_color_style: MarketColorStyle, optional
         Color style for market data visualization. Default is
         MarketColorStyle.AUTO.
 
@@ -87,9 +87,9 @@ def plot(symbol='TSLA', period='1y', interval='1d',
         For more details on templates, refer to Plotly's official
         documentation.
 
-    hides_nontrading : bool, optional
+    hides_nontrading: bool, optional
         Whether to hide non-trading periods. Default is True.
-    out_dir : str, optional
+    out_dir: str, optional
         Directory to save the output HTML file. Default is 'out'.
     """
     # Download stock data

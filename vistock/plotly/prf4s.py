@@ -189,7 +189,7 @@ class Volume:
             the number of data items to calculate the volume moving average.
         total_bins: int
             the number of bins to calculate comulative volume for bins.
-        market_color_style : MarketColorStyle, optional
+        market_color_style: MarketColorStyle, optional
             Color style for market data visualization. Default is
             MarketColorStyle.AUTO.
 
@@ -210,9 +210,9 @@ class Volume:
             For more details on templates, refer to Plotly's official
             documentation.
 
-        hides_nontrading : bool, optional
+        hides_nontrading: bool, optional
             Whether to hide non-trading periods. Default is True.
-        out_dir : str, optional
+        out_dir: str, optional
             Directory to save the output HTML file. Default is 'out'.
         """
         # Download stock data
@@ -295,7 +295,7 @@ class Turnover:
             the number of data items to calculate the volume moving average.
         total_bins: int
             the number of bins to calculate comulative volume for bins.
-        market_color_style : MarketColorStyle, optional
+        market_color_style: MarketColorStyle, optional
             Color style for market data visualization. Default is
             MarketColorStyle.AUTO.
 
@@ -316,9 +316,9 @@ class Turnover:
             For more details on templates, refer to Plotly's official
             documentation.
 
-        hides_nontrading : bool, optional
+        hides_nontrading: bool, optional
             Whether to hide non-trading periods. Default is True.
-        out_dir : str, optional
+        out_dir: str, optional
             Directory to save the output HTML file. Default is 'out'.
         """
         # Download stock data

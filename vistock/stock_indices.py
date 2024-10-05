@@ -62,11 +62,11 @@ def table_from_wikipedia(article, class_, id):
 
     Parameters
     ----------
-    article : str
+    article: str
         The name of the Wikipedia article.
-    class_ : str
+    class_: str
         The class attribute of the table to retrieve.
-    id : str
+    id: str
         The id attribute of the table to retrieve.
 
     Returns
@@ -95,11 +95,11 @@ def symbols_from_wikipedia_table(article,
 
     Parameters
     ----------
-    article : str
+    article: str
         The name of the Wikipedia article.
-    class_ : str, optional
+    class_: str, optional
         The class attribute of the table. Defaults to 'wikitable sortable'.
-    id : str, optional
+    id: str, optional
         The id attribute of the table. Defaults to 'constituents'.
 
     Returns
@@ -135,7 +135,7 @@ def table_from_bullishbears(article):
 
     Parameters
     ----------
-    article : str
+    article: str
         The relative path of the article on the Bullish Bears website.
 
     Returns
@@ -153,7 +153,7 @@ def symbols_from_bullishbears_table(article):
 
     Parameters
     ----------
-    article : str
+    article: str
         The relative path of the article on the Bullish Bears website.
 
     Returns
@@ -286,7 +286,7 @@ def get_tickers(source):
 
     Parameters
     ----------
-    source : str
+    source: str
         The ticker symbol or common abbreviation for the index or indices.
 
         - Yahoo Finance ticker symbols (e.g., '^GSPC' for S&P 500, '^NDX'
@@ -398,7 +398,7 @@ def ticker_from_name(name):
 
     Parameters
     ----------
-    name : str
+    name: str
         The long name of a ticker.
 
     Returns
@@ -449,7 +449,7 @@ def get_name(index_symbol):
 
     Parameters
     ----------
-    index_symbol : str
+    index_symbol: str
         The ticker symbol or common abbreviation for the index.
 
         - Yahoo Finance ticker symbols (e.g., '^GSPC' for S&P 500, '^NDX' for

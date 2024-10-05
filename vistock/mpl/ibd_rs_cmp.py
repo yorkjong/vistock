@@ -50,10 +50,10 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 
     Parameters
     ------------
-    symbols : list of str
+    symbols: list of str
         List of stock symbols to compare. Can include both US and Taiwan stocks.
 
-    period : str, optional
+    period: str, optional
         The period of historical data to fetch. Valid values are '6mo', '1y',
         '2y', '5y', '10y', 'ytd', 'max'.  Default is '2y'.
 
@@ -62,16 +62,16 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         - ytd -- year to date
         - max -- all data
 
-    interval : str, optional
+    interval: str, optional
         The interval for data points. Valid values are '1d' for daily or '1wk'
         for weekly. Default is '1d'.
 
-    ticker_ref : str, optional
+    ticker_ref: str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock is
         a Taiwan stock.
 
-    rs_window : str, optional
+    rs_window: str, optional
         Specify the time window ('3mo' or '12mo') for Relative Strength
         calculation. Default to '12mo'.
 
@@ -132,7 +132,7 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         - plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for
           categorical data)
 
-    out_dir : str, optional
+    out_dir: str, optional
         Directory to save the image file. Defaults to 'out'.
 
     Returns

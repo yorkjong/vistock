@@ -51,10 +51,10 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
 
     Parameters
     ------------
-    symbols : list of str
+    symbols: list of str
         List of stock symbols to compare. Can include both US and Taiwan
         stocks.
-    period : str, optional
+    period: str, optional
         the period data to download. . Defaults to '2y'. Valid values are
         6mo, 1y, 2y, 5y, 10y, ytd, max.
 
@@ -63,16 +63,16 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         - ytd -- year to date
         - max -- all data
 
-    interval : str, optional
+    interval: str, optional
         The interval for data points ('1d' for daily, '1wk' for weekly; default
         is '1d').
 
-    ticker_ref : str, optional
+    ticker_ref: str, optional
         The ticker symbol of the reference index. If None, defaults to S&P
         500 ('^GSPC') or Taiwan Weighted Index ('^TWII') if the first stock
         is a Taiwan stock.
 
-    rs_window : str, optional
+    rs_window: str, optional
         Specify the time window ('3mo' or '12mo') for Relative Strength
         calculation. Default to '12mo'.
 
@@ -113,9 +113,9 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
         - px.colors.qualitative.T10 (10 colors, clear and bright)
         - px.colors.qualitative.Plotly (10 colors, default Plotly colors)
 
-    hides_nontrading : bool, optional
+    hides_nontrading: bool, optional
         Whether to hide non-trading periods on the plot. Defaults to True.
-    out_dir : str, optional
+    out_dir: str, optional
         Directory to save the HTML file. Defaults to 'out'.
 
     Returns

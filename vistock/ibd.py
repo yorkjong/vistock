@@ -94,13 +94,13 @@ def relative_strength(closes, closes_ref, interval='1d'):
 
     Parameters
     ----------
-    closes : pd.Series
+    closes: pd.Series
         Closing prices of the stock.
 
-    closes_ref : pd.Series
+    closes_ref: pd.Series
         Closing prices of the reference index.
 
-    interval : str, optional
+    interval: str, optional
         The frequency of the data points. Must be one of '1d' for daily data,
         '1wk' for weekly data, or '1mo' for monthly data. Defaults to '1d'.
 
@@ -176,13 +176,13 @@ def quarters_return(closes, n, interval):
 
     Parameters
     ----------
-    closes : pd.Series
+    closes: pd.Series
         Closing prices of the stock or index.
 
-    n : int
+    n: int
         Number of quarters to look back.
 
-    interval : str, optional
+    interval: str, optional
         The frequency of the data points. Must be one of '1d' for daily data,
         '1wk' for weekly data, or '1mo' for monthly data.
 
@@ -223,13 +223,13 @@ def relative_strength_3m(closes, closes_ref, interval='1d'):
 
     Parameters
     ----------
-    closes : pd.Series
+    closes: pd.Series
         Closing prices of the stock.
 
-    closes_ref : pd.Series
+    closes_ref: pd.Series
         Closing prices of the reference index.
 
-    interval : str, optional
+    interval: str, optional
         The frequency of the data points. Must be one of '1d' for daily data,
         '1wk' for weekly data, or '1mo' for monthly data. Defaults to '1d'.
 
@@ -277,21 +277,21 @@ def ranking(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
 
     Parameters
     ----------
-    tickers : list of str
+    tickers: list of str
         List of stock tickers to rank.
 
-    ticker_ref : str, optional
+    ticker_ref: str, optional
         Ticker symbol of the benchmark. Default to '^GSPC' (S&P 500)
 
-    period : str, optional
+    period: str, optional
         Period for historical data ('6mo', '1y', '2y', '5y', 'ytd', 'max').
         Default to '2y' (two years).
 
-    interval : str, optional
+    interval: str, optional
         Interval for historical data ('1d', '1wk', '1mo').
         Default to '1wk' (one week).
 
-    rs_window : str, optional
+    rs_window: str, optional
         Specify the time window ('3mo' or '12mo') for Relative Strength
         calculation. Default to '12mo'.
 
@@ -389,23 +389,23 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
 
     Parameters
     ----------
-    tickers : List[str]
+    tickers: List[str]
         A list of stock tickers to analyze.
 
-    ticker_ref : str, optional
+    ticker_ref: str, optional
         The ticker symbol for the reference index. Defaults to '^GSPC' (S&P 500).
 
-    period : str, optional
+    period: str, optional
         The period for which to fetch historical data. Defaults to '2y' (two years).
 
-    interval : str, optional
+    interval: str, optional
         The frequency of the data points. Must be one of '1d' for daily data,
         '1wk' for weekly data, or '1mo' for monthly data. Defaults to '1d'.
 
-    percentile_method : str, optional
+    percentile_method: str, optional
         Method to calculate percentiles. Either 'rank' or 'qcut'. Defaults to 'rank'.
 
-    rs_window : str, optional
+    rs_window: str, optional
         Specify the time window ('3mo' or '12mo') for Relative Strength
         calculation. Default to '12mo'.
 
@@ -537,10 +537,10 @@ def ma_window_size(interval, days):
 
     Parameters
     ----------
-    interval : str
+    interval: str
         The data interval. Must be either '1d' for daily or '1wk' for weekly.
 
-    days : int
+    days: int
         Number of calendar days for the desired moving average period.
 
     Returns
@@ -601,11 +601,11 @@ def test_rankings(min_percentile=80, percentile_method='qcut',
     '''
     Parameters
     ----------
-    min_percentile : int, optional
+    min_percentile: int, optional
         The minimum percentile for a stock to be included in the rankings.
         Defaults to 80.
 
-    out_dir : str, optional
+    out_dir: str, optional
         The output directory to store CSV tables. Defaults to 'out'.
     '''
     import os
