@@ -170,13 +170,13 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    closes : pd.Series</span>
+<span class="sd">    closes: pd.Series</span>
 <span class="sd">        Closing prices of the stock.</span>
 
-<span class="sd">    closes_ref : pd.Series</span>
+<span class="sd">    closes_ref: pd.Series</span>
 <span class="sd">        Closing prices of the reference index.</span>
 
-<span class="sd">    interval : str, optional</span>
+<span class="sd">    interval: str, optional</span>
 <span class="sd">        The frequency of the data points. Must be one of &#39;1d&#39; for daily data,</span>
 <span class="sd">        &#39;1wk&#39; for weekly data, or &#39;1mo&#39; for monthly data. Defaults to &#39;1d&#39;.</span>
 
@@ -253,13 +253,13 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    closes : pd.Series</span>
+<span class="sd">    closes: pd.Series</span>
 <span class="sd">        Closing prices of the stock or index.</span>
 
-<span class="sd">    n : int</span>
+<span class="sd">    n: int</span>
 <span class="sd">        Number of quarters to look back.</span>
 
-<span class="sd">    interval : str, optional</span>
+<span class="sd">    interval: str, optional</span>
 <span class="sd">        The frequency of the data points. Must be one of &#39;1d&#39; for daily data,</span>
 <span class="sd">        &#39;1wk&#39; for weekly data, or &#39;1mo&#39; for monthly data.</span>
 
@@ -302,13 +302,13 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    closes : pd.Series</span>
+<span class="sd">    closes: pd.Series</span>
 <span class="sd">        Closing prices of the stock.</span>
 
-<span class="sd">    closes_ref : pd.Series</span>
+<span class="sd">    closes_ref: pd.Series</span>
 <span class="sd">        Closing prices of the reference index.</span>
 
-<span class="sd">    interval : str, optional</span>
+<span class="sd">    interval: str, optional</span>
 <span class="sd">        The frequency of the data points. Must be one of &#39;1d&#39; for daily data,</span>
 <span class="sd">        &#39;1wk&#39; for weekly data, or &#39;1mo&#39; for monthly data. Defaults to &#39;1d&#39;.</span>
 
@@ -359,21 +359,21 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    tickers : list of str</span>
+<span class="sd">    tickers: list of str</span>
 <span class="sd">        List of stock tickers to rank.</span>
 
-<span class="sd">    ticker_ref : str, optional</span>
+<span class="sd">    ticker_ref: str, optional</span>
 <span class="sd">        Ticker symbol of the benchmark. Default to &#39;^GSPC&#39; (S&amp;P 500)</span>
 
-<span class="sd">    period : str, optional</span>
+<span class="sd">    period: str, optional</span>
 <span class="sd">        Period for historical data (&#39;6mo&#39;, &#39;1y&#39;, &#39;2y&#39;, &#39;5y&#39;, &#39;ytd&#39;, &#39;max&#39;).</span>
 <span class="sd">        Default to &#39;2y&#39; (two years).</span>
 
-<span class="sd">    interval : str, optional</span>
+<span class="sd">    interval: str, optional</span>
 <span class="sd">        Interval for historical data (&#39;1d&#39;, &#39;1wk&#39;, &#39;1mo&#39;).</span>
 <span class="sd">        Default to &#39;1wk&#39; (one week).</span>
 
-<span class="sd">    rs_window : str, optional</span>
+<span class="sd">    rs_window: str, optional</span>
 <span class="sd">        Specify the time window (&#39;3mo&#39; or &#39;12mo&#39;) for Relative Strength</span>
 <span class="sd">        calculation. Default to &#39;12mo&#39;.</span>
 
@@ -474,23 +474,23 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    tickers : List[str]</span>
+<span class="sd">    tickers: List[str]</span>
 <span class="sd">        A list of stock tickers to analyze.</span>
 
-<span class="sd">    ticker_ref : str, optional</span>
+<span class="sd">    ticker_ref: str, optional</span>
 <span class="sd">        The ticker symbol for the reference index. Defaults to &#39;^GSPC&#39; (S&amp;P 500).</span>
 
-<span class="sd">    period : str, optional</span>
+<span class="sd">    period: str, optional</span>
 <span class="sd">        The period for which to fetch historical data. Defaults to &#39;2y&#39; (two years).</span>
 
-<span class="sd">    interval : str, optional</span>
+<span class="sd">    interval: str, optional</span>
 <span class="sd">        The frequency of the data points. Must be one of &#39;1d&#39; for daily data,</span>
 <span class="sd">        &#39;1wk&#39; for weekly data, or &#39;1mo&#39; for monthly data. Defaults to &#39;1d&#39;.</span>
 
-<span class="sd">    percentile_method : str, optional</span>
+<span class="sd">    percentile_method: str, optional</span>
 <span class="sd">        Method to calculate percentiles. Either &#39;rank&#39; or &#39;qcut&#39;. Defaults to &#39;rank&#39;.</span>
 
-<span class="sd">    rs_window : str, optional</span>
+<span class="sd">    rs_window: str, optional</span>
 <span class="sd">        Specify the time window (&#39;3mo&#39; or &#39;12mo&#39;) for Relative Strength</span>
 <span class="sd">        calculation. Default to &#39;12mo&#39;.</span>
 
@@ -625,10 +625,10 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    interval : str</span>
+<span class="sd">    interval: str</span>
 <span class="sd">        The data interval. Must be either &#39;1d&#39; for daily or &#39;1wk&#39; for weekly.</span>
 
-<span class="sd">    days : int</span>
+<span class="sd">    days: int</span>
 <span class="sd">        Number of calendar days for the desired moving average period.</span>
 
 <span class="sd">    Returns</span>
@@ -690,11 +690,11 @@
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    min_percentile : int, optional</span>
+<span class="sd">    min_percentile: int, optional</span>
 <span class="sd">        The minimum percentile for a stock to be included in the rankings.</span>
 <span class="sd">        Defaults to 80.</span>
 
-<span class="sd">    out_dir : str, optional</span>
+<span class="sd">    out_dir: str, optional</span>
 <span class="sd">        The output directory to store CSV tables. Defaults to &#39;out&#39;.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">os</span>

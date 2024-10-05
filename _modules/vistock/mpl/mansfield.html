@@ -83,9 +83,9 @@
 
 <span class="sd">Classes:</span>
 <span class="sd">--------</span>
-<span class="sd">- StockChart : A class for generating and plotting Mansfield Stock Charts for</span>
+<span class="sd">- StockChart: A class for generating and plotting Mansfield Stock Charts for</span>
 <span class="sd">  individual stocks.</span>
-<span class="sd">- RelativeStrengthLines : A class for plotting Mansfield Relative Strength</span>
+<span class="sd">- RelativeStrengthLines: A class for plotting Mansfield Relative Strength</span>
 <span class="sd">  (RSM) lines of multiple stocks compared to a reference index.</span>
 
 <span class="sd">Usage:</span>
@@ -150,9 +150,9 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        symbol : str</span>
+<span class="sd">        symbol: str</span>
 <span class="sd">            The stock symbol to analyze.</span>
-<span class="sd">        period : str, optional</span>
+<span class="sd">        period: str, optional</span>
 <span class="sd">            The period of historical data to fetch. Valid values are &#39;6mo&#39;, &#39;1y&#39;,</span>
 <span class="sd">            &#39;2y&#39;, &#39;5y&#39;, &#39;10y&#39;, &#39;ytd&#39;, &#39;max&#39;.  Default is &#39;2y&#39;.</span>
 
@@ -161,16 +161,16 @@
 <span class="sd">            - ytd -- year to date</span>
 <span class="sd">            - max -- all data</span>
 
-<span class="sd">        interval : str, optional</span>
+<span class="sd">        interval: str, optional</span>
 <span class="sd">            The interval for data points. Valid values are &#39;1d&#39; for daily or &#39;1wk&#39;</span>
 <span class="sd">            for weekly. Default is &#39;1d&#39;.</span>
 
-<span class="sd">        ticker_ref : str, optional</span>
+<span class="sd">        ticker_ref: str, optional</span>
 <span class="sd">            The ticker symbol of the reference index. If None, defaults to S&amp;P</span>
 <span class="sd">            500 (&#39;^GSPC&#39;) or Taiwan Weighted Index (&#39;^TWII&#39;) if the first stock is</span>
 <span class="sd">            a Taiwan stock.</span>
 
-<span class="sd">        ma : str, optional</span>
+<span class="sd">        ma: str, optional</span>
 <span class="sd">            Moving average type (&#39;SMA&#39;, &#39;EMA&#39;). Default to &#39;SMA&#39;.</span>
 
 <span class="sd">        legend_loc: str, optional</span>
@@ -212,7 +212,7 @@
 
 <span class="sd">            Default is &#39;yahoo&#39;.</span>
 
-<span class="sd">        hides_nontrading : bool, optional</span>
+<span class="sd">        hides_nontrading: bool, optional</span>
 <span class="sd">            Whether to hide non-trading periods. Default is True.</span>
 <span class="sd">        out_dir: str, optional</span>
 <span class="sd">            the output directory for saving figure.</span>
@@ -348,10 +348,10 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ------------</span>
-<span class="sd">        symbols : list of str</span>
+<span class="sd">        symbols: list of str</span>
 <span class="sd">            List of stock symbols to compare. Can include both US and Taiwan</span>
 <span class="sd">            stocks.</span>
-<span class="sd">        period : str, optional</span>
+<span class="sd">        period: str, optional</span>
 <span class="sd">            the period data to download. . Defaults to &#39;2y&#39;. Valid values are</span>
 <span class="sd">            6mo, 1y, 2y, 5y, 10y, ytd, max.</span>
 
@@ -360,15 +360,15 @@
 <span class="sd">            - ytd -- year to date</span>
 <span class="sd">            - max -- all data</span>
 
-<span class="sd">        interval : str, optional</span>
+<span class="sd">        interval: str, optional</span>
 <span class="sd">            The interval for data points (&#39;1d&#39; for daily, &#39;1wk&#39; for weekly;</span>
 <span class="sd">            default is &#39;1d&#39;).</span>
-<span class="sd">        ticker_ref : str, optional</span>
+<span class="sd">        ticker_ref: str, optional</span>
 <span class="sd">            The ticker symbol of the reference index. If None, defaults to S&amp;P</span>
 <span class="sd">            500 (&#39;^GSPC&#39;) or Taiwan Weighted Index (&#39;^TWII&#39;) if the first stock</span>
 <span class="sd">            is a Taiwan stock.</span>
 
-<span class="sd">        ma : str, optional</span>
+<span class="sd">        ma: str, optional</span>
 <span class="sd">            Moving average type (&#39;SMA&#39;, &#39;EMA&#39;). Default to &#39;SMA&#39;.</span>
 
 <span class="sd">        legend_loc: str, optional</span>
@@ -428,7 +428,7 @@
 <span class="sd">            - plt.cm.Set1.colors (9 colors, bold and highly distinct; ideal for</span>
 <span class="sd">              categorical data)</span>
 
-<span class="sd">        out_dir : str, optional</span>
+<span class="sd">        out_dir: str, optional</span>
 <span class="sd">            Directory to save the image file. Defaults to &#39;out&#39;.</span>
 
 <span class="sd">        Returns</span>
