@@ -338,8 +338,13 @@
     <span class="n">cumsum_sotck</span> <span class="o">=</span> <span class="n">ema_returns_stock</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
     <span class="n">cumsum_ref</span> <span class="o">=</span> <span class="n">ema_returns_ref</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
 
+    <span class="c1"># Calculate the cumulative growth factor</span>
+    <span class="c1">#cumulative_gf_stock = (1 + ema_returns_stock).cumprod()</span>
+    <span class="c1">#cumulative_gf_ref = (1 + ema_returns_ref).cumprod()</span>
+
     <span class="c1"># Calculate the relative strength (RS).</span>
     <span class="n">rs</span> <span class="o">=</span> <span class="p">(</span><span class="n">cumsum_sotck</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">cumsum_ref</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="c1">#rs = cumulative_gf_stock / cumulative_gf_ref.abs() * 100</span>
 
     <span class="k">return</span> <span class="n">rs</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Return the RS values rounded to two decimal places</span></div>
 
