@@ -1,19 +1,19 @@
 """
-ibd.py - Stock Analysis and Ranking Module
+IBD RS (Relative Strength) Rating Module
+----------------------------------------
 
 This module provides tools for analyzing and ranking stocks based on their
 relative strength compared to a benchmark index, inspired by the Investor's
 Business Daily (IBD) methodology.
 
 Key Features:
--------------
+~~~~~~~~~~~~~
 - Relative strength calculation
 - Stock and industry ranking generation
 - Percentile-based filtering of rankings
 
 Usage:
-------
-
+~~~~~~
 ::
 
     import ibd
@@ -30,7 +30,7 @@ Usage:
     top_stocks = stock_rankings[stock_rankings["Percentile"] >= min_percentile]
 
 See Also:
----------
+~~~~~~~~~
 - `RS Rating — Indicator by Fred6724 — tradingview
   <https://www.tradingview.com/script/pziQwiT2/>`_
 - `Relative Strength (IBD Style) — Indicator by Skyte — TradingView
