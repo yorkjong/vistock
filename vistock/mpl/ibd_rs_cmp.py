@@ -189,7 +189,8 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     # Convert datetime index to string format suitable for display
     df.index = df.index.strftime('%Y-%m-%d')
     fig.suptitle(f"IBD Relative Strength Comparison - {interval} "
-                 f"({df.index[0]} to {df.index[-1]})", y=0.93)
+                 f"({df.index[0]} to {df.index[-1]})",
+                 f"; RS: {rs_window}", y=0.93)
 
     # Show the figure
     mpf.show()

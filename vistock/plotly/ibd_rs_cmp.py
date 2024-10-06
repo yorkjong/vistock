@@ -160,7 +160,8 @@ def plot(symbols, period='2y', interval='1d', ticker_ref=None,
     # Update layout
     fig.update_layout(
         title=f'IBD Relative Strength Comparison - {interval} '
-              f'({df.index[0]} to {df.index[-1]})',
+              f'({df.index[0]} to {df.index[-1]})'
+              f"; RS: {rs_window}",
         title_x=0.5, title_y=0.87,
         yaxis=dict(title='Relative Strength '
                          f'(Compared to {si.get_name(ticker_ref)})',

@@ -182,7 +182,8 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
     # Update layout
     fig.update_layout(
         title=f'{symbol} - {interval} '
-              f'({df.index[0]} to {df.index[-1]})',
+              f'({df.index[0]} to {df.index[-1]})'
+              f"; RS: {rs_window}",
         title_x=0.5, title_y=0.92,
         legend=dict(yanchor='bottom', y=0.01, xanchor="left", x=0.01),
 
