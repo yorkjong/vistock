@@ -127,10 +127,10 @@ def weighted_growth(closes, interval):
     Calculate the performance of the last year, with the most recent quarter
     weighted double.
 
-    This function calculates returns for each of the last four quarters and
-    applies a weighting scheme that emphasizes recent performance. The most
-    recent quarter is given a weight of 40%, while each of the three preceding
-    quarters are given a weight of 20%.
+    This function calculates growths (returns) for each of the last four
+    quarters and applies a weighting scheme that emphasizes recent performance.
+    The most recent quarter is given a weight of 40%, while each of the three
+    preceding quarters are given a weight of 20%.
 
     Here is the formula for calculating the return:
 
@@ -214,7 +214,7 @@ def quarters_growth(closes, n, interval):
 def relative_strength_3m(closes, closes_ref, interval='1d'):
     """
     Calculate the 3-Month Relative Strength of a stock compared to a reference
-    index, based on price performance (returns).
+    index, based on price performance (growths).
 
     The 3-Month Relative Strength Rating (RS Rating) measures the stock's
     price performance against a benchmark index over a recent three-month
@@ -253,7 +253,7 @@ def relative_strength_3m(closes, closes_ref, interval='1d'):
 def relative_strength_with_span(closes, closes_ref, span):
     """
     Calculate the relative strength of a stock compared to a reference index
-    based on price performance (returns), over a specified period.
+    based on price performance (growths), over a specified period.
 
     Parameters
     ----------
