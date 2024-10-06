@@ -260,8 +260,10 @@ def relative_strength_3m(closes, closes_ref, interval='1d'):
     ema_gf_ref = gf_ref.ewm(span=span, adjust=False).mean()
 
     # Calculate the cumulative growth factors
-    cum_gf_stock = ema_gf_stock.rolling(window=span).apply(np.prod, raw=True)
-    cum_gf_ref = ema_gf_ref.rolling(window=span).apply(np.prod, raw=True)
+    cum_gf_stock = ema_gf_stock.rolling(window=span,
+                                        min_periods=1).apply(np.prod, raw=True)
+    cum_gf_ref = ema_gf_ref.rolling(window=span,
+                                    min_periods=1).apply(np.prod, raw=True)
 
     # Calculate the relative strength (RS).
     rs = cum_gf_stock / cum_gf_ref * 100
