@@ -43,7 +43,7 @@ See Also:
   <https://www.investors.com/ibd-university/
   find-evaluate-stocks/exclusive-ratings/>`_
 """
-__version__ = "4.7"
+__version__ = "4.8"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/05 (initial version) ~ 2024/10/06 (last revision)"
 
@@ -247,6 +247,33 @@ def relative_strength_3m(closes, closes_ref, interval='1d'):
         '1mo': 12 // 4,  # 3 months for monthly data
     }[interval]
 
+    return relative_strength_with_span(closes, closes_ref, span)
+
+
+def relative_strength_with_span(closes, closes_ref, span):
+    """
+    Calculate the relative strength of a stock compared to a reference index
+    based on price performance (returns), over a specified period.
+
+    Parameters
+    ----------
+    closes: pd.Series
+        Closing prices of the stock.
+
+    closes_ref: pd.Series
+        Closing prices of the reference index.
+
+    span: int
+        The span (number of periods) to calculate the exponential moving
+        average (EMA) for the growth factors.
+
+    Returns
+    -------
+    pd.Series
+        Relative strength values for the stock, rounded to two decimal places.
+        The values represent the stock's performance relative to the benchmark
+        index, with 100 indicating parity.
+    """
     # Calculate daily returns for the stock and reference index
     returns_stock = closes.pct_change(fill_method=None).fillna(0)
     returns_ref = closes_ref.pct_change(fill_method=None).fillna(0)
@@ -265,7 +292,7 @@ def relative_strength_3m(closes, closes_ref, interval='1d'):
     cum_gf_ref = ema_gf_ref.rolling(window=span,
                                     min_periods=1).apply(np.prod, raw=True)
 
-    # Calculate the relative strength (RS).
+    # Calculate the relative strength (RS)
     rs = cum_gf_stock / cum_gf_ref * 100
 
     return rs.round(2)  # Return the RS values rounded to two decimal places
