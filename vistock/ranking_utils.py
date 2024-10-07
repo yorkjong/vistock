@@ -127,10 +127,8 @@ def groupby_industry(stock_df, columns, key='RS'):
 
     # Process only the specified columns in columns
     for col in columns:
-        if col == 'Ticker':
-            agg_funcs[col] = lambda items: get_sorted_items(items, 'Ticker')
-        elif col == 'Name':
-            agg_funcs[col] = lambda items: get_sorted_items(items, 'Name')
+        if col in ['Ticker', 'Name']:
+            agg_funcs[col] = lambda i, c=col: get_sorted_items(i, c)
         elif pd.api.types.is_numeric_dtype(stock_df[col]):
             agg_funcs[col] = lambda x: round(x.mean(), 2)
         else:
