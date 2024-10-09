@@ -20,17 +20,21 @@ Usage:
     from .ranking_utils import append_ratings, groupby_industry
 
     tickers = ['MSFT', 'NVDA', 'AAPL', 'GOOGL', 'AMZN', 'TSLA']
-    stock_df = build_stock_rs_df(tickers)
+    stock_df = build_stock_rs_df(tickers, rs_window=rs_window)
     stock_df = stock_df.sort_values(by='RS', ascending=False)
 
-    rs_columns = ['RS', '1 Month Ago', '3 Months Ago', '6 Months Ago']
-    stock_df = append_ratings(stock_df, rs_columns)
+    rs_columns = ['RS', '[3mo:1mo] max', '[6mo:3mo] max', '[9mo:6mo] max']
+    rating_columns = ['Rating (RS)',
+                      'Rating (3M)', 'Rating (6M)', 'Rating (9M)']
+    stock_df = append_ratings(stock_df, rs_columns,
+                              rating_columns, method=rating_method)
 
     columns =  ['Sector', 'Ticker'] + rs_columns
     industry_df = groupby_industry(stock_df, columns, key='RS')
 
     industry_df = industry_df.sort_values(by='RS', ascending=False)
-    industry_df = append_ratings(industry_df, rs_columns)
+    industry_df = append_ratings(industry_df, rs_columns,
+                                 rating_columns, method=rating_method)
 
     industry_df = industry_df.rename(columns={
         'Ticker': 'Tickers',
@@ -52,7 +56,7 @@ See Also:
 """
 __version__ = "5.0"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/05 (initial version) ~ 2024/10/07 (last revision)"
+__date__ = "2024/08/05 (initial version) ~ 2024/10/09 (last revision)"
 
 __all__ = [
     'relative_strength',
@@ -306,113 +310,6 @@ def relative_strength_with_span(closes, closes_ref, span):
 
 
 #------------------------------------------------------------------------------
-# IBD RS Ranking (with RS rating)
-#------------------------------------------------------------------------------
-
-def ranking(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
-            rs_window='12mo'):
-    """
-    Rank stocks based on their IBD Relative Strength against an index
-    benchmark.
-
-    Parameters
-    ----------
-    tickers: list of str
-        List of stock tickers to rank.
-
-    ticker_ref: str, optional
-        Ticker symbol of the benchmark. Default to '^GSPC' (S&P 500)
-
-    period: str, optional
-        Period for historical data ('6mo', '1y', '2y', '5y', 'ytd', 'max').
-        Default to '2y' (two years).
-
-    interval: str, optional
-        Interval for historical data ('1d', '1wk', '1mo').
-        Default to '1wk' (one week).
-
-    rs_window: str, optional
-        Specify the time window ('3mo' or '12mo') for Relative Strength
-        calculation. Default to '12mo'.
-
-    Returns
-    -------
-    pandas.DataFrame
-        DataFrame containing the ranked stocks.
-
-    Example
-    -------
-    >>> tickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN']
-    >>> stock_rankings  = ranking(tickers)
-    >>> print(stock_rankings.head())
-    """
-    # Select the appropriate relative strength function based on the rs_window
-    rs_func = {
-        '3mo': relative_strength_3m,
-        '12mo': relative_strength,
-    }[rs_window]
-
-    # Fetch data for stock and index
-    df = yf.download([ticker_ref] + tickers, period=period, interval=interval)
-    df = df.xs('Close', level='Price', axis=1)
-
-    # Fetch info for stocks
-    info = yfu.download_tickers_info(tickers, ['sector', 'industry'])
-
-    rs_data = []
-    for ticker in tickers:
-        rs = rs_func(df[ticker], df[ticker_ref], interval)
-        end_date = rs.index[-1]
-
-        # Calculate max values for the specified time periods
-        one_week_ago = end_date - pd.DateOffset(weeks=1)
-        one_month_ago = end_date - pd.DateOffset(months=1)
-        three_months_ago = end_date - pd.DateOffset(months=3)
-        six_months_ago = end_date - pd.DateOffset(months=6)
-
-        rs_data.append({
-            'Ticker': ticker,
-            'Price': df[ticker].asof(end_date).round(2),
-            'Sector': info[ticker]['sector'],
-            'Industry': info[ticker]['industry'],
-            'Relative Strength': rs.asof(end_date),
-            '1wk..end': rs.loc[one_week_ago:end_date].max(),
-            '1mo..1wk': rs.loc[one_month_ago:one_week_ago].max(),
-            '3mo..1mo': rs.loc[three_months_ago:one_month_ago].max(),
-            '6mo..3mo': rs.loc[six_months_ago:three_months_ago].max(),
-        })
-
-    # Create DataFrame from RS data
-    ranking_df = pd.DataFrame(rs_data)
-
-    # Rank based on Relative Strength
-    rank_columns = ['Rank (%)',
-                    '1mo..1wk (%)', '3mo..1mo (%)',  '6mo..3mo (%)']
-    rs_columns = ['Relative Strength',
-                  '1mo..1wk', '3mo..1mo', '6mo..3mo']
-    for rank_col, rs_col in zip(rank_columns, rs_columns):
-        rank_pct = ranking_df[rs_col].rank(pct=True)
-        ranking_df[rank_col] = (rank_pct * 100).round(2)
-
-    # Sort by current rank
-    ranking_df = ranking_df.sort_values(by='Rank (%)', ascending=False)
-
-    # Calculate average RS for each industry
-    industry_rs = ranking_df.groupby('Industry')[
-        'Relative Strength'].mean().round(2).reset_index()
-    industry_rs.columns = ['Industry', 'Industry RS']
-
-    # Rank industries based on average Relative Strength
-    rank_pct = industry_rs['Industry RS'].rank(pct=True)
-    industry_rs['Industry Rank (%)'] = (rank_pct * 100).round(2)
-
-    # Merge industry rankings back into stock DataFrame
-    ranking_df = pd.merge(ranking_df, industry_rs, on='Industry', how='left')
-
-    return ranking_df
-
-
-#------------------------------------------------------------------------------
 # Build Stock RS DataFrame
 #------------------------------------------------------------------------------
 
@@ -467,24 +364,33 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
     # Calculate RS values for all stocks
     rs_data = []
     for ticker in tickers:
-        rs_series = rs_func(df[ticker], df[ticker_ref], interval)
-        end_date = rs_series.index[-1]
+        rs = rs_func(df[ticker], df[ticker_ref], interval)
+        end_date = rs.index[-1]
+
+        # Calculate max values for the specified time periods
+        one_week_ago = end_date - pd.DateOffset(weeks=1)
+        one_month_ago = end_date - pd.DateOffset(months=1)
+        three_months_ago = end_date - pd.DateOffset(months=3)
+        six_months_ago = end_date - pd.DateOffset(months=6)
+        nine_months_ago = end_date - pd.DateOffset(months=9)
 
         rs_data.append({
             'Ticker': ticker,
             'Price': df[ticker].asof(end_date).round(2),
             'Sector': info[ticker]['sector'],
             'Industry': info[ticker]['industry'],
-            'RS': rs_series.asof(end_date),
-            '1 Month Ago': rs_series.asof(end_date - pd.DateOffset(months=1)),
-            '3 Months Ago': rs_series.asof(end_date - pd.DateOffset(months=3)),
-            '6 Months Ago': rs_series.asof(end_date - pd.DateOffset(months=6)),
+            'RS': rs.asof(end_date),
+            '[1wk:end] max': rs.loc[one_week_ago:end_date].max(),
+            '[1mo:1wk] max': rs.loc[one_month_ago:one_week_ago].max(),
+            '[3mo:1mo] max': rs.loc[three_months_ago:one_month_ago].max(),
+            '[6mo:3mo] max': rs.loc[six_months_ago:three_months_ago].max(),
+            '[9mo:6mo] max': rs.loc[nine_months_ago:six_months_ago].max(),
         })
 
     # Create DataFrame from RS data
-    stock_df = pd.DataFrame(rs_data)
+    ranking_df = pd.DataFrame(rs_data)
 
-    return stock_df
+    return ranking_df.sort_values(by='RS', ascending=False)
 
 
 #------------------------------------------------------------------------------
@@ -536,32 +442,7 @@ def ma_window_size(interval, days):
 # Unit Test
 #------------------------------------------------------------------------------
 
-def test_ranking(period='2y', rs_window='12mo', out_dir='out'):
-    import os
-    from datetime import datetime
-    from vistock.stock_indices import get_tickers
-
-    #code = 'SPX+DJIA+NDX+SOX'
-    code = 'SPX'
-    tickers = get_tickers(code)
-    remove_tickers = ['HBAN', 'SW', 'BRK.B', 'VLTO', 'ARM', 'SOLV', 'GEV', 'BF.B']
-    tickers = [t for t in tickers if t not in remove_tickers]
-
-    rank = ranking(tickers, period=period, interval='1d', rs_window=rs_window)
-    print(rank.head(10))
-
-    # Save to CSV
-    print("\n\n***")
-    os.makedirs(out_dir, exist_ok=True)
-    today = datetime.now().strftime('%Y%m%d')
-    filename = f'{code}_stocks_{period}_ibd{rs_window}_{today}.csv'
-    rank.to_csv(os.path.join(out_dir, filename), index=False)
-    print(f'Your "{filename}" is in the "{out_dir}" folder.')
-    print("***\n")
-
-#------------------------------------------------------------------------------
-
-def test(min_rating=80, rating_method='qcut',
+def main(min_rating=80, rating_method='qcut',
          rs_window='12mo', out_dir='out'):
     '''
     Parameters
@@ -581,16 +462,19 @@ def test(min_rating=80, rating_method='qcut',
     tickers = si.get_tickers(code)
 
     stock_df = build_stock_rs_df(tickers, rs_window=rs_window)
-    stock_df = stock_df.sort_values(by='RS', ascending=False)
 
-    rs_columns = ['RS', '1 Month Ago', '3 Months Ago', '6 Months Ago']
-    stock_df = append_ratings(stock_df, rs_columns, method=rating_method)
+    rs_columns = ['RS', '[3mo:1mo] max', '[6mo:3mo] max', '[9mo:6mo] max']
+    rating_columns = ['Rating (RS)',
+                      'Rating (3M)', 'Rating (6M)', 'Rating (9M)']
+    stock_df = append_ratings(stock_df, rs_columns,
+                              rating_columns, method=rating_method)
 
     columns =  ['Sector', 'Ticker'] + rs_columns
     industry_df = groupby_industry(stock_df, columns, key='RS')
 
     industry_df = industry_df.sort_values(by='RS', ascending=False)
-    industry_df = append_ratings(industry_df, rs_columns, method=rating_method)
+    industry_df = append_ratings(industry_df, rs_columns,
+                                 rating_columns, method=rating_method)
 
     industry_df = industry_df.rename(columns={
         'Ticker': 'Tickers',
@@ -622,7 +506,6 @@ if __name__ == "__main__":
     import time
 
     start_time = time.time()
-    #test_ranking(rs_window='3mo')
-    test(rating_method='qcut', rs_window='3mo')
+    main(rating_method='qcut', rs_window='3mo')
     print(f"Execution time: {time.time() - start_time:.4f} seconds")
 
