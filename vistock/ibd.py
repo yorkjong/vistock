@@ -19,20 +19,16 @@ Usage:
     import ibd
     from .ranking_utils import append_ratings, groupby_industry
 
-    tickers = ['MSFT', 'NVDA', 'AAPL', 'GOOGL', 'AMZN', 'TSLA']
-    stock_df = build_stock_rs_df(tickers, rs_window=rs_window)
-    stock_df = stock_df.sort_values(by='RS', ascending=False)
+    stock_df = rankings(tickers, rs_window=rs_window,
+                        rating_method=rating_method)
 
-    rs_columns = ['RS', '[3mo:1mo] max', '[6mo:3mo] max', '[9mo:6mo] max']
-    rating_columns = ['Rating (RS)',
-                      'Rating (3M)', 'Rating (6M)', 'Rating (9M)']
-    stock_df = append_ratings(stock_df, rs_columns,
-                              rating_columns, method=rating_method)
-
+    rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
     columns =  ['Sector', 'Ticker'] + rs_columns
     industry_df = groupby_industry(stock_df, columns, key='RS')
 
     industry_df = industry_df.sort_values(by='RS', ascending=False)
+    rating_columns = ['Rating (RS)', 'Rating (3M:1M max)',
+                      'Rating (6M:3M max)', 'Rating (9M:6M max)']
     industry_df = append_ratings(industry_df, rs_columns,
                                  rating_columns, method=rating_method)
 
@@ -54,14 +50,14 @@ See Also:
   <https://www.investors.com/ibd-university/
   find-evaluate-stocks/exclusive-ratings/>`_
 """
-__version__ = "5.0"
+__version__ = "5.1"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/05 (initial version) ~ 2024/10/09 (last revision)"
+__date__ = "2024/08/05 (initial version) ~ 2024/10/10 (last revision)"
 
 __all__ = [
     'relative_strength',
     'relative_strength_3m',
-    'build_stock_rs_df',
+    'rankings',
     'ma_window_size',
 ]
 
@@ -313,40 +309,95 @@ def relative_strength_with_span(closes, closes_ref, span):
 # Build Stock RS DataFrame
 #------------------------------------------------------------------------------
 
-def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
-                      rs_window='12mo'):
+def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
+             rating_method='rank', rs_window='12mo'):
     """
-    Analyzes stocks and calculates relative strength (RS) for the given stock
-    tickers compared to a reference index. Returns a DataFrame of stock
-    rankings.
+    Analyze stocks and generate a ranking table for individual stocks and
+    industries based on Relative Strength (RS).
+
+    This function calculates Relative Strength (RS) for the given stocks
+    compared to a reference index, then ranks both individual stocks and
+    industries according to their RS values. It provides historical RS data and
+    rating rankings.
 
     Parameters
     ----------
-    tickers: list
+    tickers : list of str
         A list of stock tickers to analyze.
 
-    ticker_ref: str, optional
+    ticker_ref : str, optional
         The ticker symbol for the reference index. Defaults to '^GSPC' (S&P
         500).
 
-    period: str, optional
+    period : str, optional
         The period for which to fetch historical data. Defaults to '2y' (two
         years).
 
-    interval: str, optional
+    interval : str, optional
         The frequency of the data points. Must be one of '1d' for daily data,
         '1wk' for weekly data, or '1mo' for monthly data. Defaults to '1d'.
 
-    rs_window: str, optional
-        Specify the time window ('3mo' or '12mo') for Relative Strength
-        calculation.  Defaults to '12mo'.
+    rating_method : str, optional
+        The method to calculate ratings. Either 'rank' (based on relative
+        ranking) or 'qcut' (based on quantiles). Defaults to 'rank'.
+
+    rs_window : str, optional
+        The time window ('3mo' or '12mo') for calculating Relative Strength
+        (RS). Defaults to '12mo'.
 
     Returns
     -------
     pd.DataFrame
-        DataFrame containing stock rankings with columns:
-        Ticker, Price, Sector, Industry, RS (current), RS (1 month ago),
-        RS (3 months ago), RS (6 months ago).
+        A DataFrame containing stock rankings and RS ratings.
+    """
+    stock_df = build_stock_rs_df(tickers, ticker_ref, period, interval,
+                                 rs_window)
+
+    rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
+    rating_columns = ['Rating (RS)', 'Rating (3M:1M max)', 'Rating (6M:3M max)',
+                      'Rating (9M:6M max)']
+    stock_df = append_ratings(stock_df, rs_columns,
+                              rating_columns, method=rating_method)
+    return stock_df
+
+
+def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
+                      rs_window='12mo'):
+    """
+    Fetch historical stock data and calculate Relative Strength (RS) for the
+    given stock tickers compared to a reference index.
+
+    This function returns a DataFrame that includes the RS values and
+    historical max RS values over different periods for each stock.
+
+    Parameters
+    ----------
+    tickers : list of str
+        A list of stock tickers to analyze.
+
+    ticker_ref : str, optional
+        The ticker symbol for the reference index. Defaults to '^GSPC' (S&P
+        500).
+
+    period : str, optional
+        The period for which to fetch historical data. Defaults to '2y' (two
+        years).
+
+    interval : str, optional
+        The frequency of the data points. Must be one of '1d' (daily), '1wk'
+        (weekly), or '1mo' (monthly). Defaults to '1d'.
+
+    rs_window : str, optional
+        The time window for calculating Relative Strength. Either '3mo' for
+        short-term or '12mo' for long-term RS. Defaults to '12mo'.
+
+    Returns
+    -------
+    pd.DataFrame
+        A DataFrame containing stock rankings with the following columns:
+        'Ticker', 'Price', 'Sector', 'Industry', 'RS' (current),
+        'RS (1wk:max)', 'RS (1mo:max)', 'RS (3mo:max)', 'RS (6mo:max)',
+        'RS (9mo:max)'.
     """
     # Select the appropriate relative strength function based on the rs_window
     rs_func = {
@@ -380,11 +431,11 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
             'Sector': info[ticker]['sector'],
             'Industry': info[ticker]['industry'],
             'RS': rs.asof(end_date),
-            '[1wk:end] max': rs.loc[one_week_ago:end_date].max(),
-            '[1mo:1wk] max': rs.loc[one_month_ago:one_week_ago].max(),
-            '[3mo:1mo] max': rs.loc[three_months_ago:one_month_ago].max(),
-            '[6mo:3mo] max': rs.loc[six_months_ago:three_months_ago].max(),
-            '[9mo:6mo] max': rs.loc[nine_months_ago:six_months_ago].max(),
+            '1wk:end max': rs.loc[one_week_ago:end_date].max(),
+            '1mo:1wk max': rs.loc[one_month_ago:one_week_ago].max(),
+            '3mo:1mo max': rs.loc[three_months_ago:one_month_ago].max(),
+            '6mo:3mo max': rs.loc[six_months_ago:three_months_ago].max(),
+            '9mo:6mo max': rs.loc[nine_months_ago:six_months_ago].max(),
         })
 
     # Create DataFrame from RS data
@@ -461,18 +512,16 @@ def main(min_rating=80, rating_method='qcut',
     code = 'SPX'
     tickers = si.get_tickers(code)
 
-    stock_df = build_stock_rs_df(tickers, rs_window=rs_window)
+    stock_df = rankings(tickers, rs_window=rs_window,
+                        rating_method=rating_method)
 
-    rs_columns = ['RS', '[3mo:1mo] max', '[6mo:3mo] max', '[9mo:6mo] max']
-    rating_columns = ['Rating (RS)',
-                      'Rating (3M)', 'Rating (6M)', 'Rating (9M)']
-    stock_df = append_ratings(stock_df, rs_columns,
-                              rating_columns, method=rating_method)
-
+    rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
     columns =  ['Sector', 'Ticker'] + rs_columns
     industry_df = groupby_industry(stock_df, columns, key='RS')
 
     industry_df = industry_df.sort_values(by='RS', ascending=False)
+    rating_columns = ['Rating (RS)', 'Rating (3M:1M max)',
+                      'Rating (6M:3M max)', 'Rating (9M:6M max)']
     industry_df = append_ratings(industry_df, rs_columns,
                                  rating_columns, method=rating_method)
 
