@@ -50,7 +50,7 @@ See Also:
   <https://www.investors.com/ibd-university/
   find-evaluate-stocks/exclusive-ratings/>`_
 """
-__version__ = "5.2"
+__version__ = "5.3"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/05 (initial version) ~ 2024/10/10 (last revision)"
 
@@ -371,6 +371,7 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
         ranking_df,
         [
             'Price',
+            '52W pos',
             *[f'MA{w}' for w in ma_wins],
             f'Volume / VMA{vma_win}',
         ],
@@ -440,7 +441,6 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
     # Batch download stock info
     info = yfu.download_tickers_info(tickers, ['sector', 'industry'])
 
-    # Calculate RS values for all stocks
     rs_data = []
     price_ma = {}
     for ticker in tickers:
@@ -462,6 +462,12 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
         six_months_ago = end_date - pd.DateOffset(months=6)
         nine_months_ago = end_date - pd.DateOffset(months=9)
 
+        # Calculate position in 52W range
+        high_52w = df['Close'].rolling(window=252, min_periods=1).max().iloc[-1]
+        low_52w = df['Close'].rolling(window=252, min_periods=1).min().iloc[-1]
+        current_price = df['Close'].asof(end_date)
+        range_position = (current_price - low_52w) / (high_52w - low_52w)
+
         rs_data.append({
             'Ticker': ticker,
             'Sector': info[ticker]['sector'],
@@ -473,6 +479,7 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
             '6mo:3mo max': rs.loc[six_months_ago:three_months_ago].max(),
             '9mo:6mo max': rs.loc[nine_months_ago:six_months_ago].max(),
             'Price': df['Close'].asof(end_date).round(2),
+            '52W pos': range_position.round(2),
             **{f'MA{w}': price_ma[f'{w}'].iloc[-1] for w in ma_wins},
             f'Volume / VMA{vma_win}': vol_div_vma.iloc[-1],
         })
