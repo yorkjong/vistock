@@ -50,7 +50,7 @@ See Also:
   <https://www.investors.com/ibd-university/
   find-evaluate-stocks/exclusive-ratings/>`_
 """
-__version__ = "5.1"
+__version__ = "5.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/05 (initial version) ~ 2024/10/10 (last revision)"
 
@@ -66,7 +66,7 @@ import pandas as pd
 import yfinance as yf
 
 import vistock.yf_utils as yfu
-from .ranking_utils import append_ratings, groupby_industry
+from .ranking_utils import *
 
 
 #------------------------------------------------------------------------------
@@ -350,14 +350,31 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
     pd.DataFrame
         A DataFrame containing stock rankings and RS ratings.
     """
-    ranking_df = build_stock_rs_df(tickers, ticker_ref, period, interval,
+    # Set moving average windows based on the interval
+    try:
+        ma_wins = { '1d': [50, 200], '1wk': [10, 40]}[interval]
+        vma_win = { '1d': 50, '1wk': 10}[interval]
+    except KeyError:
+        raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
+
+    stock_df = build_stock_rs_df(tickers, ticker_ref, period, interval,
                                  rs_window)
+    stock_df = stock_df.sort_values(by='RS', ascending=False)
 
     rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
     rating_columns = ['Rating (RS)', 'Rating (3M:1M)', 'Rating (6M:3M)',
                       'Rating (9M:6M)']
-    ranking_df = append_ratings(ranking_df, rs_columns,
+    ranking_df = append_ratings(stock_df, rs_columns,
                                 rating_columns, method=rating_method)
+
+    ranking_df = move_columns_to_end(
+        ranking_df,
+        [
+            'Price',
+            *[f'MA{w}' for w in ma_wins],
+            f'Volume / VMA{vma_win}',
+        ],
+    )
     return ranking_df
 
 
@@ -405,17 +422,37 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
         '12mo': relative_strength,
     }[rs_window]
 
-    # Batch download stock data
-    df = yf.download([ticker_ref] + tickers, period=period, interval=interval)
-    df = df.xs('Close', level='Price', axis=1)
+    # Set moving average windows based on the interval
+    try:
+        ma_wins = { '1d': [50, 200], '1wk': [10, 40]}[interval]
+        vma_win = { '1d': 50, '1wk': 10}[interval]
+    except KeyError:
+        raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
+
+    # simple moving average function
+    sma = lambda x, win: x.rolling(window=win, min_periods=1).mean()
+
+    # Batch download stock price data
+    df_all = yf.download([ticker_ref] + tickers,
+                         period=period, interval=interval)
+    df_ref = df_all.xs(ticker_ref, level='Ticker', axis=1)
 
     # Batch download stock info
     info = yfu.download_tickers_info(tickers, ['sector', 'industry'])
 
     # Calculate RS values for all stocks
     rs_data = []
+    price_ma = {}
     for ticker in tickers:
-        rs = rs_func(df[ticker], df[ticker_ref], interval)
+        df = df_all.xs(ticker, level='Ticker', axis=1)
+
+        # Caluclate Moving Average
+        for win in ma_wins:
+            price_ma[f'{win}'] = sma(df['Close'], win).round(2)
+        vol_div_vma = (df['Volume'] / sma(df['Volume'], vma_win)).round(2)
+
+        # Calculate Relative Strengths
+        rs = rs_func(df['Close'], df_ref['Close'], interval)
         end_date = rs.index[-1]
 
         # Calculate max values for the specified time periods
@@ -427,7 +464,6 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
 
         rs_data.append({
             'Ticker': ticker,
-            'Price': df[ticker].asof(end_date).round(2),
             'Sector': info[ticker]['sector'],
             'Industry': info[ticker]['industry'],
             'RS': rs.asof(end_date),
@@ -436,12 +472,15 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
             '3mo:1mo max': rs.loc[three_months_ago:one_month_ago].max(),
             '6mo:3mo max': rs.loc[six_months_ago:three_months_ago].max(),
             '9mo:6mo max': rs.loc[nine_months_ago:six_months_ago].max(),
+            'Price': df['Close'].asof(end_date).round(2),
+            **{f'MA{w}': price_ma[f'{w}'].iloc[-1] for w in ma_wins},
+            f'Volume / VMA{vma_win}': vol_div_vma.iloc[-1],
         })
 
     # Create DataFrame from RS data
-    ranking_df = pd.DataFrame(rs_data)
+    stock_df = pd.DataFrame(rs_data)
 
-    return ranking_df.sort_values(by='RS', ascending=False)
+    return stock_df
 
 
 def ma_window_size(interval, days):
