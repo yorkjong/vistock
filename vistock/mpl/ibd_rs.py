@@ -17,9 +17,9 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "1.8"
+__version__ = "1.9"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/10/10 (last revision)"
 
 __all__ = ['plot']
 
@@ -31,7 +31,7 @@ from .. import tw
 from .. import file_utils
 from ..utils import MarketColorStyle, decide_market_color_style
 from . import mpf_utils as mpfu
-from ..ibd import relative_strength, relative_strength_3m, ma_window_size
+from ..ibd import relative_strength, relative_strength_3m
 from .. import stock_indices as si
 
 
@@ -137,20 +137,25 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
     # Calculate Relative Strength (RS)
     df['RS'] = rs_func(df['Close'], df_ref['Close'], interval)
 
+    # Set moving average windows based on the interval
+    try:
+        ma_wins = { '1d': [50, 200], '1wk': [10, 40]}[interval]
+        vma_win = { '1d': 50, '1wk': 10}[interval]
+    except KeyError:
+        raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
+
     # Calculate price moving average
-    ma_nitems = [ma_window_size(interval, days) for days in (50, 200)]
-    for n in ma_nitems:
+    for n in ma_wins:
         df[f'MA {n}'] = df['Close'].rolling(window=n, min_periods=1).mean()
 
     # Calculate volume moving averaage
-    vma_nitems = ma_window_size(interval, 50)
-    df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems,
+    df[f'VMA {vma_win}'] = df['Volume'].rolling(window=vma_win,
                                                    min_periods=1).mean()
 
     addplot = [
         # Plot of Price Moving Average
         *[mpf.make_addplot(df[f'MA {n}'], panel=0, label=f'MA {n}')
-            for n in ma_nitems],
+            for n in ma_wins],
 
         # Plot of Relative Strength
         mpf.make_addplot(df['RS'], panel=1, label=ticker,
@@ -159,8 +164,8 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
                          linestyle='--', color='gray'),
 
         # Plot of Volume Moving Average
-        mpf.make_addplot(df[f'VMA {vma_nitems}'], panel=2,
-                         label=f'VMA {vma_nitems}', color='purple'),
+        mpf.make_addplot(df[f'VMA {vma_win}'], panel=2,
+                         label=f'VMA {vma_win}', color='purple'),
     ]
 
     # Make a customized color style

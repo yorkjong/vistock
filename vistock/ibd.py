@@ -483,47 +483,6 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
     return stock_df
 
 
-def ma_window_size(interval, days):
-    """
-    Calculate moving average window size based on IBD (Investor's Business
-    Daily) convention.
-
-    This function adjusts the window size for weekly data to maintain
-    consistency with daily calculations.
-
-    Parameters
-    ----------
-    interval: str
-        The data interval. Must be either '1d' for daily or '1wk' for weekly.
-
-    days: int
-        Number of calendar days for the desired moving average period.
-
-    Returns
-    -------
-    int
-        Calculated window size (number of data points) for the moving average.
-
-    Raises
-    ------
-    ValueError
-        If an unsupported interval is provided (not '1d' or '1wk').
-
-    Examples
-    --------
-    >>> ma_window_size('1d', 50)
-    50
-    >>> ma_window_size('1wk', 50)
-    10
-    """
-    if interval == '1d':
-        return days
-    elif interval == '1wk':
-        return days // 5  # 1 week = 5 trading days
-    else:
-        raise ValueError("interval must be either '1d' or '1wk'")
-
-
 #------------------------------------------------------------------------------
 # Unit Test
 #------------------------------------------------------------------------------

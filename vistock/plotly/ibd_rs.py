@@ -17,9 +17,9 @@ Usage:
     ibd_rs.plot('TSLA', period='1y', interval='1d')
 """
 __software__ = "IBD-compatible stock chart"
-__version__ = "2.1"
+__version__ = "2.2"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/16 (initial version) ~ 2024/10/03 (last revision)"
+__date__ = "2024/08/16 (initial version) ~ 2024/10/10 (last revision)"
 
 __all__ = ['plot']
 
@@ -32,7 +32,7 @@ from .. import tw
 from .. import file_utils
 from . import fig_utils as futil
 from ..utils import MarketColorStyle, decide_market_color_style
-from ..ibd import relative_strength, relative_strength_3m, ma_window_size
+from ..ibd import relative_strength, relative_strength_3m
 from .. import stock_indices as si
 
 
@@ -125,14 +125,19 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
     df['RS'] = rs_func(df['Close'], df_ref['Close'], interval)
     df[f'RS {ticker_ref}'] = 100
 
+    # Set moving average windows based on the interval
+    try:
+        ma_wins = { '1d': [50, 200], '1wk': [10, 40]}[interval]
+        vma_win = { '1d': 50, '1wk': 10}[interval]
+    except KeyError:
+        raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
+
     # Calculate price moving average
-    ma_nitems = [ma_window_size(interval, days) for days in (50, 200)]
-    for n in ma_nitems:
+    for n in ma_wins:
         df[f'MA {n}'] = df['Close'].rolling(window=n, min_periods=1).mean()
 
     # Calculate volume moving averaage
-    vma_nitems = ma_window_size(interval, 50)
-    df[f'VMA {vma_nitems}'] = df['Volume'].rolling(window=vma_nitems,
+    df[f'VMA {vma_win}'] = df['Volume'].rolling(window=vma_win,
                                                    min_periods=1).mean()
 
     # Create subplots
@@ -157,7 +162,7 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
                         **mc_colors), main_row),
         *[(go.Scatter(x=df.index, y=df[f'MA {n}'],
                       mode='lines', name=f'MA {n}'), main_row)
-          for n in ma_nitems],
+          for n in ma_wins],
 
         # RS subplot
         (go.Scatter(x=df.index, y=df['RS'], mode='lines', name='RS',
@@ -169,8 +174,8 @@ def plot(symbol, period='2y', interval='1d', ticker_ref=None, rs_window='12mo',
         # Volume subplot
         (go.Bar(x=df.index, y=df['Volume'], name='Volume',
                marker_color=vol_colors, opacity=0.5), vol_row),
-        (go.Scatter(x=df.index, y=df[f'VMA {vma_nitems}'],
-                   mode='lines', name=f'VMA {vma_nitems}',
+        (go.Scatter(x=df.index, y=df[f'VMA {vma_win}'],
+                   mode='lines', name=f'VMA {vma_win}',
                    line=dict(color='purple', width=2)), vol_row),
     ]
     for trace, row in traces:
