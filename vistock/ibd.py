@@ -70,7 +70,7 @@ from .ranking_utils import append_ratings, groupby_industry
 
 
 #------------------------------------------------------------------------------
-# IBD RS (Relative Strength) Rating
+# IBD Relative Strength (1-Year Version)
 #------------------------------------------------------------------------------
 
 def relative_strength(closes, closes_ref, interval='1d'):
@@ -215,7 +215,7 @@ def quarters_growth(closes, n, interval):
 
 
 #------------------------------------------------------------------------------
-# IBD's 3-Month Relative Strength
+# IBD Relative Strength (3-Month Version)
 #------------------------------------------------------------------------------
 
 def relative_strength_3m(closes, closes_ref, interval='1d'):
@@ -306,7 +306,7 @@ def relative_strength_with_span(closes, closes_ref, span):
 
 
 #------------------------------------------------------------------------------
-# Build Stock RS DataFrame
+# IBD RS Rankings
 #------------------------------------------------------------------------------
 
 def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
@@ -350,15 +350,15 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
     pd.DataFrame
         A DataFrame containing stock rankings and RS ratings.
     """
-    stock_df = build_stock_rs_df(tickers, ticker_ref, period, interval,
+    ranking_df = build_stock_rs_df(tickers, ticker_ref, period, interval,
                                  rs_window)
 
     rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
     rating_columns = ['Rating (RS)', 'Rating (3M:1M max)', 'Rating (6M:3M max)',
                       'Rating (9M:6M max)']
-    stock_df = append_ratings(stock_df, rs_columns,
+    ranking_df = append_ratings(ranking_df, rs_columns,
                               rating_columns, method=rating_method)
-    return stock_df
+    return ranking_df
 
 
 def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
@@ -443,10 +443,6 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
 
     return ranking_df.sort_values(by='RS', ascending=False)
 
-
-#------------------------------------------------------------------------------
-# Misc Help Functions
-#------------------------------------------------------------------------------
 
 def ma_window_size(interval, days):
     """
