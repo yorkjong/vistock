@@ -354,10 +354,10 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
                                  rs_window)
 
     rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
-    rating_columns = ['Rating (RS)', 'Rating (3M:1M max)', 'Rating (6M:3M max)',
-                      'Rating (9M:6M max)']
+    rating_columns = ['Rating (RS)', 'Rating (3M:1M)', 'Rating (6M:3M)',
+                      'Rating (9M:6M)']
     ranking_df = append_ratings(ranking_df, rs_columns,
-                              rating_columns, method=rating_method)
+                                rating_columns, method=rating_method)
     return ranking_df
 
 
