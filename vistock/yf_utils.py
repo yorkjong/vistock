@@ -4,7 +4,7 @@ Utility functions for working with Yahoo Finance data.
 This module contains various utility functions for retrieving and processing
 stock data using the Yahoo Finance API via the `yfinance` library.
 """
-__version__ = "4.2"
+__version__ = "4.3"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/26 (initial version) ~ 2024/10/13 (last revision)"
 
@@ -35,13 +35,17 @@ logger.setLevel(logging.DEBUG)
 
 
 def setup_file_logging():
-    # Set up a file handler for logging
     log_fn = f'{__name__}.log'
     print(f'Logging to file: {log_fn}')
+
+    # Set up a file handler for logging
     file_handler = logging.FileHandler(log_fn)
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
+
+    # Optionally disable the default handler to prevent output to console
+    logger.propagate = False
 
 
 #------------------------------------------------------------------------------
