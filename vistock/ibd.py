@@ -50,9 +50,9 @@ See Also:
   <https://www.investors.com/ibd-university/
   find-evaluate-stocks/exclusive-ratings/>`_
 """
-__version__ = "5.3"
+__version__ = "5.4"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/05 (initial version) ~ 2024/10/10 (last revision)"
+__date__ = "2024/08/05 (initial version) ~ 2024/10/13 (last revision)"
 
 __all__ = [
     'relative_strength',
@@ -357,8 +357,9 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
     except KeyError:
         raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
 
-    stock_df = build_stock_rs_df(tickers, ticker_ref, period, interval,
-                                 rs_window)
+    stock_df = build_stock_rs_df(tickers=tickers, ticker_ref=ticker_ref,
+                                 period=period, interval=interval,
+                                 rs_window=rs_window)
     stock_df = stock_df.sort_values(by='RS', ascending=False)
 
     rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
