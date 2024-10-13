@@ -33,7 +33,7 @@ See Also:
   how-to-create-the-mansfield-relative-performance-indicator>`_
 
 """
-__version__ = "5.2"
+__version__ = "5.3"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/23 (initial version) ~ 2024/10/13 (last revision)"
 
@@ -261,6 +261,7 @@ def rankings(tickers, ticker_ref='^GSPC',
         ranking_df,
         [
             'Price',
+            '52W pos',
             *[f'MA{w}' for w in ma_wins],
             f'Volume / VMA{vma_win}',
         ],
@@ -335,6 +336,12 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC',
 
         end_date = rsm.index[-1]
 
+        # Calculate position in 52W range
+        high_52w = df['Close'].rolling(window=252, min_periods=1).max().iloc[-1]
+        low_52w = df['Close'].rolling(window=252, min_periods=1).min().iloc[-1]
+        current_price = df['Close'].asof(end_date)
+        range_position = (current_price - low_52w) / (high_52w - low_52w)
+
         # Construct DataFrame for current stock
         row = {
             'Ticker': ticker,
@@ -345,6 +352,7 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC',
             '6 Months Ago': rsm.asof(end_date - pd.DateOffset(months=6)),
             '9 Months Ago': rsm.asof(end_date - pd.DateOffset(months=9)),
             'Price': df['Close'].asof(end_date).round(2),
+            '52W pos': range_position.round(2),
             **{f'MA{w}': price_ma[f'{w}'].iloc[-1] for w in ma_wins},
             f'Volume / VMA{vma_win}': vol_div_vma.iloc[-1],
         }
