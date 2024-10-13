@@ -351,24 +351,9 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC',
         rows.append(row)
 
     # Combine rows into a single DataFrame
-    ranking_df = pd.DataFrame(rows)
+    stock_df = pd.DataFrame(rows)
 
-    # Sort by current RS
-    ranking_df = ranking_df.sort_values(by='RS', ascending=False)
-
-    # Rating based on Relative Strength
-    rs_columns = ['RS',]
-    ranking_df = append_ratings(ranking_df, rs_columns)
-
-    ranking_df = move_columns_to_end(
-        ranking_df,
-        [
-            'Price',
-            *[f'MA{w}' for w in ma_wins],
-            f'Volume / VMA{vma_win}',
-        ],
-    )
-    return ranking_df
+    return stock_df
 
 
 #------------------------------------------------------------------------------
