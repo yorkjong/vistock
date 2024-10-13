@@ -33,14 +33,14 @@ See Also:
   how-to-create-the-mansfield-relative-performance-indicator>`_
 
 """
-__version__ = "5.0"
+__version__ = "5.2"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/23 (initial version) ~ 2024/10/13 (last revision)"
 
 __all__ = [
     'mansfield_relative_strength',
     'dorsey_relative_strength',
-    'ranking',
+    'rankings',
 ]
 
 import numpy as np
