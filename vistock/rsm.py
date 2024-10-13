@@ -202,8 +202,8 @@ def relative_strength_vs_benchmark(metric_series, bench_series, window=4):
 # Ranking
 #------------------------------------------------------------------------------
 
-def ranking(tickers, ticker_ref='^GSPC',
-            period='2y', interval='1wk', ma="SMA"):
+def rankings(tickers, ticker_ref='^GSPC',
+             period='2y', interval='1wk', ma="SMA"):
     """
     Rank stocks based on their Mansfield Relative Strength (RSM) against an
     index benchmark.
@@ -364,7 +364,7 @@ def main(period='2y', ma="EMA", out_dir='out'):
     # case of empty financials DataFrame
     #tickers = ['910861.TW']
 
-    rank = ranking(tickers, period=period, interval='1wk', ma=ma)
+    rank = rankings(tickers, period=period, interval='1wk', ma=ma)
     print(rank.head(10))
 
     # Save to CSV
