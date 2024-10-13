@@ -220,8 +220,10 @@ def financial_metric_ranking(tickers):
     # Fetch financials data for stocks
     fins_q = yfu.download_financials(
         tickers, ['Basic EPS', 'Operating Revenue'], 'quarterly')
+    tickers = [t for t in tickers if t in fins_q]
     fins_a = yfu.download_financials(
         tickers, ['Basic EPS', 'Operating Revenue'], 'annual')
+    tickers = [t for t in tickers if t in fins_a]
 
     # weighted EPS of benchmark
     bench_eps_q = yfu.calc_weighted_metric(
