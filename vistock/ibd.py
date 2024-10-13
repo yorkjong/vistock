@@ -50,7 +50,7 @@ See Also:
   <https://www.investors.com/ibd-university/
   find-evaluate-stocks/exclusive-ratings/>`_
 """
-__version__ = "5.4"
+__version__ = "5.5"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/05 (initial version) ~ 2024/10/13 (last revision)"
 
@@ -441,6 +441,7 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
 
     # Batch download stock info
     info = yfu.download_tickers_info(tickers, ['sector', 'industry'])
+    tickers = [t for t in tickers if t in info]
 
     rs_data = []
     price_ma = {}
