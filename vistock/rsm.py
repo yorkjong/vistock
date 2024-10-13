@@ -33,7 +33,7 @@ See Also:
   how-to-create-the-mansfield-relative-performance-indicator>`_
 
 """
-__version__ = "4.9"
+__version__ = "5.0"
 __author__ = "York <york.jong@gmail.com>"
 __date__ = "2024/08/23 (initial version) ~ 2024/10/13 (last revision)"
 
@@ -203,34 +203,101 @@ def relative_strength_vs_benchmark(metric_series, bench_series, window=4):
 #------------------------------------------------------------------------------
 
 def rankings(tickers, ticker_ref='^GSPC',
-             period='2y', interval='1wk', ma="SMA"):
+             period='2y', interval='1wk', ma="SMA", rating_method='rank'):
     """
     Rank stocks based on their Mansfield Relative Strength (RSM) against an
     index benchmark.
 
     Parameters
     ----------
-    tickers: list of str
+    tickers : list of str
         List of stock tickers to rank.
 
-    ticker_ref: str, optional
-        Ticker symbol of the benchmark. Default to '^GSPC' (S&P 500)
+    ticker_ref : str, optional
+        Ticker symbol of the benchmark index. Defaults to '^GSPC' (S&P 500).
 
-    period: str, optional
-        Period for historical data ('6mo', '1y', '2y', '5y', 'ytd', 'max').
-        Default to '2y' (two years).
+    period : str, optional
+        Period for retrieving historical data ('6mo', '1y', '2y', '5y', 'ytd',
+        'max'). Defaults to '2y' (two years).
 
-    interval: str, optional
-        Interval for historical data ('1d', '1wk').
-        Default to '1wk' (one week).
+    interval : str, optional
+        Interval for historical data ('1d', '1wk'). Defaults to '1wk' (one
+        week).
 
-    ma: str, optional
-        Moving average type ('SMA', 'EMA'). Default to 'SMA'.
+    ma : str, optional
+        Moving average type ('SMA' for Simple Moving Average or 'EMA' for
+        Exponential Moving Average). Defaults to 'SMA'.
+
+    rating_method : str, optional
+        Method for calculating stock ratings. Either 'rank' (based on relative
+        ranking) or 'qcut' (based on quantiles). Defaults to 'rank'.
 
     Returns
     -------
     pandas.DataFrame
-        DataFrame containing the ranked stocks.
+        A DataFrame containing ranked stock data with relative strength and
+        other metrics.
+    """
+    # Set moving average windows based on the interval
+    try:
+        rs_win = { '1d': 252, '1wk': 52}[interval]
+        ma_wins = { '1d': [50, 150], '1wk': [10, 30]}[interval]
+        vma_win = { '1d': 50, '1wk': 10}[interval]
+    except KeyError:
+        raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
+
+    stock_df = build_stock_rs_df(tickers=tickers, ticker_ref=ticker_ref,
+                                 period=period, interval=interval, ma=ma)
+    stock_df = stock_df.sort_values(by='RS', ascending=False)
+
+    rs_columns = ['RS', '1 Month Ago', '3 Months Ago',
+                  '6 Months Ago', '9 Months Ago']
+    rating_columns = ['Rating (RS)', 'Rating (1M)', 'Rating (3M)',
+                      'Rating (6M)', 'Rating (9M)']
+    ranking_df = append_ratings(stock_df, rs_columns,
+                                rating_columns, method=rating_method)
+
+    ranking_df = move_columns_to_end(
+        ranking_df,
+        [
+            'Price',
+            *[f'MA{w}' for w in ma_wins],
+            f'Volume / VMA{vma_win}',
+        ],
+    )
+    return ranking_df
+
+
+def build_stock_rs_df(tickers, ticker_ref='^GSPC',
+                      period='2y', interval='1wk', ma="SMA"):
+    """
+    Build a DataFrame of stocks ranked by their Mansfield Relative Strength
+    (RSM) against a benchmark index.
+
+    Parameters
+    ----------
+    tickers : list of str
+        List of stock tickers to include in the ranking.
+
+    ticker_ref : str, optional
+        Ticker symbol of the benchmark index. Defaults to '^GSPC' (S&P 500).
+
+    period : str, optional
+        Period for historical data ('6mo', '1y', '2y', '5y', 'ytd', 'max').
+        Defaults to '2y' (two years).
+
+    interval : str, optional
+        Interval for historical data ('1d', '1wk'). Defaults to '1wk' (one week).
+
+    ma : str, optional
+        Moving average type ('SMA' for Simple Moving Average or 'EMA' for
+        Exponential Moving Average).  Defaults to 'SMA'.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A DataFrame containing relative strength values, historical data, and
+        moving averages for each stock.
     """
     # Select the MA function based on the 'ma' parameter
     try:
