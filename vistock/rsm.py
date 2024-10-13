@@ -35,7 +35,7 @@ See Also:
 """
 __version__ = "4.9"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/23 (initial version) ~ 2024/10/10 (last revision)"
+__date__ = "2024/08/23 (initial version) ~ 2024/10/13 (last revision)"
 
 __all__ = [
     'mansfield_relative_strength',
@@ -249,16 +249,6 @@ def rankings(tickers, ticker_ref='^GSPC',
     except KeyError:
         raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
 
-    # Fetch info for stocks
-    info = yfu.download_tickers_info(
-        tickers,
-        ['quoteType', 'previousClose',
-         'trailingEps', 'revenuePerShare', 'trailingPE',
-         'marketCap', 'sharesOutstanding', 'sector', 'industry',]
-    )
-    tickers = [t for t in tickers if t in info]
-    tickers = [t for t in tickers if info[t]['quoteType'] == 'EQUITY']
-
     # Fetch data for stocks and index
     df_all = yf.download([ticker_ref] + tickers,
                          period=period, interval=interval)
@@ -266,44 +256,21 @@ def rankings(tickers, ticker_ref='^GSPC',
     print("Num of downloaded stocks: "
           f"{len(df_all.columns.get_level_values('Ticker').unique())}")
 
-    # Fetch financials data for stocks
-    financials = yfu.download_financials(tickers, ['Basic EPS',
-                                                   'Operating Revenue'])
-
-    epses_index = yfu.calc_weighted_metric(financials, info,
-                                           'Basic EPS', 'sharesOutstanding')
-    revs_index = yfu.calc_weighted_metric(financials, info,
-                                          'Operating Revenue', 'marketCap')
-    #print(epses_index)
-
     rows = []
     price_ma = {}
     for ticker in tickers:
         df = df_all.xs(ticker, level='Ticker', axis=1)
         rsm = mansfield_relative_strength(df['Close'], df_ref['Close'],
                                           rs_win, ma=ma)
-
         for win in ma_wins:
             price_ma[f'{win}'] = ma_func(df['Close'], win).round(2)
         vol_div_vma = (df['Volume'] / ma_func(df['Volume'], vma_win)).round(2)
-
-        epses = financials[ticker]['Basic EPS']
-        eps_rs = relative_strength_vs_benchmark(epses, epses_index)
-        revs = financials[ticker]['Operating Revenue']
-        rev_rs = relative_strength_vs_benchmark(revs, revs_index)
-
-        pe = info[ticker]['trailingPE']
-        if not isinstance(pe, float):
-            print(f"info[{ticker}]['trailingPE']: {pe}")
-            pe = np.nan
 
         end_date = rsm.index[-1]
 
         # Construct DataFrame for current stock
         row = {
             'Ticker': ticker,
-            'Sector': info[ticker]['sector'],
-            'Industry': info[ticker]['industry'],
             'RS': rsm.asof(end_date),
             '1 Week Ago': rsm.asof(end_date - pd.DateOffset(weeks=1)),
             '1 Month Ago': rsm.asof(end_date - pd.DateOffset(months=1)),
@@ -313,11 +280,6 @@ def rankings(tickers, ticker_ref='^GSPC',
             'Price': df['Close'].asof(end_date).round(2),
             **{f'MA{w}': price_ma[f'{w}'].iloc[-1] for w in ma_wins},
             f'Volume / VMA{vma_win}': vol_div_vma.iloc[-1],
-            'EPS RS (%)': eps_rs.iloc[-1],
-            'TTM EPS': info[ticker]['trailingEps'],
-            'Rev RS (%)': rev_rs.iloc[-1],
-            'TTM RPS': info[ticker]['revenuePerShare'],
-            'TTM PE': round(pe, 2),
         }
         rows.append(row)
 
@@ -337,8 +299,6 @@ def rankings(tickers, ticker_ref='^GSPC',
             'Price',
             *[f'MA{w}' for w in ma_wins],
             f'Volume / VMA{vma_win}',
-            'EPS RS (%)', 'TTM EPS',
-            'Rev RS (%)', 'TTM RPS', 'TTM PE',
         ],
     )
     return ranking_df
