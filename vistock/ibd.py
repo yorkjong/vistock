@@ -310,7 +310,7 @@ def relative_strength_with_span(closes, closes_ref, span):
 #------------------------------------------------------------------------------
 
 def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
-             rating_method='rank', rs_window='12mo'):
+             rs_window='12mo', rating_method='rank'):
     """
     Analyze stocks and generate a ranking table for individual stocks and
     industries based on Relative Strength (RS).
@@ -337,13 +337,13 @@ def rankings(tickers, ticker_ref='^GSPC', period='2y', interval='1d',
         The frequency of the data points. Must be one of '1d' for daily data,
         '1wk' for weekly data, or '1mo' for monthly data. Defaults to '1d'.
 
-    rating_method : str, optional
-        The method to calculate ratings. Either 'rank' (based on relative
-        ranking) or 'qcut' (based on quantiles). Defaults to 'rank'.
-
     rs_window : str, optional
         The time window ('3mo' or '12mo') for calculating Relative Strength
         (RS). Defaults to '12mo'.
+
+    rating_method : str, optional
+        The method to calculate ratings. Either 'rank' (based on relative
+        ranking) or 'qcut' (based on quantiles). Defaults to 'rank'.
 
     Returns
     -------
