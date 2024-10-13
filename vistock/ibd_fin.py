@@ -25,9 +25,9 @@ For example:
     # Example usage
     ranking_df = financial_metric_ranking(stock_data)
 """
-__version__ = "1.5"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/09/15 (initial version) ~ 2024/10/07 (last revision)"
+__date__ = "2024/09/15 (initial version) ~ 2024/10/13 (last revision)"
 
 __all__ = [
     'metric_strength_vs_benchmark',
@@ -297,6 +297,8 @@ def main(out_dir='out'):
     import os
     from datetime import datetime
     from .stock_indices import get_tickers
+
+    yfu.setup_file_logging()
 
     code = 'SOX'
     code = 'NDX'

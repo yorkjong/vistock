@@ -13,6 +13,7 @@ __all__ = [
     'fetch_financials',
     'download_financials',
     'download_tickers_info',
+    'setup_file_logging',
 ]
 
 import sys
@@ -23,10 +24,22 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
+
+#------------------------------------------------------------------------------
+# Logging
+#------------------------------------------------------------------------------
+
 # Configure logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+
+def setup_file_logging():
+    # Set up a file handler for logging
+    file_handler = logging.FileHandler(f'{__name__}.log')
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
 
 #------------------------------------------------------------------------------
 # Weighted Average Metric (e.g., EPS, Revenue)
