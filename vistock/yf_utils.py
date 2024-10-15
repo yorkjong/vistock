@@ -4,15 +4,16 @@ Utility functions for working with Yahoo Finance data.
 This module contains various utility functions for retrieving and processing
 stock data using the Yahoo Finance API via the `yfinance` library.
 """
-__version__ = "4.0"
+__version__ = "4.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/26 (initial version) ~ 2024/09/29 (last revision)"
+__date__ = "2024/08/26 (initial version) ~ 2024/10/13 (last revision)"
 
 __all__ = [
     'calc_weighted_metric',
     'fetch_financials',
     'download_financials',
     'download_tickers_info',
+    'setup_file_logging',
 ]
 
 import sys
@@ -23,9 +24,28 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
+
+#------------------------------------------------------------------------------
+# Logging
+#------------------------------------------------------------------------------
+
 # Configure logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
+
+def setup_file_logging():
+    log_fn = f'{__name__}.log'
+    print(f'Logging to file: {log_fn}')
+
+    # Set up a file handler for logging
+    file_handler = logging.FileHandler(log_fn)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    # Optionally disable the default handler to prevent output to console
+    logger.propagate = False
 
 
 #------------------------------------------------------------------------------
@@ -180,12 +200,8 @@ def fetch_financials(symbol, fields=None, frequency='quarterly'):
         financials = financials.sort_index(ascending=True)
 
         if financials.empty:
-            logger.warning(f"\n{symbol}: Financials data is empty, "
-                           "returning NaN-filled DataFrame.")
-            if fields:
-                return pd.DataFrame({field: [np.nan] for field in fields})
-            else:
-                return pd.DataFrame()
+            logger.warning(f"\n{symbol}: Financials data is empty.")
+            return pd.DataFrame()
 
         if fields:
             # Check for missing fields and keep only those that exist

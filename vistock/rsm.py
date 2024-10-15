@@ -33,22 +33,23 @@ See Also:
   how-to-create-the-mansfield-relative-performance-indicator>`_
 
 """
-__version__ = "4.7"
+__version__ = "5.3"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/23 (initial version) ~ 2024/10/05 (last revision)"
+__date__ = "2024/08/23 (initial version) ~ 2024/10/13 (last revision)"
 
 __all__ = [
     'mansfield_relative_strength',
     'dorsey_relative_strength',
-    'ranking',
+    'rankings',
 ]
 
 import numpy as np
 import pandas as pd
 import yfinance as yf
 
-import vistock.yf_utils as yfu
 from .ta import simple_moving_average, exponential_moving_average
+from . import yf_utils as yfu
+from .ranking_utils import append_ratings, move_columns_to_end
 
 
 #------------------------------------------------------------------------------
@@ -201,35 +202,103 @@ def relative_strength_vs_benchmark(metric_series, bench_series, window=4):
 # Ranking
 #------------------------------------------------------------------------------
 
-def ranking(tickers, ticker_ref='^GSPC',
-            period='2y', interval='1wk', ma="SMA"):
+def rankings(tickers, ticker_ref='^GSPC',
+             period='2y', interval='1wk', ma="SMA", rating_method='rank'):
     """
     Rank stocks based on their Mansfield Relative Strength (RSM) against an
     index benchmark.
 
     Parameters
     ----------
-    tickers: list of str
+    tickers : list of str
         List of stock tickers to rank.
 
-    ticker_ref: str, optional
-        Ticker symbol of the benchmark. Default to '^GSPC' (S&P 500)
+    ticker_ref : str, optional
+        Ticker symbol of the benchmark index. Defaults to '^GSPC' (S&P 500).
 
-    period: str, optional
-        Period for historical data ('6mo', '1y', '2y', '5y', 'ytd', 'max').
-        Default to '2y' (two years).
+    period : str, optional
+        Period for retrieving historical data ('6mo', '1y', '2y', '5y', 'ytd',
+        'max'). Defaults to '2y' (two years).
 
-    interval: str, optional
-        Interval for historical data ('1d', '1wk').
-        Default to '1wk' (one week).
+    interval : str, optional
+        Interval for historical data ('1d', '1wk'). Defaults to '1wk' (one
+        week).
 
-    ma: str, optional
-        Moving average type ('SMA', 'EMA'). Default to 'SMA'.
+    ma : str, optional
+        Moving average type ('SMA' for Simple Moving Average or 'EMA' for
+        Exponential Moving Average). Defaults to 'SMA'.
+
+    rating_method : str, optional
+        Method for calculating stock ratings. Either 'rank' (based on relative
+        ranking) or 'qcut' (based on quantiles). Defaults to 'rank'.
 
     Returns
     -------
     pandas.DataFrame
-        DataFrame containing the ranked stocks.
+        A DataFrame containing ranked stock data with relative strength and
+        other metrics.
+    """
+    # Set moving average windows based on the interval
+    try:
+        rs_win = { '1d': 252, '1wk': 52}[interval]
+        ma_wins = { '1d': [50, 150], '1wk': [10, 30]}[interval]
+        vma_win = { '1d': 50, '1wk': 10}[interval]
+    except KeyError:
+        raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
+
+    stock_df = build_stock_rs_df(tickers=tickers, ticker_ref=ticker_ref,
+                                 period=period, interval=interval, ma=ma)
+    stock_df = stock_df.sort_values(by='RS', ascending=False)
+
+    rs_columns = ['RS', '1 Month Ago', '3 Months Ago',
+                  '6 Months Ago', '9 Months Ago']
+    rating_columns = ['Rating (RS)', 'Rating (1M)', 'Rating (3M)',
+                      'Rating (6M)', 'Rating (9M)']
+    ranking_df = append_ratings(stock_df, rs_columns,
+                                rating_columns, method=rating_method)
+
+    ranking_df = move_columns_to_end(
+        ranking_df,
+        [
+            'Price',
+            '52W pos',
+            *[f'MA{w}' for w in ma_wins],
+            f'Volume / VMA{vma_win}',
+        ],
+    )
+    return ranking_df
+
+
+def build_stock_rs_df(tickers, ticker_ref='^GSPC',
+                      period='2y', interval='1wk', ma="SMA"):
+    """
+    Build a DataFrame of stocks ranked by their Mansfield Relative Strength
+    (RSM) against a benchmark index.
+
+    Parameters
+    ----------
+    tickers : list of str
+        List of stock tickers to include in the ranking.
+
+    ticker_ref : str, optional
+        Ticker symbol of the benchmark index. Defaults to '^GSPC' (S&P 500).
+
+    period : str, optional
+        Period for historical data ('6mo', '1y', '2y', '5y', 'ytd', 'max').
+        Defaults to '2y' (two years).
+
+    interval : str, optional
+        Interval for historical data ('1d', '1wk'). Defaults to '1wk' (one week).
+
+    ma : str, optional
+        Moving average type ('SMA' for Simple Moving Average or 'EMA' for
+        Exponential Moving Average).  Defaults to 'SMA'.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A DataFrame containing relative strength values, historical data, and
+        moving averages for each stock.
     """
     # Select the MA function based on the 'ma' parameter
     try:
@@ -248,31 +317,12 @@ def ranking(tickers, ticker_ref='^GSPC',
     except KeyError:
         raise ValueError("Invalid interval. " "Must be '1d', or '1wk'.")
 
-    # Fetch info for stocks
-    info = yfu.download_tickers_info(
-        tickers,
-        ['quoteType', 'previousClose',
-         'trailingEps', 'revenuePerShare', 'trailingPE',
-         'marketCap', 'sharesOutstanding', 'sector', 'industry',]
-    )
-    tickers = [t for t in tickers if t in info]
-    tickers = [t for t in tickers if info[t]['quoteType'] == 'EQUITY']
-
     # Fetch data for stocks and index
-    df_all = yf.download([ticker_ref] + tickers, period=period, interval=interval)
+    df_all = yf.download([ticker_ref] + tickers,
+                         period=period, interval=interval)
     df_ref = df_all.xs(ticker_ref, level='Ticker', axis=1)
     print("Num of downloaded stocks: "
           f"{len(df_all.columns.get_level_values('Ticker').unique())}")
-
-    # Fetch financials data for stocks
-    financials = yfu.download_financials(tickers, ['Basic EPS',
-                                                   'Operating Revenue'])
-
-    epses_index = yfu.calc_weighted_metric(financials, info,
-                                           'Basic EPS', 'sharesOutstanding')
-    revs_index = yfu.calc_weighted_metric(financials, info,
-                                          'Operating Revenue', 'marketCap')
-    #print(epses_index)
 
     rows = []
     price_ma = {}
@@ -280,94 +330,39 @@ def ranking(tickers, ticker_ref='^GSPC',
         df = df_all.xs(ticker, level='Ticker', axis=1)
         rsm = mansfield_relative_strength(df['Close'], df_ref['Close'],
                                           rs_win, ma=ma)
-
         for win in ma_wins:
             price_ma[f'{win}'] = ma_func(df['Close'], win).round(2)
         vol_div_vma = (df['Volume'] / ma_func(df['Volume'], vma_win)).round(2)
 
-        epses = financials[ticker]['Basic EPS']
-        eps_rs = relative_strength_vs_benchmark(epses, epses_index)
-        revs = financials[ticker]['Operating Revenue']
-        rev_rs = relative_strength_vs_benchmark(revs, revs_index)
-
-        pe = info[ticker]['trailingPE']
-        if not isinstance(pe, float):
-            print(f"info[{ticker}]['trailingPE']: {pe}")
-            pe = np.nan
-
         end_date = rsm.index[-1]
+
+        # Calculate position in 52W range
+        high_52w = df['Close'].rolling(window=252, min_periods=1).max().iloc[-1]
+        low_52w = df['Close'].rolling(window=252, min_periods=1).min().iloc[-1]
+        current_price = df['Close'].asof(end_date)
+        range_position = (current_price - low_52w) / (high_52w - low_52w)
 
         # Construct DataFrame for current stock
         row = {
             'Ticker': ticker,
-            'Sector': info[ticker]['sector'],
-            'Industry': info[ticker]['industry'],
-            'RS (%)': rsm.asof(end_date),
+            'RS': rsm.asof(end_date),
             '1 Week Ago': rsm.asof(end_date - pd.DateOffset(weeks=1)),
             '1 Month Ago': rsm.asof(end_date - pd.DateOffset(months=1)),
             '3 Months Ago': rsm.asof(end_date - pd.DateOffset(months=3)),
             '6 Months Ago': rsm.asof(end_date - pd.DateOffset(months=6)),
             '9 Months Ago': rsm.asof(end_date - pd.DateOffset(months=9)),
             'Price': df['Close'].asof(end_date).round(2),
+            '52W pos': range_position.round(2),
             **{f'MA{w}': price_ma[f'{w}'].iloc[-1] for w in ma_wins},
             f'Volume / VMA{vma_win}': vol_div_vma.iloc[-1],
-            'EPS RS (%)': eps_rs.iloc[-1],
-            'TTM EPS': info[ticker]['trailingEps'],
-            'Rev RS (%)': rev_rs.iloc[-1],
-            'TTM RPS': info[ticker]['revenuePerShare'],
-            'TTM PE': round(pe, 2),
         }
         rows.append(row)
 
     # Combine rows into a single DataFrame
-    ranking_df = pd.DataFrame(rows)
+    stock_df = pd.DataFrame(rows)
 
-    # Sort by current RS
-    ranking_df = ranking_df.sort_values(by='RS (%)', ascending=False)
+    return stock_df
 
-    # Rank based on Relative Strength
-    rank_columns = ['RS Rank (P)',]
-    rs_columns = ['RS (%)',]
-    for rank_col, rs_col in zip(rank_columns, rs_columns):
-        rank_pct = ranking_df[rs_col].rank(pct=True)
-        ranking_df[rank_col] = (rank_pct * 100).round(2)
-
-    ranking_df = move_columns_to_end(
-        ranking_df,
-        [
-            'Price',
-            *[f'MA{w}' for w in ma_wins],
-            f'Volume / VMA{vma_win}',
-            'EPS RS (%)', 'TTM EPS',
-            'Rev RS (%)', 'TTM RPS', 'TTM PE',
-        ],
-    )
-    return ranking_df
-
-
-def move_columns_to_end(df, columns_to_move):
-    """
-    Move specified columns to the end of the DataFrame.
-
-    Parameters
-    ----------
-    df: pandas.DataFrame
-        The DataFrame whose columns need to be reordered.
-
-    columns_to_move: list of str
-        List of column names to move to the end.
-
-    Returns
-    -------
-    pandas.DataFrame
-        DataFrame with specified columns moved to the end.
-    """
-    # Get the list of columns that are not in columns_to_move
-    cols = [col for col in df.columns if col not in columns_to_move]
-    cols += columns_to_move
-    # Reorder DataFrame columns
-    df = df[cols]
-    return df
 
 #------------------------------------------------------------------------------
 # Unit Test
@@ -376,7 +371,7 @@ def move_columns_to_end(df, columns_to_move):
 def main(period='2y', ma="EMA", out_dir='out'):
     import os
     from datetime import datetime
-    from vistock.stock_indices import get_tickers
+    from .stock_indices import get_tickers
 
     code = 'SPX+DJIA+NDX+SOX'
     code = 'SOX'
@@ -389,7 +384,7 @@ def main(period='2y', ma="EMA", out_dir='out'):
     # case of empty financials DataFrame
     #tickers = ['910861.TW']
 
-    rank = ranking(tickers, period=period, interval='1wk', ma=ma)
+    rank = rankings(tickers, period=period, interval='1wk', ma=ma)
     print(rank.head(10))
 
     # Save to CSV

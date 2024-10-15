@@ -25,9 +25,9 @@ For example:
     # Example usage
     ranking_df = financial_metric_ranking(stock_data)
 """
-__version__ = "1.4"
+__version__ = "1.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/09/15 (initial version) ~ 2024/10/05 (last revision)"
+__date__ = "2024/09/15 (initial version) ~ 2024/10/13 (last revision)"
 
 __all__ = [
     'metric_strength_vs_benchmark',
@@ -37,8 +37,8 @@ __all__ = [
 import numpy as np
 import pandas as pd
 
-import vistock.yf_utils as yfu
-
+from . import yf_utils as yfu
+from .ranking_utils import append_ratings
 
 #------------------------------------------------------------------------------
 # Financial Metric Relative Strength
@@ -220,8 +220,10 @@ def financial_metric_ranking(tickers):
     # Fetch financials data for stocks
     fins_q = yfu.download_financials(
         tickers, ['Basic EPS', 'Operating Revenue'], 'quarterly')
+    tickers = [t for t in tickers if t in fins_q]
     fins_a = yfu.download_financials(
         tickers, ['Basic EPS', 'Operating Revenue'], 'annual')
+    tickers = [t for t in tickers if t in fins_a]
 
     # weighted EPS of benchmark
     bench_eps_q = yfu.calc_weighted_metric(
@@ -266,9 +268,9 @@ def financial_metric_ranking(tickers):
             'QoQ 3Q Algo (%)': eps_qoq.iloc[-3] if len(eps_qoq) > 2 else np.nan,
             'EPS YoY (%)': eps_yoy.iloc[-1],
             'YoY 2Q Algo (%)': eps_yoy.iloc[-2] if len(eps_yoy) > 1 else np.nan,
-            'EPS RS (%)': round(eps_rs.iloc[-1], 2),
+            'EPS RS': round(eps_rs.iloc[-1], 2),
             'TTM EPS': info[ticker]['trailingEps'],
-            'Rev RS (%)': round(rev_rs.iloc[-1], 2),
+            'Rev RS': round(rev_rs.iloc[-1], 2),
             'TTM RPS': info[ticker]['revenuePerShare'],
             'TTM PE': round(pe, 2),
         }
@@ -278,14 +280,11 @@ def financial_metric_ranking(tickers):
     ranking_df = pd.DataFrame(rows)
 
     # Sort by current EPS RS
-    ranking_df = ranking_df.sort_values(by='EPS RS (%)', ascending=False)
+    ranking_df = ranking_df.sort_values(by='EPS RS', ascending=False)
 
-    # Rank based on Relative Strength
-    rank_columns = ['EPS RS Rank (P)', 'RPS RS Rank (P)']
-    rs_columns = ['EPS RS (%)', 'Rev RS (%)']
-    for rank_col, rs_col in zip(rank_columns, rs_columns):
-        rank_pct = ranking_df[rs_col].rank(pct=True)
-        ranking_df[rank_col] = (rank_pct * 100).round(2)
+    # Rating based on Relative Strength
+    rs_columns = ['EPS RS', 'Rev RS']
+    ranking_df = append_ratings(ranking_df, rs_columns)
 
     return ranking_df
 
@@ -297,7 +296,9 @@ def financial_metric_ranking(tickers):
 def main(out_dir='out'):
     import os
     from datetime import datetime
-    from vistock.stock_indices import get_tickers
+    from .stock_indices import get_tickers
+
+    yfu.setup_file_logging()
 
     code = 'SOX'
     code = 'NDX'
