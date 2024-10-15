@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>vistock package &mdash; vistock 0.7.0 documentation</title>
+  <title>vistock package &mdash; vistock 0.8.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=fe7df9b0"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=486e5634"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -69,8 +67,6 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-vistock.ibd">vistock.ibd module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#ibd-rs-relative-strength-rating-module">IBD RS (Relative Strength) Rating Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vistock.ibd.ma_window_size"><code class="docutils literal notranslate"><span class="pre">ma_window_size()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vistock.ibd.ranking"><code class="docutils literal notranslate"><span class="pre">ranking()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vistock.ibd.rankings"><code class="docutils literal notranslate"><span class="pre">rankings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vistock.ibd.relative_strength"><code class="docutils literal notranslate"><span class="pre">relative_strength()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vistock.ibd.relative_strength_3m"><code class="docutils literal notranslate"><span class="pre">relative_strength_3m()</span></code></a></li>
@@ -80,7 +76,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#mansfield-relative-strength-rsm-module">Mansfield Relative Strength (RSM) Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vistock.rsm.dorsey_relative_strength"><code class="docutils literal notranslate"><span class="pre">dorsey_relative_strength()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vistock.rsm.mansfield_relative_strength"><code class="docutils literal notranslate"><span class="pre">mansfield_relative_strength()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vistock.rsm.ranking"><code class="docutils literal notranslate"><span class="pre">ranking()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vistock.rsm.rankings"><code class="docutils literal notranslate"><span class="pre">rankings()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-vistock.stock_indices">vistock.stock_indices module</a><ul>
@@ -121,6 +117,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#vistock.yf_utils.download_financials"><code class="docutils literal notranslate"><span class="pre">download_financials()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vistock.yf_utils.download_tickers_info"><code class="docutils literal notranslate"><span class="pre">download_tickers_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vistock.yf_utils.fetch_financials"><code class="docutils literal notranslate"><span class="pre">fetch_financials()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vistock.yf_utils.setup_file_logging"><code class="docutils literal notranslate"><span class="pre">setup_file_logging()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-vistock">Module contents</a></li>
@@ -444,23 +441,30 @@ Business Daily (IBD) methodology.</p>
 <ul class="simple">
 <li><p>Relative strength calculation</p></li>
 <li><p>Stock and industry ranking generation</p></li>
-<li><p>Percentile-based filtering of rankings</p></li>
+<li><p>Rating-based filtering of rankings</p></li>
 </ul>
 </section>
 <section id="usage">
 <h4>Usage:<a class="headerlink" href="#usage" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ibd</span>
+<span class="kn">from</span> <span class="nn">.ranking_utils</span> <span class="kn">import</span> <span class="n">append_ratings</span><span class="p">,</span> <span class="n">groupby_industry</span>
 
-<span class="c1"># Generate rankings for a list of stocks</span>
-<span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOGL&#39;</span><span class="p">,</span> <span class="s1">&#39;AMZN&#39;</span><span class="p">,</span> <span class="s1">&#39;TSLA&#39;</span><span class="p">]</span>
-<span class="n">stock_rankings</span><span class="p">,</span> <span class="n">industry_rankings</span> <span class="o">=</span> <span class="n">ibd</span><span class="o">.</span><span class="n">rankings</span><span class="p">(</span><span class="n">tickers</span><span class="p">)</span>
+<span class="n">stock_df</span> <span class="o">=</span> <span class="n">rankings</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="n">rs_window</span><span class="p">,</span>
+                    <span class="n">rating_method</span><span class="o">=</span><span class="n">rating_method</span><span class="p">)</span>
 
-<span class="c1"># Calculate relative strength for a single stock</span>
-<span class="n">stock_rs</span> <span class="o">=</span> <span class="n">ibd</span><span class="o">.</span><span class="n">relative_strength</span><span class="p">(</span><span class="n">stock_closes</span><span class="p">,</span> <span class="n">index_closes</span><span class="p">)</span>
+<span class="n">rs_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RS&#39;</span><span class="p">,</span> <span class="s1">&#39;3mo:1mo max&#39;</span><span class="p">,</span> <span class="s1">&#39;6mo:3mo max&#39;</span><span class="p">,</span> <span class="s1">&#39;9mo:6mo max&#39;</span><span class="p">]</span>
+<span class="n">columns</span> <span class="o">=</span>  <span class="p">[</span><span class="s1">&#39;Sector&#39;</span><span class="p">,</span> <span class="s1">&#39;Ticker&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">rs_columns</span>
+<span class="n">industry_df</span> <span class="o">=</span> <span class="n">groupby_industry</span><span class="p">(</span><span class="n">stock_df</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;RS&#39;</span><span class="p">)</span>
 
-<span class="c1"># Filter rankings based on a minimum percentile</span>
-<span class="n">min_percentile</span> <span class="o">=</span> <span class="mi">80</span>
-<span class="n">top_stocks</span> <span class="o">=</span> <span class="n">stock_rankings</span><span class="p">[</span><span class="n">stock_rankings</span><span class="p">[</span><span class="s2">&quot;Percentile&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_percentile</span><span class="p">]</span>
+<span class="n">industry_df</span> <span class="o">=</span> <span class="n">industry_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;RS&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">rating_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Rating (RS)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rating (3M:1M max)&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Rating (6M:3M max)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rating (9M:6M max)&#39;</span><span class="p">]</span>
+<span class="n">industry_df</span> <span class="o">=</span> <span class="n">append_ratings</span><span class="p">(</span><span class="n">industry_df</span><span class="p">,</span> <span class="n">rs_columns</span><span class="p">,</span>
+                             <span class="n">rating_columns</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">rating_method</span><span class="p">)</span>
+
+<span class="n">industry_df</span> <span class="o">=</span> <span class="n">industry_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;Ticker&#39;</span><span class="p">:</span> <span class="s1">&#39;Tickers&#39;</span><span class="p">,</span>
+<span class="p">})</span>
 </pre></div>
 </div>
 </section>
@@ -478,122 +482,35 @@ Business Daily (IBD) methodology.</p>
 </section>
 </section>
 <dl class="py function">
-<dt class="sig sig-object py" id="vistock.ibd.ma_window_size">
-<span class="sig-prename descclassname"><span class="pre">vistock.ibd.</span></span><span class="sig-name descname"><span class="pre">ma_window_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/ibd.html#ma_window_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.ibd.ma_window_size" title="Link to this definition"></a></dt>
-<dd><p>Calculate moving average window size based on IBD (Investor’s Business
-Daily) convention.</p>
-<p>This function adjusts the window size for weekly data to maintain
-consistency with daily calculations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>interval</strong> (<em>str</em>) – The data interval. Must be either ‘1d’ for daily or ‘1wk’ for weekly.</p></li>
-<li><p><strong>days</strong> (<em>int</em>) – Number of calendar days for the desired moving average period.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Calculated window size (number of data points) for the moving average.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If an unsupported interval is provided (not ‘1d’ or ‘1wk’).</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ma_window_size</span><span class="p">(</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="go">50</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ma_window_size</span><span class="p">(</span><span class="s1">&#39;1wk&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="go">10</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="vistock.ibd.ranking">
-<span class="sig-prename descclassname"><span class="pre">vistock.ibd.</span></span><span class="sig-name descname"><span class="pre">ranking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tickers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^GSPC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/ibd.html#ranking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.ibd.ranking" title="Link to this definition"></a></dt>
-<dd><p>Rank stocks based on their IBD Relative Strength against an index
-benchmark.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tickers</strong> (<em>list</em><em> of </em><em>str</em>) – List of stock tickers to rank.</p></li>
-<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – Ticker symbol of the benchmark. Default to ‘^GSPC’ (S&amp;P 500)</p></li>
-<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – Period for historical data (‘6mo’, ‘1y’, ‘2y’, ‘5y’, ‘ytd’, ‘max’).
-Default to ‘2y’ (two years).</p></li>
-<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – Interval for historical data (‘1d’, ‘1wk’, ‘1mo’).
-Default to ‘1wk’ (one week).</p></li>
-<li><p><strong>rs_window</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify the time window (‘3mo’ or ‘12mo’) for Relative Strength
-calculation. Default to ‘12mo’.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame containing the ranked stocks.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas.DataFrame</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOGL&#39;</span><span class="p">,</span> <span class="s1">&#39;AMZN&#39;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stock_rankings</span>  <span class="o">=</span> <span class="n">ranking</span><span class="p">(</span><span class="n">tickers</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">stock_rankings</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="vistock.ibd.rankings">
-<span class="sig-prename descclassname"><span class="pre">vistock.ibd.</span></span><span class="sig-name descname"><span class="pre">rankings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tickers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^GSPC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentile_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rank'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/ibd.html#rankings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.ibd.rankings" title="Link to this definition"></a></dt>
-<dd><p>Analyze stocks and generate ranking tables for individual stocks and
-industries.</p>
-<p>This function calculates relative strength (RS) for the given stocks compared
-to a reference index, and then ranks both individual stocks and industries
-based on their RS values. It provides historical RS data and percentile
-rankings.</p>
+<span class="sig-prename descclassname"><span class="pre">vistock.ibd.</span></span><span class="sig-name descname"><span class="pre">rankings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tickers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^GSPC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12mo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rank'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/ibd.html#rankings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.ibd.rankings" title="Link to this definition"></a></dt>
+<dd><p>Analyze stocks and generate a ranking table for individual stocks and
+industries based on Relative Strength (RS).</p>
+<p>This function calculates Relative Strength (RS) for the given stocks
+compared to a reference index, then ranks both individual stocks and
+industries according to their RS values. It provides historical RS data and
+rating rankings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tickers</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of stock tickers to analyze.</p></li>
-<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol for the reference index. Defaults to ‘^GSPC’ (S&amp;P 500).</p></li>
-<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – The period for which to fetch historical data. Defaults to ‘2y’ (two years).</p></li>
+<li><p><strong>tickers</strong> (<em>list</em><em> of </em><em>str</em>) – A list of stock tickers to analyze.</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – The ticker symbol for the reference index. Defaults to ‘^GSPC’ (S&amp;P
+500).</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – The period for which to fetch historical data. Defaults to ‘2y’ (two
+years).</p></li>
 <li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – The frequency of the data points. Must be one of ‘1d’ for daily data,
 ‘1wk’ for weekly data, or ‘1mo’ for monthly data. Defaults to ‘1d’.</p></li>
-<li><p><strong>percentile_method</strong> (<em>str</em><em>, </em><em>optional</em>) – Method to calculate percentiles. Either ‘rank’ or ‘qcut’. Defaults to ‘rank’.</p></li>
-<li><p><strong>rs_window</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify the time window (‘3mo’ or ‘12mo’) for Relative Strength
-calculation. Default to ‘12mo’.</p></li>
+<li><p><strong>rs_window</strong> (<em>str</em><em>, </em><em>optional</em>) – The time window (‘3mo’ or ‘12mo’) for calculating Relative Strength
+(RS). Defaults to ‘12mo’.</p></li>
+<li><p><strong>rating_method</strong> (<em>str</em><em>, </em><em>optional</em>) – The method to calculate ratings. Either ‘rank’ (based on relative
+ranking) or ‘qcut’ (based on quantiles). Defaults to ‘rank’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>A tuple of two Pandas DataFrames:</p>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>Stock Rankings DataFrame:</dt><dd><ul class="simple">
-<li><p>Columns: Rank, Ticker, Price, Sector, Industry, RS (current),
-RS (1 month ago), RS (3 months ago), RS (6 months ago),
-Percentile (current), Percentile (1 month ago),
-Percentile (3 months ago), Percentile (6 months ago)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Industry Rankings DataFrame:</dt><dd><ul class="simple">
-<li><p>Columns: Rank, Industry, Sector, RS (current),
-RS (1 month ago), RS (3 months ago), RS (6 months ago),
-Tickers (list of tickers in the industry),
-Percentile (current), Percentile (1 month ago),
-Percentile (3 months ago), Percentile (6 months ago)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ol>
-</p>
+<dd class="field-even"><p>A DataFrame containing stock rankings and RS ratings.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tuple[pd.DataFrame, pd.DataFrame]</p>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -772,24 +689,28 @@ values with given moving average method.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="vistock.rsm.ranking">
-<span class="sig-prename descclassname"><span class="pre">vistock.rsm.</span></span><span class="sig-name descname"><span class="pre">ranking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tickers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^GSPC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1wk'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SMA'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/rsm.html#ranking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.rsm.ranking" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="vistock.rsm.rankings">
+<span class="sig-prename descclassname"><span class="pre">vistock.rsm.</span></span><span class="sig-name descname"><span class="pre">rankings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tickers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^GSPC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1wk'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SMA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rank'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/rsm.html#rankings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.rsm.rankings" title="Link to this definition"></a></dt>
 <dd><p>Rank stocks based on their Mansfield Relative Strength (RSM) against an
 index benchmark.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>tickers</strong> (<em>list</em><em> of </em><em>str</em>) – List of stock tickers to rank.</p></li>
-<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – Ticker symbol of the benchmark. Default to ‘^GSPC’ (S&amp;P 500)</p></li>
-<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – Period for historical data (‘6mo’, ‘1y’, ‘2y’, ‘5y’, ‘ytd’, ‘max’).
-Default to ‘2y’ (two years).</p></li>
-<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – Interval for historical data (‘1d’, ‘1wk’).
-Default to ‘1wk’ (one week).</p></li>
-<li><p><strong>ma</strong> (<em>str</em><em>, </em><em>optional</em>) – Moving average type (‘SMA’, ‘EMA’). Default to ‘SMA’.</p></li>
+<li><p><strong>ticker_ref</strong> (<em>str</em><em>, </em><em>optional</em>) – Ticker symbol of the benchmark index. Defaults to ‘^GSPC’ (S&amp;P 500).</p></li>
+<li><p><strong>period</strong> (<em>str</em><em>, </em><em>optional</em>) – Period for retrieving historical data (‘6mo’, ‘1y’, ‘2y’, ‘5y’, ‘ytd’,
+‘max’). Defaults to ‘2y’ (two years).</p></li>
+<li><p><strong>interval</strong> (<em>str</em><em>, </em><em>optional</em>) – Interval for historical data (‘1d’, ‘1wk’). Defaults to ‘1wk’ (one
+week).</p></li>
+<li><p><strong>ma</strong> (<em>str</em><em>, </em><em>optional</em>) – Moving average type (‘SMA’ for Simple Moving Average or ‘EMA’ for
+Exponential Moving Average). Defaults to ‘SMA’.</p></li>
+<li><p><strong>rating_method</strong> (<em>str</em><em>, </em><em>optional</em>) – Method for calculating stock ratings. Either ‘rank’ (based on relative
+ranking) or ‘qcut’ (based on quantiles). Defaults to ‘rank’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame containing the ranked stocks.</p>
+<dd class="field-even"><p>A DataFrame containing ranked stock data with relative strength and
+other metrics.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pandas.DataFrame</p>
@@ -1626,6 +1547,11 @@ Defaults to None.</p></li>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vistock.yf_utils.setup_file_logging">
+<span class="sig-prename descclassname"><span class="pre">vistock.yf_utils.</span></span><span class="sig-name descname"><span class="pre">setup_file_logging</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/yf_utils.html#setup_file_logging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.yf_utils.setup_file_logging" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-vistock">
