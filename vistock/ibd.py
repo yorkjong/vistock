@@ -17,24 +17,13 @@ Usage:
 ::
 
     import ibd
-    from .ranking_utils import append_ratings, groupby_industry
+    import vistock.stock_indices as si
 
-    stock_df = rankings(tickers, rs_window=rs_window,
-                        rating_method=rating_method)
+    code = 'SOX'
+    tickers = si.get_tickers(code)
 
-    rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
-    columns =  ['Sector', 'Ticker'] + rs_columns
-    industry_df = groupby_industry(stock_df, columns, key='RS')
-
-    industry_df = industry_df.sort_values(by='RS', ascending=False)
-    rating_columns = ['Rating (RS)', 'Rating (3M:1M max)',
-                      'Rating (6M:3M max)', 'Rating (9M:6M max)']
-    industry_df = append_ratings(industry_df, rs_columns,
-                                 rating_columns, method=rating_method)
-
-    industry_df = industry_df.rename(columns={
-        'Ticker': 'Tickers',
-    })
+    stock_df = rankings(tickers,
+                        rs_window=rs_window, rating_method=rating_method)
 
 See Also:
 ~~~~~~~~~
@@ -50,9 +39,9 @@ See Also:
   <https://www.investors.com/ibd-university/
   find-evaluate-stocks/exclusive-ratings/>`_
 """
-__version__ = "5.5"
+__version__ = "5.6"
 __author__ = "York <york.jong@gmail.com>"
-__date__ = "2024/08/05 (initial version) ~ 2024/10/13 (last revision)"
+__date__ = "2024/08/05 (initial version) ~ 2024/10/27 (last revision)"
 
 __all__ = [
     'relative_strength',
@@ -414,7 +403,7 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
     -------
     pd.DataFrame
         A DataFrame containing stock rankings with the following columns:
-        'Ticker', 'Price', 'Sector', 'Industry', 'RS' (current),
+        'Ticker', 'Price', 'RS' (current),
         'RS (1wk:max)', 'RS (1mo:max)', 'RS (3mo:max)', 'RS (6mo:max)',
         'RS (9mo:max)'.
     """
@@ -438,10 +427,6 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
     df_all = yf.download([ticker_ref] + tickers,
                          period=period, interval=interval)
     df_ref = df_all.xs(ticker_ref, level='Ticker', axis=1)
-
-    # Batch download stock info
-    info = yfu.download_tickers_info(tickers, ['sector', 'industry'])
-    tickers = [t for t in tickers if t in info]
 
     rs_data = []
     price_ma = {}
@@ -472,8 +457,6 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
 
         rs_data.append({
             'Ticker': ticker,
-            'Sector': info[ticker]['sector'],
-            'Industry': info[ticker]['industry'],
             'RS': rs.asof(end_date),
             '1wk:end max': rs.loc[one_week_ago:end_date].max(),
             '1mo:1wk max': rs.loc[one_month_ago:one_week_ago].max(),
@@ -496,57 +479,46 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
 # Unit Test
 #------------------------------------------------------------------------------
 
-def main(min_rating=80, rating_method='qcut',
-         rs_window='12mo', out_dir='out'):
-    '''
-    Parameters
-    ----------
-    min_rating: int, optional
-        The minimum rating for a stock to be included in the rankings.
-        Defaults to 80.
-
-    out_dir: str, optional
-        The output directory to store CSV tables. Defaults to 'out'.
-    '''
+def main(rating_method='qcut', rs_window='12mo', out_dir='out'):
     import os
     from datetime import datetime
     import vistock.stock_indices as si
+    from vistock.ibd_fin import financial_metric_ranking
 
     code = 'SPX'
+    code = 'SOX'
     tickers = si.get_tickers(code)
 
-    stock_df = rankings(tickers, rs_window=rs_window,
-                        rating_method=rating_method)
+    df_rs = rankings(tickers, rs_window=rs_window, rating_method=rating_method)
+    df_fin = financial_metric_ranking(tickers)
 
-    rs_columns = ['RS', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
-    columns =  ['Sector', 'Ticker'] + rs_columns
-    industry_df = groupby_industry(stock_df, columns, key='RS')
-
-    industry_df = industry_df.sort_values(by='RS', ascending=False)
-    rating_columns = ['Rating (RS)', 'Rating (3M:1M max)',
-                      'Rating (6M:3M max)', 'Rating (9M:6M max)']
-    industry_df = append_ratings(industry_df, rs_columns,
-                                 rating_columns, method=rating_method)
-
-    industry_df = industry_df.rename(columns={
-        'Ticker': 'Tickers',
-    })
-
-    if stock_df.empty or industry_df.empty:
+    if df_rs.empty or df_fin.empty:
         print("Not enough data to generate rankings.")
         return
 
-    print('Stock Rankings:')
-    print(stock_df[stock_df["Rating (RS)"] >= min_rating])
+    columns_to_keep = ['Ticker', 'Sector', 'Industry']
+    df_stock = pd.merge(df_rs, df_fin[columns_to_keep],
+                        on='Ticker', how='left')
+    print('\nStock DataFrame:')
+    print(df_stock.head(10))
 
-    print('\n\nIndustry Rankings:')
-    print(industry_df)
+    rs_columns = ['RS',
+                  '1mo:1wk max', '3mo:1mo max', '6mo:3mo max', '9mo:6mo max']
+    columns = ['Sector', 'Ticker'] + rs_columns
+    df_industry = groupby_industry(df_stock, columns, key='RS')
+    df_industry = df_industry.sort_values(by='RS', ascending=False)
+    df_industry = df_industry.reset_index(drop=True)
+    rating_columns = ['Rating (RS)', 'Rating (1M:1W)', 'Rating (3M:1M)',
+                      'Rating (6M:3M)', 'Rating (9M:6M)']
+    df_industry = append_ratings(df_industry, rs_columns, rating_columns)
+    print('\nIndustry DataFrame:')
+    print(df_industry.head(10))
 
     # Save to CSV
     print("\n\n***")
     today = datetime.now().strftime('%Y%m%d')
     os.makedirs(out_dir, exist_ok=True)
-    for table, kind in zip([stock_df, industry_df],
+    for table, kind in zip([df_stock, df_industry],
                            ['stocks', 'industries']):
         filename = f'rs_{kind}_{rs_window}_{rating_method}_{today}.csv'
         table.to_csv(os.path.join(out_dir, filename), index=False)
