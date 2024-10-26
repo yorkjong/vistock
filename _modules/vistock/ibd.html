@@ -89,24 +89,13 @@
 <span class="sd">::</span>
 
 <span class="sd">    import ibd</span>
-<span class="sd">    from .ranking_utils import append_ratings, groupby_industry</span>
+<span class="sd">    import vistock.stock_indices as si</span>
 
-<span class="sd">    stock_df = rankings(tickers, rs_window=rs_window,</span>
-<span class="sd">                        rating_method=rating_method)</span>
+<span class="sd">    code = &#39;SOX&#39;</span>
+<span class="sd">    tickers = si.get_tickers(code)</span>
 
-<span class="sd">    rs_columns = [&#39;RS&#39;, &#39;3mo:1mo max&#39;, &#39;6mo:3mo max&#39;, &#39;9mo:6mo max&#39;]</span>
-<span class="sd">    columns =  [&#39;Sector&#39;, &#39;Ticker&#39;] + rs_columns</span>
-<span class="sd">    industry_df = groupby_industry(stock_df, columns, key=&#39;RS&#39;)</span>
-
-<span class="sd">    industry_df = industry_df.sort_values(by=&#39;RS&#39;, ascending=False)</span>
-<span class="sd">    rating_columns = [&#39;Rating (RS)&#39;, &#39;Rating (3M:1M max)&#39;,</span>
-<span class="sd">                      &#39;Rating (6M:3M max)&#39;, &#39;Rating (9M:6M max)&#39;]</span>
-<span class="sd">    industry_df = append_ratings(industry_df, rs_columns,</span>
-<span class="sd">                                 rating_columns, method=rating_method)</span>
-
-<span class="sd">    industry_df = industry_df.rename(columns={</span>
-<span class="sd">        &#39;Ticker&#39;: &#39;Tickers&#39;,</span>
-<span class="sd">    })</span>
+<span class="sd">    stock_df = rankings(tickers,</span>
+<span class="sd">                        rs_window=rs_window, rating_method=rating_method)</span>
 
 <span class="sd">See Also:</span>
 <span class="sd">~~~~~~~~~</span>
@@ -122,9 +111,9 @@
 <span class="sd">  &lt;https://www.investors.com/ibd-university/</span>
 <span class="sd">  find-evaluate-stocks/exclusive-ratings/&gt;`_</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;5.5&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;5.6&quot;</span>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;York &lt;york.jong@gmail.com&gt;&quot;</span>
-<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/05 (initial version) ~ 2024/10/13 (last revision)&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/05 (initial version) ~ 2024/10/27 (last revision)&quot;</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;relative_strength&#39;</span><span class="p">,</span>
@@ -495,7 +484,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    pd.DataFrame</span>
 <span class="sd">        A DataFrame containing stock rankings with the following columns:</span>
-<span class="sd">        &#39;Ticker&#39;, &#39;Price&#39;, &#39;Sector&#39;, &#39;Industry&#39;, &#39;RS&#39; (current),</span>
+<span class="sd">        &#39;Ticker&#39;, &#39;Price&#39;, &#39;RS&#39; (current),</span>
 <span class="sd">        &#39;RS (1wk:max)&#39;, &#39;RS (1mo:max)&#39;, &#39;RS (3mo:max)&#39;, &#39;RS (6mo:max)&#39;,</span>
 <span class="sd">        &#39;RS (9mo:max)&#39;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -519,10 +508,6 @@
     <span class="n">df_all</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">([</span><span class="n">ticker_ref</span><span class="p">]</span> <span class="o">+</span> <span class="n">tickers</span><span class="p">,</span>
                          <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span>
     <span class="n">df_ref</span> <span class="o">=</span> <span class="n">df_all</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">ticker_ref</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># Batch download stock info</span>
-    <span class="n">info</span> <span class="o">=</span> <span class="n">yfu</span><span class="o">.</span><span class="n">download_tickers_info</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;industry&#39;</span><span class="p">])</span>
-    <span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tickers</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">info</span><span class="p">]</span>
 
     <span class="n">rs_data</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">price_ma</span> <span class="o">=</span> <span class="p">{}</span>
@@ -553,8 +538,6 @@
 
         <span class="n">rs_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
             <span class="s1">&#39;Ticker&#39;</span><span class="p">:</span> <span class="n">ticker</span><span class="p">,</span>
-            <span class="s1">&#39;Sector&#39;</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="n">ticker</span><span class="p">][</span><span class="s1">&#39;sector&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;Industry&#39;</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="n">ticker</span><span class="p">][</span><span class="s1">&#39;industry&#39;</span><span class="p">],</span>
             <span class="s1">&#39;RS&#39;</span><span class="p">:</span> <span class="n">rs</span><span class="o">.</span><span class="n">asof</span><span class="p">(</span><span class="n">end_date</span><span class="p">),</span>
             <span class="s1">&#39;1wk:end max&#39;</span><span class="p">:</span> <span class="n">rs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">one_week_ago</span><span class="p">:</span><span class="n">end_date</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
             <span class="s1">&#39;1mo:1wk max&#39;</span><span class="p">:</span> <span class="n">rs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">one_month_ago</span><span class="p">:</span><span class="n">one_week_ago</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
@@ -577,57 +560,46 @@
 <span class="c1"># Unit Test</span>
 <span class="c1">#------------------------------------------------------------------------------</span>
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">min_rating</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">rating_method</span><span class="o">=</span><span class="s1">&#39;qcut&#39;</span><span class="p">,</span>
-         <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    min_rating: int, optional</span>
-<span class="sd">        The minimum rating for a stock to be included in the rankings.</span>
-<span class="sd">        Defaults to 80.</span>
-
-<span class="sd">    out_dir: str, optional</span>
-<span class="sd">        The output directory to store CSV tables. Defaults to &#39;out&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">rating_method</span><span class="o">=</span><span class="s1">&#39;qcut&#39;</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">os</span>
     <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
     <span class="kn">import</span> <span class="nn">vistock.stock_indices</span> <span class="k">as</span> <span class="nn">si</span>
+    <span class="kn">from</span> <span class="nn">vistock.ibd_fin</span> <span class="kn">import</span> <span class="n">financial_metric_ranking</span>
 
     <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;SPX&#39;</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;SOX&#39;</span>
     <span class="n">tickers</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">get_tickers</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
 
-    <span class="n">stock_df</span> <span class="o">=</span> <span class="n">rankings</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="n">rs_window</span><span class="p">,</span>
-                        <span class="n">rating_method</span><span class="o">=</span><span class="n">rating_method</span><span class="p">)</span>
+    <span class="n">df_rs</span> <span class="o">=</span> <span class="n">rankings</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="n">rs_window</span><span class="p">,</span> <span class="n">rating_method</span><span class="o">=</span><span class="n">rating_method</span><span class="p">)</span>
+    <span class="n">df_fin</span> <span class="o">=</span> <span class="n">financial_metric_ranking</span><span class="p">(</span><span class="n">tickers</span><span class="p">)</span>
 
-    <span class="n">rs_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RS&#39;</span><span class="p">,</span> <span class="s1">&#39;3mo:1mo max&#39;</span><span class="p">,</span> <span class="s1">&#39;6mo:3mo max&#39;</span><span class="p">,</span> <span class="s1">&#39;9mo:6mo max&#39;</span><span class="p">]</span>
-    <span class="n">columns</span> <span class="o">=</span>  <span class="p">[</span><span class="s1">&#39;Sector&#39;</span><span class="p">,</span> <span class="s1">&#39;Ticker&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">rs_columns</span>
-    <span class="n">industry_df</span> <span class="o">=</span> <span class="n">groupby_industry</span><span class="p">(</span><span class="n">stock_df</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;RS&#39;</span><span class="p">)</span>
-
-    <span class="n">industry_df</span> <span class="o">=</span> <span class="n">industry_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;RS&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">rating_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Rating (RS)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rating (3M:1M max)&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;Rating (6M:3M max)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rating (9M:6M max)&#39;</span><span class="p">]</span>
-    <span class="n">industry_df</span> <span class="o">=</span> <span class="n">append_ratings</span><span class="p">(</span><span class="n">industry_df</span><span class="p">,</span> <span class="n">rs_columns</span><span class="p">,</span>
-                                 <span class="n">rating_columns</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">rating_method</span><span class="p">)</span>
-
-    <span class="n">industry_df</span> <span class="o">=</span> <span class="n">industry_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Ticker&#39;</span><span class="p">:</span> <span class="s1">&#39;Tickers&#39;</span><span class="p">,</span>
-    <span class="p">})</span>
-
-    <span class="k">if</span> <span class="n">stock_df</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">industry_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">df_rs</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">df_fin</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not enough data to generate rankings.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Stock Rankings:&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">stock_df</span><span class="p">[</span><span class="n">stock_df</span><span class="p">[</span><span class="s2">&quot;Rating (RS)&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_rating</span><span class="p">])</span>
+    <span class="n">columns_to_keep</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span> <span class="s1">&#39;Sector&#39;</span><span class="p">,</span> <span class="s1">&#39;Industry&#39;</span><span class="p">]</span>
+    <span class="n">df_stock</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_rs</span><span class="p">,</span> <span class="n">df_fin</span><span class="p">[</span><span class="n">columns_to_keep</span><span class="p">],</span>
+                        <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Stock DataFrame:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_stock</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">Industry Rankings:&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">industry_df</span><span class="p">)</span>
+    <span class="n">rs_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RS&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;1mo:1wk max&#39;</span><span class="p">,</span> <span class="s1">&#39;3mo:1mo max&#39;</span><span class="p">,</span> <span class="s1">&#39;6mo:3mo max&#39;</span><span class="p">,</span> <span class="s1">&#39;9mo:6mo max&#39;</span><span class="p">]</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Sector&#39;</span><span class="p">,</span> <span class="s1">&#39;Ticker&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">rs_columns</span>
+    <span class="n">df_industry</span> <span class="o">=</span> <span class="n">groupby_industry</span><span class="p">(</span><span class="n">df_stock</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;RS&#39;</span><span class="p">)</span>
+    <span class="n">df_industry</span> <span class="o">=</span> <span class="n">df_industry</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;RS&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">df_industry</span> <span class="o">=</span> <span class="n">df_industry</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">rating_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Rating (RS)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rating (1M:1W)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rating (3M:1M)&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;Rating (6M:3M)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rating (9M:6M)&#39;</span><span class="p">]</span>
+    <span class="n">df_industry</span> <span class="o">=</span> <span class="n">append_ratings</span><span class="p">(</span><span class="n">df_industry</span><span class="p">,</span> <span class="n">rs_columns</span><span class="p">,</span> <span class="n">rating_columns</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Industry DataFrame:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_industry</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 
     <span class="c1"># Save to CSV</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">***&quot;</span><span class="p">)</span>
     <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">kind</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">stock_df</span><span class="p">,</span> <span class="n">industry_df</span><span class="p">],</span>
+    <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">kind</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">df_stock</span><span class="p">,</span> <span class="n">df_industry</span><span class="p">],</span>
                            <span class="p">[</span><span class="s1">&#39;stocks&#39;</span><span class="p">,</span> <span class="s1">&#39;industries&#39;</span><span class="p">]):</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;rs_</span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">rs_window</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">rating_method</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">today</span><span class="si">}</span><span class="s1">.csv&#39;</span>
         <span class="n">table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
