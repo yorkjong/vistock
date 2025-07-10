@@ -270,7 +270,7 @@
 <span class="sd">        DataFrame containing the ticker&#39;s financials</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Add random delay to reduce the risk of being rate-limited</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># Delay between 1.5 and 5 seconds</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">.2</span><span class="p">,</span> <span class="mf">.8</span><span class="p">))</span>  <span class="c1"># Delay between .2 and .8 seconds</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ticker</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">Ticker</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
@@ -431,7 +431,7 @@
 <span class="sd">            Dictionary containing the ticker&#39;s info</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Add random delay to reduce the risk of being rate-limited</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># Delay between 1.5 and 5 seconds</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">.2</span><span class="p">,</span> <span class="mf">.8</span><span class="p">))</span>  <span class="c1"># Delay between .2 and .8 seconds</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">info</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">Ticker</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="o">.</span><span class="n">info</span>
