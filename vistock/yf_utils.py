@@ -234,7 +234,7 @@ def fetch_financials(symbol, fields=None, frequency='quarterly'):
 
 
 def download_financials(symbols, fields=None, frequency='quarterly',
-                        max_workers=8, progress=True):
+                        max_workers=3, progress=True):
     """
     Downloads the financials (quarterly or annual) of multiple stocks and
     returns the specified fields.
@@ -300,7 +300,7 @@ def download_financials(symbols, fields=None, frequency='quarterly',
     return financials_dict
 
 
-def download_tickers_info(symbols, fields=None, max_workers=8, progress=True):
+def download_tickers_info(symbols, fields=None, max_workers=3, progress=True):
     """
     Downloads the basic information of multiple stocks and returns the
     specified fields.
