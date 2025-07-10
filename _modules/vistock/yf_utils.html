@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.yf_utils &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -76,9 +76,9 @@
 <span class="sd">This module contains various utility functions for retrieving and processing</span>
 <span class="sd">stock data using the Yahoo Finance API via the `yfinance` library.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;4.3&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;4.4&quot;</span>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;York &lt;york.jong@gmail.com&gt;&quot;</span>
-<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/26 (initial version) ~ 2024/10/13 (last revision)&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2024/08/26 (initial version) ~ 2025/7/10 (last revision)&quot;</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;calc_weighted_metric&#39;</span><span class="p">,</span>
@@ -88,13 +88,14 @@
     <span class="s1">&#39;setup_file_logging&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThreadPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
 
 
 <span class="c1">#------------------------------------------------------------------------------</span>
@@ -108,7 +109,7 @@
 
 <div class="viewcode-block" id="setup_file_logging">
 <a class="viewcode-back" href="../../vistock.html#vistock.yf_utils.setup_file_logging">[docs]</a>
-<span class="k">def</span> <span class="nf">setup_file_logging</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">setup_file_logging</span><span class="p">():</span>
     <span class="n">log_fn</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">.log&#39;</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Logging to file: </span><span class="si">{</span><span class="n">log_fn</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
@@ -129,7 +130,7 @@
 
 <div class="viewcode-block" id="calc_weighted_metric">
 <a class="viewcode-back" href="../../vistock.html#vistock.yf_utils.calc_weighted_metric">[docs]</a>
-<span class="k">def</span> <span class="nf">calc_weighted_metric</span><span class="p">(</span><span class="n">financials</span><span class="p">,</span> <span class="n">tickers_info</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">weight_field</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calc_weighted_metric</span><span class="p">(</span><span class="n">financials</span><span class="p">,</span> <span class="n">tickers_info</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">weight_field</span><span class="p">,</span>
                          <span class="n">threshold</span><span class="o">=</span><span class="mf">0.7</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the weighted average of a specified financial metric for all stock</span>
@@ -248,7 +249,7 @@
 
 <div class="viewcode-block" id="fetch_financials">
 <a class="viewcode-back" href="../../vistock.html#vistock.yf_utils.fetch_financials">[docs]</a>
-<span class="k">def</span> <span class="nf">fetch_financials</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s1">&#39;quarterly&#39;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fetch_financials</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s1">&#39;quarterly&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fetch the financials for a single ticker symbol using yfinance.</span>
 
@@ -267,6 +268,9 @@
 <span class="sd">    DataFrame</span>
 <span class="sd">        DataFrame containing the ticker&#39;s financials</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Add random delay to reduce the risk of being rate-limited</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># Delay between 1.5 and 5 seconds</span>
+
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ticker</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">Ticker</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -311,7 +315,7 @@
 
 <div class="viewcode-block" id="download_financials">
 <a class="viewcode-back" href="../../vistock.html#vistock.yf_utils.download_financials">[docs]</a>
-<span class="k">def</span> <span class="nf">download_financials</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s1">&#39;quarterly&#39;</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">download_financials</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s1">&#39;quarterly&#39;</span><span class="p">,</span>
                         <span class="n">max_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Downloads the financials (quarterly or annual) of multiple stocks and</span>
@@ -381,7 +385,7 @@
 
 <div class="viewcode-block" id="download_tickers_info">
 <a class="viewcode-back" href="../../vistock.html#vistock.yf_utils.download_tickers_info">[docs]</a>
-<span class="k">def</span> <span class="nf">download_tickers_info</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">download_tickers_info</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Downloads the basic information of multiple stocks and returns the</span>
 <span class="sd">    specified fields.</span>
@@ -412,7 +416,7 @@
 <span class="sd">    &gt;&gt;&gt; info[&#39;AAPL&#39;][&#39;longName&#39;]</span>
 <span class="sd">    &#39;Apple Inc.&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">fetch_info</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_info</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fetch the info for a single ticker symbol using yfinance.</span>
 
@@ -425,6 +429,9 @@
 <span class="sd">        dict</span>
 <span class="sd">            Dictionary containing the ticker&#39;s info</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Add random delay to reduce the risk of being rate-limited</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># Delay between 1.5 and 5 seconds</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="n">info</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">Ticker</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="o">.</span><span class="n">info</span>
             <span class="k">if</span> <span class="n">fields</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -482,7 +489,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">print_progress_bar</span><span class="p">(</span><span class="n">iteration</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_progress_bar</span><span class="p">(</span><span class="n">iteration</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Call in a loop to create a terminal progress bar with the percentage in</span>
 <span class="sd">    the middle.</span>
@@ -536,7 +543,7 @@
 <span class="c1">#------------------------------------------------------------------------------</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">doctest</span><span class="o">,</span> <span class="nn">time</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">doctest</span><span class="o">,</span><span class="w"> </span><span class="nn">time</span>
 
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>

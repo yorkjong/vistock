@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.plotly.ibd_rs_cmp &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -94,22 +94,22 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
-<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
-<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">plotly.subplots</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_subplots</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">tw</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">file_utils</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">fig_utils</span> <span class="k">as</span> <span class="n">futil</span>
-<span class="kn">from</span> <span class="nn">..ibd</span> <span class="kn">import</span> <span class="n">relative_strength</span><span class="p">,</span> <span class="n">relative_strength_3m</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stock_indices</span> <span class="k">as</span> <span class="n">si</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">tw</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">file_utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">fig_utils</span> <span class="k">as</span> <span class="n">futil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..ibd</span><span class="w"> </span><span class="kn">import</span> <span class="n">relative_strength</span><span class="p">,</span> <span class="n">relative_strength_3m</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">stock_indices</span> <span class="k">as</span> <span class="n">si</span>
 
 
 <div class="viewcode-block" id="plot">
 <a class="viewcode-back" href="../../../vistock.plotly.html#vistock.plotly.ibd_rs_cmp.plot">[docs]</a>
-<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
          <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span>
          <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly&#39;</span><span class="p">,</span> <span class="n">colorway</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Set3</span><span class="p">,</span>
          <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
@@ -270,7 +270,7 @@
 <span class="c1"># Test</span>
 <span class="c1">#------------------------------------------------------------------------------</span>
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;^NDX&#39;</span><span class="p">,</span> <span class="s1">&#39;^TWII&#39;</span><span class="p">]</span>
     <span class="n">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly_dark&#39;</span><span class="p">)</span>
     <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;羅昇&#39;</span><span class="p">,</span> <span class="s1">&#39;昆盈&#39;</span><span class="p">,</span> <span class="s1">&#39;穎漢&#39;</span><span class="p">,</span> <span class="s1">&#39;光聖&#39;</span><span class="p">,</span> <span class="s1">&#39;所羅門&#39;</span><span class="p">]</span>

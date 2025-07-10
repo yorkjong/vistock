@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.plotly.mansfield &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -116,25 +116,25 @@
     <span class="s1">&#39;RelativeStrengthLines&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
-<span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="k">as</span> <span class="nn">go</span>
-<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">plotly.subplots</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_subplots</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">tw</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">file_utils</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">fig_utils</span> <span class="k">as</span> <span class="n">futil</span>
-<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">MarketColorStyle</span><span class="p">,</span> <span class="n">decide_market_color_style</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stock_indices</span> <span class="k">as</span> <span class="n">si</span>
-<span class="kn">from</span> <span class="nn">..ta</span> <span class="kn">import</span> <span class="n">simple_moving_average</span><span class="p">,</span> <span class="n">exponential_moving_average</span>
-<span class="kn">from</span> <span class="nn">..rsm</span> <span class="kn">import</span> <span class="n">mansfield_relative_strength</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">tw</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">file_utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">fig_utils</span> <span class="k">as</span> <span class="n">futil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">MarketColorStyle</span><span class="p">,</span> <span class="n">decide_market_color_style</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">stock_indices</span> <span class="k">as</span> <span class="n">si</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..ta</span><span class="w"> </span><span class="kn">import</span> <span class="n">simple_moving_average</span><span class="p">,</span> <span class="n">exponential_moving_average</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..rsm</span><span class="w"> </span><span class="kn">import</span> <span class="n">mansfield_relative_strength</span>
 
 
 <div class="viewcode-block" id="StockChart">
 <a class="viewcode-back" href="../../../vistock.plotly.html#vistock.plotly.mansfield.StockChart">[docs]</a>
-<span class="k">class</span> <span class="nc">StockChart</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StockChart</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A class for generating and plotting Mansfield Stock Charts based on Stan</span>
 <span class="sd">    Weinstein&#39;s methods outlined in the book &quot;Secrets for Profiting in Bull and</span>
 <span class="sd">    Bear Markets.&quot;</span>
@@ -142,7 +142,7 @@
 <div class="viewcode-block" id="StockChart.plot">
 <a class="viewcode-back" href="../../../vistock.plotly.html#vistock.plotly.mansfield.StockChart.plot">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1wk&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ma</span><span class="o">=</span><span class="s1">&#39;SMA&#39;</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1wk&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ma</span><span class="o">=</span><span class="s1">&#39;SMA&#39;</span><span class="p">,</span>
              <span class="n">market_color_style</span><span class="o">=</span><span class="n">MarketColorStyle</span><span class="o">.</span><span class="n">AUTO</span><span class="p">,</span>
              <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly&#39;</span><span class="p">,</span> <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot a Mansfield Stock Chart for a given stock symbol and time</span>
@@ -337,7 +337,7 @@
 
 <div class="viewcode-block" id="RelativeStrengthLines">
 <a class="viewcode-back" href="../../../vistock.plotly.html#vistock.plotly.mansfield.RelativeStrengthLines">[docs]</a>
-<span class="k">class</span> <span class="nc">RelativeStrengthLines</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RelativeStrengthLines</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for plotting Mansfield Relative Strength (RSM) lines of multiple</span>
 <span class="sd">    stocks compared to a reference index.</span>
@@ -351,7 +351,7 @@
 <div class="viewcode-block" id="RelativeStrengthLines.plot">
 <a class="viewcode-back" href="../../../vistock.plotly.html#vistock.plotly.mansfield.RelativeStrengthLines.plot">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ma</span><span class="o">=</span><span class="s1">&#39;SMA&#39;</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ma</span><span class="o">=</span><span class="s1">&#39;SMA&#39;</span><span class="p">,</span>
              <span class="n">template</span><span class="o">=</span><span class="s1">&#39;plotly_dark&#39;</span><span class="p">,</span> <span class="n">colorway</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Set3</span><span class="p">,</span>
              <span class="n">hides_nontrading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

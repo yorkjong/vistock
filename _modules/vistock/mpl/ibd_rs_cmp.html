@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.mpl.ibd_rs_cmp &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -94,21 +94,21 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">mplfinance</span> <span class="k">as</span> <span class="nn">mpf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mplfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpf</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">tw</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">file_utils</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">mpf_utils</span> <span class="k">as</span> <span class="n">mpfu</span>
-<span class="kn">from</span> <span class="nn">..ibd</span> <span class="kn">import</span> <span class="n">relative_strength</span><span class="p">,</span> <span class="n">relative_strength_3m</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stock_indices</span> <span class="k">as</span> <span class="n">si</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">tw</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">file_utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">mpf_utils</span> <span class="k">as</span> <span class="n">mpfu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..ibd</span><span class="w"> </span><span class="kn">import</span> <span class="n">relative_strength</span><span class="p">,</span> <span class="n">relative_strength_3m</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">stock_indices</span> <span class="k">as</span> <span class="n">si</span>
 
 
 <div class="viewcode-block" id="plot">
 <a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.ibd_rs_cmp.plot">[docs]</a>
-<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
          <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span>
          <span class="n">style</span><span class="o">=</span><span class="s1">&#39;checkers&#39;</span><span class="p">,</span> <span class="n">color_cycle</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span>
          <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
@@ -280,7 +280,7 @@
 <span class="c1"># Test</span>
 <span class="c1">#------------------------------------------------------------------------------</span>
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="n">mpfu</span><span class="o">.</span><span class="n">use_mac_chinese_font</span><span class="p">()</span>
     <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NVDA&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;META&#39;</span><span class="p">,</span> <span class="s1">&#39;^NDX&#39;</span><span class="p">,</span> <span class="s1">&#39;^TWII&#39;</span><span class="p">]</span>
     <span class="c1">#symbols = [&#39;NVDA&#39;, &#39;MSFT&#39;, &#39;META&#39;, &#39;^NDX&#39;]</span>

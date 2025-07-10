@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.ta &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -86,7 +86,7 @@
 
 <div class="viewcode-block" id="simple_moving_average">
 <a class="viewcode-back" href="../../vistock.html#vistock.ta.simple_moving_average">[docs]</a>
-<span class="k">def</span> <span class="nf">simple_moving_average</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">simple_moving_average</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate Simple Moving Average (SMA) for given values and window size.</span>
 
@@ -122,7 +122,7 @@
 
 <div class="viewcode-block" id="exponential_moving_average">
 <a class="viewcode-back" href="../../vistock.html#vistock.ta.exponential_moving_average">[docs]</a>
-<span class="k">def</span> <span class="nf">exponential_moving_average</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">adjust</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">exponential_moving_average</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">adjust</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate Exponential Moving Average (EMA) for given values and window size.</span>
 
@@ -163,7 +163,7 @@
 
 <div class="viewcode-block" id="rsi">
 <a class="viewcode-back" href="../../vistock.html#vistock.ta.rsi">[docs]</a>
-<span class="k">def</span> <span class="nf">rsi</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">14</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rsi</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">14</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the Relative Strength Index (RSI) for a given dataset.</span>
 
@@ -213,7 +213,7 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">doctest</span><span class="o">,</span> <span class="nn">time</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">doctest</span><span class="o">,</span><span class="w"> </span><span class="nn">time</span>
 
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>

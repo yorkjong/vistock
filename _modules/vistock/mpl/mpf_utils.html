@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.mpl.mpf_utils &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -81,18 +81,18 @@
     <span class="s1">&#39;decide_mpf_style&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.font_manager</span> <span class="k">as</span> <span class="nn">fm</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">mplfinance</span> <span class="k">as</span> <span class="nn">mpf</span>
-<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">MarketColorStyle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.font_manager</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">fm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mplfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">MarketColorStyle</span>
 
 
 <div class="viewcode-block" id="use_mac_chinese_font">
 <a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.mpf_utils.use_mac_chinese_font">[docs]</a>
-<span class="k">def</span> <span class="nf">use_mac_chinese_font</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">use_mac_chinese_font</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;Darwin&#39;</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="n">font_name</span> <span class="o">=</span> <span class="s1">&#39;Arial Unicode MS&#39;</span>
@@ -103,7 +103,7 @@
 
 <div class="viewcode-block" id="decide_mpf_style">
 <a class="viewcode-back" href="../../../vistock.mpl.html#vistock.mpl.mpf_utils.decide_mpf_style">[docs]</a>
-<span class="k">def</span> <span class="nf">decide_mpf_style</span><span class="p">(</span><span class="n">base_mpf_style</span><span class="o">=</span><span class="s1">&#39;yahoo&#39;</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">decide_mpf_style</span><span class="p">(</span><span class="n">base_mpf_style</span><span class="o">=</span><span class="s1">&#39;yahoo&#39;</span><span class="p">,</span>
                      <span class="n">market_color_style</span><span class="o">=</span><span class="n">MarketColorStyle</span><span class="o">.</span><span class="n">WESTERN</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Determine the mplfinance style based on the base style and market color style.</span>

@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.utils &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -82,14 +82,14 @@
     <span class="s1">&#39;decide_market_color_style&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="c1">#------------------------------------------------------------------------------</span>
 
 <span class="c1"># Enum for market color styles</span>
 <div class="viewcode-block" id="MarketColorStyle">
 <a class="viewcode-back" href="../../vistock.html#vistock.utils.MarketColorStyle">[docs]</a>
-<span class="k">class</span> <span class="nc">MarketColorStyle</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MarketColorStyle</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">WESTERN</span> <span class="o">=</span> <span class="s2">&quot;western&quot;</span>
     <span class="n">EASTERN</span> <span class="o">=</span> <span class="s2">&quot;eastern&quot;</span>
     <span class="n">AUTO</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span></div>
@@ -98,7 +98,7 @@
 
 <div class="viewcode-block" id="decide_market_color_style">
 <a class="viewcode-back" href="../../vistock.html#vistock.utils.decide_market_color_style">[docs]</a>
-<span class="k">def</span> <span class="nf">decide_market_color_style</span><span class="p">(</span><span class="n">ticker</span><span class="o">=</span><span class="s1">&#39;TSLA&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">MarketColorStyle</span><span class="o">.</span><span class="n">AUTO</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">decide_market_color_style</span><span class="p">(</span><span class="n">ticker</span><span class="o">=</span><span class="s1">&#39;TSLA&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">MarketColorStyle</span><span class="o">.</span><span class="n">AUTO</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the market color style based on the given ticker and specified</span>
 <span class="sd">    style.</span>
 
@@ -142,7 +142,7 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">doctest</span>
     <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
 
 </pre></div>

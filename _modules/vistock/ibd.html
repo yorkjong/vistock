@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.ibd &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -122,12 +122,12 @@
     <span class="s1">&#39;ma_window_size&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
 
-<span class="kn">import</span> <span class="nn">vistock.yf_utils</span> <span class="k">as</span> <span class="nn">yfu</span>
-<span class="kn">from</span> <span class="nn">.ranking_utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">vistock.yf_utils</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yfu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ranking_utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
 
 <span class="c1">#------------------------------------------------------------------------------</span>
@@ -136,7 +136,7 @@
 
 <div class="viewcode-block" id="relative_strength">
 <a class="viewcode-back" href="../../vistock.html#vistock.ibd.relative_strength">[docs]</a>
-<span class="k">def</span> <span class="nf">relative_strength</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">closes_ref</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">relative_strength</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">closes_ref</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the relative strength of a stock compared to a reference index.</span>
 
@@ -193,7 +193,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">weighted_growth</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">weighted_growth</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the performance of the last year, with the most recent quarter</span>
 <span class="sd">    weighted double.</span>
@@ -237,7 +237,7 @@
     <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">p4</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5</span>
 
 
-<span class="k">def</span> <span class="nf">quarters_growth</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">quarters_growth</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the growth (percentage change) over the last n quarters.</span>
 
@@ -284,7 +284,7 @@
 
 <div class="viewcode-block" id="relative_strength_3m">
 <a class="viewcode-back" href="../../vistock.html#vistock.ibd.relative_strength_3m">[docs]</a>
-<span class="k">def</span> <span class="nf">relative_strength_3m</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">closes_ref</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">relative_strength_3m</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">closes_ref</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the 3-Month Relative Strength of a stock compared to a reference</span>
 <span class="sd">    index, based on price performance (growths).</span>
@@ -324,7 +324,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">relative_strength_with_span</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">closes_ref</span><span class="p">,</span> <span class="n">span</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">relative_strength_with_span</span><span class="p">(</span><span class="n">closes</span><span class="p">,</span> <span class="n">closes_ref</span><span class="p">,</span> <span class="n">span</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the relative strength of a stock compared to a reference index</span>
 <span class="sd">    based on price performance (growths), over a specified period.</span>
@@ -378,7 +378,7 @@
 
 <div class="viewcode-block" id="rankings">
 <a class="viewcode-back" href="../../vistock.html#vistock.ibd.rankings">[docs]</a>
-<span class="k">def</span> <span class="nf">rankings</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="s1">&#39;^GSPC&#39;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rankings</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="s1">&#39;^GSPC&#39;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span>
              <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">rating_method</span><span class="o">=</span><span class="s1">&#39;rank&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Analyze stocks and generate a ranking table for individual stocks and</span>
@@ -450,7 +450,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">build_stock_rs_df</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="s1">&#39;^GSPC&#39;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span> <span class="s1">&#39;1d&#39;</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_stock_rs_df</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">ticker_ref</span><span class="o">=</span><span class="s1">&#39;^GSPC&#39;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;2y&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span> <span class="s1">&#39;1d&#39;</span><span class="p">,</span>
                       <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fetch historical stock data and calculate Relative Strength (RS) for the</span>
@@ -560,11 +560,11 @@
 <span class="c1"># Unit Test</span>
 <span class="c1">#------------------------------------------------------------------------------</span>
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">rating_method</span><span class="o">=</span><span class="s1">&#39;qcut&#39;</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">os</span>
-    <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-    <span class="kn">import</span> <span class="nn">vistock.stock_indices</span> <span class="k">as</span> <span class="nn">si</span>
-    <span class="kn">from</span> <span class="nn">vistock.ibd_fin</span> <span class="kn">import</span> <span class="n">financial_metric_ranking</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">rating_method</span><span class="o">=</span><span class="s1">&#39;qcut&#39;</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;12mo&#39;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">vistock.stock_indices</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">si</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">vistock.ibd_fin</span><span class="w"> </span><span class="kn">import</span> <span class="n">financial_metric_ranking</span>
 
     <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;SPX&#39;</span>
     <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;SOX&#39;</span>
@@ -608,7 +608,7 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">main</span><span class="p">(</span><span class="n">rating_method</span><span class="o">=</span><span class="s1">&#39;qcut&#39;</span><span class="p">,</span> <span class="n">rs_window</span><span class="o">=</span><span class="s1">&#39;3mo&#39;</span><span class="p">)</span>

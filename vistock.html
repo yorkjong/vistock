@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock package &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
@@ -446,8 +446,8 @@ Business Daily (IBD) methodology.</p>
 </section>
 <section id="usage">
 <h4>Usage:<a class="headerlink" href="#usage" title="Link to this heading"></a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ibd</span>
-<span class="kn">import</span> <span class="nn">vistock.stock_indices</span> <span class="k">as</span> <span class="nn">si</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ibd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">vistock.stock_indices</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">si</span>
 
 <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;SOX&#39;</span>
 <span class="n">tickers</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">get_tickers</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
@@ -726,7 +726,7 @@ index source.</p></li>
 </section>
 <section id="usage-examples">
 <h3>Usage Examples:<a class="headerlink" href="#usage-examples" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stock_indices</span> <span class="kn">import</span> <span class="n">get_tickers</span><span class="p">,</span> <span class="n">get_name</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">stock_indices</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_tickers</span><span class="p">,</span> <span class="n">get_name</span>
 
 <span class="c1"># Get tickers for the S&amp;P 500 index</span>
 <span class="n">spx_tickers</span> <span class="o">=</span> <span class="n">get_tickers</span><span class="p">(</span><span class="s1">&#39;SPX&#39;</span><span class="p">)</span>
@@ -941,7 +941,7 @@ values.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">120</span><span class="p">],</span>
 <span class="gp">... </span>        <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">exponential_moving_average</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -979,8 +979,8 @@ is 14.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;RSI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rsi</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">periods</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;RSI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
@@ -1014,7 +1014,7 @@ is 14.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">120</span><span class="p">],</span>
 <span class="gp">... </span>        <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">simple_moving_average</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -1047,7 +1047,7 @@ stock data, and retrieving ticker lists from these markets.</p>
 </section>
 <section id="id2">
 <h3>Usage Examples:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tw</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tw</span>
 
 <span class="c1"># Get the stock name from its code</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">stock_name</span><span class="p">(</span><span class="s1">&#39;2330.TW&#39;</span><span class="p">)</span>
@@ -1331,7 +1331,7 @@ Exchange (TWSE).</p>
 <p>Utility Functions for vistock package.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vistock.utils.MarketColorStyle">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.utils.</span></span><span class="sig-name descname"><span class="pre">MarketColorStyle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/utils.html#MarketColorStyle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.utils.MarketColorStyle" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vistock.utils.</span></span><span class="sig-name descname"><span class="pre">MarketColorStyle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vistock/utils.html#MarketColorStyle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#vistock.utils.MarketColorStyle" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vistock.utils.MarketColorStyle.AUTO">
@@ -1421,7 +1421,7 @@ number of quarters (or years).</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOG&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">financials</span> <span class="o">=</span> <span class="n">download_financials</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Basic EPS&#39;</span><span class="p">])</span>
-<span class="gp">... </span>                            
+<span class="gp">...</span>
 <span class="go">[...**********************100%**********************]</span>
 <span class="go">3 of 3 financials downloaded</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tickers_info</span> <span class="o">=</span> <span class="p">{</span>
@@ -1470,7 +1470,7 @@ DataFrame of the specified fields.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;TSLA&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOG&#39;</span><span class="p">,</span> <span class="s1">&#39;AMZN&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">financials</span> <span class="o">=</span> <span class="n">download_financials</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s1">&#39;annual&#39;</span><span class="p">)</span>
-<span class="gp">... </span>                            
+<span class="gp">...</span>
 <span class="go">[...*******************100%**********************]</span>
 <span class="go">  5 of 5 financials downloaded</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">epses</span> <span class="o">=</span> <span class="n">financials</span><span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">][</span><span class="s1">&#39;Basic EPS&#39;</span><span class="p">]</span>
@@ -1506,8 +1506,8 @@ dictionary of the specified fields.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;TSLA&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOG&#39;</span><span class="p">,</span> <span class="s1">&#39;AMZN&#39;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">download_tickers_info</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span> 
-<span class="gp">... </span>                                      
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">download_tickers_info</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
+<span class="gp">...</span>
 <span class="go">[...*******************100%**********************]  5 of 5 info downloaded</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">][</span><span class="s1">&#39;longName&#39;</span><span class="p">]</span>
 <span class="go">&#39;Apple Inc.&#39;</span>

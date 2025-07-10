@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vistock.tw &mdash; vistock 0.8.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -122,20 +122,20 @@
     <span class="s1">&#39;get_tickers&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">unicodedata</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unicodedata</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">urllib3.exceptions</span> <span class="kn">import</span> <span class="n">IncompleteRead</span>
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib3.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">IncompleteRead</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
 
 
 <span class="c1">#------------------------------------------------------------------------------</span>
 <span class="c1"># Utility Functions</span>
 <span class="c1">#------------------------------------------------------------------------------</span>
 
-<span class="k">def</span> <span class="nf">is_chinese</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_chinese</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if the first character of given string is a Chinese character.</span>
 
@@ -160,7 +160,7 @@
 
 <div class="viewcode-block" id="is_taiwan_stock">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.is_taiwan_stock">[docs]</a>
-<span class="k">def</span> <span class="nf">is_taiwan_stock</span><span class="p">(</span><span class="n">ticker</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_taiwan_stock</span><span class="p">(</span><span class="n">ticker</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if the given ticker represents a Taiwan stock.</span>
 
@@ -184,7 +184,7 @@
 <span class="c1"># Crawler</span>
 <span class="c1">#------------------------------------------------------------------------------</span>
 
-<span class="k">class</span> <span class="nc">Crawler</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Crawler</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for crawling stock data from Taiwan stock market websites.</span>
 
@@ -194,7 +194,7 @@
 <span class="sd">    stock data is from &#39;https://isin.twse.com.tw/isin/C_public.jsp&#39;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_name_code_pair</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">str_mode</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_name_code_pair</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">str_mode</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get (name, code) pair from a given symbol.</span>
 
 <span class="sd">        Here the symbol may be a stock name or a stock code.</span>
@@ -224,7 +224,7 @@
         <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">as_yfinance</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_yfinance</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert a given stock symbol into yfinance compatible stock symbol.</span>
 
@@ -265,7 +265,7 @@
 <span class="c1"># Open API</span>
 <span class="c1">#------------------------------------------------------------------------------</span>
 
-<span class="k">class</span> <span class="nc">OpenAPI</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpenAPI</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for interacting with Taiwan stock market Open APIs.</span>
 
@@ -275,11 +275,11 @@
     <span class="n">_lookup_cache</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">clear_cache</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_cache</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_lookup_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">value_from_key</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">key_field</span><span class="p">,</span> <span class="n">value_field</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value_from_key</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">key_field</span><span class="p">,</span> <span class="n">value_field</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the value of a given key that is looked-up from an Open API</span>
 <span class="sd">        response table.</span>
 
@@ -304,7 +304,7 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">similar_keys</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">key_field</span><span class="p">,</span> <span class="n">value_field</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">similar_keys</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">key_field</span><span class="p">,</span> <span class="n">value_field</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get (key, value) pairs with similar keys that are looked-up from an</span>
 <span class="sd">        Open API response table.</span>
 
@@ -332,7 +332,7 @@
         <span class="k">return</span> <span class="n">pairs</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_columns</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">column_names</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_columns</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">column_names</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fetch JSON data from the specified URL and extracts the specified</span>
 <span class="sd">        columns.</span>
@@ -363,7 +363,7 @@
         <span class="k">return</span> <span class="n">columns</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">yfinance_symbol_from_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">yfinance_symbol_from_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get yfinance compatible symbol from a Taiwan stock name.</span>
 
 <span class="sd">        Args:</span>
@@ -418,7 +418,7 @@
         <span class="k">return</span> <span class="n">name</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">stock_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stock_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get stock name from its code.</span>
 
 <span class="sd">        Args:</span>
@@ -446,7 +446,7 @@
         <span class="k">return</span> <span class="n">code</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">stock_price</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stock_price</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get stock price from its code.</span>
 
 <span class="sd">        Args:</span>
@@ -501,7 +501,7 @@
         <span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">yfinance_symbol_from_code</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">yfinance_symbol_from_code</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get yfinance compatible symbol from a Taiwan stock code.</span>
 
 <span class="sd">        Args:</span>
@@ -560,7 +560,7 @@
 
 <div class="viewcode-block" id="stock_name">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.stock_name">[docs]</a>
-<span class="k">def</span> <span class="nf">stock_name</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">stock_name</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get stock name from its code.</span>
 
 <span class="sd">    Args:</span>
@@ -587,7 +587,7 @@
 
 <div class="viewcode-block" id="stock_price">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.stock_price">[docs]</a>
-<span class="k">def</span> <span class="nf">stock_price</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">stock_price</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get stock price from its code.</span>
 
 <span class="sd">    Args:</span>
@@ -604,7 +604,7 @@
 
 <div class="viewcode-block" id="as_yfinance">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.as_yfinance">[docs]</a>
-<span class="k">def</span> <span class="nf">as_yfinance</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">as_yfinance</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a given stock symbol into yfinance compatible stock symbol.</span>
 
@@ -651,7 +651,7 @@
 
 <div class="viewcode-block" id="similar_stocks">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.similar_stocks">[docs]</a>
-<span class="k">def</span> <span class="nf">similar_stocks</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">similar_stocks</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get similar stock of a given stock.</span>
 
 <span class="sd">    Args:</span>
@@ -705,7 +705,7 @@
 
 <div class="viewcode-block" id="get_twse_tickers">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.get_twse_tickers">[docs]</a>
-<span class="k">def</span> <span class="nf">get_twse_tickers</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_twse_tickers</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fetch the list of tickers for companies listed on the Taiwan Stock</span>
 <span class="sd">    Exchange (TWSE).</span>
@@ -728,7 +728,7 @@
 
 <div class="viewcode-block" id="get_tpex_tickers">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.get_tpex_tickers">[docs]</a>
-<span class="k">def</span> <span class="nf">get_tpex_tickers</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_tpex_tickers</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fetch the list of tickers for companies listed on the Taipei Exchange</span>
 <span class="sd">    (TPEx).</span>
@@ -751,7 +751,7 @@
 
 <div class="viewcode-block" id="get_esb_tickers">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.get_esb_tickers">[docs]</a>
-<span class="k">def</span> <span class="nf">get_esb_tickers</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_esb_tickers</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fetch the list of tickers for companies listed on the Emerging Stock</span>
 <span class="sd">    Board (ESB) of the Taipei Exchange.</span>
@@ -776,7 +776,7 @@
 
 <div class="viewcode-block" id="get_tickers">
 <a class="viewcode-back" href="../../vistock.html#vistock.tw.get_tickers">[docs]</a>
-<span class="k">def</span> <span class="nf">get_tickers</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_tickers</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve a list of tickers for the specified exchange(s) in Taiwan,</span>
 <span class="sd">    removing duplicates.</span>
@@ -836,9 +836,9 @@
 <span class="c1"># Test</span>
 <span class="c1">#------------------------------------------------------------------------------</span>
 
-<span class="k">def</span> <span class="nf">use_requests_cache</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">use_requests_cache</span><span class="p">():</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">requests_cache</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">requests_cache</span>
         <span class="n">cache_installed</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="n">cache_installed</span> <span class="o">=</span> <span class="kc">False</span>
@@ -848,7 +848,7 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">doctest</span><span class="o">,</span> <span class="nn">time</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">doctest</span><span class="o">,</span><span class="w"> </span><span class="nn">time</span>
 
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">use_requests_cache</span><span class="p">()</span>
