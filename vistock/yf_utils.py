@@ -18,6 +18,7 @@ __all__ = [
 
 import sys
 import time
+import random
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import logging
 
@@ -189,7 +190,7 @@ def fetch_financials(symbol, fields=None, frequency='quarterly'):
         DataFrame containing the ticker's financials
     """
     # Add random delay to reduce the risk of being rate-limited
-    time.sleep(random.uniform(1.5, 5))  # Delay between 1.5 and 5 seconds
+    time.sleep(random.uniform(.5, 1))  # Delay between 1.5 and 5 seconds
 
     try:
         ticker = yf.Ticker(symbol)
@@ -344,7 +345,7 @@ def download_tickers_info(symbols, fields=None, max_workers=8, progress=True):
             Dictionary containing the ticker's info
         """
         # Add random delay to reduce the risk of being rate-limited
-        time.sleep(random.uniform(1.5, 5))  # Delay between 1.5 and 5 seconds
+        time.sleep(random.uniform(.5, 1))  # Delay between 1.5 and 5 seconds
 
         try:
             info = yf.Ticker(symbol).info
