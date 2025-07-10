@@ -190,7 +190,7 @@ def fetch_financials(symbol, fields=None, frequency='quarterly'):
         DataFrame containing the ticker's financials
     """
     # Add random delay to reduce the risk of being rate-limited
-    time.sleep(random.uniform(.2, .8))  # Delay between .2 and .8 seconds
+    time.sleep(random.uniform(.5, .9))  # Delay between .5 and .9 seconds
 
     try:
         ticker = yf.Ticker(symbol)
@@ -345,7 +345,7 @@ def download_tickers_info(symbols, fields=None, max_workers=8, progress=True):
             Dictionary containing the ticker's info
         """
         # Add random delay to reduce the risk of being rate-limited
-        time.sleep(random.uniform(.2, .8))  # Delay between .2 and .8 seconds
+        time.sleep(random.uniform(.5, .9))  # Delay between .5 and .9 seconds
 
         try:
             info = yf.Ticker(symbol).info
