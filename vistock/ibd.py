@@ -425,7 +425,7 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC', period='2y', interval= '1d',
 
     # Batch download stock price data
     df_all = yf.download([ticker_ref] + tickers,
-                         period=period, interval=interval)
+                         period=period, interval=interval, auto_adjust=True)
     df_ref = df_all.xs(ticker_ref, level='Ticker', axis=1)
 
     rs_data = []

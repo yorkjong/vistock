@@ -319,7 +319,7 @@ def build_stock_rs_df(tickers, ticker_ref='^GSPC',
 
     # Fetch data for stocks and index
     df_all = yf.download([ticker_ref] + tickers,
-                         period=period, interval=interval)
+                         period=period, interval=interval, auto_adjust=True)
     df_ref = df_all.xs(ticker_ref, level='Ticker', axis=1)
     print("Num of downloaded stocks: "
           f"{len(df_all.columns.get_level_values('Ticker').unique())}")
